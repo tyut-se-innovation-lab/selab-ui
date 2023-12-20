@@ -8,7 +8,7 @@
 <script lang="ts" setup>
 import '../../less/components/button/index.less';
 import { defineProps, computed, ref, reactive } from 'vue';
-
+defineOptions({ name: "se-button" });
 // 定义组件 props
 const props = defineProps<{
   type?: string;
