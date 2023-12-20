@@ -1,0 +1,20 @@
+{
+  "name": "selab-ui",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "scripts": {
+    "build": "vite build",
+    "test": "vitest",
+    "coverage": "vitest run --coverage"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@selab-ui/utils": "workspace:^"
+  },
+  "devDependencies": {
+    "@vitest/coverage-v8": "^1.0.4"
+  }
+}

@@ -1,0 +1,1 @@
+"use strict";Object.defineProperties(exports,{__esModule:{value:!0},[Symbol.toStringTag]:{value:"Module"}});const e=require("./src/index.js"),r=require("./src/button/index.js"),c=require("./src/card/index.js"),i={install:n=>{for(const t in e)if(Object.prototype.hasOwnProperty.call(e,t)){const o=e[t];n.use(o)}}};exports.Button=r.Button;exports.card=c.card;exports.default=i;
