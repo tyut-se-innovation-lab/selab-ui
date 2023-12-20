@@ -2,13 +2,14 @@
 # Selab UI 组件库
 
 这个项目是一个基于 Vite、TypeScript、Vue 3 和 Vitepress 的组件库，为 Selab UI 提供了一系列的组件和工具。
-
+**注意：以下命令都是在selab-ui文件路径运行不需要cd到文件里面的路径**
 ## 安装
 
 ```bash
 pnpm run install:selab
 ```
 该命令安装了主项目和 CLI 工具的依赖项。安装在npm 安装cli文件夹的时候有时候他会显示安装完但是进度条还在可以直接`ctrl +  c`打断就行因为那个时候已经安装好了
+**如果有不能执行的需要看一下在那个文件夹里面打开那个路径单独`pnpm i` 一下应该不会出现这个问题了但也不确定**
 
 ## 构建 Selab UI
 ```bash
