@@ -14,7 +14,6 @@
     "coverage:selab": "cd packages/components/src && vitest run --coverage",
     "docs:dev": "cd site  && vitepress dev docs",
     "docs:build": "cd site && vitepress build docs",
-    "docs:preview": "cd site && vitepress preview docs",
     "dev:examples": "cd examples && vite"
   },
   "keywords": [],
@@ -28,6 +27,7 @@
     "@typescript-eslint/eslint-plugin": "^6.14.0",
     "@typescript-eslint/parser": "^6.14.0",
     "@vitejs/plugin-vue": "^4.5.1",
+    "@vitejs/plugin-vue-jsx": "^3.1.0",
     "@vue/runtime-core": "^3.3.11",
     "@vue/test-utils": "^2.4.3",
     "c8": "^8.0.1",
