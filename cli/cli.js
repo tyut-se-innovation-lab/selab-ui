@@ -21,7 +21,7 @@ const promptsOptions = [
         type: 'select',
         name: 'templateType',
         message: '请选择模板类型',
-        choices: templateTypes.map(type => ({ title: type, value: type }))
+        choices: templateTypes.map((type) => ({ title: type, value: type }))
     }
 ];
 
@@ -36,14 +36,18 @@ process.on('SIGINT', () => {
 });
 
 // 创建组件文件
-const createComponentFiles = (componentNameEn, componentNameZh,templateType) => {
+const createComponentFiles = (
+    componentNameEn,
+    componentNameZh,
+    templateType
+) => {
     const basePath = path.resolve(process.cwd(), 'packages/components/src');
     const folderName = path.resolve(basePath, componentNameEn);
 
     if (createFolder(folderName)) {
         updateIndexFile(basePath, componentNameEn, componentNameZh);
-        createTemplateFiles(folderName, componentNameEn,templateType);
-        createTestFiles(folderName, componentNameEn,templateType);
+        createTemplateFiles(folderName, componentNameEn, templateType);
+        createTestFiles(folderName, componentNameEn, templateType);
         createComponentIndexFile(folderName, componentNameEn);
         createComponentDocs(componentNameEn);
         // 创建组件 Less 文件
@@ -102,8 +106,7 @@ const ${componentNameEn}Style = computed(() => {
             break;
         case 'TSX':
             fileExtension = 'tsx';
-            templateContent =
-                `import { defineComponent, computed, VNode } from "vue";
+            templateContent = `import { defineComponent, computed, VNode } from "vue";
 import '../../less/components/${componentNameEn}/index.less'
 export default defineComponent({
   name: "se-${componentNameEn}",
@@ -122,7 +125,7 @@ export default defineComponent({
   },
 });
 
-                `
+                `;
             break;
         case 'JSX':
             fileExtension = 'jsx';
@@ -149,7 +152,7 @@ export default defineComponent({
 });
 
 
-`
+`;
             break;
         default:
             console.error('未知的模板类型');
@@ -216,7 +219,6 @@ describe('${componentNameEn} Test', () => {
 
     createFile(testFilePath, testContent, `文件 ${testFilePath} 创建成功`);
 };
-
 
 // 创建 index.ts 文件
 const createComponentIndexFile = (folderName, componentNameEn) => {
@@ -381,7 +383,11 @@ const createComponentDocs = (componentNameEn) => {
 const getUserInfo = async () => {
     const res = await prompts(promptsOptions);
     if (res.componentNameEn && res.componentNameZh && res.templateType) {
-        createComponentFiles(res.componentNameEn, res.componentNameZh,res.templateType);
+        createComponentFiles(
+            res.componentNameEn,
+            res.componentNameZh,
+            res.templateType
+        );
 
         await updateVitepressConfig(res.componentNameEn, res.componentNameZh);
     } else {

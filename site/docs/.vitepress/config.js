@@ -6,7 +6,7 @@ export default {
             {text: "组件", link: "/components/"}
         ],
         socialLinks: [
-            {icon: "github", "link": "https://github.com/qddidi/easyest"}
+            {icon: "github", "link": "https://github.com/tyut-se-innovation-lab/selab-ui"}
         ],
         sidebar: {
             "/guild/": [

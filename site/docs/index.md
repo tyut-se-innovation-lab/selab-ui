@@ -16,8 +16,8 @@ hero:
       text: 开始
       link: /guild/
     - theme: alt
-      text: 在 Gitee 上查看
-      link: #
+      text: 在 Github 上查看
+      link: https://github.com/tyut-se-innovation-lab/selab-ui
 
 features:
   - icon: 💡

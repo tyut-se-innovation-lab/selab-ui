@@ -1,0 +1,39 @@
+// Your component styles here
+// components/card/index.less
+
+.se-card {
+    // Common card styles
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+
+    // Add more common styles as needed
+
+    &--type1 {
+        font-weight: bold;
+        color: #333;
+        // Styles for type1
+        background-color: #e0e0e0;
+    }
+
+    &--type2 {
+        color: #fff;
+        text-align: center;
+        // Styles for type2
+        background-color: #3498db;
+    }
+
+    // Add more modifier classes as needed
+
+    // Additional styles for the card
+    &:hover {
+        box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+    }
+
+    .card-content {
+        // Styles for content inside the card
+        font-size: 16px;
+    }
+
+    // Add more styles or nested styles as needed
+}

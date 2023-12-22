@@ -1,0 +1,43 @@
+// components/box/index.less
+
+.se-box {
+    // Common box styles
+    padding: 10px;
+    margin: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+
+    &--type1 {
+        font-weight: bold;
+        color: #333;
+        // Styles for type1
+        background-color: #e0e0e0;
+    }
+
+    &--type2 {
+        color: #fff;
+        text-align: center;
+        // Styles for type2
+        background-color: #3498db;
+    }
+
+    &--rounded {
+        // Rounded corners
+        border-radius: 15px;
+    }
+
+    // Add more modifier classes as needed
+
+    // Additional styles for the box
+    &:hover {
+        box-shadow: 0 0 5px rgb(0 0 0 / 30%);
+    }
+
+    .box-content {
+        // Styles for content inside the box
+        font-size: 14px;
+    }
+
+    // Add more styles or nested styles as needed
+}
+// Your component styles here
