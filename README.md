@@ -69,12 +69,6 @@ pnpm run docs:build
 ```
 该命令使用 Vitepress 构建文档。
 
-### 预览服务文档
-```bash
-pnpm run docs:preview
-```
-该命令使用 Vitepress 预览文档。
-
 ## 示例开发
 ```bash
 pnpm run dev:examples
