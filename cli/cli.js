@@ -2,6 +2,9 @@ import prompts from 'prompts';
 import fs from 'fs';
 import path from 'path';
 
+// 定义模板类型
+const templateTypes = ['Vue', 'TSX', 'JSX'];
+
 // 定义提示选项
 const promptsOptions = [
     {
@@ -13,6 +16,12 @@ const promptsOptions = [
         type: 'text',
         name: 'componentNameZh',
         message: '请输入组件中文名字'
+    },
+    {
+        type: 'select',
+        name: 'templateType',
+        message: '请选择模板类型',
+        choices: templateTypes.map(type => ({ title: type, value: type }))
     }
 ];
 
@@ -27,14 +36,14 @@ process.on('SIGINT', () => {
 });
 
 // 创建组件文件
-const createComponentFiles = (componentNameEn, componentNameZh) => {
+const createComponentFiles = (componentNameEn, componentNameZh,templateType) => {
     const basePath = path.resolve(process.cwd(), 'packages/components/src');
     const folderName = path.resolve(basePath, componentNameEn);
 
     if (createFolder(folderName)) {
         updateIndexFile(basePath, componentNameEn, componentNameZh);
-        createTemplateFiles(folderName, componentNameEn);
-        createTestFiles(folderName, componentNameEn);
+        createTemplateFiles(folderName, componentNameEn,templateType);
+        createTestFiles(folderName, componentNameEn,templateType);
         createComponentIndexFile(folderName, componentNameEn);
         createComponentDocs(componentNameEn);
         // 创建组件 Less 文件
@@ -63,14 +72,18 @@ const updateIndexFile = (basePath, componentNameEn, componentNameZh) => {
     fs.appendFileSync(indexFilePath, indexContent);
     console.log(`文件 ${indexFilePath} 更新成功`);
 };
-
-// 创建 template 文件夹和 .vue 文件
-const createTemplateFiles = (folderName, componentNameEn) => {
+//创建模板
+const createTemplateFiles = (folderName, componentNameEn, templateType) => {
     const templateFolder = `${folderName}/template`;
     createFolder(templateFolder);
 
-    const vueContent = `<template>
-  <${componentNameEn} class="se-${componentNameEn}" :class="buttonStyle"><slot /></${componentNameEn}>
+    let fileExtension, templateContent;
+
+    switch (templateType) {
+        case 'Vue':
+            fileExtension = 'vue';
+            templateContent = `<template>
+  <div class="se-${componentNameEn}" :class="${componentNameEn}Style"><slot /></div>
 </template>
 
 <script lang="ts" setup>
@@ -82,25 +95,86 @@ type ${componentNameEn}Props = {
 };
 const ${componentNameEn}Props = defineProps<${componentNameEn}Props>();
 
-const buttonStyle = computed(() => {
+const ${componentNameEn}Style = computed(() => {
   return { ["se-${componentNameEn}--" + ${componentNameEn}Props.type]: ${componentNameEn}Props.type };
 });
 </script>`;
-    const templateFilePath = `${templateFolder}/${componentNameEn}.vue`;
+            break;
+        case 'TSX':
+            fileExtension = 'tsx';
+            templateContent =
+                `import { defineComponent, computed, VNode } from "vue";
+import '../../less/components/${componentNameEn}/index.less'
+export default defineComponent({
+  name: "se-${componentNameEn}",
+  props: {
+    type: String,
+  },
+  setup(props, { slots }): () => VNode {
+    const ${componentNameEn}Style = computed(() => {
+      return props.type ? { ["se-${componentNameEn}--" + props.type]: true } : {};
+    });
+    return () => (
+          <div class={\`se-${componentNameEn} \${${componentNameEn}Style.value ? Object.keys(${componentNameEn}Style.value).join(' ') : ''}\`}>
+        {slots.default && slots.default()}
+      </div>
+    );
+  },
+});
+
+                `
+            break;
+        case 'JSX':
+            fileExtension = 'jsx';
+            templateContent = `
+import {  defineComponent, computed } from "vue";
+import '../../less/components/${componentNameEn}/index.less';
+
+export default defineComponent({
+  name: "se-${componentNameEn}",
+  props: {
+    type: String,
+  },
+  setup(props, { slots }) {
+    const ${componentNameEn}Style = computed(() => {
+      return props.type ? { ["se-${componentNameEn}--" + props.type]: true } : {};
+    });
+
+    return () => (
+       <div class={\`se-${componentNameEn} \${${componentNameEn}Style.value ? Object.keys(${componentNameEn}Style.value).join(' ') : ''}\`}>
+        {slots.default && slots.default()}
+      </div>
+    );
+  },
+});
+
+
+`
+            break;
+        default:
+            console.error('未知的模板类型');
+            return;
+    }
+
+    const templateFilePath = `${templateFolder}/${componentNameEn}.${fileExtension}`;
 
     createFile(
         templateFilePath,
-        vueContent,
+        templateContent,
         `文件 ${templateFilePath} 创建成功`
     );
 };
 
 // 创建 test 文件夹和 .test.ts 文件
-const createTestFiles = (folderName, componentNameEn) => {
+const createTestFiles = (folderName, componentNameEn, templateType) => {
     const testFolder = `${folderName}/test`;
     createFolder(testFolder);
 
-    const testContent = `import { mount } from '@vue/test-utils';
+    let testContent, testFilePath;
+
+    switch (templateType) {
+        case 'Vue':
+            testContent = `import { mount } from '@vue/test-utils';
 import ${componentNameEn} from '../template/${componentNameEn}.vue';
 import { describe, expect, it } from 'vitest';
 describe('${componentNameEn} Test', () => {
@@ -109,10 +183,40 @@ describe('${componentNameEn} Test', () => {
     // Add your test logic here
   });
 });`;
-    const testFilePath = `${testFolder}/${componentNameEn}.test.ts`;
+            testFilePath = `${testFolder}/${componentNameEn}.test.ts`;
+            break;
+        case 'TSX':
+            testContent = `import { mount } from '@vue/test-utils';
+import ${componentNameEn} from '../template/${componentNameEn}.tsx';
+import { describe, expect, it } from 'vitest';
+describe('${componentNameEn} Test', () => {
+  it('renders component properly', () => {
+    const wrapper = mount(${componentNameEn});
+    // Add your test logic here
+  });
+});`;
+            testFilePath = `${testFolder}/${componentNameEn}.test.ts`;
+            break;
+        case 'JSX':
+            testContent = `import { mount } from '@vue/test-utils';
+import ${componentNameEn} from '../template/${componentNameEn}.jsx';
+import { describe, expect, it } from 'vitest';
+describe('${componentNameEn} Test', () => {
+  it('renders component properly', () => {
+    const wrapper = mount(${componentNameEn});
+    // Add your test logic here
+  });
+});`;
+            testFilePath = `${testFolder}/${componentNameEn}.test.ts`;
+            break;
+        default:
+            console.error('未知的模板类型');
+            return;
+    }
 
     createFile(testFilePath, testContent, `文件 ${testFilePath} 创建成功`);
 };
+
 
 // 创建 index.ts 文件
 const createComponentIndexFile = (folderName, componentNameEn) => {
@@ -276,8 +380,8 @@ const createComponentDocs = (componentNameEn) => {
 // 获取用户输入信息
 const getUserInfo = async () => {
     const res = await prompts(promptsOptions);
-    if (res.componentNameEn && res.componentNameZh) {
-        createComponentFiles(res.componentNameEn, res.componentNameZh);
+    if (res.componentNameEn && res.componentNameZh && res.templateType) {
+        createComponentFiles(res.componentNameEn, res.componentNameZh,res.templateType);
 
         await updateVitepressConfig(res.componentNameEn, res.componentNameZh);
     } else {
