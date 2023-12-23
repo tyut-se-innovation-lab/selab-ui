@@ -26,7 +26,7 @@ pnpm run create:selab
 ``` 
 # Q1:请输入组件英文名字
 # Q2:请输入组件中文名字
-# Q3:选用模板 :vue jsx tsx 都已可以正常使用
+# Q3:选用模板 :vue tsx 都已可以正常使用
 ```
 
 ## 检查

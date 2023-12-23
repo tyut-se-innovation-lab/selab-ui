@@ -7,9 +7,7 @@ declare module "@vue/runtime-core" {
         seButton: typeof Button;
         seBox: typeof Box;
         //[
-
-    seCol: typeof Col;
-
+        seCol: typeof Col;
     }
 }
 
