@@ -1,12 +1,12 @@
 ## Button 按钮
 
-<se-button>默认按钮</se-button>      
-<se-button type="primary">默认按钮</se-button>
+#### 示例
+<preview path="../../demos/button/button.vue" title="基本使用" description=" "></preview>
 
 ::: details 显示代码
 
 ```html
-<se-button>默认按钮</se-button> <se-button type="primary">默认按钮</se-button>
+ <se-button type="primary">测试</se-button>
 ```
 
 :::

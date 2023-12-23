@@ -8,10 +8,13 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "moduleResolution": "Node",
-    "lib": ["esnext", "dom"],
-    "compilerOptions": {
-      //...
-      "types": ["selab/lib/src/components"]
-    }
+    "allowImportingTsExtensions": true,
+    "lib": [
+      "esnext",
+      "dom"
+    ],
+    "types": [
+      "selab/lib/src/components"
+    ]
   }
 }
