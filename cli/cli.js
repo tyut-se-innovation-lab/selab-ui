@@ -49,7 +49,7 @@ const createComponentFiles = (
         createTemplateFiles(folderName, componentNameEn, templateType);
         createTestFiles(folderName, componentNameEn, templateType);
         createComponentIndexFile(folderName, componentNameEn);
-        createComponentDocs(componentNameEn);
+        createComponentDocs(componentNameEn,folderName);
         // 创建组件 Less 文件
         createComponentLess(componentNameEn);
         // 更新 components/index.less
@@ -111,7 +111,7 @@ import '../../less/components/${componentNameEn}/index.less'
 export default defineComponent({
   name: "se-${componentNameEn}",
   props: {
-    type: String,
+    type: String
   },
   setup(props, { slots }): () => VNode {
     const ${componentNameEn}Style = computed(() => {
@@ -122,7 +122,7 @@ export default defineComponent({
         {slots.default && slots.default()}
       </div>
     );
-  },
+  }
 });
 
                 `;
@@ -136,7 +136,7 @@ import '../../less/components/${componentNameEn}/index.less';
 export default defineComponent({
   name: "se-${componentNameEn}",
   props: {
-    type: String,
+    type: String
   },
   setup(props, { slots }) {
     const ${componentNameEn}Style = computed(() => {
@@ -148,11 +148,8 @@ export default defineComponent({
         {slots.default && slots.default()}
       </div>
     );
-  },
-});
-
-
-`;
+  }
+});`;
             break;
         default:
             console.error('未知的模板类型');
@@ -190,7 +187,7 @@ describe('${componentNameEn} Test', () => {
             break;
         case 'TSX':
             testContent = `import { mount } from '@vue/test-utils';
-import ${componentNameEn} from '../template/${componentNameEn}.tsx';
+import ${componentNameEn} from '../template/${componentNameEn}';
 import { describe, expect, it } from 'vitest';
 describe('${componentNameEn} Test', () => {
   it('renders component properly', () => {
@@ -202,7 +199,7 @@ describe('${componentNameEn} Test', () => {
             break;
         case 'JSX':
             testContent = `import { mount } from '@vue/test-utils';
-import ${componentNameEn} from '../template/${componentNameEn}.jsx';
+import ${componentNameEn} from '../template/${componentNameEn}';
 import { describe, expect, it } from 'vitest';
 describe('${componentNameEn} Test', () => {
   it('renders component properly', () => {
@@ -276,7 +273,7 @@ const updateComponentsLess = (componentNameEn) => {
         basePath,
         'less/components/index.less'
     );
-    const importStatement = `@import './${componentNameEn}/index.less';`;
+    const importStatement = `@import url('./${componentNameEn}/index.less');`;
 
     if (!isInterrupted && fs.existsSync(componentsLessPath)) {
         const currentComponentsLessContent = fs.readFileSync(
@@ -363,7 +360,7 @@ const updateVitepressConfig = async (componentNameEn) => {
 };
 
 // 创建组件文档
-const createComponentDocs = (componentNameEn) => {
+const createComponentDocs = (componentNameEn,folderName) => {
     const docsPath = path.resolve(
         process.cwd(),
         `site/docs/components/${componentNameEn.toLowerCase()}`
@@ -372,9 +369,25 @@ const createComponentDocs = (componentNameEn) => {
     console.log(`尝试创建组件文档文件夹 ${docsPath}`);
 
     if (createFolder(docsPath)) {
-        const indexContent = `# ${capitalizeFirstLetter(componentNameEn)}
+        const indexContent = `# ${componentNameEn}${capitalizeFirstLetter(componentNameEn)}
 
-这是 \`${capitalizeFirstLetter(componentNameEn)}\` 组件的文档。`;
+这是 \`${capitalizeFirstLetter(componentNameEn)}\` (${folderName})组件的文档。
+#### 示例
+\`\`\`html
+<se-${componentNameEn}>测试</se-${componentNameEn}> 
+\`\`\`
+
+
+### ${capitalizeFirstLetter(componentNameEn)}的基础配置
+
+### ${componentNameEn} 参数
+
+| 参数名      | 类型                       | 默认值 | 描述                                                                                | 跳转 Demo                                 |
+| :---------- | :------------------------- | :----- | :---------------------------------------------------------------------------------- | :---------------------------------------- |
+                                           
+
+### 其他说明
+`
 
         fs.writeFileSync(`${docsPath}/index.md`, indexContent);
         console.log(`组件文档文件夹 ${docsPath} 创建成功`);

@@ -32,15 +32,15 @@ export default {
                             text: "Button",
                             link: "/components/button/",
                         },
-{
-                text: "box",
-                link: "/components/box/"
-            },
-	{
-                text: "card",
-                link: "/components/card/"
-            },
-	//]
+                        {
+                            text: "box",
+                            link: "/components/box/"
+                        },
+                        {
+                            text: "card",
+                            link: "/components/card/"
+                        },
+                        //]
 
                     ]
                 }
