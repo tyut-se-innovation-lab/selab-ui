@@ -1,11 +1,10 @@
 @import url('../../base/index.less');
-
 .se-button {
     box-sizing: border-box;
     display: inline-block;
-    padding: 12px 20px;
+    padding: @spacing-s @spacing-m;
     margin: 0;
-    font-size: 14px;
+    font-size: @font-size-normal;
     font-weight: 500;
     line-height: 1;
     color: @brand-color-primary;
@@ -13,21 +12,21 @@
     white-space: nowrap;
     appearance: none;
     cursor: pointer;
-    background: #fff;
-    border: 1px solid #dcdfe6;
-    border-radius: 4px;
+    background: @bg-color-primary;
+    border: 1px solid @border-color-primary;
+    border-radius: @border-rounded;
     outline: none;
     transition: 0.1s;
 }
 
 .se-button.se-button--primary {
-    color: #fff;
-    background-color: #409eff;
-    border-color: #409eff;
+    color: @text-color-white;
+    background-color: @brand-color-primary;
+    border-color: @brand-color-primary;
 
     &:hover {
-        color: #fff;
-        background: #66b1ff;
-        border-color: #66b1ff;
+        color: @text-color-white;
+        background: darken(@brand-color-primary, 10%);
+        border-color: darken(@brand-color-primary, 10%);
     }
 }

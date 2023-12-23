@@ -1,43 +1,31 @@
-// components/box/index.less
-
+@import url('../../base/index.less');
 .se-box {
-    // Common box styles
     padding: 10px;
     margin: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    border: 1px solid @border-width-thin;
+    border-radius: @border-rounded;
 
     &--type1 {
         font-weight: bold;
-        color: #333;
-        // Styles for type1
-        background-color: #e0e0e0;
+        color: @text-color-primary;
+        background-color: @bg-color-secondary;
     }
 
     &--type2 {
-        color: #fff;
+        color: @text-color-white;
         text-align: center;
-        // Styles for type2
-        background-color: #3498db;
+        background-color: @brand-color-primary;
     }
 
     &--rounded {
-        // Rounded corners
-        border-radius: 15px;
+        border-radius: @border-radius-large;
     }
 
-    // Add more modifier classes as needed
-
-    // Additional styles for the box
     &:hover {
-        box-shadow: 0 0 5px rgb(0 0 0 / 30%);
+        box-shadow: @box-shadow-small;
     }
 
     .box-content {
-        // Styles for content inside the box
-        font-size: 14px;
+        font-size: @font-size-normal;
     }
-
-    // Add more styles or nested styles as needed
 }
-// Your component styles here

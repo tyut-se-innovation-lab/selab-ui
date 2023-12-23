@@ -254,7 +254,9 @@ const createComponentLess = (componentNameEn) => {
     createFolder(lessFolder);
 
     // 创建组件文件夹中的 index.less 文件
-    const componentLessContent = `// Your component styles here`;
+    const componentLessContent = `// Your component styles here
+    @import url('../../base/index.less');
+    `;
 
     const componentLessFilePath = `${lessFolder}/index.less`;
     if (!isInterrupted && !fs.existsSync(componentLessFilePath)) {
