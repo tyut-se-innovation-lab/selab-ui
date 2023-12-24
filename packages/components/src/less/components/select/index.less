@@ -1,5 +1,6 @@
 // Your component styles here
 @import url('../../base/index.less');
+
 .se-select {
     position: relative;
     display: inline-block;
@@ -17,9 +18,13 @@
     border-radius: 6px;
     transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
     font-size: 14px;
+    box-sizing: border-box;
+
     .se-select-wrapper {
-        margin-left: 10px;
+        margin-left: var(--margin-left);
         display: flex;
+        height: 100%;
+        align-items: center;
         .se-select-selection-tags {
             position: relative;
             display: flex;
@@ -33,9 +38,9 @@
             border: 1px solid rgba(5, 5, 5, 0.06);
             border-radius: 4px;
             transition:
-                    font-size 0.3s,
-                    line-height 0.3s,
-                    height 0.3s;
+                font-size 0.3s,
+                line-height 0.3s,
+                height 0.3s;
             user-select: none;
             margin-inline-end: 4px;
             padding: 3px 8px;
@@ -91,9 +96,9 @@
         border-radius: 8px;
         outline: none;
         box-shadow:
-                0 6px 16px 0 rgba(0, 0, 0, 0.08),
-                0 3px 6px -4px rgba(0, 0, 0, 0.12),
-                0 9px 28px 8px rgba(0, 0, 0, 0.05);
+            0 6px 16px 0 rgba(0, 0, 0, 0.08),
+            0 3px 6px -4px rgba(0, 0, 0, 0.12),
+            0 9px 28px 8px rgba(0, 0, 0, 0.05);
 
         .se-select-dropdown-item {
             position: relative;
@@ -117,5 +122,17 @@
             background-color: #e6f4ff;
             border-radius: 0;
         }
+
+        .empty-data {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100px;
+            color: #d9d9d9;
+        }
     }
+}
+.se-select-selected {
+    border: 1px solid #4096ff;
+    box-shadow: 0 0 0 2px rgba(5, 145, 255, 0.1);
 }

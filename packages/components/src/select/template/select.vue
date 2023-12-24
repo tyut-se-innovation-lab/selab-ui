@@ -1,40 +1,46 @@
 <template>
     <div
-        class="se-select"
-        @click="inputRef?.focus()"
+        :class="['se-select', selectOptionsShow ? 'se-select-selected' : '']"
+        @click="selectClick"
         v-click-outside="clickOutside"
     >
-        <div class="se-select-wrapper">
+        <div
+            class="se-select-wrapper"
+            :style="{
+                '--margin-left': selectMultipleValue.length > 0 ? '0px' : '10px'
+            }"
+        >
             <template v-if="selectProps.multiple">
                 <div
                     class="se-select-selection-tags"
-                    v-for="item in searchTags"
+                    v-for="item in selectMultipleTarget"
                 >
-                    <span>{{ item }}</span>
+                    <span>{{ item.label }}</span>
                     <span
                         class="se-select-selection-tag-close"
-                        @click="removeTag(item)"
+                        @click.stop="removeTag(item)"
                         >x</span
                     >
                 </div>
+                <div class="se-select-selection-search">
+                    <input
+                        ref="inputRef"
+                        class="se-select-search-input"
+                        type="text"
+                        @input="searchValueInput"
+                        :value="searchValue"
+                    />
+                </div>
             </template>
-
-            <div class="se-select-selection-search">
-                <input
-                    ref="inputRef"
-                    class="se-select-search-input"
-                    type="text"
-                    @input="searchValueInput"
-                    :value="searchValue"
-                    @click="selectOptionsShow = true"
-                />
+            <div class="se-select-selection-item">
+                {{ labelProxy }}
             </div>
             <div
                 class="se-select-selection-placeholder"
                 v-show="
                     searchValue == '' &&
                     selectProps.placeholder &&
-                    searchTags.length < 0
+                    selectMultipleValue.length < 0
                 "
             >
                 {{ selectProps.placeholder }}
@@ -48,88 +54,137 @@
                 <div
                     :class="[
                         'se-select-dropdown-item',
-                        searchTags.includes(item.value)
-                            ? 'se-select-dropdown-item-selected'
-                            : ''
+                        selectOptionItemClass(item)
                     ]"
                     v-for="item in filterOptions"
-                    @click="selectOptionsItemClick(item)"
+                    @click.stop="selectOptionsItemClick(item)"
                 >
-                    {{ item.value }}
+                    {{ item.label }}
                 </div>
+            </div>
+            <div class="empty-data" v-if="filterOptions.length == 0">
+                暂无数据
             </div>
         </div>
     </div>
 </template>
 
 <script lang="ts" setup>
+import { as } from 'vitest/dist/reporters-O4LBziQ_';
 import '../../less/components/select/index.less';
-import { computed, ref, withDefaults, watchEffect, watch } from 'vue';
+import { computed, ref, withDefaults } from 'vue';
 defineOptions({ name: 'se-select' });
 
 type ISelectProps = {
     placeholder?: string;
-    options: any[];
+    options: ISelectOption[];
     multiple?: boolean;
     autoClearSearchValue?: boolean;
+    modelValue: string | number | string[] | number[];
+};
+type ISelectOption = {
+    value: string | number;
+    label: string;
 };
 
 const selectProps = withDefaults(defineProps<ISelectProps>(), {
     placeholder: '请输入内容',
     multiple: false,
-    autoClearSearchValue: true
+    autoClearSearchValue: true,
+    options: () => []
 });
+const emits = defineEmits(['update:modelValue']);
 const searchValue = ref('');
+//单选值
+const valueProxy = computed({
+    get() {
+        return selectProps.modelValue;
+    },
+    set(value) {
+        emits('update:modelValue', value);
+    }
+});
+const labelProxy = computed(() => {
+    return selectProps.options.find((i) => i.value === valueProxy.value)?.label;
+});
+
+//计算选中的item的class
+const selectOptionItemClass = (item: ISelectOption) => {
+    if (
+        (selectMultipleValue.value.length > 0 &&
+            selectMultipleValue.value.findIndex((i) => i === item.value) >
+                -1) ||
+        item.value === valueProxy.value
+    )
+        return 'se-select-dropdown-item-selected';
+};
 
 const filterOptions = computed(() => {
     if (!selectProps.multiple) return selectProps.options;
     return searchValue.value
         ? selectProps.options.filter((item) =>
-              item.value.includes(searchValue.value)
+              item.label.includes(searchValue.value)
           )
         : selectProps.options;
 });
+//下拉框
 const selectOptionsShow = ref(false);
-const searchTags = ref<any[]>(['a1', 'b3']);
 
 const searchValueInput = (e: Event) => {
     searchValue.value = (e.target as HTMLInputElement).value;
     selectOptionsShow.value = searchValue.value.length > 0;
 };
+const selectClick = () => {
+    inputRef.value?.focus();
+    selectOptionsShow.value = !selectOptionsShow.value;
+    // if (!selectProps.multiple) {
+    //     selectOptionsShow.value = true;
+    // }
+};
 const clickOutside = () => {
-    console.log(55);
     selectOptionsShow.value = false;
 };
-const selectOptionsItemClick = (item: any) => {
+//多选tag值
+const selectMultipleValue = computed({
+    get() {
+        if (selectProps.multiple && selectProps.modelValue instanceof Array) {
+            return selectProps.modelValue || [];
+        }
+        return [];
+    },
+    set(value) {
+        emits('update:modelValue', value);
+    }
+});
+const selectMultipleTarget = computed(() => {
+    return selectProps.options.filter((i) =>
+        selectMultipleValue.value.find((j) => j === i.value)
+    );
+});
+const selectOptionsItemClick = (item: ISelectOption) => {
     if (!selectProps.multiple) {
         //单选
+        searchValue.value = item.label;
+        valueProxy.value = item.value;
         selectOptionsShow.value = false;
-        searchValue.value = item.value;
         return;
     }
     //多选
     selectProps.autoClearSearchValue && (searchValue.value = '');
-    const index = searchTags.value.indexOf(item.value);
+    const index = selectMultipleValue.value.findIndex((i) => i === item.value);
     if (index > -1) {
-        searchTags.value.splice(index, 1);
+        selectMultipleValue.value.splice(index, 1);
     } else {
-        searchTags.value.push(item.value);
+        const arr = [...selectMultipleValue.value];
+        arr.push(item.value);
+        selectMultipleValue.value = arr as any;
     }
 };
-const removeTag = (item: any) => {
-    searchTags.value = searchTags.value.filter((i) => i !== item);
+const removeTag = (item: ISelectOption) => {
+    selectMultipleValue.value = selectMultipleValue.value.filter(
+        (i) => i !== item.value
+    ) as any;
 };
-watchEffect(() => {});
-// watch(
-//     () => searchValue.value,
-//     () => {
-//         if (selectProps.multiple) {
-//             selectOptionsShow.value = searchValue.value.length > 0;
-//         } else {
-//             selectOptionsShow.value = true;
-//         }
-//     }
-// );
 
 const selectDropSize = ref(6);
 const inputRef = ref<HTMLInputElement>();
