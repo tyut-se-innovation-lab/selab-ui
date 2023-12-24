@@ -1,4 +1,5 @@
 import { mount } from '@vue/test-utils';
+<<<<<<< HEAD
 import tag from '../template/se-tag.vue';
 import { describe, expect, it } from 'vitest';
 describe('se-tag Test', () => {
@@ -48,3 +49,13 @@ describe('se-tag Test', () => {
         expect(wrapper.emitted().click).toBeTruthy();
     });
 });
+=======
+import tag from '../template/tag.vue';
+import { describe, expect, it } from 'vitest';
+describe('tag Test', () => {
+  it('renders component properly', () => {
+    const wrapper = mount(tag);
+    // Add your test logic here
+  });
+});
+>>>>>>> d6f8f4d0c2c85942e72e837a804ce8f2ceb1935a

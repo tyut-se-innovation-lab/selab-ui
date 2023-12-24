@@ -1,17 +1,17 @@
-# Card
+# Tag
 
-这是 `Card` (卡片)组件的文档。
+这是 `Tag` (标签)组件的文档。
 ## 预览
-<preview path="../../demos/card/card.vue" title="基本使用" description=" "></preview>
+<preview path="../../demos/tag/tag.vue" title="基本使用" description=" "></preview>
 #### 示例
 ```html
-<se-card>测试</se-card> 
+<se-tag>测试</se-tag> 
 ```
 
 
-### Card的基础配置
+### Tag的基础配置
 
-### card 参数
+### tag 参数
 
 | 参数名      | 类型                       | 默认值 | 描述                                                                                | 跳转 Demo                                 |
 | :---------- | :------------------------- | :----- | :---------------------------------------------------------------------------------- | :---------------------------------------- |

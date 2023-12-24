@@ -1,3 +1,8 @@
+import {
+    componentPreview,
+    containerPreview
+} from '@vitepress-demo-preview/plugin'
+
 export default {
     themeConfig: {
         siteTitle: "selab-ui",
@@ -32,6 +37,7 @@ export default {
                             text: "Button",
                             link: "/components/button/",
                         },
+<<<<<<< HEAD
 {
                 text: "box",
                 link: "/components/box/"
@@ -53,10 +59,41 @@ export default {
                 link: "/components/select/"
             },
 	//]
+=======
+                        {
+                            text: "box",
+                            link: "/components/box/"
+                        },
+                        {
+                            text: "card",
+                            link: "/components/card/"
+                        },
+                        {
+                            text: "select",
+                            link: "/components/select/"
+                        },
+                        {
+                            text: "skeleton",
+                            link: "/components/skeleton/"
+                        },
+                        {
+                            text: "tag",
+                            link: "/components/tag/"
+                        },
+                        //]
+>>>>>>> d6f8f4d0c2c85942e72e837a804ce8f2ceb1935a
 
                     ]
                 }
             ]
+        }
+
+    },
+    markdown: {
+        lineNumbers: true,
+        config(md) {
+            md.use(componentPreview)
+            md.use(containerPreview)
         }
     }
 }

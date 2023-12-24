@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
     "compilerOptions": {
         "baseUrl": ".",
         "jsx": "preserve",
@@ -13,4 +14,24 @@
         "allowImportingTsExtensions": true,
         "noEmit": true
     }
+=======
+  "compilerOptions": {
+    "baseUrl": ".",
+    "jsx": "preserve",
+    "strict": true,
+    "target": "ES2015",
+    "module": "ESNext",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "moduleResolution": "Node",
+    "allowImportingTsExtensions": true,
+    "lib": [
+      "esnext",
+      "dom"
+    ],
+    "types": [
+      "selab/lib/src/components"
+    ]
+  }
+>>>>>>> d6f8f4d0c2c85942e72e837a804ce8f2ceb1935a
 }

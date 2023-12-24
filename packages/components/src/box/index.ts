@@ -9,5 +9,9 @@ const withInstall = <T>(comp: T) => {
     };
     return comp as SFCWithInstall<T>;
 };
+<<<<<<< HEAD
 export const Box = withInstall(_Box);
+=======
+export const Box = withInstall(_box);
+>>>>>>> d6f8f4d0c2c85942e72e837a804ce8f2ceb1935a
 export default Box;

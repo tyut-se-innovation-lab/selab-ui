@@ -12,8 +12,12 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "selab-ui": "workspace:^",
     "vitepress": "1.0.0-rc.31",
-    "vue": "^3.3.11",
-    "selab-ui": "workspace:^"
+    "vue": "^3.3.11"
+  },
+  "dependencies": {
+    "@vitepress-demo-preview/component": "^2.3.2",
+    "@vitepress-demo-preview/plugin": "^1.2.2"
   }
 }
