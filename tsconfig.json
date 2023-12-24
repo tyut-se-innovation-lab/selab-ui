@@ -1,20 +1,16 @@
 {
-  "compilerOptions": {
-    "baseUrl": ".",
-    "jsx": "preserve",
-    "strict": true,
-    "target": "ES2015",
-    "module": "ESNext",
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "moduleResolution": "Node",
-    "allowImportingTsExtensions": true,
-    "lib": [
-      "esnext",
-      "dom"
-    ],
-    "types": [
-      "selab/lib/src/components"
-    ]
-  }
+    "compilerOptions": {
+        "baseUrl": ".",
+        "jsx": "preserve",
+        "strict": true,
+        "target": "ES2015",
+        "module": "ESNext",
+        "skipLibCheck": true,
+        "esModuleInterop": true,
+        "moduleResolution": "Node",
+        "allowImportingTsExtensions": true,
+        "noEmit": true,
+        "lib": ["esnext", "dom"],
+        "types": ["./packages/components.d.ts"]
+    }
 }
