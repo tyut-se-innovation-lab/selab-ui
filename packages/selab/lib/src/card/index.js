@@ -1,1 +1,0 @@
-"use strict";Object.defineProperties(exports,{__esModule:{value:!0},[Symbol.toStringTag]:{value:"Module"}});const u=require("./card.vue.js"),a=e=>(e.install=n=>{const r=e.name;n.component(r,e)},e),t=a(u.default);exports.card=t;exports.default=t;

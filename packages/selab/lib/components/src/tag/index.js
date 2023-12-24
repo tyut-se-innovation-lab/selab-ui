@@ -1,0 +1,1 @@
+"use strict";Object.defineProperties(exports,{__esModule:{value:!0},[Symbol.toStringTag]:{value:"Module"}});const a=require("./template/tag.vue.js"),l=e=>(e.install=n=>{const u=e.name;n.component(u,e)},e),t=l(a.default);exports.Tag=t;exports.default=t;
