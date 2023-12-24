@@ -1,11 +1,11 @@
 
 <template>
   <div>
-    <se-col>测试</se-col>
+    <se-skeleton></se-skeleton>
   </div>
 </template>
 
-<script setup>
+<script>
 
 </script>
 

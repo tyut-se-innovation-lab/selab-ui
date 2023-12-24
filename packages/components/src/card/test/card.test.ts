@@ -1,9 +1,9 @@
 import { mount } from '@vue/test-utils';
-import col from '../template/col';
+import card from '../template/card';
 import { describe, expect, it } from 'vitest';
-describe('col Test', () => {
+describe('card Test', () => {
   it('renders component properly', () => {
-    const wrapper = mount(col);
+    const wrapper = mount(card);
     // Add your test logic here
   });
 });

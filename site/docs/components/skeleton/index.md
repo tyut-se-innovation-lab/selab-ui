@@ -1,20 +1,20 @@
-# Box
+# Skeleton
 
-这是 `Box` (标签)组件的文档。
+这是 `Skeleton` (骨架屏)组件的文档。
 ## 预览
-<preview path="../../demos/box/box.vue" title="基本使用" description=" "></preview>
+<preview path="../../demos/skeleton/skeleton.vue" title="基本使用" description=" "></preview>
 #### 示例
 ```html
-<se-box>测试</se-box> 
+<se-skeleton>测试</se-skeleton> 
 ```
 
 
-### Box的基础配置
+### Skeleton的基础配置
 
-### box 参数
+### skeleton 参数
 
 | 参数名      | 类型                       | 默认值 | 描述                                                                                | 跳转 Demo                                 |
 | :---------- | :------------------------- | :----- | :---------------------------------------------------------------------------------- | :---------------------------------------- |
-
+                                           
 
 ### 其他说明

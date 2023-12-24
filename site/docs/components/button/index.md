@@ -1,4 +1,4 @@
-## Button 按钮
+## Button
 
 #### 示例
 <preview path="../../demos/button/button.vue" title="基本使用" description=" "></preview>

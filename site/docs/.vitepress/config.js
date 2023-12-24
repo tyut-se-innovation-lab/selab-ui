@@ -2,6 +2,7 @@ import {
     componentPreview,
     containerPreview
 } from '@vitepress-demo-preview/plugin'
+
 export default {
     themeConfig: {
         siteTitle: "selab-ui",
@@ -40,11 +41,23 @@ export default {
                             text: "box",
                             link: "/components/box/"
                         },
-	{
-                text: "col",
-                link: "/components/col/"
-            },
-	//]
+                        {
+                            text: "card",
+                            link: "/components/card/"
+                        },
+                        {
+                            text: "select",
+                            link: "/components/select/"
+                        },
+                        {
+                            text: "skeleton",
+                            link: "/components/skeleton/"
+                        },
+                        {
+                            text: "tag",
+                            link: "/components/tag/"
+                        },
+                        //]
 
                     ]
                 }

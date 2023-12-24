@@ -99,9 +99,7 @@ function updateComponents(basePath, componentNameEn) {
         fs.writeFileSync(componentsDeclarationPath, existingDeclarations);
     }
 
-    const newGlobalComponentsDeclaration = `
-    se${capitalizeFirstLetter(componentNameEn)}: typeof ${capitalizeFirstLetter(componentNameEn)};
-`;
+    const newGlobalComponentsDeclaration = ` se${capitalizeFirstLetter(componentNameEn)}: typeof ${capitalizeFirstLetter(componentNameEn)};`;
 
     // 检查 GlobalComponents 声明是否已存在
     if (!existingDeclarations.includes(`se${capitalizeFirstLetter(componentNameEn)}: typeof ${capitalizeFirstLetter(componentNameEn)};`)) {
@@ -396,7 +394,7 @@ const createComponentDocs = (componentNameEn,componentNameZh) => {
     console.log(`尝试创建组件文档文件夹 ${docsPath}`);
 
     if (createFolder(docsPath)) {
-        const indexContent = `# ${componentNameEn}${capitalizeFirstLetter(componentNameEn)}
+        const indexContent = `# ${capitalizeFirstLetter(componentNameEn)}
 
 这是 \`${capitalizeFirstLetter(componentNameEn)}\` (${componentNameZh})组件的文档。
 ## 预览
