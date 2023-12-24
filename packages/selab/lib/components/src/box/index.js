@@ -1,1 +1,0 @@
-"use strict";Object.defineProperties(exports,{__esModule:{value:!0},[Symbol.toStringTag]:{value:"Module"}});const o=require("./template/box.js"),s=e=>(e.install=n=>{const l=e.name;n.component(l,e)},e),t=s(o.default);exports.Box=t;exports.default=t;

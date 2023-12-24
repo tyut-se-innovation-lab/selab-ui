@@ -1,1 +1,0 @@
-"use strict";Object.defineProperties(exports,{__esModule:{value:!0},[Symbol.toStringTag]:{value:"Module"}});const u=require("./template/skeleton.vue.js"),s=e=>(e.install=n=>{const l=e.name;n.component(l,e)},e),t=s(u.default);exports.Skeleton=t;exports.default=t;

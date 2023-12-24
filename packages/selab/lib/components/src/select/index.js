@@ -1,1 +1,0 @@
-"use strict";Object.defineProperties(exports,{__esModule:{value:!0},[Symbol.toStringTag]:{value:"Module"}});const u=require("./template/select.vue.js"),s=e=>(e.install=l=>{const n=e.name;l.component(n,e)},e),t=s(u.default);exports.Select=t;exports.default=t;
