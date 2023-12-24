@@ -353,7 +353,7 @@ const updateVitepressConfig = async (componentNameEn) => {
         if (insertIndex !== -1) {
             // 构建新的组件项字符串
             const newItem = `{
-                text: "${componentNameEn}",
+                text: "${capitalizeFirstLetter(componentNameEn)}",
                 link: "/components/${componentNameEn.toLowerCase()}/"
             },\n\t//]`;
 

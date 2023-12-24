@@ -38,23 +38,23 @@ export default {
                             link: "/components/button/",
                         },
                         {
-                            text: "box",
+                            text: "Box",
                             link: "/components/box/"
                         },
                         {
-                            text: "card",
+                            text: "Card",
                             link: "/components/card/"
                         },
                         {
-                            text: "select",
+                            text: "Select",
                             link: "/components/select/"
                         },
                         {
-                            text: "skeleton",
+                            text: "Skeleton",
                             link: "/components/skeleton/"
                         },
                         {
-                            text: "tag",
+                            text: "Tag",
                             link: "/components/tag/"
                         },
                         //]
