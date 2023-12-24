@@ -1,4 +1,4 @@
-import _card from './template/card.jsx';
+import _Card from './template/card.tsx';
 import type { App, Plugin } from 'vue';
 type SFCWithInstall<T> = T & Plugin;
 const withInstall = <T>(comp: T) => {
@@ -9,5 +9,5 @@ const withInstall = <T>(comp: T) => {
     };
     return comp as SFCWithInstall<T>;
 };
-export const card = withInstall(_card);
-export default card;
+export const Card = withInstall(_Card);
+export default Card;

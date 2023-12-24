@@ -10735,7 +10735,7 @@ var initDirectivesForSSR = () => {
   }
 };
 
-// ../node_modules/.pnpm/registry.npmmirror.com+vue@3.3.11_typescript@5.3.3/node_modules/vue/dist/vue.runtime.esm-bundler.js
+// ../node_modules/.pnpm/registry.npmmirror.com+vue@3.3.11/node_modules/vue/dist/vue.runtime.esm-bundler.js
 function initDev() {
   {
     initCustomFormatter();

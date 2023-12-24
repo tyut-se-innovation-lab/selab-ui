@@ -14,12 +14,10 @@ export default defineComponent({
 
     // Define the setup function
     setup(props, { slots }) {
-        // Define the computed property for buttonStyle
         const buttonStyle = computed(() => {
             return props.type ? { ['se-card--' + props.type]: true } : {};
         });
 
-        // Return the JSX template
         return () => (
             <div
                 class={`se-card ${

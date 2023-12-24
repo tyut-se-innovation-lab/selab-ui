@@ -1,7 +1,6 @@
 import * as components from './src/index';
+import { clickOutside } from '../utils/index';
 import { App, Plugin } from 'vue';
-
-export * from './src/index';
 
 const myPlugin: Plugin = {
     install: (app: App): void => {
@@ -14,7 +13,10 @@ const myPlugin: Plugin = {
                 app.use(component);
             }
         }
+        app.directive('click-outside', clickOutside);
     }
 };
+
+export * from './src/index';
 
 export default myPlugin;

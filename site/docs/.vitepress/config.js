@@ -40,6 +40,18 @@ export default {
                 text: "card",
                 link: "/components/card/"
             },
+	{
+                text: "se-tag",
+                link: "/components/se-tag/"
+            },
+	{
+                text: "skeleton",
+                link: "/components/skeleton/"
+            },
+	{
+                text: "select",
+                link: "/components/select/"
+            },
 	//]
 
                     ]

@@ -7,11 +7,12 @@
 
 <script lang="ts" setup>
 import '../../less/components/button/index.less';
-import { defineProps, computed, ref, reactive } from 'vue';
+import { computed, ref, reactive } from 'vue';
 defineOptions({ name: 'se-button' });
-// 定义组件 props
+// 定义组件
+type buttonType = 'primary' | 'success' | 'info' | 'warning' | 'danger';
 const props = defineProps<{
-    type?: string;
+    type?: buttonType;
     onClick?: () => void; // 添加 onClick prop
 }>();
 
