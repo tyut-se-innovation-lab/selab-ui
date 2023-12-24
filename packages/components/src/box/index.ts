@@ -1,4 +1,4 @@
-import _box from './template/box';
+import _Box from './template/box';
 import type { App, Plugin } from 'vue';
 type SFCWithInstall<T> = T & Plugin;
 const withInstall = <T>(comp: T) => {
@@ -9,5 +9,5 @@ const withInstall = <T>(comp: T) => {
     };
     return comp as SFCWithInstall<T>;
 };
-export const Box = withInstall(_box);
+export const Box = withInstall(_Box);
 export default Box;

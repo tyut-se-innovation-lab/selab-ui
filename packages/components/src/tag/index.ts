@@ -1,4 +1,4 @@
-import _tag from "./template/tag.vue";
+import _Tag from "./template/tag.vue";
 import type { App, Plugin } from "vue";
 type SFCWithInstall<T> = T & Plugin;
 const withInstall = <T>(comp: T) => {
@@ -9,5 +9,5 @@ const withInstall = <T>(comp: T) => {
   };
   return comp as SFCWithInstall<T>;
 };
-export const Tag = withInstall(_tag);
+export const Tag = withInstall(_Tag);
 export default Tag;

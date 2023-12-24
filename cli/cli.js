@@ -243,7 +243,7 @@ describe('${componentNameEn} Test', () => {
 const createComponentIndexFile = (folderName, componentNameEn, templateType) => {
     console.log(templateType)
     const templateExtension = templateType === 'TSX' ? '' : '.vue';
-    const componentIndexContent = `import _${componentNameEn} from "./template/${componentNameEn}${templateExtension}";\nimport type { App, Plugin } from "vue";\ntype SFCWithInstall<T> = T & Plugin;\nconst withInstall = <T>(comp: T) => {\n  (comp as SFCWithInstall<T>).install = (app: App) => {\n    const name = (comp as any).name;\n    // 注册组件\n    app.component(name, comp as SFCWithInstall<T>);\n  };\n  return comp as SFCWithInstall<T>;\n};\nexport const ${capitalizeFirstLetter(componentNameEn)} = withInstall(_${componentNameEn});\nexport default ${capitalizeFirstLetter(componentNameEn)};`;
+    const componentIndexContent = `import _${componentNameEn} from "./template/${capitalizeFirstLetter(componentNameEn)}${templateExtension}";\nimport type { App, Plugin } from "vue";\ntype SFCWithInstall<T> = T & Plugin;\nconst withInstall = <T>(comp: T) => {\n  (comp as SFCWithInstall<T>).install = (app: App) => {\n    const name = (comp as any).name;\n    // 注册组件\n    app.component(name, comp as SFCWithInstall<T>);\n  };\n  return comp as SFCWithInstall<T>;\n};\nexport const ${capitalizeFirstLetter(componentNameEn)} = withInstall(_${capitalizeFirstLetter(componentNameEn)});\nexport default ${capitalizeFirstLetter(componentNameEn)};`;
 
     const componentIndexFilePath = `${folderName}/index.ts`;
 
@@ -394,7 +394,7 @@ const createComponentDocs = (componentNameEn,componentNameZh) => {
     console.log(`尝试创建组件文档文件夹 ${docsPath}`);
 
     if (createFolder(docsPath)) {
-        const indexContent = `# ${capitalizeFirstLetter(componentNameEn)}
+        const indexContent = `# ${capitalizeFirstLetter(componentNameEn)}(componentNameZh)
 
 这是 \`${capitalizeFirstLetter(componentNameEn)}\` (${componentNameZh})组件的文档。
 ## 预览
@@ -407,7 +407,7 @@ const createComponentDocs = (componentNameEn,componentNameZh) => {
 
 ### ${capitalizeFirstLetter(componentNameEn)}的基础配置
 
-### ${componentNameEn} 参数
+### ${capitalizeFirstLetter(componentNameEn)} 参数
 
 | 参数名      | 类型                       | 默认值 | 描述                                                                                | 跳转 Demo                                 |
 | :---------- | :------------------------- | :----- | :---------------------------------------------------------------------------------- | :---------------------------------------- |

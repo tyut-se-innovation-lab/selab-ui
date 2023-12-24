@@ -1,4 +1,4 @@
-import _skeleton from "./template/skeleton.vue";
+import _Skeleton from "./template/skeleton.vue";
 import type { App, Plugin } from "vue";
 type SFCWithInstall<T> = T & Plugin;
 const withInstall = <T>(comp: T) => {
@@ -9,5 +9,5 @@ const withInstall = <T>(comp: T) => {
   };
   return comp as SFCWithInstall<T>;
 };
-export const Skeleton = withInstall(_skeleton);
+export const Skeleton = withInstall(_Skeleton);
 export default Skeleton;
