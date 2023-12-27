@@ -3,122 +3,128 @@
 
 .se-select {
     position: relative;
+    box-sizing: border-box;
     display: inline-block;
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 32px;
-    position: relative;
-    background-color: #ffffff;
-    border: 1px solid #d9d9d9;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
+    width: 100%;
+    height: 32px;
+    padding: 0;
     padding: 1px 4px;
+    margin: 0;
+    font-size: 14px;
+    background-color: #fff;
+    border: 1px solid #d9d9d9;
     border-radius: 6px;
     transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
-    font-size: 14px;
-    box-sizing: border-box;
 
     .se-select-wrapper {
-        margin-left: var(--margin-left);
         display: flex;
-        height: 100%;
         align-items: center;
+        height: 100%;
+        margin-left: var(--margin-left);
+
         .se-select-selection-tags {
             position: relative;
-            display: flex;
-            align-items: center;
-            flex: none;
             box-sizing: border-box;
+            display: flex;
+            flex: none;
+            align-items: center;
             max-width: 100%;
+            padding: 3px 8px;
+            margin-inline-end: 4px;
             margin-top: 2px;
             margin-bottom: 2px;
-            background: rgba(0, 0, 0, 0.06);
-            border: 1px solid rgba(5, 5, 5, 0.06);
+            user-select: none;
+            background: rgb(0 0 0 / 6%);
+            border: 1px solid rgb(5 5 5 / 6%);
             border-radius: 4px;
             transition:
                 font-size 0.3s,
                 line-height 0.3s,
                 height 0.3s;
-            user-select: none;
-            margin-inline-end: 4px;
-            padding: 3px 8px;
+
             .se-select-selection-tag-close {
                 margin-left: 5px;
+                color: rgb(0 0 0 / 30%);
                 cursor: pointer;
-                color: rgba(0, 0, 0, 0.3);
+
                 &:hover {
-                    color: rgba(0, 0, 0, 0.6);
+                    color: rgb(0 0 0 / 60%);
                 }
             }
         }
     }
+
     .se-select-selection-placeholder {
         position: absolute;
+        inset-inline: 11px 11px;
         top: 50%;
-        inset-inline-start: 11px;
-        inset-inline-end: 11px;
-        transform: translateY(-50%);
-        transition: all 0.3s;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
         flex: 1;
-        color: rgba(0, 0, 0, 0.25);
+        overflow: hidden;
+        color: rgb(0 0 0 / 25%);
+        text-overflow: ellipsis;
+        white-space: nowrap;
         pointer-events: none;
+        transition: all 0.3s;
+        transform: translateY(-50%);
     }
+
     .se-select-search-input {
         width: 100%;
         height: 100%;
-        margin: 0;
         padding: 0;
+        margin: 0;
+        appearance: none;
         background: transparent;
         border: none;
         outline: none;
-        appearance: none;
     }
+
     .se-select-dropdown {
-        width: 100%;
-        max-height: 200px;
         position: absolute;
         top: calc(100% + 5px);
         left: 0;
-        box-sizing: border-box;
-        margin: 0;
-        padding: 4px;
-        color: rgba(0, 0, 0, 0.88);
-        font-size: 14px;
-        list-style: none;
         z-index: 99;
+        box-sizing: border-box;
+        width: 100%;
+        max-height: 200px;
+        padding: 4px;
+        margin: 0;
         overflow: auto;
-        background-color: #ffffff;
+        font-size: 14px;
+        color: rgb(0 0 0 / 88%);
+        list-style: none;
+        background-color: #fff;
         border-radius: 8px;
         outline: none;
         box-shadow:
-            0 6px 16px 0 rgba(0, 0, 0, 0.08),
-            0 3px 6px -4px rgba(0, 0, 0, 0.12),
-            0 9px 28px 8px rgba(0, 0, 0, 0.05);
+            0 6px 16px 0 rgb(0 0 0 / 8%),
+            0 3px 6px -4px rgb(0 0 0 / 12%),
+            0 9px 28px 8px rgb(0 0 0 / 5%);
 
         .se-select-dropdown-item {
             position: relative;
+            box-sizing: border-box;
             display: block;
             min-height: 32px;
             padding: 5px 12px;
-            color: rgba(0, 0, 0, 0.88);
-            font-weight: normal;
             font-size: 14px;
-            box-sizing: border-box;
+            font-weight: normal;
+            color: rgb(0 0 0 / 88%);
             cursor: pointer;
-            transition: background 0.3s ease;
             border-radius: 4px;
+            transition: background 0.3s ease;
+
             &:hover {
-                background-color: rgba(0, 0, 0, 0.04);
+                background-color: rgb(0 0 0 / 4%);
             }
         }
+
         .se-select-dropdown-item-selected {
-            color: rgba(0, 0, 0, 0.88);
             font-weight: 600;
+            color: rgb(0 0 0 / 88%);
             background-color: #e6f4ff;
             border-radius: 0;
         }
@@ -132,7 +138,8 @@
         }
     }
 }
+
 .se-select-selected {
     border: 1px solid #4096ff;
-    box-shadow: 0 0 0 2px rgba(5, 145, 255, 0.1);
+    box-shadow: 0 0 0 2px rgb(5 145 255 / 10%);
 }

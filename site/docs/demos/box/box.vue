@@ -1,11 +1,7 @@
-<script setup lang="ts">
-
-</script>
+<script setup lang="ts"></script>
 
 <template>
-  <se-box type="primary">测试</se-box>
+    <se-box type="primary">测试</se-box>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

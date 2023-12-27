@@ -1,13 +1,9 @@
-
 <template>
-  <div>
-    <se-card>测试</se-card>
-  </div>
+    <div>
+        <se-card>测试</se-card>
+    </div>
 </template>
 
-<script>
+<script></script>
 
-</script>
-
-<style scoped>
-</style>
+<style scoped></style>

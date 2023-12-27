@@ -1,6 +1,6 @@
-import { defineConfig } from 'vite'
-import VueJsx from '@vitejs/plugin-vue-jsx'
-import path from 'path' // 导入 path
+import { defineConfig } from 'vite';
+import VueJsx from '@vitejs/plugin-vue-jsx';
+import path from 'path'; // 导入 path
 
 export default defineConfig({
     plugins: [VueJsx()],
@@ -12,4 +12,4 @@ export default defineConfig({
     server: {
         port: 3100
     }
-})
+});

@@ -14,7 +14,6 @@ declare module "@vue/runtime-core" {
         seSkeleton: typeof Skeleton;
         seSelect: typeof Select;
         seCard: typeof Card;
-
     }
 }
 

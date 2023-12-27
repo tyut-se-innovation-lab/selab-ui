@@ -119,7 +119,7 @@ importers:
   examples:
     dependencies:
       selab-ui:
-        specifier: workspace:^1.0.0
+        specifier: workspace:^
         version: link:../packages/components
 
   packages/components:

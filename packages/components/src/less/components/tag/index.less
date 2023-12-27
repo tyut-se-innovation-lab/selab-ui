@@ -1,47 +1,52 @@
 // Your component styles here
 @import url('../../base/index.less');
+
 .se-tag {
-    background-color: #ecf5ff;
+    position: relative;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
     padding: @spacing-xxs @spacing-xs;
     font-size: 12px;
     color: @brand-color-primary;
+    white-space: nowrap;
+    background-color: #ecf5ff;
     border: 1px solid #d9ecff;
     border-radius: 4px;
-    box-sizing: border-box;
-    white-space: nowrap;
-    position: relative;
-    display: inline-flex;
-    align-items: center;
 }
 
 .se-tag.se-tag--success {
+    color: @brand-color-secondary;
     background-color: #f0f9eb;
     border-color: #e1f3d8;
-    color: @brand-color-secondary;
 }
+
 .se-tag.se-tag--warning {
+    color: @brand-color-highlight;
     background-color: #fdf6ec;
     border-color: #faecd8;
-    color: @brand-color-highlight;
 }
+
 .se-tag.se-tag--danger {
+    color: @brand-color-accent;
     background-color: #fef0f0;
     border-color: #fde2e2;
-    color: @brand-color-accent;
 }
+
 .se-tag.se-tag--info {
+    color: #909399;
     background-color: #f4f4f5;
     border-color: #e9e9eb;
-    color: #909399;
 }
 
 .se-tag-close-icon {
-    font-size: 12px;
     margin-left: 5px;
+    font-size: 12px;
+    color: rgb(0 0 0 / 30%);
     cursor: pointer;
-    color: rgba(0, 0, 0, 0.3);
+
     &:hover {
-        color: rgba(0, 0, 0, 0.6);
+        color: rgb(0 0 0 / 60%);
     }
 }
 

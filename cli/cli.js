@@ -3,7 +3,7 @@ import fs from 'fs';
 import path from 'path';
 
 // 定义模板类型
-const templateTypes = ['Vue', 'TSX',];
+const templateTypes = ['Vue', 'TSX'];
 
 // 定义提示选项
 const promptsOptions = [
@@ -36,29 +36,36 @@ process.on('SIGINT', () => {
 });
 
 // 创建组件文件
-const createComponentFiles = (
-    componentNameEn,
-    componentNameZh,
-    templateType
-) => {
+const createComponentFiles = (componentNameEn, componentNameZh, templateType) => {
     const basePath = path.resolve(process.cwd(), 'packages/components/src');
     const folderName = path.resolve(basePath, componentNameEn);
 
     if (createFolder(folderName)) {
-        updateIndexFile(basePath, componentNameEn, componentNameZh,templateType);
-        updateComponents( path.resolve(process.cwd(), 'packages'), componentNameEn);
-        generateComponentFiles(path.resolve(process.cwd(), 'site/docs/demos'),componentNameEn);
+        updateIndexFile(
+            basePath,
+            componentNameEn,
+            componentNameZh,
+            templateType
+        );
+        updateComponents(
+            path.resolve(process.cwd(), 'packages'),
+            componentNameEn
+        );
+        generateComponentFiles(
+            path.resolve(process.cwd(), 'site/docs/demos'),
+            componentNameEn
+        );
         createTemplateFiles(folderName, componentNameEn, templateType);
         createTestFiles(folderName, componentNameEn, templateType);
-        createComponentIndexFile(folderName, componentNameEn,templateType);
-        createComponentDocs(componentNameEn,componentNameZh);
+        createComponentIndexFile(folderName, componentNameEn, templateType);
+        createComponentDocs(componentNameEn, componentNameZh);
         // 创建组件 Less 文件
         createComponentLess(componentNameEn);
         // 更新 components/index.less
         updateComponentsLess(componentNameEn);
     }
 };
-function generateComponentFiles(basePath,componentNameEn ) {
+function generateComponentFiles(basePath, componentNameEn) {
     // 创建组件英文名称的文件夹
     const componentFolderPath = path.join(basePath, componentNameEn);
     if (!fs.existsSync(componentFolderPath)) {
@@ -81,16 +88,28 @@ function generateComponentFiles(basePath,componentNameEn ) {
 </style>
 `;
 
-    const vueFilePath = path.join(componentFolderPath, `${componentNameEn}.vue`);
+    const vueFilePath = path.join(
+        componentFolderPath,
+        `${componentNameEn}.vue`
+    );
     fs.writeFileSync(vueFilePath, vueTemplate);
 
     console.log(`demo案例创建成功`);
 }
 // 跟新components.d.ts
 function updateComponents(basePath, componentNameEn) {
-    const componentsDeclarationPath = path.resolve(process.cwd(), basePath, 'components.d.ts');
-    let existingDeclarations = fs.readFileSync(componentsDeclarationPath, 'utf-8');
-    const newImportStatement = `import {${capitalizeFirstLetter(componentNameEn)}} from "./components/src";`;
+    const componentsDeclarationPath = path.resolve(
+        process.cwd(),
+        basePath,
+        'components.d.ts'
+    );
+    let existingDeclarations = fs.readFileSync(
+        componentsDeclarationPath,
+        'utf-8'
+    );
+    const newImportStatement = `import {${capitalizeFirstLetter(
+        componentNameEn
+    )}} from "./components/src";`;
 
     // 检查是否已经存在相同的 import 语句
     if (!existingDeclarations.includes(newImportStatement)) {
@@ -99,19 +118,30 @@ function updateComponents(basePath, componentNameEn) {
         fs.writeFileSync(componentsDeclarationPath, existingDeclarations);
     }
 
-    const newGlobalComponentsDeclaration = ` se${capitalizeFirstLetter(componentNameEn)}: typeof ${capitalizeFirstLetter(componentNameEn)};`;
+    const newGlobalComponentsDeclaration = ` se${capitalizeFirstLetter(
+        componentNameEn
+    )}: typeof ${capitalizeFirstLetter(componentNameEn)};`;
 
     // 检查 GlobalComponents 声明是否已存在
-    if (!existingDeclarations.includes(`se${capitalizeFirstLetter(componentNameEn)}: typeof ${capitalizeFirstLetter(componentNameEn)};`)) {
+    if (
+        !existingDeclarations.includes(
+            `se${capitalizeFirstLetter(
+                componentNameEn
+            )}: typeof ${capitalizeFirstLetter(componentNameEn)};`
+        )
+    ) {
         // 如果不存在，在 //[ 后插入新的 GlobalComponents 声明
-        const insertionIndexGlobalComponents = existingDeclarations.indexOf('//[');
+        const insertionIndexGlobalComponents =
+            existingDeclarations.indexOf('//[');
         const updatedDeclarationsGlobalComponents =
             existingDeclarations.slice(0, insertionIndexGlobalComponents + 4) +
-            '\n' +
-            newGlobalComponentsDeclaration +
+            "\t\t"+newGlobalComponentsDeclaration +'\n' +
             existingDeclarations.slice(insertionIndexGlobalComponents + 4);
 
-        fs.writeFileSync(componentsDeclarationPath, updatedDeclarationsGlobalComponents);
+        fs.writeFileSync(
+            componentsDeclarationPath,
+            updatedDeclarationsGlobalComponents
+        );
     }
 
     console.log(`components.d.ts 更新成功。`);
@@ -241,9 +271,12 @@ describe('${componentNameEn} Test', () => {
 
 // 创建 index.ts 文件
 const createComponentIndexFile = (folderName, componentNameEn, templateType) => {
-    console.log(templateType)
     const templateExtension = templateType === 'TSX' ? '' : '.vue';
-    const componentIndexContent = `import _${componentNameEn} from "./template/${capitalizeFirstLetter(componentNameEn)}${templateExtension}";\nimport type { App, Plugin } from "vue";\ntype SFCWithInstall<T> = T & Plugin;\nconst withInstall = <T>(comp: T) => {\n  (comp as SFCWithInstall<T>).install = (app: App) => {\n    const name = (comp as any).name;\n    // 注册组件\n    app.component(name, comp as SFCWithInstall<T>);\n  };\n  return comp as SFCWithInstall<T>;\n};\nexport const ${capitalizeFirstLetter(componentNameEn)} = withInstall(_${capitalizeFirstLetter(componentNameEn)});\nexport default ${capitalizeFirstLetter(componentNameEn)};`;
+    const componentIndexContent = `import _${capitalizeFirstLetter(componentNameEn)} from "./template/${componentNameEn}${templateExtension}";\nimport type { App, Plugin } from "vue";\ntype SFCWithInstall<T> = T & Plugin;\nconst withInstall = <T>(comp: T) => {\n  (comp as SFCWithInstall<T>).install = (app: App) => {\n    const name = (comp as any).name;\n    // 注册组件\n    app.component(name, comp as SFCWithInstall<T>);\n  };\n  return comp as SFCWithInstall<T>;\n};\nexport const ${capitalizeFirstLetter(
+        componentNameEn
+    )} = withInstall(_${capitalizeFirstLetter(
+        componentNameEn
+    )});\nexport default ${capitalizeFirstLetter(componentNameEn)};`;
 
     const componentIndexFilePath = `${folderName}/index.ts`;
 
@@ -347,24 +380,24 @@ const updateVitepressConfig = async (componentNameEn) => {
         // 读取配置文件
         let configContent = fs.readFileSync(configPath, { encoding: 'utf-8' });
 
+        // 构建新的组件项字符串
+        const newItem = `{
+            text: "${capitalizeFirstLetter(componentNameEn)}",
+            link: "/components/${componentNameEn.toLowerCase()}/"
+        },\n\t//]`;
+
+        // 检查组件是否已存在
+        if (configContent.includes(`"${capitalizeFirstLetter(componentNameEn)}"`)) {
+            console.error(
+                `Vitepress 配置文件 ${configPath} 中已存在 ${componentNameEn} 的文档`
+            );
+            return;
+        }
+
         // 在字符串中查找 //] 出现的位置
         const insertIndex = configContent.indexOf('//]');
 
         if (insertIndex !== -1) {
-            // 构建新的组件项字符串
-            const newItem = `{
-                text: "${capitalizeFirstLetter(componentNameEn)}",
-                link: "/components/${componentNameEn.toLowerCase()}/"
-            },\n\t//]`;
-
-            // 检查组件是否已存在
-            if (configContent.includes(`"${componentNameEn}"`)) {
-                console.error(
-                    `Vitepress 配置文件 ${configPath} 中已存在 ${componentNameEn} 的文档`
-                );
-                return;
-            }
-
             // 插入新项
             configContent =
                 configContent.slice(0, insertIndex) +
@@ -385,7 +418,7 @@ const updateVitepressConfig = async (componentNameEn) => {
 };
 
 // 创建组件文档
-const createComponentDocs = (componentNameEn,componentNameZh) => {
+const createComponentDocs = (componentNameEn, componentNameZh) => {
     const docsPath = path.resolve(
         process.cwd(),
         `site/docs/components/${componentNameEn.toLowerCase()}`
@@ -394,9 +427,13 @@ const createComponentDocs = (componentNameEn,componentNameZh) => {
     console.log(`尝试创建组件文档文件夹 ${docsPath}`);
 
     if (createFolder(docsPath)) {
-        const indexContent = `# ${capitalizeFirstLetter(componentNameEn)}(componentNameZh)
+        const indexContent = `# ${capitalizeFirstLetter(
+            componentNameEn
+        )}(componentNameZh)
 
-这是 \`${capitalizeFirstLetter(componentNameEn)}\` (${componentNameZh})组件的文档。
+这是 \`${capitalizeFirstLetter(
+            componentNameEn
+        )}\` (${componentNameZh})组件的文档。
 ## 预览
 <preview path="../../demos/${componentNameEn}/${componentNameEn}.vue" title="基本使用" description=" "></preview>
 #### 示例
@@ -414,8 +451,7 @@ const createComponentDocs = (componentNameEn,componentNameZh) => {
                                            
 
 ### 其他说明
-`
-
+`;
         fs.writeFileSync(`${docsPath}/index.md`, indexContent);
         console.log(`组件文档文件夹 ${docsPath} 创建成功`);
     }

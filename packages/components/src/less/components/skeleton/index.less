@@ -1,48 +1,57 @@
 // Your component styles here
 @import url('../../base/index.less');
+
 .skeleton-animation {
     animation: pulse 1.8s infinite ease;
 }
+
 .skeleton-container {
     width: 100%;
     padding: 16px;
+
     .skeleton-header {
         display: flex;
         align-items: center;
+
         .skeleton-title {
+            width: var(--skeleton-title-width); /* 调整头部宽度 */
             // flex: 1;
             height: 16px;
-            width: var(--skeleton-title-width); /* 调整头部宽度 */
-            background-color: #d9d9d9;
             margin-bottom: 12px;
+            background-color: #d9d9d9;
             border-radius: 5px;
         }
     }
+
     /* 头部颜色 */
 
     .skeleton-avatar {
         width: 50px;
         height: 50px;
-        border-radius: 50%;
-        background-color: #d9d9d9;
         margin: 10px;
         margin-left: 0;
+        background-color: #d9d9d9;
+        border-radius: 50%;
     }
+
     .skeleton-content {
         display: flex;
+
         .skeleton-avatar {
             visibility: hidden;
         }
+
         .skeleton-paragraph {
             flex: 1;
 
             .skeleton-paragraph-content {
-                height: 16px;
                 width: 100%;
-                background-color: #d9d9d9;
+                height: 16px;
                 margin-bottom: 12px;
+                background-color: #d9d9d9;
                 border-radius: 5px;
             }
+
             .skeleton-paragraph-content:last-child {
                 width: 40%;
             }
@@ -56,9 +65,11 @@
     0% {
         opacity: 0.4;
     }
+
     50% {
         opacity: 1;
     }
+
     100% {
         opacity: 0.4;
     }

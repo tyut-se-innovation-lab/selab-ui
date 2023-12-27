@@ -1,13 +1,9 @@
-
 <template>
-  <div>
-    <se-skeleton></se-skeleton>
-  </div>
+    <div>
+        <se-skeleton></se-skeleton>
+    </div>
 </template>
 
-<script>
+<script></script>
 
-</script>
-
-<style scoped>
-</style>
+<style scoped></style>

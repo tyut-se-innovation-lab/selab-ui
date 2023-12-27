@@ -18,25 +18,25 @@ type tagType = 'success' | 'info' | 'warning' | 'danger';
 const show = ref(true);
 const slots = useSlots();
 type Props = {
-  type?: tagType;
-  closeable?: boolean;
+    type?: tagType;
+    closeable?: boolean;
 };
 const emits = defineEmits(['close', 'click']);
 const tagProps = withDefaults(defineProps<Props>(), {
-  closeable: false
+    closeable: false
 });
 const tagClick = () => {
-  emits('click');
+    emits('click');
 };
 const tagCloseClick = () => {
-  if (tagProps.closeable) {
-    show.value = false;
-    emits('close');
-  }
+    if (tagProps.closeable) {
+        show.value = false;
+        emits('close');
+    }
 };
 
 const tagStyle = computed(() => [
-  tagProps.type ? `se-tag--${tagProps.type}` : '',
-  show.value ? '' : 'se-tag--hide'
+    tagProps.type ? `se-tag--${tagProps.type}` : '',
+    show.value ? '' : 'se-tag--hide'
 ]);
 </script>
