@@ -57,6 +57,11 @@ export default {
                             text: "Tag",
                             link: "/components/tag/"
                         },
+
+	{
+            text: "Icon",
+            link: "/components/icon/"
+        },
 	//]
 
                     ]

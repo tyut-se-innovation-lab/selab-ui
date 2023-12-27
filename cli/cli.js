@@ -429,17 +429,13 @@ const createComponentDocs = (componentNameEn, componentNameZh) => {
     if (createFolder(docsPath)) {
         const indexContent = `# ${capitalizeFirstLetter(
             componentNameEn
-        )}(componentNameZh)
+        )}(${componentNameZh})
 
 这是 \`${capitalizeFirstLetter(
             componentNameEn
         )}\` (${componentNameZh})组件的文档。
 ## 预览
 <preview path="../../demos/${componentNameEn}/${componentNameEn}.vue" title="基本使用" description=" "></preview>
-#### 示例
-\`\`\`html
-<se-${componentNameEn}>测试</se-${componentNameEn}> 
-\`\`\`
 
 
 ### ${capitalizeFirstLetter(componentNameEn)}的基础配置

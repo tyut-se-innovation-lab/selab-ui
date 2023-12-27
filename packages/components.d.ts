@@ -1,3 +1,4 @@
+import {Icon} from "./components/src";
 import {Tag} from "./components/src";
 import {Skeleton} from "./components/src";
 import {Select} from "./components/src";
@@ -10,6 +11,7 @@ declare module "@vue/runtime-core" {
         seButton: typeof Button;
         seBox: typeof Box;
         //[
+		 seIcon: typeof Icon;
         seTag: typeof Tag;
         seSkeleton: typeof Skeleton;
         seSelect: typeof Select;

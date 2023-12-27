@@ -10,3 +10,7 @@ export * from './select';
 export * from './skeleton';
 // 导入标签
 export * from './tag';
+// 导入图标
+export * from "./icon";
+// 导入图表
+export * from "./icon";
