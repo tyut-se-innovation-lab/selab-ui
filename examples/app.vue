@@ -64,7 +64,6 @@ const query = (value: string) => {
             label: (i + 10).toString(36) + (i + 1),
             value: i
         }));
-        console.log(options3.value);
     }, 2000);
 };
 </script>

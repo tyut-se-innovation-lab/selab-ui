@@ -7,7 +7,7 @@
         <div
             class="se-select-wrapper"
             :style="{
-                '--margin-left': selectMultipleValue.length > 0 ? '0px' : '10px'
+                marginLeft: selectMultipleValue.length > 0 ? '0px' : '10px'
             }"
         >
             <template v-if="selectProps.multiple">
@@ -65,14 +65,16 @@
                     {{ item.label }}
                 </div>
             </div>
-            <div class="empty-data" v-if="filterOptions.length == 0">暂无数据</div>
+            <div class="empty-data" v-if="filterOptions.length == 0">
+                暂无数据
+            </div>
         </div>
     </div>
 </template>
 
 <script lang="ts" setup>
 import '../../less/components/select/index.less';
-import { computed, ref, withDefaults } from 'vue';
+import { computed, ref, watch, withDefaults } from 'vue';
 import { debounce } from '../../../../utils/index';
 defineOptions({ name: 'se-select' });
 
@@ -150,11 +152,14 @@ const searchValueInput = (e: Event) => {
 };
 const selectClick = () => {
     inputRef.value?.focus();
+    if (filterOptions.value.length <= 0)
+        return (selectOptionsShow.value = false);
     selectOptionsShow.value = !selectOptionsShow.value;
 };
 const clickOutside = () => {
     selectOptionsShow.value = false;
 };
+
 //多选tag值
 const selectMultipleValue = computed({
     get() {
@@ -167,6 +172,7 @@ const selectMultipleValue = computed({
         emits('update:modelValue', value);
     }
 });
+
 const selectMultipleTags = ref<ISelectOption[]>([]);
 if (selectMultipleValue.value.length > 0) {
     selectMultipleTags.value = selectProps.options.filter(
@@ -191,11 +197,17 @@ const selectOptionsItemClick = (item: ISelectOption) => {
     } else {
         selectMultipleTags.value.push(item);
     }
+    selectMultipleValue.value = selectMultipleTags.value.map((i) => i.value) as
+        | string[]
+        | number[];
 };
 const removeTag = (item: ISelectOption) => {
     selectMultipleTags.value = selectMultipleTags.value.filter(
         (i) => i.value !== item.value
-    ) as any;
+    );
+    selectMultipleValue.value = selectMultipleTags.value.map((i) => i.value) as
+        | string[]
+        | number[];
 };
 
 const selectDropSize = ref(6);
