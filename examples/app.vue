@@ -5,7 +5,7 @@
         <se-card type="type1">测试卡片</se-card>
         <se-tag>测试</se-tag>
         <se-tag type="success" closeable>测试</se-tag>
-        <se-tag type="warning" v-for="item in 3" @click="tagclick">
+        <se-tag type="warning" v-for="item in 3" :key="item" @click="tagclick">
             {{ item }}
         </se-tag>
         <se-tag type="danger" closeable>
@@ -19,10 +19,59 @@
         <se-select :options="options" v-model="value"></se-select>
 
         <se-select :options="options" multiple v-model="value2"></se-select>
+        <button @click="msg('success')">success</button>
+        <button @click="msg('warning')">warning</button>
+        <button @click="msg('danger')">danger</button>
+        <button @click="msg('info')">info</button>
+        <button @click="$seMsg('info')">$seMsg</button>
+        <se-img
+            v-for="i of [...Array(5).keys()]"
+            :key="i"
+            :src="imgList[i]"
+            fit="cover"
+            width="400"
+            lazy
+            :preview="{ name: '测试' }"
+        >
+            <template #loading>
+                <div>loading</div>
+            </template>
+            <template #error>
+                <div>error</div>
+            </template>
+            <template #mask>
+                <span> mask </span>
+            </template>
+        </se-img>
+        <se-img
+            :src="imgList[5]"
+            fit="contain"
+            width="400"
+            lazy
+            :preview="{ name: '测试1', album: true, albumList: imgList }"
+        >
+            <template #loading>
+                <div>loading</div>
+            </template>
+            <template #error>
+                <div>error</div>
+            </template>
+            <template #mask>
+                <span> mask </span>
+            </template>
+        </se-img>
     </div>
 </template>
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { ref, createVNode } from 'vue';
+import { seMsg } from 'selab-ui';
+import img1 from './src/assets/img/img (1).png';
+import img2 from './src/assets/img/img (2).png';
+import img3 from './src/assets/img/img (3).png';
+import img4 from './src/assets/img/img (4).png';
+import img5 from './src/assets/img/img (5).png';
+import img6 from './src/assets/img/img (6).png';
+const imgList = [img1, img2, img3, img4, img5, img6];
 const options = [...Array(25)].map((_, i) => ({
     label: (i + 10).toString(36) + (i + 1),
     value: i
@@ -32,4 +81,34 @@ const value2 = ref([2, 5]);
 const tagclick = (e: any) => {
     console.log(e);
 };
+function msg(type: 'success' | 'warning' | 'danger' | 'info') {
+    const vNode = createVNode(
+        'button',
+        {
+            key: 'buttonVNode',
+            onClick: () => console.log('createVNode测试')
+        },
+        'createVNode测试'
+    );
+    // const msgA =
+    seMsg({
+        message: vNode,
+        type,
+        duration: Math.random() * 1000 + 1000,
+        icon: 'info',
+        showClose: true,
+        size: 'default',
+        beforeClose: (close) => {
+            setTimeout(() => {
+                close();
+            }, 0);
+        },
+        onCloseClick: () => {
+            console.log('onCloseClick');
+        }
+    });
+    // setTimeout(() => {
+    //     msgA.close();
+    // }, 2000);
+}
 </script>

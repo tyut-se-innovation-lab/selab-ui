@@ -1,0 +1,106 @@
+@import url('icon-font/icon-font.css');
+.hover-underline:hover {
+  text-decoration: underline;
+}
+.hover-pointer:hover {
+  cursor: pointer;
+}
+.se-msg {
+  position: fixed;
+  left: 50%;
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+  line-height: 16px;
+  border: 1.4px solid;
+  border-radius: 8px;
+  transition: all 0.3s;
+  transform: translateX(-50%);
+  box-sizing: content-box;
+}
+.se-msg-icon {
+  margin-right: 10px;
+  font-size: 16px;
+  line-height: 16px;
+}
+.se-msg-close {
+  margin-left: 10px;
+  font-size: 16px;
+  line-height: 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.se-msg-num {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 14px;
+  line-height: 14px;
+  text-align: center;
+  font-size: 12px;
+  border: 1.4px solid;
+  border-radius: 7px;
+  box-shadow: -1px 1px 1px #0002;
+  transform: translate(50%, -50%);
+  box-sizing: content-box;
+}
+.se-msg-success {
+  background-color: #d7f5d1;
+  color: #2ecc71;
+  border-color: #a8ebc4;
+}
+.se-msg-close-success:hover {
+  color: #29b765;
+}
+.se-msg-num-success {
+  border-color: #a8ebc4;
+  background-color: #d7f5d1;
+}
+.se-msg-warning {
+  background-color: #fceebc;
+  color: #f39c12;
+  border-color: #fad9a4;
+}
+.se-msg-close-warning:hover {
+  color: #e08e0b;
+}
+.se-msg-num-warning {
+  border-color: #fad9a4;
+  background-color: #fceebc;
+}
+.se-msg-danger {
+  background-color: #fbdbe8;
+  color: #e74c3c;
+  border-color: #f8c9c4;
+}
+.se-msg-close-danger:hover {
+  color: #e43725;
+}
+.se-msg-num-danger {
+  border-color: #f8c9c4;
+  background-color: #fbdbe8;
+}
+.se-msg-info {
+  background-color: #cbf6f2;
+  color: #3498db;
+  border-color: #b6daf2;
+}
+.se-msg-close-info:hover {
+  color: #258cd1;
+}
+.se-msg-num-info {
+  border-color: #b6daf2;
+  background-color: #cbf6f2;
+}
+.se-msg-mini {
+  transform: translateX(-50%) scale(0.6);
+}
+.se-msg-small {
+  transform: translateX(-50%) scale(0.8);
+}
+.se-msg-default {
+  transform: translateX(-50%) scale(1);
+}
+.se-msg-large {
+  transform: translateX(-50%) scale(1.2);
+}

@@ -10,3 +10,8 @@ export * from "./select";
 export * from "./skeleton";
 // 导入标签
 export * from "./tag";
+// 导入消息
+export * from "./message";
+
+// 导入图像
+export * from "./img";

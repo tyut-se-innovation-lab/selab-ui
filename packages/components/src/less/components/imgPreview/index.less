@@ -1,0 +1,51 @@
+@import url('../../base/index.less');
+
+.se-img-preview-direct-root {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+}
+
+.se-img-preview {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  z-index: 999;
+
+  & .se-img-preview-mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #00000066;
+    transition: all .3s;
+    animation-name: showPreview;
+    animation-iteration-count: 1;
+    animation: showPreview .3s;
+  }
+
+  & .se-img-preview-img {
+    & .se-img-preview-img-item {}
+
+    & .se-img-preview-img-item-0 {
+      position: absolute;
+      transition: all .2s;
+    }
+  }
+}
+
+@keyframes showPreview {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+
