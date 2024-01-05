@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import DefineOptions from 'unplugin-vue-define-options/vite';
 import dts from 'vite-plugin-dts';
+import vueJsx from "@vitejs/plugin-vue-jsx";
 export default defineConfig({
     test: {
         environment: 'happy-dom'
@@ -46,6 +47,7 @@ export default defineConfig({
     },
     plugins: [
         vue(),
+        vueJsx(),
         dts({
             entryRoot: './src',
             outputDir: ['../selab/es/src', '../selab/lib/src'],

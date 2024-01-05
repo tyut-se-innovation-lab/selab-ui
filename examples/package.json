@@ -11,6 +11,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "selab-ui": "workspace:^1.0.0"
+    "selab-ui": "workspace:^"
   }
 }

@@ -7,21 +7,24 @@
         <div
             class="se-select-wrapper"
             :style="{
-                '--margin-left': selectMultipleValue.length > 0 ? '0px' : '10px'
+                marginLeft: selectMultipleValue.length > 0 ? '0px' : '10px'
             }"
         >
             <template v-if="selectProps.multiple">
-                <div
-                    class="se-select-selection-tags"
-                    v-for="item in selectMultipleTarget"
-                >
-                    <span>{{ item.label }}</span>
-                    <span
-                        class="se-select-selection-tag-close"
-                        @click.stop="removeTag(item)"
-                        >x</span
+                <template v-if="selectMultipleTags">
+                    <div
+                        class="se-select-selection-tags"
+                        v-for="item in selectMultipleTags"
                     >
-                </div>
+                        <span>{{ item.label }}</span>
+                        <span
+                            class="se-select-selection-tag-close"
+                            @click.stop="removeTag(item)"
+                            >x</span
+                        >
+                    </div>
+                </template>
+
                 <div class="se-select-selection-search">
                     <input
                         ref="inputRef"
@@ -47,10 +50,10 @@
             </div>
         </div>
         <div class="se-select-dropdown" v-show="selectOptionsShow">
-            <div
-                class="se-select-dropdown-wrapper"
-                :style="{ height: filterOptions.length * 32 + 'px' }"
-            >
+            <!-- <template v-loading="loading">
+                <div></div>
+            </template> -->
+            <div class="se-select-dropdown-wrapper">
                 <div
                     :class="[
                         'se-select-dropdown-item',
@@ -70,9 +73,9 @@
 </template>
 
 <script lang="ts" setup>
-import { as } from 'vitest/dist/reporters-O4LBziQ_';
 import '../../less/components/select/index.less';
-import { computed, ref, withDefaults } from 'vue';
+import { computed, ref, watch, withDefaults } from 'vue';
+import { debounce } from '../../../../utils/index';
 defineOptions({ name: 'se-select' });
 
 type ISelectProps = {
@@ -81,6 +84,11 @@ type ISelectProps = {
     multiple?: boolean;
     autoClearSearchValue?: boolean;
     modelValue: string | number | string[] | number[];
+    filterable?: boolean;
+    filterMethod?: (value: string) => ISelectOption[];
+    queryMethod?: (value: string) => any;
+    remote?: boolean;
+    loading?: boolean;
 };
 type ISelectOption = {
     value: string | number;
@@ -91,7 +99,8 @@ const selectProps = withDefaults(defineProps<ISelectProps>(), {
     placeholder: '请输入内容',
     multiple: false,
     autoClearSearchValue: true,
-    options: () => []
+    options: () => [],
+    remote: false
 });
 const emits = defineEmits(['update:modelValue']);
 const searchValue = ref('');
@@ -111,8 +120,8 @@ const labelProxy = computed(() => {
 //计算选中的item的class
 const selectOptionItemClass = (item: ISelectOption) => {
     if (
-        (selectMultipleValue.value.length > 0 &&
-            selectMultipleValue.value.findIndex((i) => i === item.value) >
+        (selectMultipleTags.value.length > 0 &&
+            selectMultipleTags.value.findIndex((i) => i.value === item.value) >
                 -1) ||
         item.value === valueProxy.value
     )
@@ -121,11 +130,15 @@ const selectOptionItemClass = (item: ISelectOption) => {
 
 const filterOptions = computed(() => {
     if (!selectProps.multiple) return selectProps.options;
-    return searchValue.value
-        ? selectProps.options.filter((item) =>
-              item.label.includes(searchValue.value)
-          )
-        : selectProps.options;
+    if (searchValue.value) {
+        if (selectProps.filterable && selectProps.filterMethod) {
+            return selectProps.filterMethod(searchValue.value);
+        }
+        return selectProps.options.filter((item) =>
+            item.label.includes(searchValue.value)
+        );
+    }
+    return selectProps.options;
 });
 //下拉框
 const selectOptionsShow = ref(false);
@@ -133,17 +146,20 @@ const selectOptionsShow = ref(false);
 const searchValueInput = (e: Event) => {
     searchValue.value = (e.target as HTMLInputElement).value;
     selectOptionsShow.value = searchValue.value.length > 0;
+    if (selectProps.queryMethod && selectProps.remote) {
+        debounce(selectProps.queryMethod(searchValue.value), 500);
+    }
 };
 const selectClick = () => {
     inputRef.value?.focus();
+    if (filterOptions.value.length <= 0)
+        return (selectOptionsShow.value = false);
     selectOptionsShow.value = !selectOptionsShow.value;
-    // if (!selectProps.multiple) {
-    //     selectOptionsShow.value = true;
-    // }
 };
 const clickOutside = () => {
     selectOptionsShow.value = false;
 };
+
 //多选tag值
 const selectMultipleValue = computed({
     get() {
@@ -156,11 +172,13 @@ const selectMultipleValue = computed({
         emits('update:modelValue', value);
     }
 });
-const selectMultipleTarget = computed(() => {
-    return selectProps.options.filter((i) =>
-        selectMultipleValue.value.find((j) => j === i.value)
+
+const selectMultipleTags = ref<ISelectOption[]>([]);
+if (selectMultipleValue.value.length > 0) {
+    selectMultipleTags.value = selectProps.options.filter(
+        (i) => selectMultipleValue.value.findIndex((j) => j === i.value) > -1
     );
-});
+}
 const selectOptionsItemClick = (item: ISelectOption) => {
     if (!selectProps.multiple) {
         //单选
@@ -171,19 +189,25 @@ const selectOptionsItemClick = (item: ISelectOption) => {
     }
     //多选
     selectProps.autoClearSearchValue && (searchValue.value = '');
-    const index = selectMultipleValue.value.findIndex((i) => i === item.value);
+    const index = selectMultipleTags.value.findIndex(
+        (i) => i.value === item.value
+    );
     if (index > -1) {
-        selectMultipleValue.value.splice(index, 1);
+        selectMultipleTags.value.splice(index, 1);
     } else {
-        const arr = [...selectMultipleValue.value];
-        arr.push(item.value);
-        selectMultipleValue.value = arr as any;
+        selectMultipleTags.value.push(item);
     }
+    selectMultipleValue.value = selectMultipleTags.value.map((i) => i.value) as
+        | string[]
+        | number[];
 };
 const removeTag = (item: ISelectOption) => {
-    selectMultipleValue.value = selectMultipleValue.value.filter(
-        (i) => i !== item.value
-    ) as any;
+    selectMultipleTags.value = selectMultipleTags.value.filter(
+        (i) => i.value !== item.value
+    );
+    selectMultipleValue.value = selectMultipleTags.value.map((i) => i.value) as
+        | string[]
+        | number[];
 };
 
 const selectDropSize = ref(6);

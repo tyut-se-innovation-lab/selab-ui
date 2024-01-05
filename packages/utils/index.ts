@@ -4,6 +4,9 @@ import { COMPInstallWithContext, COMPWithInstall } from './type';
 export const testFun = (a: number, b: number): number => {
     return a + b;
 };
+// type DebouncedFunction<T extends (...args: any[]) => void> = (
+//     ...args: Parameters<T>
+// ) => void;
 
 export const clickOutside = {
     mounted(el: any, binding: any) {
@@ -104,3 +107,16 @@ export const withInstallFunction = <T>(fn: T, name: string) => {
     };
     return fn as COMPInstallWithContext<T>;
 };
+
+export function debounce(fn: (...arg: any[]) => any, duration: number = 300) {
+    let timer = -1;
+    return function (this: unknown, ...args: any[]) {
+        if (timer > -1) {
+            clearTimeout(timer);
+        }
+        timer = window.setTimeout(() => {
+            fn.apply(this, args);
+            timer = -1;
+        }, duration);
+    };
+}

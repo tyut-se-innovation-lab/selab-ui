@@ -14,9 +14,9 @@ const myPlugin: Plugin = {
                 const component =
                     components[componentName as keyof typeof components];
                 app.use(component);
-                app.directive('click-outside', clickOutside);
             }
         }
+        app.directive('click-outside', clickOutside);
     }
 };
 

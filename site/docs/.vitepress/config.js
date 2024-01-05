@@ -65,6 +65,11 @@ export default {
                 text: "Img",
                 link: "/components/img/"
             },
+
+	{
+            text: "Icon",
+            link: "/components/icon/"
+        },
 	//]
 
                     ]

@@ -60,6 +60,21 @@
                 <span> mask </span>
             </template>
         </se-img>
+        <se-select
+            :options="options"
+            filterable
+            :filter-method="filter"
+            multiple
+            v-model="value2"
+        ></se-select>
+
+        <se-select
+            :options="options3"
+            multiple
+            remote
+            v-model="value3"
+            :queryMethod="query"
+        ></se-select>
     </div>
 </template>
 <script lang="ts" setup>
@@ -76,6 +91,14 @@ const options = [...Array(25)].map((_, i) => ({
     label: (i + 10).toString(36) + (i + 1),
     value: i
 }));
+
+const options = ref(
+    [...Array(25)].map((_, i) => ({
+        label: (i + 10).toString(36) + (i + 1),
+        value: i
+    }))
+);
+const options2 = ref([]);
 const value = ref(3);
 const value2 = ref([2, 5]);
 const tagclick = (e: any) => {
@@ -111,4 +134,21 @@ function msg(type: 'success' | 'warning' | 'danger' | 'info') {
     //     msgA.close();
     // }, 2000);
 }
+const filter = (value: string) => {
+    console.log(value);
+    return options.value.filter((i) => i.label.includes(value));
+};
+const value3 = ref([]);
+const loading = ref(false);
+const options3 = ref<{ value: string | number; label: string }[]>();
+const query = (value: string) => {
+    loading.value = true;
+    setTimeout(() => {
+        loading.value = false;
+        options3.value = [...Array(25)].map((_, i) => ({
+            label: (i + 10).toString(36) + (i + 1),
+            value: i
+        }));
+    }, 2000);
+};
 </script>
