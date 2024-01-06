@@ -24,6 +24,15 @@ type ToolBar = {
     pagination: boolean;
 };
 
+export type Pagination = {
+    index: Ref<number>;
+    total: number;
+};
+
+export type PreviewToolbarPropsType = ToolBar & Pagination;
+
+export type PreviewToolbarProps = CreateProps<PreviewToolbarPropsType>;
+
 export type PreviewType = {
     // 预览的图片地址, 默认与 img 组件的 src 一致
     src: string;
@@ -60,7 +69,7 @@ export type PreviewType = {
     // 图片加载失败的回调
     onError: (e: Event) => void;
     // 图片切换的回调
-    onChange: (index: number) => void;
+    onChange: (change: () => void, index: number) => void;
     // 打开预览的回调, 当用户点击图片打开时拦截
     onOpen: (open: () => void) => void;
     // 关闭预览的回调, 当用户点击关闭按钮、遮罩或Esc关闭时拦截

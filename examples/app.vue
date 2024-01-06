@@ -17,21 +17,41 @@
         <se-skeleton></se-skeleton>
         <se-skeleton :avatarShow="false" :active="true"></se-skeleton>
         <se-select :options="options" v-model="value"></se-select>
-
         <se-select :options="options" multiple v-model="value2"></se-select>
+        <se-select
+            :options="options"
+            filterable
+            :filter-method="filter"
+            multiple
+            v-model="value2"
+        ></se-select>
+
+        <se-select
+            :options="options3"
+            multiple
+            remote
+            v-model="value3"
+            :queryMethod="query"
+        ></se-select>
         <button @click="msg('success')">success</button>
         <button @click="msg('warning')">warning</button>
         <button @click="msg('danger')">danger</button>
         <button @click="msg('info')">info</button>
         <button @click="$seMsg('info')">$seMsg</button>
         <se-img
-            v-for="i of [...Array(5).keys()]"
+            v-for="i of [...Array(6).keys()]"
             :key="i"
             :src="imgList[i]"
             fit="cover"
             width="400"
             lazy
-            :preview="{ name: '测试' }"
+            :preview="{
+                name: '测试',
+                minScale: 1,
+                maxScale: 50,
+                animation: 'slide',
+                loop: false
+            }"
         >
             <template #loading>
                 <div>loading</div>
@@ -48,7 +68,16 @@
             fit="contain"
             width="400"
             lazy
-            :preview="{ name: '测试1', album: true, albumList: imgList }"
+            :preview="{
+                name: '测试1',
+                album: true,
+                albumList: imgList,
+                animation: 'slide',
+                modal: false,
+                onChange: onImgChange,
+                onClose: onImgClose,
+                onOpen: onImgOpen
+            }"
         >
             <template #loading>
                 <div>loading</div>
@@ -60,21 +89,6 @@
                 <span> mask </span>
             </template>
         </se-img>
-        <se-select
-            :options="options"
-            filterable
-            :filter-method="filter"
-            multiple
-            v-model="value2"
-        ></se-select>
-
-        <se-select
-            :options="options3"
-            multiple
-            remote
-            v-model="value3"
-            :queryMethod="query"
-        ></se-select>
     </div>
 </template>
 <script lang="ts" setup>
@@ -87,10 +101,6 @@ import img4 from './src/assets/img/img (4).png';
 import img5 from './src/assets/img/img (5).png';
 import img6 from './src/assets/img/img (6).png';
 const imgList = [img1, img2, img3, img4, img5, img6];
-const options = [...Array(25)].map((_, i) => ({
-    label: (i + 10).toString(36) + (i + 1),
-    value: i
-}));
 
 const options = ref(
     [...Array(25)].map((_, i) => ({
@@ -134,6 +144,18 @@ function msg(type: 'success' | 'warning' | 'danger' | 'info') {
     //     msgA.close();
     // }, 2000);
 }
+const onImgChange = (change: () => void, index: number) => {
+    change();
+    console.log('onImgChange', index);
+};
+const onImgClose = (close: () => void) => {
+    close();
+    console.log('onImgClose');
+};
+const onImgOpen = (open: () => void) => {
+    open();
+    console.log('onImgOpen');
+};
 const filter = (value: string) => {
     console.log(value);
     return options.value.filter((i) => i.label.includes(value));

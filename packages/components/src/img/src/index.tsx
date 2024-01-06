@@ -41,6 +41,11 @@ export default defineComponent({
             props.onError?.(e);
         }
         function loadHandle(e: Event) {
+            if (props.lazy && seImg.value.dataset.src) {
+                // 若是懒加载, 且当前加载的图片是懒加载的占位图, 则不触发onLoad事件
+                return;
+            }
+            console.log('loadHandle', e);
             isLoadSuccess.value = true;
             isLoading.value = false;
             props.onLoad?.(e);

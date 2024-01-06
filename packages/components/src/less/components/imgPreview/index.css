@@ -31,9 +31,37 @@
   animation-iteration-count: 1;
   animation: showPreview 0.3s;
 }
-.se-img-preview .se-img-preview-img .se-img-preview-img-item-0 {
+.se-img-preview .se-img-preview-img .se-img-preview-img-item {
   position: absolute;
   transition: all 0.2s;
+  cursor: grab;
+}
+.se-img-preview .se-img-preview-toolbar {
+  position: fixed;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: all 0.3s;
+  animation-name: showToolbar;
+  animation-iteration-count: 1;
+  animation: showToolbar 0.3s;
+}
+.se-img-preview .se-img-preview-close {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #00000066;
+  color: #fff;
+  text-align: center;
+  line-height: 30px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.se-img-preview .se-img-preview-close:hover {
+  background-color: #00000099;
 }
 @keyframes showPreview {
   0% {
@@ -41,5 +69,13 @@
   }
   100% {
     opacity: 1;
+  }
+}
+@keyframes showToolbar {
+  0% {
+    transform: translateX(-50%) translateY(200%);
+  }
+  100% {
+    transform: translateX(-50%) translateY(0);
   }
 }

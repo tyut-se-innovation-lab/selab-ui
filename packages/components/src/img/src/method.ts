@@ -16,6 +16,7 @@ const observer = new IntersectionObserver(
             if (entry.isIntersecting) {
                 const img = entry.target as HTMLImageElement;
                 img.src = img.dataset.src as string;
+                img.removeAttribute('data-src');
                 observer.unobserve(img);
             }
         });
@@ -105,17 +106,19 @@ function registerPreviewImage(
         root: getPupOpsMountedLocation(),
         toolbar: { ...option.toolbar },
         clickMask: function (e) {
+            const _openPreview = (index: number) => {
+                previewImage(instance, index);
+            };
             instance.mask.find((item, index) => {
                 if (item === e.target) {
-                    previewImage(instance, index);
+                    // previewImage(instance, index);
+                    instance.preview.onOpen(() => _openPreview(index));
                 }
             });
         },
         vNode: null
     };
     instances.push(instance);
-
-    console.log('instances', instances);
 
     mask.addEventListener('click', instance.clickMask);
     return instance;
@@ -152,6 +155,8 @@ function unregisterPreviewImage(option: PreviewType, mask: HTMLElement) {
 
 // 启动预览
 function previewImage(instance: Instance, index = 0) {
+    // 如果该预览已经存在, 则直接返回
+    if (previewInstance.value === instance) return;
     unPreviewImage();
     console.log('previewImage', instance, index);
     // 创建Preview组件实例, 挂载到instance.root上
@@ -173,7 +178,10 @@ function previewImage(instance: Instance, index = 0) {
 function unPreviewImage() {
     if (!previewInstance.value) return;
     const instance = previewInstance.value;
-    if (instance.preview.modal) document.body.style.overflow = '';
+    if (instance.preview.modal)
+        setTimeout(() => {
+            document.body.style.overflow = '';
+        }, 300);
     previewInstance.value = null;
     instance.vNode!.component!.exposed?._close();
     setTimeout(() => {

@@ -4,7 +4,8 @@ import {
     ImgProps,
     PreviewType,
     ImgPreviewProps,
-    Instance
+    Instance,
+    PreviewToolbarProps
 } from './image.d';
 
 export const previewDefault: PreviewType = {
@@ -14,7 +15,7 @@ export const previewDefault: PreviewType = {
     scaleStep: 0.5,
     minScale: 1,
     maxScale: 50,
-    closeIcon: '',
+    closeIcon: 'close',
     toolbar: {
         zoom: true,
         rotate: true,
@@ -22,17 +23,17 @@ export const previewDefault: PreviewType = {
         reset: true,
         download: false,
         pagination: true,
-        show: false
+        show: true
     },
     name: '',
     album: false,
     albumList: [],
-    loop: false,
-    animation: 'slide',
+    loop: true,
+    animation: 'none',
     closeOnClickModal: true,
     closeOnPressEscape: true,
     onError: () => {},
-    onChange: () => {},
+    onChange: (change) => change(),
     onOpen: (open) => open(),
     onClose: (close) => close()
 };
@@ -167,7 +168,7 @@ export const imgPreviewProps: ImgPreviewProps = {
         default: previewDefault.onError
     },
     onChange: {
-        type: Function as PropType<(index: number) => void>,
+        type: Function as PropType<(change: () => void, index: number) => void>,
         default: previewDefault.onChange
     },
     onOpen: {
@@ -186,5 +187,44 @@ export const imgPreviewProps: ImgPreviewProps = {
         type: Object as PropType<Instance | null>,
         default: null,
         required: true
+    }
+};
+
+export const previewToolbarProps: PreviewToolbarProps = {
+    show: {
+        type: Boolean,
+        default: previewDefault.toolbar.show
+    },
+    zoom: {
+        type: Boolean,
+        default: previewDefault.toolbar.zoom
+    },
+    rotate: {
+        type: Boolean,
+        default: previewDefault.toolbar.rotate
+    },
+    flip: {
+        type: Boolean,
+        default: previewDefault.toolbar.flip
+    },
+    reset: {
+        type: Boolean,
+        default: previewDefault.toolbar.reset
+    },
+    download: {
+        type: [Boolean, Function] as PropType<false | (() => void)>,
+        default: previewDefault.toolbar.download
+    },
+    pagination: {
+        type: Boolean,
+        default: previewDefault.toolbar.pagination
+    },
+    index: {
+        type: Number,
+        default: 0
+    },
+    total: {
+        type: Number,
+        default: 0
     }
 };
