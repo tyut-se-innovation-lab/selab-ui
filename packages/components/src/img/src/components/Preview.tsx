@@ -21,13 +21,25 @@ export default defineComponent({
     setup(props, { expose }): () => VNode {
         console.log('props', props);
         // 获取点击图片的位置
-        const rect = props.instance!.mask[props.index].getBoundingClientRect();
-        const fit = (
-            props.instance!.mask[props.index].parentNode
-                ?.childNodes[0] as HTMLImageElement
-        ).classList[1]
-            .split('-')
-            .pop();
+        let rect: DOMRect;
+        let fit: string;
+        if ('mask' in props.instance) {
+            rect = props.instance!.mask[props.index].getBoundingClientRect();
+            fit = (
+                props.instance!.mask[props.index].parentNode
+                    ?.childNodes[0] as HTMLImageElement
+            ).classList[1]
+                .split('-')
+                .pop() as string;
+        } else {
+            rect = {
+                width: props.instance!.location.width,
+                height: props.instance!.location.height,
+                left: props.instance!.location.x,
+                top: props.instance!.location.y
+            } as DOMRect;
+            fit = 'fill';
+        }
         const _option = {
             index: props.index,
             imgList: props.albumList,

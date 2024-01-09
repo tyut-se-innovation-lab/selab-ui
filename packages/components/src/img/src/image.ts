@@ -5,7 +5,8 @@ import {
     PreviewType,
     ImgPreviewProps,
     Instance,
-    PreviewToolbarProps
+    PreviewToolbarProps,
+    TemporaryInstance
 } from './image.d';
 
 export const previewDefault: PreviewType = {
@@ -181,8 +182,8 @@ export const imgPreviewProps: ImgPreviewProps = {
         default: 0
     },
     instance: {
-        type: Object as PropType<Instance | null>,
-        default: null,
+        type: Object as PropType<Instance | TemporaryInstance>,
+        default: {} as Instance | TemporaryInstance,
         required: true
     }
 };

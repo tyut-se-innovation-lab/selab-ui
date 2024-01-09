@@ -37,10 +37,9 @@
         <button @click="msg('warning')">warning</button>
         <button @click="msg('danger')">danger</button>
         <button @click="msg('info')">info</button>
-        <button @click="$seMsg('info')">$seMsg</button>4
-        <button @click="myAlbum.open()">myAlbum open</button>
+        <button @click="$seMsg('info')">$seMsg</button>
+        <button @click="myAlbum.open(albumLocation)">myAlbum open</button>
         <button @click="myAlbum.close()">myAlbum close</button>
-        <button @click="myAlbum.unReg()">myAlbum unregister</button>
         <se-img
             v-for="i of [...Array(6).keys()]"
             :key="i"
@@ -195,6 +194,13 @@ const myAlbum = seRegAlbum({
         show: true
     }
 });
+
+const albumLocation = {
+    x: document.documentElement.clientWidth / 2 - 50,
+    y: document.documentElement.clientHeight / 2 - 50,
+    width: 100,
+    height: 100
+};
 
 const value3 = ref([]);
 const loading = ref(false);

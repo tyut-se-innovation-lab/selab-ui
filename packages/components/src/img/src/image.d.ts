@@ -136,6 +136,21 @@ export type Instance = {
     vNode: VNode | null;
 };
 
-export type ImgPreviewPropsType = PreviewType & { index: number } & { instance: Instance | null };
+export type TemporaryInstance = {
+    // 预览的配置
+    preview: PreviewType;
+    // 预览的组件实例的根元素
+    root: HTMLElement;
+    // 工具栏配置
+    toolbar: Partial<ToolBar>;
+    // 启动预览
+    open: (option: { x: number; y: number; width: number; height: number; }) => void;
+    // vNode
+    vNode: VNode | null;
+    // 位置
+    location: { x: number; y: number; width: number; height: number; };
+};
+
+export type ImgPreviewPropsType = PreviewType & { index: number } & { instance: Instance | TemporaryInstance };
 
 export type ImgPreviewProps = CreateProps<ImgPreviewPropsType>;
