@@ -70,6 +70,10 @@ export default {
             text: "Icon",
             link: "/components/icon/"
         },
+	{
+            text: "MiniMsg",
+            link: "/components/minimsg/"
+        },
 	//]
 
                     ]

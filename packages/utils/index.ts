@@ -40,7 +40,7 @@ export const getStyle = (): ['info', 'success', 'warning', 'danger'] => [
 ];
 
 // (创建)返回全局窗口挂载节点
-export const getPupOpsMountedLocation = () => {
+export const getPupOpsMountedLocation = (): HTMLDivElement => {
     const id = '__se_window_mounted__';
     let dom = document.getElementById(id);
     if (!dom) {
@@ -55,11 +55,12 @@ export const getPupOpsMountedLocation = () => {
     return dom;
 };
 
-export const getStringWidth = (msg: string): number => {
+export const getStringWidth = (msg: string, fontSize?: number): number => {
     const stringWidthDom = document.createElement('span');
     stringWidthDom.innerHTML = msg;
     stringWidthDom.style.position = 'absolute';
     stringWidthDom.style.left = '-9999px';
+    fontSize && (stringWidthDom.style.fontSize = fontSize + 'px');
     document.body.appendChild(stringWidthDom);
     const width = stringWidthDom.offsetWidth;
     document.body.removeChild(stringWidthDom);
