@@ -10,7 +10,10 @@ import '../../../less/components/imgPreview/index.less';
 import { imgPreviewProps } from '../image';
 import { unPreviewImage } from '../method';
 import SePreviewToolbar from './Toolbar';
-import { previewMsg } from './previewMsg/index';
+import seMiniMeg from '../../../miniMsg/src/index';
+import leftCur from '../../../../../assets/mouseImg/left.ico';
+import rightIco from '../../../../../assets/mouseImg/right.ico';
+import closeIco from '../../../../../assets/mouseImg/close.ico';
 
 export default defineComponent({
     name: 'se-img-preview',
@@ -31,7 +34,6 @@ export default defineComponent({
             loop: props.loop,
             animation: props.animation,
             modal: props.modal,
-            movable: props.movable,
             scaleStep: props.scaleStep + 1,
             minScale: props.minScale,
             maxScale: props.maxScale,
@@ -43,6 +45,7 @@ export default defineComponent({
         const maskRef = ref();
         const imagesRef = ref();
         const toolbarRef = ref();
+        const msgRootRef = ref();
         // 关闭预览的函数
         function closePreview() {
             // 获取当前图片
@@ -55,8 +58,13 @@ export default defineComponent({
             if (props.modal) {
                 maskRef.value!.style.opacity = '0';
             }
+            // 关闭关闭按钮
+            const closeBtn = document.querySelector(
+                '.se-img-preview-close'
+            ) as HTMLDivElement;
+            closeBtn && (closeBtn.style.opacity = '0');
             // 若存在, 关闭工具栏
-            if (props.toolbar.show) {
+            if (props.toolbar.show !== false || !_option.modal) {
                 toolbarRef.value.style.transform =
                     'translateX(-50%) translateY(50%)';
                 toolbarRef.value.style.opacity = '0';
@@ -145,9 +153,35 @@ export default defineComponent({
                 // 遮罩存在且点击遮罩关闭预览
                 if (props.modal) {
                     maskRef.value &&
-                        maskRef.value.addEventListener('click', () => {
-                            userClosePreview();
-                        });
+                        maskRef.value.addEventListener(
+                            'click',
+                            (e: MouseEvent) => {
+                                // 当用户点击遮罩左侧时, 切换到上一张图片
+                                if (
+                                    e.clientX <
+                                    clientWidth / 2 - imgWidthOriginal / 2
+                                    // _option.index !== 0
+                                ) {
+                                    userChangeImg('prev', e);
+                                    return;
+                                }
+                                // 当用户点击遮罩右侧时, 切换到下一张图片
+                                if (
+                                    e.clientX >
+                                    clientWidth / 2 + imgWidthOriginal / 2
+                                    // _option.index !== _option.imgList.length - 1
+                                ) {
+                                    userChangeImg('next', e);
+                                    return;
+                                }
+                                // 否则关闭预览
+                                if (props.closeOnClickModal) {
+                                    userClosePreview();
+                                }
+                            }
+                        );
+                    // 当鼠标在遮罩同位置移动时, 显示不同的鼠标样式
+                    maskRef.value.addEventListener('mousemove', changeMouse);
                 } else {
                     // 鼠标进入图片时禁用默认滚动
                     imgItem.addEventListener('mousemove', () => {
@@ -161,6 +195,26 @@ export default defineComponent({
                 // esc键关闭预览
                 if (props.closeOnPressEscape) {
                     document.addEventListener('keydown', closeEsc);
+                }
+            };
+            // 检测鼠标在遮罩上的位置, 更改鼠标样式
+            const changeMouse = (e: MouseEvent) => {
+                if (e.clientX < clientWidth / 2 - imgWidthOriginal / 2) {
+                    if (_option.index !== 0)
+                        maskRef.value!.style.cursor = `url(${leftCur}), auto`;
+                    else {
+                        maskRef.value!.style.cursor = 'not-allowed';
+                    }
+                } else if (e.clientX > clientWidth / 2 + imgWidthOriginal / 2) {
+                    if (_option.index !== _option.imgList.length - 1)
+                        maskRef.value!.style.cursor = `url(${rightIco}), auto`;
+                    else {
+                        maskRef.value!.style.cursor = 'not-allowed';
+                    }
+                } else if (props.closeOnClickModal) {
+                    maskRef.value!.style.cursor = `url(${closeIco}), auto`;
+                } else {
+                    maskRef.value!.style.cursor = 'default';
                 }
             };
             // 检测图片是否离开视口, 若离开则移动到视口内可见位置
@@ -228,9 +282,11 @@ export default defineComponent({
                 imgItem.addEventListener('mouseleave', mouseUpLeave);
                 // 移除过渡
                 imgItem.style.transition = 'none';
+                // toolbarRef.value.style.transition = 'none';
                 // 鼠标样式改为抓取
                 imgItem.style.cursor = 'grabbing';
             }
+            let toolbarWidth: number;
             // 移动事件
             function mouseMove(e: MouseEvent) {
                 // 计算移动距离
@@ -241,9 +297,20 @@ export default defineComponent({
                 const imgNow = getComputedStyle(imgItem);
                 const imgLeft = parseFloat(imgNow.left);
                 const imgTop = parseFloat(imgNow.top);
+                // const imgWidth = parseFloat(imgNow.width);
+                // const imgHeight = parseFloat(imgNow.height);
                 // 移动图片
                 imgItem.style.left = imgLeft + moveX + 'px';
                 imgItem.style.top = imgTop + moveY + 'px';
+                // 如果不显示遮罩, 则工具栏跟随移动
+                if (!_option.modal) {
+                    if (
+                        imgLeft > toolbarWidth / 2 + 10 &&
+                        imgLeft < clientWidth - toolbarWidth / 2 - 10
+                    ) {
+                        toolbarRef.value.style.left = imgLeft + moveX + 'px';
+                    }
+                }
                 // 保存当前鼠标位置
                 mouseDownPosition[0] = e.clientX;
                 mouseDownPosition[1] = e.clientY;
@@ -257,6 +324,7 @@ export default defineComponent({
                 imgItem.removeEventListener('mouseup', mouseUpLeave);
                 // 恢复过渡
                 imgItem.style.transition = '';
+                toolbarRef.value.style.transition = '';
                 // 鼠标样式改为抓取
                 imgItem.style.cursor = 'grab';
                 checkImg();
@@ -351,12 +419,12 @@ export default defineComponent({
                 );
                 if (type === 'horizontal') {
                     imgItem.style.transform = `translate(-50%, -50%) scale(1) rotate(${imgRotate}deg) rotateY(${
-                        imgRotateY + 180
+                        imgRotateY === 180 ? 0 : 180
                     }deg) rotateZ(${imgRotateZ}deg)`;
                 } else {
                     imgItem.style.transform = `translate(-50%, -50%) scale(1) rotate(${imgRotate}deg) rotateY(${
-                        imgRotateY + 180
-                    }deg) rotateZ(${imgRotateZ + 180}deg)`;
+                        imgRotateY === 180 ? 0 : 180
+                    }deg) rotateZ(${imgRotateZ === 180 ? 0 : 180}deg)`;
                 }
                 // 用canvas实现了镜像反转, 但是处理较慢, 然后想起css transform可以实现, 所以就不用canvas了
                 // 我是若子
@@ -487,10 +555,27 @@ export default defineComponent({
             // 切换图片的函数
             function changeImg(
                 type: 'prev' | 'next',
-                nextIndex: number | false
+                nextIndex: number | false,
+                e: MouseEvent
             ) {
                 if (nextIndex === false) {
-                    previewMsg('已经到头了');
+                    let x: number | string;
+                    let y: number | string;
+                    if (_option.modal) {
+                        x = e.clientX;
+                        y = e.clientY;
+                    } else {
+                        x = '50vw';
+                        y = '50vh';
+                    }
+                    seMiniMeg({
+                        msg: '已经到头了',
+                        type: 'warning',
+                        location: { x, y },
+                        duration: 1000,
+                        root: msgRootRef.value,
+                        isViewport: true
+                    });
                     return;
                 }
                 const imgItem = imagesRef.value.childNodes[0];
@@ -538,6 +623,10 @@ export default defineComponent({
                         oldImgItem.style.height = imgHeightOriginal + 'px';
                         oldImgItem.style.transform =
                             'translate(-50%, -50%) scale(1) rotate(0deg) rotateY(0deg) rotateZ(0deg)';
+                        // 如果有遮罩, 则修改鼠标样式
+                        if (_option.modal) {
+                            changeMouse(e);
+                        }
                         setTimeout(() => {
                             if (_option.animation === 'fade') {
                                 oldImgDom.style.opacity = '0';
@@ -546,6 +635,9 @@ export default defineComponent({
                                     type === 'prev' ? '125vw' : '-125vw';
                             }
                         });
+                        setTimeout(() => {
+                            document.body.removeChild(oldImgDom);
+                        }, 200);
                     });
                 }
                 //计算图片的真实宽高比
@@ -603,8 +695,29 @@ export default defineComponent({
                     }, 200);
                 };
             }
+            // 用户点击下载的函数
+            function userDownload() {
+                if (typeof props.toolbar.download === 'function') {
+                    props.toolbar.download({
+                        index: _option.index,
+                        src: _option.imgList[_option.index],
+                        srcList: _option.imgList,
+                        name: props.name
+                    });
+                }
+                if (props.toolbar.download === false) {
+                    seMiniMeg({
+                        msg: '未开放下载',
+                        type: 'info',
+                        location: { x: clientWidth / 2, y: clientHeight - 100 },
+                        duration: 1000,
+                        root: msgRootRef.value,
+                        isViewport: true
+                    });
+                }
+            }
             // 用户切换图片的函数
-            function userChangeImg(type: 'prev' | 'next') {
+            function userChangeImg(type: 'prev' | 'next', e: MouseEvent) {
                 // 获取当前图片的下标
                 const index = _option.index;
                 // 获取图片的总数
@@ -627,7 +740,7 @@ export default defineComponent({
                     }
                 }
                 const _changeImg = () => {
-                    changeImg(type, nextIndex);
+                    changeImg(type, nextIndex, e);
                 };
                 if (typeof props.onChange === 'function') {
                     props.onChange(_changeImg, nextIndex);
@@ -635,10 +748,25 @@ export default defineComponent({
                     throw new TypeError('onChange is not a function');
                 }
             }
+            // 更新工具栏位置到图片中心
+            function initToolbarLocation() {
+                if (!_option.modal) {
+                    // 获取图片的位置
+                    const imgItem = imagesRef.value.childNodes[0];
+                    const imgNow = getComputedStyle(imgItem);
+                    const imgLeft =
+                        parseFloat(imgItem.left) || parseFloat(imgNow.left);
+                    if (
+                        imgLeft > toolbarWidth / 2 + 10 &&
+                        imgLeft < clientWidth - toolbarWidth / 2 - 10
+                    ) {
+                        toolbarRef.value.style.left = imgLeft + 'px';
+                    }
+                }
+            }
             // 创建工具栏
-            if (props.toolbar.show) {
+            if (props.toolbar.show !== false) {
                 const _toolbar = createVNode(SePreviewToolbar, {
-                    class: 'se-img-preview-toolbar-item',
                     ...props.toolbar,
                     index: nowIndex,
                     total: _option.imgList.length,
@@ -651,7 +779,47 @@ export default defineComponent({
                     onRotate: rotateImg,
                     onFlip: flipImg,
                     onReset: resetImg,
-                    onChange: userChangeImg
+                    onChange: userChangeImg,
+                    onDownload: userDownload,
+                    onClose: userClosePreview,
+                    onExportToolbarWidth: (width: number) => {
+                        toolbarWidth = width;
+                    },
+                    onInitToolbarLocation: initToolbarLocation,
+                    class: !_option.modal
+                        ? 'se-img-preview-toolbar-noModal'
+                        : ''
+                });
+                render(_toolbar, toolbarRef.value);
+            } else if (
+                props.toolbar.show === false &&
+                !props.modal &&
+                _option.imgList.length > 1
+            ) {
+                // 若工具栏不显示, 且遮罩不存在, 则显示工具栏且只显示切换按钮
+                const _toolbar = createVNode(SePreviewToolbar, {
+                    index: nowIndex,
+                    total: _option.imgList.length,
+                    zoom: false,
+                    rotate: false,
+                    flip: false,
+                    reset: false,
+                    pagination: false,
+                    download: false,
+                    onZoom: scaleImg,
+                    onRotate: rotateImg,
+                    onFlip: flipImg,
+                    onReset: resetImg,
+                    onChange: userChangeImg,
+                    onDownload: userDownload,
+                    onClose: userClosePreview,
+                    onExportToolbarWidth: (width: number) => {
+                        toolbarWidth = width;
+                    },
+                    onInitToolbarLocation: initToolbarLocation,
+                    class: !_option.modal
+                        ? 'se-img-preview-toolbar-noModal'
+                        : ''
                 });
                 render(_toolbar, toolbarRef.value);
             }
@@ -668,9 +836,15 @@ export default defineComponent({
                 )}
                 <div class="se-img-preview-img" ref={imagesRef}></div>
                 <div class="se-img-preview-toolbar" ref={toolbarRef}></div>
-                <div class="se-img-preview-close" onClick={userClosePreview}>
-                    {props.closeIcon}
-                </div>
+                {props.modal && (
+                    <div
+                        class="se-img-preview-close"
+                        onClick={userClosePreview}
+                    >
+                        {props.closeIcon}
+                    </div>
+                )}
+                <div class="se-img-preview-msg" ref={msgRootRef}></div>
             </div>
         );
     }

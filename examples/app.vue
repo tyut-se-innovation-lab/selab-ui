@@ -37,7 +37,10 @@
         <button @click="msg('warning')">warning</button>
         <button @click="msg('danger')">danger</button>
         <button @click="msg('info')">info</button>
-        <button @click="$seMsg('info')">$seMsg</button>
+        <button @click="$seMsg('info')">$seMsg</button>4
+        <button @click="myAlbum.open()">myAlbum open</button>
+        <button @click="myAlbum.close()">myAlbum close</button>
+        <button @click="myAlbum.unReg()">myAlbum unregister</button>
         <se-img
             v-for="i of [...Array(6).keys()]"
             :key="i"
@@ -49,8 +52,21 @@
                 name: '测试',
                 minScale: 1,
                 maxScale: 50,
-                animation: 'slide',
-                loop: false
+                animation: 'fade',
+                loop: false,
+                toolbar: {
+                    show: true,
+                    zoom: true,
+                    rotate: true,
+                    reset: true,
+                    pagination: true,
+                    flip: true,
+                    download: onImgDownload
+                },
+                scaleStep: 0.5,
+                closeIcon: '滚',
+                closeOnClickModal: true,
+                closeOnPressEscape: true
             }"
         >
             <template #loading>
@@ -73,10 +89,14 @@
                 album: true,
                 albumList: imgList,
                 animation: 'slide',
+                loop: false,
                 modal: false,
                 onChange: onImgChange,
                 onClose: onImgClose,
-                onOpen: onImgOpen
+                onOpen: onImgOpen,
+                toolbar: {
+                    show: false
+                }
             }"
         >
             <template #loading>
@@ -93,7 +113,7 @@
 </template>
 <script lang="ts" setup>
 import { ref, createVNode } from 'vue';
-import { seMsg } from 'selab-ui';
+import { seMsg, seRegAlbum } from 'selab-ui';
 import img1 from './src/assets/img/img (1).png';
 import img2 from './src/assets/img/img (2).png';
 import img3 from './src/assets/img/img (3).png';
@@ -144,7 +164,7 @@ function msg(type: 'success' | 'warning' | 'danger' | 'info') {
     //     msgA.close();
     // }, 2000);
 }
-const onImgChange = (change: () => void, index: number) => {
+const onImgChange = (change: () => void, index: number | false) => {
     change();
     console.log('onImgChange', index);
 };
@@ -156,10 +176,26 @@ const onImgOpen = (open: () => void) => {
     open();
     console.log('onImgOpen');
 };
+const onImgDownload = (e: any) => {
+    console.log('onImgDownload', e);
+};
 const filter = (value: string) => {
     console.log(value);
     return options.value.filter((i) => i.label.includes(value));
 };
+const myAlbum = seRegAlbum({
+    albumList: imgList,
+    animation: 'slide',
+    loop: false,
+    modal: false,
+    onChange: onImgChange,
+    onClose: onImgClose,
+    onOpen: onImgOpen,
+    toolbar: {
+        show: true
+    }
+});
+
 const value3 = ref([]);
 const loading = ref(false);
 const options3 = ref<{ value: string | number; label: string }[]>();

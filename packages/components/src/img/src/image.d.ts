@@ -7,6 +7,17 @@ declare module "*.png" {
   export default value;
 }
 
+type DownloadEvent = {
+    // 下载的图片地址
+    src: string;
+    // 下载的图片名称
+    name: string;
+    // 全部图片的地址
+    srcList: string[];
+    // 当前图片的索引
+    index: number;
+};
+
 type ToolBar = {
     // 是否显示工具栏, 默认 true
     show: boolean;
@@ -19,7 +30,7 @@ type ToolBar = {
     // 是否显示还原按钮, 默认 true
     reset: boolean;
     // 下载按钮事件, 默认 false
-    download: false | (() => void);
+    download: false | ((event: DownloadEvent) => void);
     // 是否显示页码, 默认 true
     pagination: boolean;
 };
@@ -38,8 +49,6 @@ export type PreviewType = {
     src: string;
     // 是否开启遮罩, 默认 true
     modal: boolean;
-    // 在放大倍数未超出屏幕时是否可移动, 默认 true
-    movable: boolean;
     // 缩放每步的倍数, 实际值为 1 + scaleStep, 默认 0.5
     scaleStep: number;
     // 最小缩放倍数, 默认 1
@@ -69,7 +78,7 @@ export type PreviewType = {
     // 图片加载失败的回调
     onError: (e: Event) => void;
     // 图片切换的回调
-    onChange: (change: () => void, index: number) => void;
+    onChange: (change: () => void, index: number | false) => void;
     // 打开预览的回调, 当用户点击图片打开时拦截
     onOpen: (open: () => void) => void;
     // 关闭预览的回调, 当用户点击关闭按钮、遮罩或Esc关闭时拦截
@@ -120,7 +129,7 @@ export type Instance = {
     // 预览的组件实例的根元素
     root: HTMLElement;
     // 工具栏配置
-    toolbar: ToolBar;
+    toolbar: Partial<ToolBar>;
     // 点击遮罩的事件
     clickMask: (e: Event) => void;
     // vNode

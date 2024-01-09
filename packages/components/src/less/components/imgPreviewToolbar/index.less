@@ -1,0 +1,69 @@
+@import url('../../base/index.less');
+
+.se-img-preview-toolbar-root {
+  position: relative;
+  background-color: #00000044;
+  border-radius: 999px;
+  box-shadow: 0 0 10px #00000044;
+  color: #ffffffaa;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+
+  &.se-img-preview-toolbar-noModal {
+    background-color: #00000066;
+    border: 1.4px solid #ffffff66;
+  }
+  
+  & ul {
+    position: relative;
+    display: flex;
+    align-items: center;
+    list-style: none;
+    padding: 8px 10px;
+    margin: 0;
+    transition: all .3s;
+    cursor: default;
+
+    & li {
+      display: flex;
+      transition: all .3s;
+      margin-right: 10px;
+
+      & button {
+        margin-right: 10px;
+        height: 32px;
+        width: 32px;
+        border-radius: 50%;
+        border: none;
+        background-color: #00000000;
+        color: #ffffffaa;
+        cursor: pointer;
+        transition: all .3s;
+        outline: none;
+
+        &:last-child {
+          margin-right: 0;
+        }
+
+        &:hover {
+          background-color: #00000022;
+          color: #ffffffff;
+        }
+      }
+
+      & span {
+        margin: 0 10px;
+        white-space: nowrap;
+        transition: all .3s;
+
+        &:hover {
+        color: #ffffffff;
+        }
+      }
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}

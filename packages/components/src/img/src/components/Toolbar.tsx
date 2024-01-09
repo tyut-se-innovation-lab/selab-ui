@@ -1,12 +1,13 @@
-import { VNode, defineComponent } from 'vue';
+import { Ref, VNode, defineComponent, onMounted, ref } from 'vue';
 import { previewToolbarProps } from '../image';
 import { PreviewToolbarProps } from '../image.d';
+import '../../../less/components/imgPreviewToolbar/index.less';
 
 export default defineComponent({
     name: 'se-img',
     props: previewToolbarProps,
     setup(props, { emit }): () => VNode {
-        console.log('previewToolbarProps', props);
+        const root = ref() as Ref<HTMLDivElement>;
         // 显示的内容
         const content: { [key: string]: boolean } = {};
         ['zoom', 'rotate', 'reset', 'flip', 'download', 'pagination'].forEach(
@@ -16,10 +17,61 @@ export default defineComponent({
                     : false;
             }
         );
+        const isNoModal = ref(false);
+        onMounted(() => {
+            emit(
+                'exportToolbarWidth',
+                parseFloat(getComputedStyle(root.value).width) + 60
+            );
+            isNoModal.value = root.value.classList.contains(
+                'se-img-preview-toolbar-noModal'
+            );
+            setTimeout(() => {
+                if (isNoModal.value) {
+                    const ulWidth = parseFloat(
+                        getComputedStyle(
+                            root.value.childNodes[0] as HTMLUListElement
+                        ).width
+                    );
+                    (root.value.childNodes[0] as HTMLUListElement).style.width =
+                        '32px';
+                    root.value.onmouseenter = () => {
+                        (
+                            root.value.childNodes[0] as HTMLUListElement
+                        ).style.width = ulWidth - 40 + 'px';
+                        (
+                            root.value.childNodes[0] as HTMLUListElement
+                        ).style.left = -40 + 'px';
+                        (
+                            root.value.childNodes[0]
+                                .childNodes[0] as HTMLLIElement
+                        ).style.cssText = 'transition: all .3s; opacity: 0;';
+                    };
+                    root.value.onmouseleave = () => {
+                        (
+                            root.value.childNodes[0] as HTMLUListElement
+                        ).style.width = '32px';
+                        (
+                            root.value.childNodes[0] as HTMLUListElement
+                        ).style.left = 0 + 'px';
+                        (
+                            root.value.childNodes[0]
+                                .childNodes[0] as HTMLLIElement
+                        ).style.cssText = 'transition: all .3s; opacity: 1;';
+                        emit('initToolbarLocation');
+                    };
+                }
+            });
+        });
         return () => {
             return (
-                <div>
+                <div class="se-img-preview-toolbar-root" ref={root}>
                     <ul>
+                        {isNoModal.value && (
+                            <li>
+                                <nav>more</nav>
+                            </li>
+                        )}
                         {content.zoom && (
                             <li>
                                 <button onClick={() => emit('zoom', 'out')}>
@@ -74,17 +126,34 @@ export default defineComponent({
                         )}
                         {props.total > 1 && (
                             <li>
-                                <button onClick={() => emit('change', 'prev')}>
+                                <button
+                                    onClick={(e: MouseEvent) =>
+                                        emit('change', 'prev', e)
+                                    }
+                                >
                                     上一张
                                 </button>
-                                <button onClick={() => emit('change', 'next')}>
+                                <button
+                                    onClick={(e: MouseEvent) =>
+                                        emit('change', 'next', e)
+                                    }
+                                >
                                     下一张
+                                </button>
+                            </li>
+                        )}
+                        {isNoModal.value && (
+                            <li>
+                                <button onClick={() => emit('close')}>
+                                    关闭
                                 </button>
                             </li>
                         )}
                         {content.pagination && props.total > 1 && (
                             <li>
-                                {props.index.value + 1} / {props.total}
+                                <span>
+                                    {props.index.value + 1} / {props.total}
+                                </span>
                             </li>
                         )}
                     </ul>

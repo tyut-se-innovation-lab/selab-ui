@@ -1,5 +1,5 @@
 import { shallowReactive, shallowRef, createVNode, render } from 'vue';
-import { ImgPropsType, PreviewType, Instance } from './image.d';
+import { ImgPropsType, PreviewType, Instance, ToolBar } from './image.d';
 import { previewDefault } from './image';
 import SePreview from './components/Preview';
 import { getPupOpsMountedLocation } from '@selab-ui/utils';
@@ -83,8 +83,33 @@ function previewCheck(props: Readonly<ImgPropsType>): PreviewType | false {
 // 注册预览图片
 function registerPreviewImage(
     option: PreviewType,
-    mask: HTMLElement
+    mask: HTMLElement,
+    isTemporary = false
 ): Instance {
+    if (isTemporary) {
+        const instance: Instance = {
+            preview: {
+                ...option,
+                toolbar: { ...option.toolbar }
+            },
+            mask: [mask],
+            root: getPupOpsMountedLocation(),
+            toolbar: { ...option.toolbar },
+            clickMask: function (e) {
+                const _openPreview = (index: number) => {
+                    previewImage(instance, index);
+                };
+                instance.mask.find((item, index) => {
+                    if (item.contains(e.target as Node)) {
+                        instance.preview.onOpen(() => _openPreview(index));
+                    }
+                });
+            },
+            vNode: null
+        };
+        mask.addEventListener('click', instance.clickMask);
+        return instance;
+    }
     // 通过option创建用于实例化Preview.tsx的配置, 并添加到instances, 同时创建事件监听器
     const _instance = instances.find((item) => {
         if (item.preview.name === option.name) {
@@ -110,8 +135,7 @@ function registerPreviewImage(
                 previewImage(instance, index);
             };
             instance.mask.find((item, index) => {
-                if (item === e.target) {
-                    // previewImage(instance, index);
+                if (item.contains(e.target as Node)) {
                     instance.preview.onOpen(() => _openPreview(index));
                 }
             });
@@ -157,8 +181,13 @@ function unregisterPreviewImage(option: PreviewType, mask: HTMLElement) {
 function previewImage(instance: Instance, index = 0) {
     // 如果该预览已经存在, 则直接返回
     if (previewInstance.value === instance) return;
+    // 如果下标超出范围, 则重置为报错
+    if (index >= instance.preview.albumList.length) {
+        throw new Error(
+            `Index out of range, index: ${index}, albumList: ${instance.preview.albumList.length}`
+        );
+    }
     unPreviewImage();
-    console.log('previewImage', instance, index);
     // 创建Preview组件实例, 挂载到instance.root上
     instance.vNode = createVNode(SePreview, {
         ...instance.preview,
@@ -192,6 +221,104 @@ function unPreviewImage() {
     }, 300);
 }
 
+// 注册相册，返回注销和启动预览和关闭预览的方法
+function registerAlbum({
+    albumList,
+    modal = true,
+    scaleStep = 0.5,
+    minScale = 1,
+    maxScale = 50,
+    closeIcon = 'close',
+    toolbar = {
+        zoom: true,
+        rotate: true,
+        flip: true,
+        reset: true,
+        download: false,
+        pagination: true,
+        show: true
+    },
+    loop = true,
+    animation = 'slide',
+    closeOnClickModal = true,
+    closeOnPressEscape = true,
+    onError = () => {},
+    onChange = (change: () => void) => change(),
+    onOpen = (open: () => void) => open(),
+    onClose = (close: () => void) => close()
+}: {
+    albumList: string[];
+    modal?: boolean;
+    scaleStep?: number;
+    minScale?: number;
+    maxScale?: number;
+    closeIcon?: string;
+    toolbar?: Partial<ToolBar>;
+    loop?: boolean;
+    animation?: 'none' | 'slide' | 'fade';
+    closeOnClickModal?: boolean;
+    closeOnPressEscape?: boolean;
+    onError?: (e: Event) => void;
+    onChange?: (change: () => void, index: number | false) => void;
+    onOpen?: (open: () => void) => void;
+    onClose?: (close: () => void) => void;
+}): {
+    open: () => void;
+    close: () => void;
+    unReg: () => void;
+} {
+    // 创建临时dom, 用于挂载预览触发的点击事件
+    const dom = document.createElement('div');
+    // 将dom挂载到body上
+    const root = getPupOpsMountedLocation();
+    dom.style.position = 'fixed';
+    dom.style.top = '50vw';
+    dom.style.left = '50vw';
+    dom.style.width = '0';
+    dom.style.height = '0';
+    dom.style.zIndex = '-1';
+    dom.className = 'se-img-none se-img-fit-cover';
+    root.appendChild(dom);
+    const instance = registerPreviewImage(
+        {
+            album: true,
+            albumList,
+            name: Math.floor(Math.random() * 999999999999999).toString(36),
+            modal,
+            scaleStep,
+            minScale,
+            maxScale,
+            closeIcon,
+            toolbar: { ...toolbar } as ToolBar,
+            loop,
+            animation,
+            closeOnClickModal,
+            closeOnPressEscape,
+            onError,
+            onChange,
+            onOpen,
+            onClose,
+            src: ''
+        },
+        dom
+    );
+    let isOpen = false;
+    const open = () => {
+        dom.click();
+        isOpen = true;
+    };
+    const close = () => {
+        unPreviewImage();
+        isOpen = false;
+    };
+    const unReg = () => {
+        if (isOpen) close();
+        instance.mask[0].removeEventListener('click', instance.clickMask);
+        dom.remove();
+    };
+    return { open, close, unReg };
+}
+
 export {
     observer,
     previewCheck,
@@ -200,3 +327,5 @@ export {
     previewImage,
     unPreviewImage
 };
+
+export default registerAlbum;

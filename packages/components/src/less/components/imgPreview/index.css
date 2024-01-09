@@ -38,8 +38,8 @@
 }
 .se-img-preview .se-img-preview-toolbar {
   position: fixed;
-  bottom: 10px;
-  left: 50%;
+  top: calc(100vh - 80px);
+  left: 50vw;
   transform: translateX(-50%);
   transition: all 0.3s;
   animation-name: showToolbar;
@@ -53,15 +53,28 @@
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  background-color: #00000066;
+  background-color: #00000033;
   color: #fff;
   text-align: center;
   line-height: 30px;
+  backdrop-filter: blur(10px);
   cursor: pointer;
   transition: all 0.3s;
+  z-index: 99;
 }
 .se-img-preview .se-img-preview-close:hover {
-  background-color: #00000099;
+  background-color: #00000055;
+}
+.se-img-preview .se-img-preview-msg {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  z-index: 99;
 }
 @keyframes showPreview {
   0% {

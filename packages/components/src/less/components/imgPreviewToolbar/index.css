@@ -1,0 +1,64 @@
+.hover-underline:hover {
+  text-decoration: underline;
+}
+.hover-pointer:hover {
+  cursor: pointer;
+}
+.se-img-preview-toolbar-root {
+  position: relative;
+  background-color: #00000044;
+  border-radius: 999px;
+  box-shadow: 0 0 10px #00000044;
+  color: #ffffffaa;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+.se-img-preview-toolbar-root.se-img-preview-toolbar-noModal {
+  background-color: #00000066;
+  border: 1.4px solid #ffffff66;
+}
+.se-img-preview-toolbar-root ul {
+  position: relative;
+  display: flex;
+  align-items: center;
+  list-style: none;
+  padding: 8px 10px;
+  margin: 0;
+  transition: all 0.3s;
+  cursor: default;
+}
+.se-img-preview-toolbar-root ul li {
+  display: flex;
+  transition: all 0.3s;
+  margin-right: 10px;
+}
+.se-img-preview-toolbar-root ul li button {
+  margin-right: 10px;
+  height: 32px;
+  width: 32px;
+  border-radius: 50%;
+  border: none;
+  background-color: #00000000;
+  color: #ffffffaa;
+  cursor: pointer;
+  transition: all 0.3s;
+  outline: none;
+}
+.se-img-preview-toolbar-root ul li button:last-child {
+  margin-right: 0;
+}
+.se-img-preview-toolbar-root ul li button:hover {
+  background-color: #00000022;
+  color: #ffffffff;
+}
+.se-img-preview-toolbar-root ul li span {
+  margin: 0 10px;
+  white-space: nowrap;
+  transition: all 0.3s;
+}
+.se-img-preview-toolbar-root ul li span:hover {
+  color: #ffffffff;
+}
+.se-img-preview-toolbar-root ul li:last-child {
+  margin-right: 0;
+}

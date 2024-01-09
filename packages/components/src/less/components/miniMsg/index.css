@@ -1,0 +1,65 @@
+.hover-underline:hover {
+  text-decoration: underline;
+}
+.hover-pointer:hover {
+  cursor: pointer;
+}
+.se-msg-mini-root {
+  position: absolute;
+  width: 0;
+  height: 0;
+  top: 0;
+  left: 0;
+  z-index: 999;
+}
+.se-msg-mini-root .se-msg-mini {
+  position: absolute;
+  height: 32px;
+  transition: all 0.3s;
+  transform: translate(-50%, -50%);
+  box-sizing: content-box;
+  font-size: initial;
+  border: 1.4px solid;
+  border-radius: 8px;
+  line-height: 32px;
+  backdrop-filter: blur(10px);
+  padding: 0 8px;
+  animation-name: showMiniMsg;
+  animation-iteration-count: 1;
+  animation: showMiniMsg 0.2s;
+  cursor: default;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.se-msg-mini-root .se-msg-mini.se-msg-mini-success {
+  color: #2ecc71;
+  border-color: #a8ebc4;
+  background-color: #d7f5d1;
+}
+.se-msg-mini-root .se-msg-mini.se-msg-mini-warning {
+  color: #f39c12;
+  border-color: #fad9a4;
+  background-color: #fceebc;
+}
+.se-msg-mini-root .se-msg-mini.se-msg-mini-danger {
+  color: #e74c3c;
+  border-color: #f8c9c4;
+  background-color: #fbdbe8;
+}
+.se-msg-mini-root .se-msg-mini.se-msg-mini-info {
+  color: #3498db;
+  border-color: #b6daf2;
+  background-color: #cbf6f2;
+}
+@keyframes showMiniMsg {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}

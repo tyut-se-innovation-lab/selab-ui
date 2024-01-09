@@ -11,7 +11,6 @@ import {
 export const previewDefault: PreviewType = {
     src: '',
     modal: true,
-    movable: true,
     scaleStep: 0.5,
     minScale: 1,
     maxScale: 50,
@@ -29,7 +28,7 @@ export const previewDefault: PreviewType = {
     album: false,
     albumList: [],
     loop: true,
-    animation: 'none',
+    animation: 'slide',
     closeOnClickModal: true,
     closeOnPressEscape: true,
     onError: () => {},
@@ -111,10 +110,6 @@ export const imgPreviewProps: ImgPreviewProps = {
         type: Boolean,
         default: previewDefault.modal
     },
-    movable: {
-        type: Boolean,
-        default: previewDefault.movable
-    },
     scaleStep: {
         type: Number,
         default: previewDefault.scaleStep
@@ -168,7 +163,9 @@ export const imgPreviewProps: ImgPreviewProps = {
         default: previewDefault.onError
     },
     onChange: {
-        type: Function as PropType<(change: () => void, index: number) => void>,
+        type: Function as PropType<
+            (change: () => void, index: number | false) => void
+        >,
         default: previewDefault.onChange
     },
     onOpen: {

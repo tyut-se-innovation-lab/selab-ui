@@ -18,3 +18,6 @@ export * from "./img";
 
 // 导入图表
 export * from "./icon";
+
+// 导入微型消息
+export * from "./miniMsg";
