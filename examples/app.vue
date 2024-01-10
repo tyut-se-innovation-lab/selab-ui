@@ -184,8 +184,8 @@ const filter = (value: string) => {
 };
 const myAlbum = seRegAlbum({
     albumList: imgList,
-    animation: 'slide',
-    loop: false,
+    animation: 'none',
+    loop: true,
     modal: false,
     onChange: onImgChange,
     onClose: onImgClose,

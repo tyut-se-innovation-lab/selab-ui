@@ -66,7 +66,7 @@ export default defineComponent({
                 instance = registerPreviewImage(
                     preview,
                     mask.value as HTMLDivElement
-                );
+                ) as Instance;
                 index = instance.mask.indexOf(mask.value as HTMLDivElement);
             }
             if (props.lazy) {

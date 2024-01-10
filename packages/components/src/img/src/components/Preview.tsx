@@ -212,13 +212,16 @@ export default defineComponent({
             // 检测鼠标在遮罩上的位置, 更改鼠标样式
             const changeMouse = (e: MouseEvent) => {
                 if (e.clientX < clientWidth / 2 - imgWidthOriginal / 2) {
-                    if (_option.index !== 0)
+                    if (_option.index !== 0 || _option.loop)
                         maskRef.value!.style.cursor = `url(${leftCur}), auto`;
                     else {
                         maskRef.value!.style.cursor = 'not-allowed';
                     }
                 } else if (e.clientX > clientWidth / 2 + imgWidthOriginal / 2) {
-                    if (_option.index !== _option.imgList.length - 1)
+                    if (
+                        _option.index !== _option.imgList.length - 1 ||
+                        _option.loop
+                    )
                         maskRef.value!.style.cursor = `url(${rightIco}), auto`;
                     else {
                         maskRef.value!.style.cursor = 'not-allowed';
@@ -349,24 +352,30 @@ export default defineComponent({
                 // 获取当前图片的显示宽高
                 const imgWidth = parseFloat(imgNow.width);
                 const imgHeight = parseFloat(imgNow.height);
-                // 计算当前缩放比例
-                const scale = Math.floor(imgWidth / imgWidthOriginal);
-                // 若当前缩放比例小于最小缩放比例, 则不允许继续缩小
-                if (type === 'out' && scale < _option.minScale) return;
-                // 若当前缩放比例大于最大缩放比例, 则不允许继续放大
-                if (type === 'in' && scale > _option.maxScale) return;
                 // 获取当前图片的位置
                 const imgLeft = parseFloat(imgNow.left);
                 const imgTop = parseFloat(imgNow.top);
                 // 计算缩放后的宽高
-                const newWidth =
+                let newWidth =
                     type === 'in'
                         ? imgWidth * _option.scaleStep
                         : imgWidth / _option.scaleStep;
-                const newHeight =
+                let newHeight =
                     type === 'in'
                         ? imgHeight * _option.scaleStep
                         : imgHeight / _option.scaleStep;
+                // 计算当前缩放比例
+                const scale = imgWidth / imgWidthOriginal;
+                // 若当前缩放比例小于最小缩放比例, 则宽高改为最小缩放比例
+                if (type === 'out' && scale < _option.minScale) {
+                    newWidth = imgWidthOriginal * _option.minScale;
+                    newHeight = imgHeightOriginal * _option.minScale;
+                }
+                // 若当前缩放比例大于最大缩放比例, 则宽高改为最大缩放比例
+                if (type === 'in' && scale > _option.maxScale) {
+                    newWidth = imgWidthOriginal * _option.maxScale;
+                    newHeight = imgHeightOriginal * _option.maxScale;
+                }
                 // 确认缩放点
                 const _origin = origin ? origin : [imgWidth / 2, imgHeight / 2];
                 // 计算缩放后的位置
