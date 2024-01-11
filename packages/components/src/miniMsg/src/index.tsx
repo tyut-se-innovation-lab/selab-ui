@@ -134,15 +134,13 @@ function locationFormat(
     };
 }
 
-// const closePrev = function () {};
-
 export const seMiniMeg = function ({
     msg,
     type = 'info',
     duration = 1000,
     location,
     root,
-    isViewport = false
+    isViewport = true
 }: {
     // 内容
     msg: string;

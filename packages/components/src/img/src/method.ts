@@ -30,6 +30,38 @@ const observer = new IntersectionObserver(
     { threshold: 0.01 }
 );
 
+// 判断配置合法性
+function checkPreview(option: PreviewType): boolean {
+    if (option.album) {
+        if (!option.albumList || option.albumList.length === 0) {
+            throw new Error('AlbumList is empty but it is must for album.');
+        }
+        return false;
+    }
+
+    if (option.scaleStep <= 0) {
+        throw new Error('ScaleStep must be greater than 0.');
+        return false;
+    }
+
+    if (option.minScale <= 0) {
+        throw new Error('MinScale must be greater than 0.');
+        return false;
+    }
+
+    if (option.maxScale < 1) {
+        throw new Error('MaxScale must be greater than 1.');
+        return false;
+    }
+
+    if (option.minScale >= option.maxScale) {
+        throw new Error('MinScale must be less than MaxScale.');
+        return false;
+    }
+
+    return true;
+}
+
 // 通过img设置的preview配置检测
 function previewCheck(props: Readonly<ImgPropsType>): PreviewType | false {
     if (typeof props.preview === 'boolean') {
@@ -47,6 +79,7 @@ function previewCheck(props: Readonly<ImgPropsType>): PreviewType | false {
             return false;
         }
     } else {
+        // 在这里添加判断配置合法性的函数
         // 当 preview 为对象时, 判断是否有相同的命名
         const instance =
             instances.length !== 0 &&
@@ -70,13 +103,15 @@ function previewCheck(props: Readonly<ImgPropsType>): PreviewType | false {
         const name =
             props.preview.name ||
             Math.floor(Math.random() * 999999999999999).toString(36);
-        if (
-            props.preview.album &&
-            (!props.preview.albumList || props.preview.albumList.length === 0)
-        ) {
-            // 当开启相册预览时, 但是相册列表为空时, 报错
-            throw new Error('AlbumList is empty but it is must for album.');
-        } else if (!props.preview.album) {
+        // if (
+        //     props.preview.album &&
+        //     (!props.preview.albumList || props.preview.albumList.length === 0)
+        // ) {
+        //     // 当开启相册预览时, 但是相册列表为空时, 报错
+        //     throw new Error('AlbumList is empty but it is must for album.');
+        // } else
+
+        if (!props.preview.album) {
             // 当不是相册预览时, 直接使用 img 的 src
             props.preview.albumList = [];
             props.preview.albumList.push(props.preview.src || props.src);
@@ -92,6 +127,8 @@ function registerPreviewImage(
     mask: HTMLElement | null,
     isTemporary = false
 ): Instance | TemporaryInstance {
+    // 检测配置合法性
+    if (!checkPreview(option)) throw new Error('Preview config is error.');
     // 如果是临时的, 则直接创建实例, 并添加事件监听器
     if (isTemporary) {
         const instance: TemporaryInstance = {

@@ -112,7 +112,7 @@
 </template>
 <script lang="ts" setup>
 import { ref, createVNode } from 'vue';
-import { seMsg, seRegAlbum } from 'selab-ui';
+import { seMsg, seCreateAlbum } from 'selab-ui';
 import img1 from './src/assets/img/img (1).png';
 import img2 from './src/assets/img/img (2).png';
 import img3 from './src/assets/img/img (3).png';
@@ -182,7 +182,7 @@ const filter = (value: string) => {
     console.log(value);
     return options.value.filter((i) => i.label.includes(value));
 };
-const myAlbum = seRegAlbum({
+const myAlbum = seCreateAlbum({
     albumList: imgList,
     animation: 'none',
     loop: true,
