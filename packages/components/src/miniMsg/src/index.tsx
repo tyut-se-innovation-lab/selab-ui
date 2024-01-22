@@ -98,14 +98,14 @@ type locationType =
 function locationFormat(
     location: { x: locationType; y: locationType },
     msg: string,
-    isViewport: boolean,
+    // isViewport: boolean,
     root: HTMLElement | null
 ) {
     const { x, y } = location;
     const msgWidth = getStringWidth(msg);
     let rootWidth: number;
     let rootHeight: number;
-    if (isViewport) {
+    if (!root) {
         rootWidth = document.documentElement.clientWidth;
         rootHeight = document.documentElement.clientHeight;
     } else {
@@ -168,8 +168,7 @@ export const seMiniMeg = function ({
     type = 'info',
     duration = 1000,
     location,
-    root,
-    isViewport = true
+    root
 }: {
     // 内容
     message: string;
@@ -184,16 +183,10 @@ export const seMiniMeg = function ({
     };
     // 挂载点
     root?: HTMLElement;
-    // 是否挂载到视口
-    isViewport?: boolean;
 }) {
+    // 如果当前有miniMsg正在显示，则关闭当前的miniMsg
     if (nowMagClose) nowMagClose();
-    const _location = locationFormat(
-        location,
-        msg,
-        isViewport,
-        root ? root : null
-    );
+    const _location = locationFormat(location, message, root ? root : null);
     const div = document.createElement('div');
     div.className = 'se-msg-mini-root';
 
