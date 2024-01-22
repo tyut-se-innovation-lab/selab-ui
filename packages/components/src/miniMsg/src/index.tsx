@@ -63,11 +63,40 @@ const miniMsgComponent = defineComponent({
     }
 });
 
+// 保存当前的miniMsg的close方法
 let nowMagClose: () => void;
 
-// 将location的位置规范化并添加单位
+// 限制x y的值为数字或数字加单位字符串
+type locationType =
+    | number
+    | `${number}%`
+    | `${number}cm`
+    | `${number}mm`
+    | `${number}Q`
+    | `${number}in`
+    | `${number}pc`
+    | `${number}pt`
+    | `${number}px`
+    | `${number}em`
+    | `${number}ex`
+    | `${number}ch`
+    | `${number}rem`
+    | `${number}vw`
+    | `${number}vh`
+    | `${number}vmin`
+    | `${number}vmax`
+    | `${number}vb`
+    | `${number}vi`
+    | `${number}svw`
+    | `${number}svh`
+    | `${number}lvw`
+    | `${number}lvh`
+    | `${number}dvw`
+    | `${number}dvh`;
+
+/** 将location的位置规范化并添加单位 */
 function locationFormat(
-    location: { x: number | string; y: number | string },
+    location: { x: locationType; y: locationType },
     msg: string,
     isViewport: boolean,
     root: HTMLElement | null
@@ -150,8 +179,8 @@ export const seMiniMeg = function ({
     duration?: number;
     // 位置(相对于root)
     location: {
-        x: number | string;
-        y: number | string;
+        x: locationType;
+        y: locationType;
     };
     // 挂载点
     root?: HTMLElement;
