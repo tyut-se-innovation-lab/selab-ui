@@ -13,7 +13,7 @@ import { getStringWidth, getPupOpsMount } from '@selab-ui/utils';
 const miniMsgComponent = defineComponent({
     name: 'se-img-previewMsg',
     props: {
-        msg: {
+        message: {
             type: String,
             default: '',
             required: true
@@ -55,9 +55,9 @@ const miniMsgComponent = defineComponent({
                 class={`se-msg-mini se-msg-mini-${props.type}`}
                 style={`left:${props.location.x};top:${
                     props.location.y
-                }; width: ${getStringWidth(props.msg)}px;`}
+                }; width: ${getStringWidth(props.message)}px;`}
             >
-                {props.msg}
+                {props.message}
             </div>
         );
     }
@@ -135,7 +135,7 @@ function locationFormat(
 }
 
 export const seMiniMeg = function ({
-    msg,
+    message,
     type = 'info',
     duration = 1000,
     location,
@@ -143,7 +143,7 @@ export const seMiniMeg = function ({
     isViewport = true
 }: {
     // 内容
-    msg: string;
+    message: string;
     // 类型
     type?: 'info' | 'success' | 'danger' | 'warning';
     // 持续时间
@@ -173,7 +173,7 @@ export const seMiniMeg = function ({
         mountLocation.mount(div);
     }
     const vNode = createVNode(miniMsgComponent, {
-        msg,
+        message,
         type,
         duration,
         location: _location
