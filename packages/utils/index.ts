@@ -70,6 +70,7 @@ export const getPupOpsMount = (): {
     };
 };
 
+/** 获取字符串长度(px) */
 export const getStringWidth = (msg: string, fontSize?: number): number => {
     const stringWidthDom = document.createElement('span');
     stringWidthDom.innerHTML = msg;
@@ -83,6 +84,7 @@ export const getStringWidth = (msg: string, fontSize?: number): number => {
     return width;
 };
 
+/** 获取静态vNode的高度(px) */
 export const getVNodeHeight = (vNode: VNode): number => {
     const boxHeightDom = document.createElement('div');
     boxHeightDom.style.position = 'absolute';
@@ -95,6 +97,7 @@ export const getVNodeHeight = (vNode: VNode): number => {
     return height;
 };
 
+/** 获取不同尺寸对应的缩放比例 */
 export const getSizeMap = (
     size: 'large' | 'small' | 'mini' | 'default'
 ): number => {
