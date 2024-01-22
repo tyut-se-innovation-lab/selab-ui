@@ -40,19 +40,34 @@ export const getStyle = (): ['info', 'success', 'warning', 'danger'] => [
 ];
 
 // (创建)返回全局窗口挂载节点
-export const getPupOpsMountedLocation = (): HTMLDivElement => {
+export const getPupOpsMount = (): {
+    mount: (childDom: HTMLElement) => void;
+    unmount: (childDom: HTMLElement) => void;
+} => {
     const id = '__se_window_mounted__';
-    let dom = document.getElementById(id);
+    let dom = document.getElementById(id) as HTMLDivElement;
     if (!dom) {
-        dom = document.createElement('div');
+        dom = document.createElement('div') as HTMLDivElement;
         dom.id = id;
-        dom.style.position = 'absolute';
+        dom.style.position = 'fixed';
         dom.style.top = '0';
         dom.style.left = '0';
+        dom.style.zIndex = '9999';
         document.body.appendChild(dom);
     }
 
-    return dom;
+    function mount(childDom: HTMLElement) {
+        dom.appendChild(childDom);
+    }
+
+    function unmount(childDom: HTMLElement) {
+        dom.removeChild(childDom);
+    }
+
+    return {
+        mount: mount.bind(null),
+        unmount: unmount.bind(null)
+    };
 };
 
 export const getStringWidth = (msg: string, fontSize?: number): number => {
@@ -60,7 +75,8 @@ export const getStringWidth = (msg: string, fontSize?: number): number => {
     stringWidthDom.innerHTML = msg;
     stringWidthDom.style.position = 'absolute';
     stringWidthDom.style.left = '-9999px';
-    fontSize && (stringWidthDom.style.fontSize = fontSize + 'px');
+    if (fontSize) stringWidthDom.style.fontSize = fontSize + 'px';
+    else stringWidthDom.style.fontSize = 'initial';
     document.body.appendChild(stringWidthDom);
     const width = stringWidthDom.offsetWidth;
     document.body.removeChild(stringWidthDom);
@@ -79,7 +95,9 @@ export const getVNodeHeight = (vNode: VNode): number => {
     return height;
 };
 
-export const getSizeMap = (size: string): number => {
+export const getSizeMap = (
+    size: 'large' | 'small' | 'mini' | 'default'
+): number => {
     switch (size) {
         case 'large':
             return 1.2;
