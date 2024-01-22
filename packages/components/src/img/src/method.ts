@@ -8,7 +8,7 @@ import {
 } from './image.d';
 import { previewDefault } from './image';
 import SePreview from './components/Preview';
-import { getPupOpsMountedLocation } from '@selab-ui/utils';
+import { getPupOpsMount } from '@selab-ui/utils';
 
 // 全部预览实例
 const instances = shallowReactive<Array<Instance>>([]);
@@ -136,7 +136,7 @@ function registerPreviewImage(
                 ...option,
                 toolbar: { ...option.toolbar }
             },
-            root: getPupOpsMountedLocation(),
+            root: getPupOpsMount(),
             toolbar: { ...option.toolbar },
             open: function (option: {
                 x: number;
@@ -176,7 +176,7 @@ function registerPreviewImage(
             toolbar: { ...option.toolbar }
         },
         mask: [mask],
-        root: getPupOpsMountedLocation(),
+        root: getPupOpsMount(),
         toolbar: { ...option.toolbar },
         clickMask: function (e) {
             const _openPreview = (index: number) => {
@@ -243,7 +243,12 @@ function previewImage(instance: Instance | TemporaryInstance, index = 0) {
     if (instance.preview.modal) document.body.style.overflow = 'hidden';
     const domRood = document.createElement('div');
     domRood.className = 'se-img-preview-direct-root';
-    instance.root.appendChild(domRood);
+    (
+        instance.root as {
+            mount: (childDom: HTMLElement) => void;
+            unmount: (childDom: HTMLElement) => void;
+        }
+    ).mount(domRood);
     render(instance.vNode, domRood);
     previewInstance.value = instance;
     instance.root = domRood;
@@ -260,10 +265,10 @@ function unPreviewImage() {
     previewInstance.value = null;
     instance.vNode!.component!.exposed?._close();
     setTimeout(() => {
-        render(null, instance.root);
+        render(null, instance.root as HTMLElement);
         instance.vNode = null;
-        instance.root.remove();
-        instance.root = getPupOpsMountedLocation();
+        (instance.root as HTMLElement).remove();
+        instance.root = getPupOpsMount();
     }, 300);
 }
 
