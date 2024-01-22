@@ -127,7 +127,10 @@ export type Instance = {
     // 遮罩元素
     mask: Array<HTMLElement>;
     // 预览的组件实例的根元素
-    root: HTMLElement;
+    root: HTMLElement | {
+        mount: (childDom: HTMLElement) => void;
+        unmount: (childDom: HTMLElement) => void;
+    };
     // 工具栏配置
     toolbar: Partial<ToolBar>;
     // 点击遮罩的事件
@@ -140,7 +143,10 @@ export type TemporaryInstance = {
     // 预览的配置
     preview: PreviewType;
     // 预览的组件实例的根元素
-    root: HTMLElement;
+    root: HTMLElement | {
+        mount: (childDom: HTMLElement) => void;
+        unmount: (childDom: HTMLElement) => void;
+    };
     // 工具栏配置
     toolbar: Partial<ToolBar>;
     // 启动预览
