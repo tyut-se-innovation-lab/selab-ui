@@ -580,8 +580,8 @@ export default defineComponent({
                 e: MouseEvent
             ) {
                 if (nextIndex === false) {
-                    let x: number | string;
-                    let y: number | string;
+                    let x: number | '50vw';
+                    let y: number | '50vh';
                     if (_option.modal) {
                         x = e.clientX;
                         y = e.clientY;
@@ -590,12 +590,11 @@ export default defineComponent({
                         y = '50vh';
                     }
                     seMiniMeg({
-                        msg: '已经到头了',
+                        message: '已经到头了',
                         type: 'warning',
                         location: { x, y },
                         duration: 1000,
-                        root: msgRootRef.value,
-                        isViewport: true
+                        root: msgRootRef.value
                     });
                     return;
                 }
@@ -728,12 +727,11 @@ export default defineComponent({
                 }
                 if (props.toolbar.download === false) {
                     seMiniMeg({
-                        msg: '未开放下载',
+                        message: '未开放下载',
                         type: 'info',
                         location: { x: clientWidth / 2, y: clientHeight - 100 },
                         duration: 1000,
-                        root: msgRootRef.value,
-                        isViewport: true
+                        root: msgRootRef.value
                     });
                 }
             }
