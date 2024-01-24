@@ -8,7 +8,7 @@ import {
     render
 } from 'vue';
 import '../../less/components/miniMsg/index.less';
-import { getStringWidth, getPupOpsMount } from '@selab-ui/utils';
+import { getStringWidth, pupOpsMount } from '@selab-ui/utils';
 
 const miniMsgComponent = defineComponent({
     name: 'se-img-previewMsg',
@@ -114,7 +114,6 @@ function locationFormat(
     }
     let xUnit: string;
     let yUnit: string;
-    console.log(x, y);
     if (typeof x === 'number') {
         if (msgWidth / 2 + 20 > x) {
             xUnit = msgWidth / 2 + 20 + 'px';
@@ -191,8 +190,8 @@ export const seMiniMeg = function ({
     div.className = 'se-msg-mini-root';
 
     if (!root) {
-        const mountLocation = getPupOpsMount();
-        mountLocation.mount(div);
+        const mountLocation = pupOpsMount();
+        mountLocation.mountDiv(div);
     }
     const vNode = createVNode(miniMsgComponent, {
         message,

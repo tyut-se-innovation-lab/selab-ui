@@ -1,4 +1,4 @@
-import { shallowReactive, shallowRef, createVNode, render } from 'vue';
+import { shallowReactive, shallowRef, createVNode, render, VNode } from 'vue';
 import {
     ImgPropsType,
     PreviewType,
@@ -8,7 +8,7 @@ import {
 } from './image.d';
 import { previewDefault } from './image';
 import SePreview from './components/Preview';
-import { getPupOpsMount } from '@selab-ui/utils';
+import { pupOpsMount } from '@selab-ui/utils';
 
 // 全部预览实例
 const instances = shallowReactive<Array<Instance>>([]);
@@ -32,31 +32,27 @@ const observer = new IntersectionObserver(
 
 // 判断配置合法性
 function checkPreview(option: PreviewType): boolean {
+    console.log(option);
     if (option.album) {
         if (!option.albumList || option.albumList.length === 0) {
             throw new Error('AlbumList is empty but it is must for album.');
         }
-        return false;
     }
 
     if (option.scaleStep <= 0) {
         throw new Error('ScaleStep must be greater than 0.');
-        return false;
     }
 
     if (option.minScale <= 0) {
         throw new Error('MinScale must be greater than 0.');
-        return false;
     }
 
     if (option.maxScale < 1) {
         throw new Error('MaxScale must be greater than 1.');
-        return false;
     }
 
     if (option.minScale >= option.maxScale) {
         throw new Error('MinScale must be less than MaxScale.');
-        return false;
     }
 
     return true;
@@ -136,7 +132,7 @@ function registerPreviewImage(
                 ...option,
                 toolbar: { ...option.toolbar }
             },
-            root: getPupOpsMount(),
+            root: pupOpsMount(),
             toolbar: { ...option.toolbar },
             open: function (option: {
                 x: number;
@@ -176,7 +172,7 @@ function registerPreviewImage(
             toolbar: { ...option.toolbar }
         },
         mask: [mask],
-        root: getPupOpsMount(),
+        root: pupOpsMount(),
         toolbar: { ...option.toolbar },
         clickMask: function (e) {
             const _openPreview = (index: number) => {
@@ -245,10 +241,10 @@ function previewImage(instance: Instance | TemporaryInstance, index = 0) {
     domRood.className = 'se-img-preview-direct-root';
     (
         instance.root as {
-            mount: (childDom: HTMLElement) => void;
-            unmount: (childDom: HTMLElement) => void;
+            mountDiv: (childDom: HTMLElement) => void;
+            render: (vNode: VNode) => void;
         }
-    ).mount(domRood);
+    ).mountDiv(domRood);
     render(instance.vNode, domRood);
     previewInstance.value = instance;
     instance.root = domRood;
@@ -268,7 +264,7 @@ function unPreviewImage() {
         render(null, instance.root as HTMLElement);
         instance.vNode = null;
         (instance.root as HTMLElement).remove();
-        instance.root = getPupOpsMount();
+        instance.root = pupOpsMount();
     }, 300);
 }
 

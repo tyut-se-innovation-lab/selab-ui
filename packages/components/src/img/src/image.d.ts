@@ -128,8 +128,7 @@ export type Instance = {
     mask: Array<HTMLElement>;
     // 预览的组件实例的根元素
     root: HTMLElement | {
-        mount: (childDom: HTMLElement) => void;
-        unmount: (childDom: HTMLElement) => void;
+        mountDiv: (childDom: HTMLElement) => void;
     };
     // 工具栏配置
     toolbar: Partial<ToolBar>;
@@ -144,8 +143,7 @@ export type TemporaryInstance = {
     preview: PreviewType;
     // 预览的组件实例的根元素
     root: HTMLElement | {
-        mount: (childDom: HTMLElement) => void;
-        unmount: (childDom: HTMLElement) => void;
+        mountDiv: (childDom: HTMLElement) => void;
     };
     // 工具栏配置
     toolbar: Partial<ToolBar>;
