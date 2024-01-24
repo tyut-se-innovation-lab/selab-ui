@@ -38,6 +38,7 @@
         <button @click="msg('danger')">danger</button>
         <button @click="msg('info')">info</button>
         <button @click="$seMsg('info')">$seMsg</button>
+        <button @click="miniMsg('info')">mini Msg</button>
         <button @click="myAlbum.open(albumLocation)">myAlbum open</button>
         <button @click="myAlbum.close()">myAlbum close</button>
         <se-img
@@ -113,6 +114,7 @@
 <script lang="ts" setup>
 import { ref, createVNode } from 'vue';
 import { seMsg, seCreateAlbum } from 'selab-ui';
+import { seMsg, seMiniMsg, seCreateAlbum } from 'selab-ui';
 import img1 from './src/assets/img/img (1).png';
 import img2 from './src/assets/img/img (2).png';
 import img3 from './src/assets/img/img (3).png';
@@ -163,6 +165,19 @@ function msg(type: 'success' | 'warning' | 'danger' | 'info') {
     //     msgA.close();
     // }, 2000);
 }
+
+function miniMsg(type: 'success' | 'warning' | 'danger' | 'info') {
+    seMiniMsg({
+        type: 'success',
+        message: 'This is a success message',
+        duration: 3000,
+        location: {
+            x: '50vw',
+            y: '50vh'
+        }
+    });
+}
+
 const onImgChange = (change: () => void, index: number | false) => {
     change();
     console.log('onImgChange', index);
