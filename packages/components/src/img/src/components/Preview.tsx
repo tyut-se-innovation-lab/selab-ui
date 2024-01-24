@@ -102,7 +102,7 @@ export default defineComponent({
             }
         }
         onMounted(() => {
-            // 创建图片实例, 并且挂载到dom上, 初始位置为点击的图片位置, 以及图片的宽高, 以及图片的fit, 在0.2s后移动到中心位置
+            // 创建图片实例, 并且挂载到dom上, 初始位置为点击的图片位置, 以及图片的宽高, 以及图片的fit, 在0.3s后移动到中心位置
             const img = createVNode('img', {
                 src: _option.imgList[_option.index],
                 fit: fit,
@@ -364,8 +364,8 @@ export default defineComponent({
                     type === 'in'
                         ? imgHeight * _option.scaleStep
                         : imgHeight / _option.scaleStep;
-                // 计算当前缩放比例
-                const scale = imgWidth / imgWidthOriginal;
+                // 计算缩放后比例
+                const scale = newWidth / imgWidthOriginal;
                 // 若当前缩放比例小于最小缩放比例, 则宽高改为最小缩放比例
                 if (type === 'out' && scale < _option.minScale) {
                     newWidth = imgWidthOriginal * _option.minScale;
@@ -397,6 +397,9 @@ export default defineComponent({
                 imgItem.style.height = newHeight + 'px';
                 imgItem.style.left = newLeft + 'px';
                 imgItem.style.top = newTop + 'px';
+                setTimeout(() => {
+                    checkImg();
+                }, 300);
             }
             // 控制旋转的函数
             function rotateImg(type: 'forward' | 'reverse') {
@@ -416,9 +419,18 @@ export default defineComponent({
                         .split('rotateZ(')[1]
                         .split('deg)')[0]
                 );
-                imgItem.style.transform = `translate(-50%, -50%) scale(1) rotate(${
-                    type === 'reverse' ? imgRotate + 90 : imgRotate - 90
-                }deg) rotateY(${imgRotateY}deg) rotateZ(${imgRotateZ}deg)`;
+                const _newRotate =
+                    type === 'reverse' ? imgRotate + 90 : imgRotate - 90;
+                imgItem.style.transform = `translate(-50%, -50%) scale(1) rotate(${_newRotate}deg) rotateY(${imgRotateY}deg) rotateZ(${imgRotateZ}deg)`;
+                setTimeout(() => {
+                    if (_newRotate === 360 || _newRotate === -360) {
+                        imgItem.style.transition = 'none';
+                        imgItem.style.transform = `translate(-50%, -50%) scale(1) rotate(0deg) rotateY(${imgRotateY}deg) rotateZ(${imgRotateZ}deg)`;
+                    }
+                    requestAnimationFrame(() => {
+                        imgItem.style.transition = '';
+                    });
+                }, 300);
             }
             // 控制镜像反转的函数
             function flipImg(type: 'horizontal' | 'vertical') {
@@ -580,8 +592,8 @@ export default defineComponent({
                 e: MouseEvent
             ) {
                 if (nextIndex === false) {
-                    let x: number | string;
-                    let y: number | string;
+                    let x: number | '50vw';
+                    let y: number | '50vh';
                     if (_option.modal) {
                         x = e.clientX;
                         y = e.clientY;
@@ -590,12 +602,10 @@ export default defineComponent({
                         y = '50vh';
                     }
                     seMiniMeg({
-                        msg: '已经到头了',
+                        message: '已经到头了',
                         type: 'warning',
                         location: { x, y },
-                        duration: 1000,
-                        root: msgRootRef.value,
-                        isViewport: true
+                        duration: 1000
                     });
                     return;
                 }
@@ -617,7 +627,7 @@ export default defineComponent({
                         fit: fit,
                         style: {
                             position: 'absolute',
-                            transition: 'all 0.2s',
+                            transition: 'all 0.3s ease-in-out',
                             width: oldWidth,
                             height: oldHeight,
                             left: oldLeft,
@@ -629,7 +639,7 @@ export default defineComponent({
                     });
                     const oldImgDom = document.createElement('div');
                     oldImgDom.style.position = 'fixed';
-                    oldImgDom.style.transition = 'all 0.2s';
+                    oldImgDom.style.transition = 'all 0.3s ease-in-out';
                     oldImgDom.style.left = '0px';
                     oldImgDom.style.top = '0px';
                     render(oldImg, oldImgDom);
@@ -653,12 +663,12 @@ export default defineComponent({
                                 oldImgDom.style.opacity = '0';
                             } else if (_option.animation === 'slide') {
                                 oldImgDom.style.left =
-                                    type === 'prev' ? '125vw' : '-125vw';
+                                    type === 'prev' ? '150vw' : '-150vw';
                             }
                         });
                         setTimeout(() => {
                             document.body.removeChild(oldImgDom);
-                        }, 200);
+                        }, 300);
                     });
                 }
                 //计算图片的真实宽高比
@@ -690,7 +700,7 @@ export default defineComponent({
                             imgItem.style.opacity = '0';
                         } else if (_option.animation === 'slide') {
                             imgItem.style.left =
-                                type === 'prev' ? '-125vw' : '125vw';
+                                type === 'prev' ? '-150vw' : '150vw';
                         }
                         requestAnimationFrame(() => {
                             imgItem.style.transition = '';
@@ -708,12 +718,12 @@ export default defineComponent({
                     // 修改当前下标
                     _option.index = nextIndex;
                     nowIndex.value = nextIndex;
-                    // 0.2s后将切换前的图片节点移除
+                    // 0.3s后将切换前的图片节点移除
                     setTimeout(() => {
                         document
                             .getElementById('se-oldImg-preview-item')
                             ?.remove();
-                    }, 200);
+                    }, 300);
                 };
             }
             // 用户点击下载的函数
@@ -728,12 +738,10 @@ export default defineComponent({
                 }
                 if (props.toolbar.download === false) {
                     seMiniMeg({
-                        msg: '未开放下载',
+                        message: '未开放下载',
                         type: 'info',
                         location: { x: clientWidth / 2, y: clientHeight - 100 },
-                        duration: 1000,
-                        root: msgRootRef.value,
-                        isViewport: true
+                        duration: 1000
                     });
                 }
             }

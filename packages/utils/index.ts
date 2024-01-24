@@ -67,13 +67,13 @@ function pupOpsMount() {
 
     function mountDiv(childDom: HTMLDivElement) {
         if (
-            childDom.style.position === 'relative' ||
-            childDom.style.position === 'static' ||
-            childDom.style.position === 'sticky' ||
-            !childDom.style.position
+            childDom.style.position !== 'absolute' &&
+            childDom.style.position !== 'fixed'
         ) {
             if (childDom.style.position !== 'static' && childDom.style.position)
-                console.warn('弹窗组件的节点必须是absolute或fixed定位');
+                console.warn(
+                    '弹窗组件的节点必须是absolute或fixed定位, 这次帮你改成absolute了, 下次注意啊!'
+                );
             childDom.style.position = 'absolute';
         }
         pupOpsMountDom?.appendChild(childDom);

@@ -31,6 +31,10 @@
   display: flex;
   transition: all 0.3s;
   margin-right: 10px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 .se-img-preview-toolbar-root ul li button {
   margin-right: 10px;
