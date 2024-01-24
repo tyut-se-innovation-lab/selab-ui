@@ -1,0 +1,70 @@
+// Your component styles here
+@import url('../../base/index.less');
+
+/* 整体 */
+.se-tooltip {
+  position: relative;
+  width: fit-content;
+}
+
+///* 触发提示的文字 */
+//.se-tooltip-text {
+//
+//}
+
+/* 提示内容区域 */
+.se-tooltip-content {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding-top: 12px;
+
+}
+
+/* 提示文本 */
+.se-tooltip-inner {
+  min-width: 32px;
+  min-height: 32px;
+  padding: 6px 8px;
+  color: @text-color-inverse;
+  text-decoration: none;
+  word-wrap: break-word;
+  background-color: @bgColor;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+/* 小箭头 */
+.se-tooltip-arrow {
+  position: relative;
+
+  .se-tooltip-arrow-content {
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translate(-50%, -100%);
+      width: 0;
+      height: 0;
+      border: 8px solid;
+      border-color: var(--before-border-color);
+      //border-color: transparent transparent var(--bgColor) transparent;
+    }
+  }
+}
+
+
+/* 渐变过渡 */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+@bgColor: var(--bgColor);

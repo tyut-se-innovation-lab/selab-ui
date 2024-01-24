@@ -1,5 +1,17 @@
 <template>
     <div>
+        <se-tooltip>
+            <template #title>默认触发颜色</template>
+            触发文本触发文本触发文本触发文本触发文本触发文本
+        </se-tooltip>
+        <se-tooltip color="pink">
+            <template #title>自定义触发颜色:pink</template>
+            触发文本触发文本触发文本触发文本触
+        </se-tooltip>
+        <se-tooltip color="#f50">
+            <template #title>自定义触发颜色:#f50</template>
+            触发文本触发文本触发文本
+        </se-tooltip>
         <se-button type="primary">测试</se-button>
         <se-box type="type1">测试盒子</se-box>
         <se-card type="type1">测试卡片</se-card>
@@ -120,6 +132,7 @@ import img3 from './src/assets/img/img (3).png';
 import img4 from './src/assets/img/img (4).png';
 import img5 from './src/assets/img/img (5).png';
 import img6 from './src/assets/img/img (6).png';
+
 const imgList = [img1, img2, img3, img4, img5, img6];
 
 const options = ref(
@@ -134,6 +147,7 @@ const value2 = ref([2, 5]);
 const tagclick = (e: any) => {
     console.log(e);
 };
+
 function msg(type: 'success' | 'warning' | 'danger' | 'info') {
     const vNode = createVNode(
         'button',
