@@ -1,5 +1,5 @@
-import { App, VNode, render } from 'vue';
-import { COMPInstallWithContext, COMPWithInstall } from './type';
+import { App, VNode, createVNode, render } from 'vue';
+import { COMPInstallWithContext, COMPWithInstall, _createVNode } from './type';
 
 export const testFun = (a: number, b: number): number => {
     return a + b;
@@ -39,36 +39,116 @@ export const getStyle = (): ['info', 'success', 'warning', 'danger'] => [
     'danger'
 ];
 
-// (创建)返回全局窗口挂载节点
-export const getPupOpsMount = (): {
-    mount: (childDom: HTMLElement) => void;
-    unmount: (childDom: HTMLElement) => void;
-} => {
-    const id = '__se_window_mounted__';
-    let dom = document.getElementById(id) as HTMLDivElement;
-    if (!dom) {
-        dom = document.createElement('div') as HTMLDivElement;
-        dom.id = id;
-        dom.style.position = 'fixed';
-        dom.style.top = '0';
-        dom.style.left = '0';
-        dom.style.zIndex = '9999';
-        document.body.appendChild(dom);
+let pupOpsMountDom: HTMLDivElement | null = null;
+
+/** (创建)返回全局窗口挂载节点 */
+function pupOpsMount(): {
+    /** 用于直接在根节点添加子节点(div) */
+    mountDiv: (childDom: HTMLElement) => () => void;
+    /** 用于vNode节点渲染 */
+    render: (vNode: VNode) => () => void;
+    /** 用于组件实例的创建和渲染 */
+    createVNode: typeof _createVNode;
+};
+function pupOpsMount() {
+    if (!pupOpsMountDom) {
+        pupOpsMountDom = document.createElement('div') as HTMLDivElement;
+        pupOpsMountDom.id = '__se_window_mount__';
+        pupOpsMountDom.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            z-index: 9999;
+        `;
+        document.body.appendChild(pupOpsMountDom);
     }
 
-    function mount(childDom: HTMLElement) {
-        dom.appendChild(childDom);
+    function mountDiv(childDom: HTMLDivElement) {
+        if (
+            childDom.style.position === 'relative' ||
+            childDom.style.position === 'static' ||
+            childDom.style.position === 'sticky' ||
+            !childDom.style.position
+        ) {
+            if (childDom.style.position !== 'static' && childDom.style.position)
+                console.warn('弹窗组件的节点必须是absolute或fixed定位');
+            childDom.style.position = 'absolute';
+        }
+        pupOpsMountDom?.appendChild(childDom);
+
+        function unmount() {
+            unmountDiv(childDom);
+        }
+
+        return unmount;
     }
 
-    function unmount(childDom: HTMLElement) {
-        dom.removeChild(childDom);
+    function unmountDiv(childDom: HTMLDivElement) {
+        pupOpsMountDom?.removeChild(childDom);
+    }
+
+    function renderPupOp(vNode: VNode) {
+        const childDom = document.createElement('div');
+        childDom.style.cssText = `
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+        `;
+        mountDiv(childDom);
+        render(vNode, childDom);
+
+        let isRendered = true;
+
+        function unmount() {
+            if (isRendered) {
+                render(null, childDom);
+                unmountDiv(childDom);
+                isRendered = false;
+            }
+        }
+
+        return unmount;
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    function createVNodePupOp(type: any, props?: any, children?: any) {
+        const vNode = createVNode(type, props, children);
+        let _unmount = renderPupOp(vNode);
+
+        let isRendered = true;
+
+        function render() {
+            if (isRendered) return;
+            _unmount = renderPupOp(vNode);
+            isRendered = true;
+        }
+
+        function unmount() {
+            if (isRendered) {
+                _unmount();
+                isRendered = false;
+            }
+        }
+
+        return {
+            vNode,
+            unRender: unmount.bind(null),
+            render: render.bind(null)
+        };
     }
 
     return {
-        mount: mount.bind(null),
-        unmount: unmount.bind(null)
+        mountDiv: mountDiv.bind(null),
+        render: renderPupOp.bind(null),
+        createVNode: createVNodePupOp.bind(null)
     };
-};
+}
+
+export { pupOpsMount };
 
 /** 获取字符串长度(px) */
 export const getStringWidth = (msg: string, fontSize?: number): number => {
