@@ -13,6 +13,7 @@
 <script lang="ts" setup>
 import '../../less/components/tag/index.less';
 import { computed, ref, withDefaults, useSlots } from 'vue';
+
 defineOptions({ name: 'se-tag' });
 type tagType = 'success' | 'info' | 'warning' | 'danger';
 const show = ref(true);

@@ -75,7 +75,7 @@ export default {
             link: "/components/minimsg/"
         },
 	{
-            text: "ToolTip",
+            text: "Tooltip",
             link: "/components/tooltip/"
         },
 	//]

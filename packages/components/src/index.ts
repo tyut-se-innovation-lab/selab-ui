@@ -23,4 +23,4 @@ export * from "./icon";
 export * from "./miniMsg";
 
 // 导入文字提示
-export * from "./toolTip";
+export * from "./tooltip";

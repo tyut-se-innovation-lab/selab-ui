@@ -1,4 +1,4 @@
-import {ToolTip} from "./components/src";
+import {Tooltip} from "./components/src";
 import {MiniMsg} from "./components/src";
 import {Img} from "./components/src";
 import {Icon} from "./components/src";
@@ -14,7 +14,7 @@ declare module "@vue/runtime-core" {
     export interface GlobalComponents {
         seButton: typeof Button;
         seBox: typeof Box;
-        //[		 seToolTip: typeof ToolTip;
+        //[		 seTooltip: typeof Tooltip;
 
 
 		 seMiniMsg: typeof MiniMsg;
