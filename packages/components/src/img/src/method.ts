@@ -1,4 +1,4 @@
-import { shallowReactive, shallowRef, createVNode, render, VNode } from 'vue';
+import { shallowReactive, shallowRef, createVNode, render } from 'vue';
 import {
     ImgPropsType,
     PreviewType,
@@ -241,8 +241,7 @@ function previewImage(instance: Instance | TemporaryInstance, index = 0) {
     domRood.className = 'se-img-preview-direct-root';
     (
         instance.root as {
-            mountDiv: (childDom: HTMLElement) => void;
-            render: (vNode: VNode) => void;
+            mountDiv: (childDom: HTMLDivElement) => void;
         }
     ).mountDiv(domRood);
     render(instance.vNode, domRood);
