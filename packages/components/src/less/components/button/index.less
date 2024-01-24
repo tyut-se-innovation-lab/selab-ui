@@ -31,3 +31,95 @@
         border-color: darken(@brand-color-primary, 10%);
     }
 }
+
+.se-button.se-button--success {
+    color: @text-color-white;
+    background-color: @brand-color-secondary;
+    border-color: @brand-color-secondary;
+
+    &:hover {
+        color: @text-color-white;
+        background: darken(@brand-color-secondary, 10%);
+        border-color: darken(@brand-color-secondary, 10%);
+    }
+}
+.se-button.se-button--warning {
+    color: @text-color-white;
+    background-color: @brand-color-highlight;
+    border-color: @brand-color-highlight;
+
+    &:hover {
+        color: @text-color-white;
+        background: darken(@brand-color-highlight, 10%);
+        border-color: darken(@brand-color-highlight, 10%);
+    }
+}
+.se-button.se-button--danger {
+    color: @text-color-white;
+    background-color: @brand-color-accent;
+    border-color: @brand-color-accent;
+
+    &:hover {
+        color: @text-color-white;
+        background: darken(@brand-color-accent, 10%);
+        border-color: darken(@brand-color-accent, 10%);
+    }
+}
+
+.se-button.se-button--info{
+    color: @brand-color-primary;
+    background-color: @bg-color-primary;
+    border-color: @bg-color-primary;
+
+    &:hover {
+        color: darken(@brand-color-primary,10%);
+        background: darken(@bg-color-primary, 10%);
+        border-color: darken(@bg-color-primary, 10%);
+    }
+}
+.se-button.se-button--link{
+    color: @link-color;
+    background-color: rgba(0, 0, 0, 0);
+    border: 0 solid @bg-color-primary;
+
+    &:hover {
+        color: @link-hover-color;
+    }
+}
+.se-button.is-disabled {
+    color: @text-color-disabled;
+    cursor: not-allowed;
+    background-image: none;
+    background-color: @text-color-inverse;
+    border-color: #ebeef5;
+}
+
+.se-button--primary.is-disabled,
+.se-button--primary.is-disabled:active,
+.se-button--primary.is-disabled:focus,
+.se-button--primary.is-disabled:hover {
+    color: #fff;
+    background-color: #a0cfff;
+    border-color: #a0cfff;
+}
+
+.is-round {
+    border-radius: 50%;
+}
+.se-button--medium {
+    padding: 10px 20px;
+    font-size: 12px;
+    border-radius: 4px;
+}
+
+.se-button--small {
+    padding: 9px 15px;
+    font-size: 14px;
+    border-radius: 3px;
+}
+
+.se-button--large {
+    padding: 13px 25px;
+    font-size: 18px;
+    border-radius: 3px;
+}

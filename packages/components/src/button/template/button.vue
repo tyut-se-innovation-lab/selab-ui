@@ -7,19 +7,21 @@
 
 <script lang="ts" setup>
 import '../../less/components/button/index.less';
+import {ButtonProps, buttonProps} from './buttonTypes.ts';
 import { defineProps, computed, ref, reactive } from 'vue';
 defineOptions({ name: 'se-button' });
 // 定义组件 props
-const props = defineProps<{
-    type?: string;
-    onClick?: () => void; // 添加 onClick prop
-}>();
+const props:ButtonProps = defineProps(buttonProps);
 
 // 计算属性，根据 type 属性计算按钮样式
 const buttonStyle = computed(() => {
-    return {
-        [`se-button--${props.type || 'default'}`]: true
-    };
+  return {
+    [`se-button--${props.type}`]: props.type,
+    'is-plain': props.plain,
+    'is-round': props.round,
+    'is-disabled': props.disabled,
+    [`se-button--${props.size}`]: props.size,
+  }
 });
 
 // 默认点击事件处理程序
