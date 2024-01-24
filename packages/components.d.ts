@@ -7,7 +7,7 @@ import {Select} from "./components/src";
 import {Card} from "./components/src";
 import {Button} from "./components/src";
 import {Box} from "./components/src";
-import {seMsg} from "./components/src";
+import {Msg} from "./components/src";
 
 declare module "@vue/runtime-core" {
     export interface GlobalComponents {
@@ -20,7 +20,7 @@ declare module "@vue/runtime-core" {
         seSkeleton: typeof Skeleton;
         seSelect: typeof Select;
         seCard: typeof Card;
-        seMsg: typeof seMsg;
+        seMsg: typeof Msg;
 		 seIcon: typeof Icon;
         seTag: typeof Tag;
         seSkeleton: typeof Skeleton;
