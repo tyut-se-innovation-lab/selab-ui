@@ -21,3 +21,5 @@ export * from "./icon";
 
 // 导入微型消息
 export * from "./miniMsg";
+// 导入文字提示
+export * from "./Tooltip";
