@@ -123,8 +123,16 @@ export default defineComponent({
                         )}
                     </div>
                 )}
-                {props.preview && !isLoading.value && isLoadSuccess.value && (
-                    <div class="se-img-mask" ref={mask}>
+                {props.preview && (
+                    <div
+                        class="se-img-mask"
+                        ref={mask}
+                        style={
+                            !isLoading.value && isLoadSuccess.value
+                                ? 'opacity: 0;'
+                                : ''
+                        }
+                    >
                         {slots.mask ? (
                             slots.mask()
                         ) : (
