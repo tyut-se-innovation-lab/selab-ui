@@ -99,7 +99,7 @@
                 }
             }"
         >
-            <template #loading>
+            <!-- <template #loading>
                 <div>loading</div>
             </template>
             <template #error>
@@ -107,13 +107,12 @@
             </template>
             <template #mask>
                 <span> mask </span>
-            </template>
+            </template> -->
         </se-img>
     </div>
 </template>
 <script lang="ts" setup>
 import { ref, createVNode } from 'vue';
-import { seMsg, seCreateAlbum } from 'selab-ui';
 import { seMsg, seMiniMsg, seCreateAlbum } from 'selab-ui';
 import img1 from './src/assets/img/img (1).png';
 import img2 from './src/assets/img/img (2).png';
@@ -209,7 +208,6 @@ const myAlbum = seCreateAlbum({
         show: true
     }
 });
-
 const albumLocation = {
     x: document.documentElement.clientWidth / 2 - 50,
     y: document.documentElement.clientHeight / 2 - 50,
