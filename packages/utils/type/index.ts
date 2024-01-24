@@ -31,8 +31,7 @@ export declare interface ClassComponent {
 
 export declare function _createVNode(
     type: VNodeTypes | ClassComponent,
-    props?: (Record<string, unknown> & VNodeProps) | null,
-    children?: unknown
+    props?: (Record<string, unknown> & VNodeProps) | null
 ): {
     vNode: VNode;
     unRender: () => void;

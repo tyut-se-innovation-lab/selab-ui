@@ -82,7 +82,7 @@ function pupOpsMount() {
             unmountDiv(childDom);
         }
 
-        return unmount;
+        return unmount.bind(null);
     }
 
     function unmountDiv(childDom: HTMLDivElement) {
@@ -111,12 +111,12 @@ function pupOpsMount() {
             }
         }
 
-        return unmount;
+        return unmount.bind(null);
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    function createVNodePupOp(type: any, props?: any, children?: any) {
-        const vNode = createVNode(type, props, children);
+    function createVNodePupOp(type: any, props?: any) {
+        const vNode = createVNode(type, props);
         let _unmount = renderPupOp(vNode);
 
         let isRendered = true;
