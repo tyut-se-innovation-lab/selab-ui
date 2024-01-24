@@ -38,6 +38,7 @@ export default defineComponent({
         function errorHandle(e: Event) {
             isLoadSuccess.value = false;
             isLoading.value = false;
+            mask?.value?.remove();
             props.onError?.(e);
         }
         function loadHandle(e: Event) {
@@ -124,15 +125,7 @@ export default defineComponent({
                     </div>
                 )}
                 {props.preview && (
-                    <div
-                        class="se-img-mask"
-                        ref={mask}
-                        style={
-                            !isLoading.value && isLoadSuccess.value
-                                ? 'opacity: 0;'
-                                : ''
-                        }
-                    >
+                    <div class="se-img-mask" ref={mask}>
                         {slots.mask ? (
                             slots.mask()
                         ) : (
