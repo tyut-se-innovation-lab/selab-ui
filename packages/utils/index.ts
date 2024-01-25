@@ -212,10 +212,7 @@ export const withInstallFunction = <T>(fn: T, name: string) => {
 };
 
 /** 注册自定义指令 */
-export const withInstallDirectives = <T>(
-    fn: Directive<unknown, unknown>,
-    name: string
-) => {
+export const withInstallDirectives = <T>(fn: Directive, name: string) => {
     (fn as COMPWithInstall<T>).install = (app: App) => {
         app.directive(name, fn);
     };
