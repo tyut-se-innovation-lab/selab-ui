@@ -1,0 +1,1 @@
+export const IconArray:string[] = ["down", "round_transfer", "mobile", "subtitle_unblock_light", "mobilefill", "oppose_fill_light", "copy", "oppose_light", ]

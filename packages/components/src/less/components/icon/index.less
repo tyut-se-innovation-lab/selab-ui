@@ -1,8 +1,26 @@
 // Your component styles here
-    @import url('../../base/index.less');
+@import url('../../base/index.less');
+@import url("iconfont/iconfont.css");
+
 .icon {
-    width: 1em; height: 1em;
-    vertical-align: -0.15em;
-    fill: currentColor;
-    overflow: hidden;
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
 }
+
+.iconfont {
+  font-size: inherit;
+  transition: font-size 0.3s ease-in-out; /* Transition for smooth effect */
+  color: #333;
+  //border-radius: 50%;
+
+  /* Hover effect */
+
+  &:hover {
+    transform: scale(1.5); /* Increase size on hover */
+    background-color: #ffffff; /* Gray background on hover */
+  }
+}
+

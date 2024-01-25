@@ -1,8 +1,7 @@
 
 <template>
-  <se-icon name="mobile_fill"></se-icon>
   <span v-for="(item,index) in IconArray()" style="display: inline-block;width: 100%">
-  <span>{{index}}</span> <se-icon style="display: inline-block" :name="item" ></se-icon> <span>{{item}}</span>
+  <span>{{ index + 1}}</span> <se-icon style="display: inline-block;" :name="item" :color="getRandomColor()" ></se-icon> <span>{{item}}</span>
   </span>
 
 </template>
@@ -11,9 +10,12 @@
 
 import {IconArray} from "./output";
 import {defineComponent} from "vue";
+import {getRandomColor} from "../utils/getRandomColor";
+
 
 export default defineComponent({
   methods: {
+    getRandomColor,
     IconArray() {
       return IconArray
     }
@@ -24,6 +26,6 @@ export default defineComponent({
 
 <style scoped>
 span{
-  padding: 20px;
+  margin: 20px;
 }
 </style>

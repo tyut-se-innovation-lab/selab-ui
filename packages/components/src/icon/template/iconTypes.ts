@@ -3,15 +3,15 @@ import {ExtractPropTypes, PropType} from 'vue'
 export const iconProps = {
     name: {
         type: String,
-        default:"home"
+        default:"down"
     },
-    size: {
-        type: [String, Number] as PropType<string | number>,
-        default: 'inherit'
+    iconSize: {
+        type: [Number, String],
+        default: '16px'
     },
     color: {
         type: String,
-        default: 'inherit'
+        default: 'black'
 
     },
 
