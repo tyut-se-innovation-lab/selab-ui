@@ -30,7 +30,7 @@
   color: @text-color-inverse;
   text-decoration: none;
   word-wrap: break-word;
-  background-color: @bgColor;
+  //background-color: @bgColor;
   border-radius: 6px;
   box-sizing: border-box;
 }
@@ -38,21 +38,6 @@
 /* 小箭头 */
 .se-tooltip-arrow {
   position: relative;
-
-  .se-tooltip-arrow-content {
-    &::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 50%;
-      transform: translate(-50%, -100%);
-      width: 0;
-      height: 0;
-      border: 8px solid;
-      border-color: var(--before-border-color);
-      //border-color: transparent transparent var(--bgColor) transparent;
-    }
-  }
 }
 
 
@@ -67,4 +52,39 @@
   opacity: 0;
 }
 
-@bgColor: var(--bgColor);
+@set: {
+  black: @bg-color-black;
+  pink: @bg-color-pink;
+  red: @bg-color-red;
+  yellow: @bg-color-yellow;
+  orange: @bg-color-orange;
+  cyan: @bg-color-cyan;
+  green: @bg-color-green;
+  blue: @bg-color-blue;
+  purple: @bg-color-purple;
+  geekblue: @bg-color-geekblue;
+  magenta: @bg-color-magenta;
+  volcano: @bg-color-volcano;
+  gold: @bg-color-gold;
+  lime: @bg-color-lime
+}
+
+each(@set, {
+  .se-tooltip-arrow-@{key} {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -100%);
+    width: 0;
+    height: 0;
+    border: 8px solid;
+    border-color: transparent transparent @value transparent;
+  }
+})
+
+each(@set, {
+  .se-tooltip-inner-@{key} {
+    background-color: @value;
+  }
+})

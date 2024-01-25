@@ -4,11 +4,11 @@
             <template #title>默认触发颜色</template>
             触发文本触发文本触发文本触发文本触发文本触发文本
         </se-tooltip>
-        <se-tooltip color="pink">
+        <se-tooltip color="pink" :mouseLeaveDelay="1">
             <template #title>自定义触发颜色:pink</template>
             触发文本触发文本触发文本触发文本触
         </se-tooltip>
-        <se-tooltip color="#f50">
+        <se-tooltip color="#f50" trigger="click">
             <template #title>自定义触发颜色:#f50</template>
             触发文本触发文本触发文本
         </se-tooltip>
