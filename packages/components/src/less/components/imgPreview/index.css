@@ -36,6 +36,9 @@
   transition: all 0.3s ease-in-out;
   cursor: grab;
 }
+.se-img-preview .se-img-preview-img .se-img-preview-img-item.se-img-preview-img-only-preview {
+  animation: showPreview 0.3s;
+}
 .se-img-preview .se-img-preview-toolbar {
   position: fixed;
   top: calc(100vh - 80px);

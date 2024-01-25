@@ -51,7 +51,7 @@
         <button @click="msg('info')">info</button>
         <button @click="$seMsg('info')">$seMsg</button>
         <button @click="miniMsg('info')">mini Msg</button>
-        <button @click="myAlbum.open(albumLocation)">myAlbum open</button>
+        <button @click="myAlbum.open(2)">myAlbum open</button>
         <button @click="myAlbum.close()">myAlbum close</button>
         <se-img
             v-for="i of [...Array(6).keys()]"
@@ -110,6 +110,7 @@
                     show: false
                 }
             }"
+            :contextmenu="false"
         >
             <!-- <template #loading>
                 <div>loading</div>
@@ -181,7 +182,7 @@ function msg(type: 'success' | 'warning' | 'danger' | 'info') {
 
 function miniMsg(type: 'success' | 'warning' | 'danger' | 'info') {
     seMiniMsg({
-        type: 'success',
+        type: type,
         message: 'This is a success message',
         duration: 3000,
         location: {
@@ -210,11 +211,20 @@ const filter = (value: string) => {
     console.log(value);
     return options.value.filter((i) => i.label.includes(value));
 };
+
+const albumLocation = {
+    x: document.documentElement.clientWidth / 2 - 250,
+    y: document.documentElement.clientHeight / 2 - 250,
+    width: 500,
+    height: 500
+};
+
 const myAlbum = seCreateAlbum({
     albumList: imgList,
     animation: 'none',
     loop: true,
     modal: false,
+    location: albumLocation,
     onChange: onImgChange,
     onClose: onImgClose,
     onOpen: onImgOpen,
@@ -222,12 +232,6 @@ const myAlbum = seCreateAlbum({
         show: true
     }
 });
-const albumLocation = {
-    x: document.documentElement.clientWidth / 2 - 50,
-    y: document.documentElement.clientHeight / 2 - 50,
-    width: 100,
-    height: 100
-};
 
 const value3 = ref([]);
 const loading = ref(false);

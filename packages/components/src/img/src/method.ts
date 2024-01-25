@@ -32,7 +32,6 @@ const observer = new IntersectionObserver(
 
 // 判断配置合法性
 function checkPreview(option: PreviewType): boolean {
-    console.log(option);
     if (option.album) {
         if (!option.albumList || option.albumList.length === 0) {
             throw new Error('AlbumList is empty but it is must for album.');
@@ -121,7 +120,13 @@ function previewCheck(props: Readonly<ImgPropsType>): PreviewType | false {
 function registerPreviewImage(
     option: PreviewType,
     mask: HTMLElement | null,
-    isTemporary = false
+    isTemporary = false,
+    location: {
+        x: number;
+        y: number;
+        width: number;
+        height: number;
+    }
 ): Instance | TemporaryInstance {
     // 检测配置合法性
     if (!checkPreview(option)) throw new Error('Preview config is error.');
@@ -134,22 +139,18 @@ function registerPreviewImage(
             },
             root: pupOpsMount(),
             toolbar: { ...option.toolbar },
-            open: function (option: {
-                x: number;
-                y: number;
-                width: number;
-                height: number;
-            }) {
-                instance.location = option;
-                previewImage(instance, 0);
+            open: (page: number) => {
+                if (
+                    page >= instance.preview.albumList.length + 1 ||
+                    page <= 0
+                ) {
+                    console.error('Image Preview > Index out of range.');
+                    return;
+                }
+                previewImage(instance, page - 1);
             },
             vNode: null,
-            location: {
-                x: 0,
-                y: 0,
-                width: 0,
-                height: 0
-            }
+            location
         };
         return instance;
     }
@@ -226,7 +227,7 @@ function previewImage(instance: Instance | TemporaryInstance, index = 0) {
     // 如果下标超出范围, 则重置为报错
     if (index >= instance.preview.albumList.length) {
         throw new Error(
-            `Index out of range, index: ${index}, albumList: ${instance.preview.albumList.length}`
+            `Image Preview > Index out of range, index: ${index}, albumList: ${instance.preview.albumList.length}`
         );
     }
     unPreviewImage();
@@ -286,6 +287,7 @@ function createAlbum({
     },
     loop = true,
     animation = 'slide',
+    location,
     closeOnClickModal = true,
     closeOnPressEscape = true,
     onError = () => {},
@@ -302,6 +304,12 @@ function createAlbum({
     toolbar?: Partial<ToolBar>;
     loop?: boolean;
     animation?: 'none' | 'slide' | 'fade';
+    location?: {
+        x?: number;
+        y?: number;
+        width?: number;
+        height?: number;
+    };
     closeOnClickModal?: boolean;
     closeOnPressEscape?: boolean;
     onError?: (e: Event) => void;
@@ -309,14 +317,16 @@ function createAlbum({
     onOpen?: (open: () => void) => void;
     onClose?: (close: () => void) => void;
 }): {
-    open: (option: {
-        x: number;
-        y: number;
-        width: number;
-        height: number;
-    }) => void;
+    open: (page: number) => void;
     close: () => void;
 } {
+    const _location = {
+        x: 0,
+        y: 0,
+        width: 0,
+        height: 0,
+        ...location
+    };
     const instance: TemporaryInstance = registerPreviewImage(
         {
             album: true,
@@ -339,26 +349,11 @@ function createAlbum({
             src: ''
         },
         null,
-        true
+        true,
+        _location
     ) as TemporaryInstance;
-    const open = (
-        option:
-            | {
-                  x?: number | undefined;
-                  y?: number | undefined;
-                  width?: number | undefined;
-                  height?: number | undefined;
-              }
-            | undefined
-    ) => {
-        const _option = {
-            x: 0,
-            y: 0,
-            width: 0,
-            height: 0,
-            ...option
-        };
-        instance.open(_option);
+    const open = (page = 1) => {
+        instance.open(page);
     };
     const close = () => {
         if (previewInstance.value === instance) unPreviewImage();
