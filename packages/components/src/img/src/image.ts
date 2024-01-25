@@ -152,6 +152,10 @@ export const imgPreviewProps: ImgPreviewProps = {
         type: String as PropType<'none' | 'slide' | 'fade'>,
         default: previewDefault.animation
     },
+    contextmenu: {
+        type: [Boolean, Array] as PropType<PreviewType['contextmenu']>,
+        default: previewDefault.contextmenu
+    },
     closeOnClickModal: {
         type: Boolean,
         default: previewDefault.closeOnClickModal

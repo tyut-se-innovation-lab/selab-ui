@@ -4,7 +4,8 @@ import {
     onMounted,
     ref,
     createVNode,
-    render
+    render,
+    withDirectives
 } from 'vue';
 import '../../../less/components/imgPreview/index.less';
 import { imgPreviewProps } from '../image';
@@ -14,12 +15,12 @@ import seMiniMeg from '../../../miniMsg/src/index';
 import leftCur from '../../../../../assets/mouseImg/left.ico';
 import rightIco from '../../../../../assets/mouseImg/right.ico';
 import closeIco from '../../../../../assets/mouseImg/close.ico';
+import contextmenu from '../../../contextmenu/src/method';
 
 export default defineComponent({
     name: 'se-img-preview',
     props: imgPreviewProps,
     setup(props, { expose }): () => VNode {
-        console.log('props', props);
         // 获取点击图片的位置
         let rect: DOMRect;
         let fit: string;
@@ -103,18 +104,32 @@ export default defineComponent({
         }
         onMounted(() => {
             // 创建图片实例, 并且挂载到dom上, 初始位置为点击的图片位置, 以及图片的宽高, 以及图片的fit, 在0.3s后移动到中心位置
-            const img = createVNode('img', {
-                src: _option.imgList[_option.index],
-                fit: fit,
-                style: {
-                    width: rect.width + 'px',
-                    height: rect.height + 'px',
-                    left: rect.left + 'px',
-                    top: rect.top + 'px'
-                },
-                class: 'se-img-preview-img-item',
-                onError: props.onError
-            });
+            const img = withDirectives(
+                createVNode('img', {
+                    src: _option.imgList[_option.index],
+                    fit: fit,
+                    style: {
+                        width: rect.width + 'px',
+                        height: rect.height + 'px',
+                        left: rect.left + 'px',
+                        top: rect.top + 'px'
+                    },
+                    class: 'se-img-preview-img-item',
+                    onError: props.onError
+                }),
+                [[contextmenu, false]]
+            );
+            // [[contextmenu, false]];
+            // console.log(img);
+            // const imgBindings = img.dirs || (img.dirs = []);
+            // imgBindings.push({
+            //     dir: contextmenu,
+            //     instance: img,
+            //     value: false,
+            //     oldValue: void 0,
+            //     arg: void 0,
+            //     modifiers: {},
+            // });
             render(img, imagesRef.value);
             // 计算图片的真实宽高比
             const imgReal = new Image();
@@ -144,6 +159,10 @@ export default defineComponent({
                 imgItem.style.top = '50vh';
                 imgItem.style.transform =
                     'translate(-50%, -50%) scale(1) rotate(0deg) rotateY(0deg) rotateZ(0deg)';
+                // location存在说明本次预览不是通过点击图片,而是直接调用方法, 所以需要动画
+                if ('location' in props.instance) {
+                    imgItem.classList.add('se-img-preview-img-only-preview');
+                }
                 // 记录原始显示的图片的宽高
                 imgWidthOriginal = imgRealWidth * scale;
                 imgHeightOriginal = imgRealHeight * scale;
