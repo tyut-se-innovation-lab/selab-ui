@@ -78,6 +78,10 @@ export default {
             text: "Tooltip",
             link: "/components/tooltip/"
         },
+	{
+            text: "Contextmenu",
+            link: "/components/contextmenu/"
+        },
 	//]
 
                     ]

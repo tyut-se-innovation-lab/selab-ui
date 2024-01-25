@@ -1,3 +1,4 @@
+import {Contextmenu} from "./components/src";
 import {Tooltip} from "./components/src";
 import {MiniMsg} from "./components/src";
 import {Img} from "./components/src";
@@ -14,7 +15,8 @@ declare module "@vue/runtime-core" {
     export interface GlobalComponents {
         seButton: typeof Button;
         seBox: typeof Box;
-        //[		 seTooltip: typeof Tooltip;
+        //[		 seContextmenu: typeof Contextmenu;
+		 seTooltip: typeof Tooltip;
 
 
 		 seMiniMsg: typeof MiniMsg;
