@@ -46,7 +46,6 @@ export default defineComponent({
                 // 若是懒加载, 且当前加载的图片是懒加载的占位图, 则不触发onLoad事件
                 return;
             }
-            console.log('loadHandle', e);
             isLoadSuccess.value = true;
             isLoading.value = false;
             props.onLoad?.(e);
@@ -73,6 +72,14 @@ export default defineComponent({
             if (props.lazy) {
                 seImg.value.setAttribute('data-src', props.src);
                 observer.observe(seImg.value);
+            }
+            if (!props.contextmenu) {
+                seImg.value.addEventListener('contextmenu', (e: Event) => {
+                    e.preventDefault();
+                });
+                mask.value?.addEventListener('contextmenu', (e: Event) => {
+                    e.preventDefault();
+                });
             }
         });
         onDeactivated(() => {

@@ -30,6 +30,7 @@ export const previewDefault: PreviewType = {
     albumList: [],
     loop: true,
     animation: 'slide',
+    contextmenu: false,
     closeOnClickModal: true,
     closeOnPressEscape: true,
     onError: () => {},
@@ -46,7 +47,7 @@ export const imgDefault: ImgPropsType = {
     src: '',
     lazy: false,
     rootClassName: '',
-    contextmenu: false,
+    contextmenu: true,
     onError: () => {},
     onLoad: () => {},
     preview: previewDefault
@@ -85,7 +86,7 @@ export const imgProps: ImgProps = {
         default: imgDefault.rootClassName
     },
     contextmenu: {
-        type: [Boolean, Object],
+        type: [Boolean],
         default: imgDefault.contextmenu
     },
     onError: {

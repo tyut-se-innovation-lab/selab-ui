@@ -1,6 +1,6 @@
-import { VNode } from "vue";
+import { VNode, Slot } from "vue";
 import { CreateProps } from '@selab-ui/utils/type';
-import { Slot } from "@vue/test-utils/dist/types";
+import { ContextmenuType } from "../../contextmenu/src/contextmenu";
 
 declare module "*.png" {
   const value: any;
@@ -100,8 +100,8 @@ export type ImgPropsType = {
     lazy: boolean;
     // 图片的根类名
     rootClassName: string;
-    // 右键菜单
-    contextmenu?: never | boolean ;
+    // 右键菜单, 只能禁止右键菜单, 不能自定义右键菜单
+    contextmenu?: boolean;
     // 图片加载失败的回调
     onError: (e: Event) => void;
     // 图片加载完成的回调
@@ -148,7 +148,7 @@ export type TemporaryInstance = {
     // 工具栏配置
     toolbar: Partial<ToolBar>;
     // 启动预览
-    open: (option: { x: number; y: number; width: number; height: number; }) => void;
+    open: (page: number) => void;
     // vNode
     vNode: VNode | null;
     // 位置
