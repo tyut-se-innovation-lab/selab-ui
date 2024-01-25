@@ -1,4 +1,4 @@
-import { App, VNode, createVNode, render } from 'vue';
+import { App, Directive, VNode, createVNode, render } from 'vue';
 import { COMPInstallWithContext, COMPWithInstall, _createVNode } from './type';
 
 export const testFun = (a: number, b: number): number => {
@@ -193,21 +193,33 @@ export const getSizeMap = (
     }
 };
 
+/** 注册组件 */
 export const withInstall = <T>(fn: T) => {
     (fn as COMPWithInstall<T>).install = (app: App) => {
         const name = (fn as COMPWithInstall<T> & { name: string }).name;
-        // 注册组件
         app.component(name, fn as COMPWithInstall<T>);
     };
     return fn as COMPWithInstall<T>;
 };
 
+/** 注册调用 */
 export const withInstallFunction = <T>(fn: T, name: string) => {
     (fn as COMPWithInstall<T>).install = (app: App) => {
         (fn as COMPInstallWithContext<T>)._context = app._context;
         app.config.globalProperties[name] = fn;
     };
     return fn as COMPInstallWithContext<T>;
+};
+
+/** 注册自定义指令 */
+export const withInstallDirectives = <T>(
+    fn: Directive<unknown, unknown>,
+    name: string
+) => {
+    (fn as COMPWithInstall<T>).install = (app: App) => {
+        app.directive(name, fn);
+    };
+    return fn as COMPWithInstall<T>;
 };
 
 export function debounce(fn: (...arg: any[]) => any, duration: number = 300) {
