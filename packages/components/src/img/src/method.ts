@@ -9,6 +9,7 @@ import {
 import { previewDefault } from './image';
 import SePreview from './components/Preview';
 import { pupOpsMount } from '@selab-ui/utils';
+import { ContextmenuType } from '../../contextmenu/src/contextmenu.d';
 
 // 全部预览实例
 const instances = shallowReactive<Array<Instance>>([]);
@@ -287,6 +288,7 @@ function createAlbum({
     },
     loop = true,
     animation = 'slide',
+    contextmenu = false,
     location,
     closeOnClickModal = true,
     closeOnPressEscape = true,
@@ -304,6 +306,7 @@ function createAlbum({
     toolbar?: Partial<ToolBar>;
     loop?: boolean;
     animation?: 'none' | 'slide' | 'fade';
+    contextmenu?: boolean | ContextmenuType;
     location?: {
         x?: number;
         y?: number;
@@ -340,6 +343,7 @@ function createAlbum({
             toolbar: { ...toolbar } as ToolBar,
             loop,
             animation,
+            contextmenu,
             closeOnClickModal,
             closeOnPressEscape,
             onError,

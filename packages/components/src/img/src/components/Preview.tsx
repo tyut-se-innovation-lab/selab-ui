@@ -102,34 +102,9 @@ export default defineComponent({
                 throw new TypeError('onClose is not a function');
             }
         }
+        // 用于保存在render函数里创建的带有指令的图片实例
+        let img: VNode;
         onMounted(() => {
-            // 创建图片实例, 并且挂载到dom上, 初始位置为点击的图片位置, 以及图片的宽高, 以及图片的fit, 在0.3s后移动到中心位置
-            const img = withDirectives(
-                createVNode('img', {
-                    src: _option.imgList[_option.index],
-                    fit: fit,
-                    style: {
-                        width: rect.width + 'px',
-                        height: rect.height + 'px',
-                        left: rect.left + 'px',
-                        top: rect.top + 'px'
-                    },
-                    class: 'se-img-preview-img-item',
-                    onError: props.onError
-                }),
-                [[contextmenu, false]]
-            );
-            // [[contextmenu, false]];
-            // console.log(img);
-            // const imgBindings = img.dirs || (img.dirs = []);
-            // imgBindings.push({
-            //     dir: contextmenu,
-            //     instance: img,
-            //     value: false,
-            //     oldValue: void 0,
-            //     arg: void 0,
-            //     modifiers: {},
-            // });
             render(img, imagesRef.value);
             // 计算图片的真实宽高比
             const imgReal = new Image();
@@ -877,23 +852,43 @@ export default defineComponent({
                 closePreview();
             }
         });
-        return () => (
-            <div class="se-img-preview">
-                {props.modal && (
-                    <div class="se-img-preview-mask" ref={maskRef}></div>
-                )}
-                <div class="se-img-preview-img" ref={imagesRef}></div>
-                <div class="se-img-preview-toolbar" ref={toolbarRef}></div>
-                {props.modal && (
-                    <div
-                        class="se-img-preview-close"
-                        onClick={userClosePreview}
-                    >
-                        {props.closeIcon}
-                    </div>
-                )}
-                <div class="se-img-preview-msg" ref={msgRootRef}></div>
-            </div>
-        );
+        return () => {
+            // 因为 withDirectives 只能在render函数中使用, 所以在这里创建图片实例, 再赋值给img变量, 就能在外面用了
+            // 创建图片实例, 并且挂载到dom上, 初始位置为点击的图片位置, 以及图片的宽高, 以及图片的fit, 在0.3s后移动到中心位置
+            const _img = withDirectives(
+                createVNode('img', {
+                    src: _option.imgList[_option.index],
+                    fit: fit,
+                    style: {
+                        width: rect.width + 'px',
+                        height: rect.height + 'px',
+                        left: rect.left + 'px',
+                        top: rect.top + 'px'
+                    },
+                    class: 'se-img-preview-img-item',
+                    onError: props.onError
+                }),
+                [[contextmenu, false]]
+            );
+            img = _img;
+            return (
+                <div class="se-img-preview">
+                    {props.modal && (
+                        <div class="se-img-preview-mask" ref={maskRef}></div>
+                    )}
+                    <div class="se-img-preview-img" ref={imagesRef}></div>
+                    <div class="se-img-preview-toolbar" ref={toolbarRef}></div>
+                    {props.modal && (
+                        <div
+                            class="se-img-preview-close"
+                            onClick={userClosePreview}
+                        >
+                            {props.closeIcon}
+                        </div>
+                    )}
+                    <div class="se-img-preview-msg" ref={msgRootRef}></div>
+                </div>
+            );
+        };
     }
 });
