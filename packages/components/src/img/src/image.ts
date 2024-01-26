@@ -1,4 +1,4 @@
-import { PropType } from 'vue';
+import { PropType, Ref } from 'vue';
 import {
     ImgPropsType,
     ImgProps,
@@ -223,7 +223,7 @@ export const previewToolbarProps: PreviewToolbarProps = {
         default: previewDefault.toolbar.pagination
     },
     index: {
-        type: Number,
+        type: Object as PropType<Ref<number>>,
         default: 0
     },
     total: {
