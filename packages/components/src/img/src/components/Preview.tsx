@@ -67,6 +67,9 @@ export default defineComponent({
             imgItem.style.opacity = '0';
             imgItem.style.transform =
                 'translate(-50%, -50%) scale(0.2) rotate(0deg) rotateY(0deg) rotateZ(0deg)';
+            const { clientWidth, clientHeight } = document.documentElement;
+            imgItem.style.top = clientHeight / 2 + 'px';
+            imgItem.style.left = clientWidth / 2 + 'px';
             // 若存在, 关闭遮罩
             if (props.modal) {
                 maskRef.value!.style.opacity = '0';
