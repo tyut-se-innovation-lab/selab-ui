@@ -341,14 +341,21 @@ export default defineComponent({
                 imgItem.style.cursor = 'grab';
                 checkImg();
             }
+            // 是否正在缩放
+            let isScaling = false;
             // 控制缩放的函数
             function scaleImg(type: 'out' | 'in', origin?: [number, number]) {
+                if (isScaling) return;
+                const lastScale = setTimeout(() => {
+                    isScaling = false;
+                }, 200);
                 // 获取当前图片
                 const imgItem = imagesRef.value.childNodes[0];
                 const imgNow = getComputedStyle(imgItem);
                 // 获取当前图片的显示宽高
                 const imgWidth = parseFloat(imgNow.width);
                 const imgHeight = parseFloat(imgNow.height);
+                isScaling = true;
                 // 获取当前图片的位置
                 const imgLeft = parseFloat(imgNow.left);
                 const imgTop = parseFloat(imgNow.top);
