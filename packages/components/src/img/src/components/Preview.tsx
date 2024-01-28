@@ -355,6 +355,18 @@ export default defineComponent({
                 // 获取当前图片的显示宽高
                 const imgWidth = parseFloat(imgNow.width);
                 const imgHeight = parseFloat(imgNow.height);
+                // 计算缩放前比例
+                const oldScale = imgWidth / imgWidthOriginal;
+                // 若当前缩放比例等于最小缩放比例或最大缩放比例, 则不缩放
+                if (
+                    (type === 'out' &&
+                        Math.abs(oldScale - _option.minScale) < 0.001) ||
+                    (type === 'in' &&
+                        Math.abs(oldScale - _option.maxScale) < 0.001)
+                ) {
+                    lastScale && clearTimeout(lastScale);
+                    return;
+                }
                 isScaling = true;
                 // 获取当前图片的位置
                 const imgLeft = parseFloat(imgNow.left);
@@ -382,19 +394,21 @@ export default defineComponent({
                 }
                 // 确认缩放点
                 const _origin = origin ? origin : [imgWidth / 2, imgHeight / 2];
+                // 获取实际缩放比例
+                const realScale =
+                    type === 'out' ? imgWidth / newWidth : newWidth / imgWidth;
                 // 计算缩放后的位置
                 const leftChange =
                     type === 'out'
                         ? (_origin[0] - imgWidth / 2) / 1 -
-                          (_origin[0] - imgWidth / 2) / _option.scaleStep
-                        : (_origin[0] - imgWidth / 2) * (1 - _option.scaleStep);
+                          (_origin[0] - imgWidth / 2) / realScale
+                        : (_origin[0] - imgWidth / 2) * (1 - realScale);
                 const newLeft = imgLeft + leftChange;
                 const topChange =
                     type === 'out'
                         ? (_origin[1] - imgHeight / 2) / 1 -
-                          (_origin[1] - imgHeight / 2) / _option.scaleStep
-                        : (_origin[1] - imgHeight / 2) *
-                          (1 - _option.scaleStep);
+                          (_origin[1] - imgHeight / 2) / realScale
+                        : (_origin[1] - imgHeight / 2) * (1 - realScale);
                 const newTop = imgTop + topChange;
                 // 缩放
                 imgItem.style.width = newWidth + 'px';
