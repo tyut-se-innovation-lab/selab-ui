@@ -57,7 +57,7 @@
             v-for="i of [...Array(6).keys()]"
             :key="i"
             :src="imgList[i]"
-            fit="cover"
+            fit="contain"
             width="400"
             lazy
             :preview="{
@@ -75,6 +75,7 @@
                     flip: true,
                     download: onImgDownload
                 },
+                modal: true,
                 scaleStep: 0.5,
                 closeIcon: '滚',
                 closeOnClickModal: true,
@@ -92,8 +93,8 @@
             </template>
         </se-img>
         <se-img
-            :src="imgList[5]"
-            fit="contain"
+            :src="imgList[3]"
+            fit="cover"
             width="400"
             lazy
             :preview="{
@@ -102,13 +103,13 @@
                 albumList: imgList,
                 animation: 'slide',
                 loop: false,
-                modal: false,
+                modal: true,
                 onChange: onImgChange,
                 onClose: onImgClose,
                 onOpen: onImgOpen,
-                toolbar: {
-                    show: false
-                }
+                // toolbar: {
+                //     show: false
+                // }
             }"
             :contextmenu="false"
         >

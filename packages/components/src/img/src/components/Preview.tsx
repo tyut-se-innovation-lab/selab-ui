@@ -12,10 +12,11 @@ import { imgPreviewProps } from '../image';
 import { unPreviewImage } from '../method';
 import SePreviewToolbar from './Toolbar';
 import seMiniMeg from '../../../miniMsg/src/index';
+import contextmenu from '../../../contextmenu/src/method';
+import { pupOpsMount } from '@selab-ui/utils';
 import leftCur from '../../../../../assets/mouseImg/left.ico';
 import rightIco from '../../../../../assets/mouseImg/right.ico';
 import closeIco from '../../../../../assets/mouseImg/close.ico';
-import contextmenu from '../../../contextmenu/src/method';
 
 export default defineComponent({
     name: 'se-img-preview',
@@ -25,9 +26,11 @@ export default defineComponent({
         let rect: DOMRect;
         let fit: string;
         if ('mask' in props.instance) {
-            rect = props.instance!.mask[props.index].getBoundingClientRect();
+            let index = props.index;
+            if (!props.instance!.mask[index]) index = 0;
+            rect = props.instance!.mask[index].getBoundingClientRect();
             fit = (
-                props.instance!.mask[props.index].parentNode
+                props.instance!.mask[index].parentNode
                     ?.childNodes[0] as HTMLImageElement
             ).classList[1]
                 .split('-')
@@ -689,8 +692,10 @@ export default defineComponent({
                     oldImgDom.style.transition = 'all 0.3s ease-in-out';
                     oldImgDom.style.left = '0px';
                     oldImgDom.style.top = '0px';
+                    oldImgDom.style.zIndex = '999';
                     render(oldImg, oldImgDom);
-                    document.body.appendChild(oldImgDom);
+                    const mountLocation = pupOpsMount();
+                    const unmount = mountLocation.mountDiv(oldImgDom);
                     requestAnimationFrame(() => {
                         // 恢复初始化
                         const oldImgItem = oldImgDom
@@ -714,7 +719,7 @@ export default defineComponent({
                             }
                         });
                         setTimeout(() => {
-                            document.body.removeChild(oldImgDom);
+                            unmount();
                         }, 300);
                     });
                 }

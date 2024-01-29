@@ -187,11 +187,36 @@ function registerPreviewImage<
                 const _openPreview = (index: number) => {
                     previewImage(instance, index);
                 };
-                instance.mask.find((item, index) => {
-                    if (item.contains(e.target as Node)) {
-                        instance.preview.onOpen(() => _openPreview(index));
-                    }
+                if (!option.album) {
+                    instance.mask.find((item, index) => {
+                        if (item.contains(e.target as Node)) {
+                            instance.preview.onOpen(() => _openPreview(index));
+                        }
+                    });
+                    return;
+                }
+                const clickImg = (
+                    (e.target as HTMLDivElement).parentNode
+                        ?.childNodes[0] as HTMLImageElement
+                ).src;
+                const index = option.albumList.findIndex((item) => {
+                    const img2 = createVNode('img', {
+                        src: item
+                    });
+                    const dom = document.createElement('div');
+                    render(img2, dom);
+                    const isFind = clickImg === img2.el!.src;
+                    render(null, dom);
+                    dom.remove();
+                    return isFind;
                 });
+                console.log(index);
+                if (index === -1) {
+                    instance.preview.onOpen(() => _openPreview(0));
+                } else {
+                    instance.preview.onOpen(() => _openPreview(index));
+                }
+                // instance.preview.onOpen(() => _openPreview(5));
             },
             vNode: null
         };
