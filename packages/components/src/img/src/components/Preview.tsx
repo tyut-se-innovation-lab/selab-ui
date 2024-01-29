@@ -54,22 +54,39 @@ export default defineComponent({
             'close-on-click-modal': props.closeOnClickModal,
             'close-on-press-escape': props.closeOnPressEscape
         };
+        const onOpenIndex = _option.index;
         const nowIndex = ref(_option.index);
         const maskRef = ref();
         const imagesRef = ref();
         const toolbarRef = ref();
         const msgRootRef = ref();
+        // 记录预览是否关闭, 关闭后将禁止全部操作
+        let isClose = false;
         // 关闭预览的函数
         function closePreview() {
+            if (isClose) return;
+            isClose = true;
             // 获取当前图片
-            const imgItem = imagesRef.value.childNodes[0];
+            const imgItem = img.el!;
             // 关闭预览
-            imgItem.style.opacity = '0';
-            imgItem.style.transform =
-                'translate(-50%, -50%) scale(0.2) rotate(0deg) rotateY(0deg) rotateZ(0deg)';
-            const { clientWidth, clientHeight } = document.documentElement;
-            imgItem.style.top = clientHeight / 2 + 'px';
-            imgItem.style.left = clientWidth / 2 + 'px';
+            if (
+                _option.modal &&
+                'mask' in props.instance &&
+                onOpenIndex === _option.index
+            ) {
+                imgItem.style.left = rect.left + 'px';
+                imgItem.style.top = rect.top + 'px';
+                imgItem.style.width = rect.width + 'px';
+                imgItem.style.height = rect.height + 'px';
+                imgItem.style.transform = `translate(0, 0) scale(1) rotate(0deg) rotateY(0deg) rotateZ(0deg)`;
+            } else {
+                const { clientWidth, clientHeight } = document.documentElement;
+                imgItem.style.top = clientHeight / 2 + 'px';
+                imgItem.style.left = clientWidth / 2 + 'px';
+                imgItem.style.transform =
+                    'translate(-50%, -50%) scale(0.2) rotate(0deg) rotateY(0deg) rotateZ(0deg)';
+                imgItem.style.opacity = '0';
+            }
             // 若存在, 关闭遮罩
             if (props.modal) {
                 maskRef.value!.style.opacity = '0';
@@ -129,7 +146,7 @@ export default defineComponent({
                         clientHeight / imgRealHeight
                     ) / 1.4;
                 // 保存打开预览时的图片
-                const imgItem = imagesRef.value.childNodes[0];
+                const imgItem = img.el!;
                 imgItem.style['object-fit'] = fit;
                 imgItem.style.width = imgRealWidth * scale + 'px';
                 imgItem.style.height = imgRealHeight * scale + 'px';
@@ -146,6 +163,7 @@ export default defineComponent({
                 imgHeightOriginal = imgRealHeight * scale;
                 // 监听滚轮事件
                 imgItem.addEventListener('wheel', (e: WheelEvent) => {
+                    if (isClose) return;
                     const toLeftBorder =
                         e.clientX - imgItem.getBoundingClientRect().left;
                     const toTopBorder =
@@ -208,6 +226,7 @@ export default defineComponent({
             };
             // 检测鼠标在遮罩上的位置, 更改鼠标样式
             const changeMouse = (e: MouseEvent) => {
+                if (isClose) return;
                 if (e.clientX < clientWidth / 2 - imgWidthOriginal / 2) {
                     if (_option.index !== 0 || _option.loop)
                         maskRef.value!.style.cursor = `url(${leftCur}), auto`;
@@ -231,7 +250,8 @@ export default defineComponent({
             };
             // 检测图片是否离开视口, 若离开则移动到视口内可见位置
             function checkImg() {
-                const imgItem = imagesRef.value.childNodes[0];
+                if (isClose) return;
+                const imgItem = img.el! as HTMLImageElement;
                 const imgNow = getComputedStyle(imgItem);
                 const imgLeft = parseFloat(imgNow.left);
                 const imgTop = parseFloat(imgNow.top);
@@ -283,7 +303,8 @@ export default defineComponent({
             const mouseDownPosition = [0, 0];
             // 点击事件
             function mouseDown(e: MouseEvent) {
-                const imgItem = imagesRef.value.childNodes[0];
+                if (isClose) return;
+                const imgItem = img.el!;
                 mouseDownPosition[0] = e.clientX;
                 mouseDownPosition[1] = e.clientY;
                 // 添加移动事件
@@ -294,18 +315,18 @@ export default defineComponent({
                 imgItem.addEventListener('mouseleave', mouseUpLeave);
                 // 移除过渡
                 imgItem.style.transition = 'none';
-                // toolbarRef.value.style.transition = 'none';
                 // 鼠标样式改为抓取
                 imgItem.style.cursor = 'grabbing';
             }
             let toolbarWidth: number;
             // 移动事件
             function mouseMove(e: MouseEvent) {
+                if (isClose) return;
                 // 计算移动距离
                 const moveX = e.clientX - mouseDownPosition[0];
                 const moveY = e.clientY - mouseDownPosition[1];
                 // 获取当前图片的位置
-                const imgItem = imagesRef.value.childNodes[0];
+                const imgItem = img.el! as HTMLImageElement;
                 const imgNow = getComputedStyle(imgItem);
                 const imgLeft = parseFloat(imgNow.left);
                 const imgTop = parseFloat(imgNow.top);
@@ -329,7 +350,8 @@ export default defineComponent({
             }
             // 松开事件和离开事件
             function mouseUpLeave() {
-                const imgItem = imagesRef.value.childNodes[0];
+                if (isClose) return;
+                const imgItem = img.el!;
                 // 移除移动事件
                 imgItem.removeEventListener('mousemove', mouseMove);
                 // 移除松开事件
@@ -345,12 +367,13 @@ export default defineComponent({
             let isScaling = false;
             // 控制缩放的函数
             function scaleImg(type: 'out' | 'in', origin?: [number, number]) {
+                if (isClose) return;
                 if (isScaling) return;
                 const lastScale = setTimeout(() => {
                     isScaling = false;
                 }, 200);
                 // 获取当前图片
-                const imgItem = imagesRef.value.childNodes[0];
+                const imgItem = img.el! as HTMLImageElement;
                 const imgNowStyle = getComputedStyle(imgItem);
                 // 获取当前图片的显示宽高
                 const imgWidth = parseFloat(imgNowStyle.width);
@@ -421,8 +444,9 @@ export default defineComponent({
             }
             // 控制旋转的函数
             function rotateImg(type: 'forward' | 'reverse') {
+                if (isClose) return;
                 // 获取当前图片
-                const imgNowItem = imagesRef.value.childNodes[0];
+                const imgNowItem = img.el!;
                 // 获取之前的旋转角度
                 const imgOldRotate = parseInt(
                     imgNowItem.style.transform
@@ -454,8 +478,9 @@ export default defineComponent({
             }
             // 控制镜像反转的函数
             function flipImg(type: 'horizontal' | 'vertical') {
+                if (isClose) return;
                 // 获取当前图片
-                const imgItem = imagesRef.value.childNodes[0];
+                const imgItem = img.el!;
                 // 获取之前的旋转角度
                 const imgRotate = parseInt(
                     imgItem.style.transform.split('rotate(')[1].split('deg)')[0]
@@ -484,7 +509,7 @@ export default defineComponent({
                 // 折叠
                 // 使用canvas的方式
                 // 获取当前图片
-                // const imgItem = imagesRef.value.childNodes[0];
+                // const imgItem = img.el!;
                 // // 创建canvas
                 // const canvas = document.createElement('canvas');
                 // // 创建上下文
@@ -597,7 +622,8 @@ export default defineComponent({
             }
             // 还原图片的函数
             function resetImg() {
-                const imgItem = imagesRef.value.childNodes[0];
+                if (isClose) return;
+                const imgItem = img.el!;
                 imgItem.style.transform =
                     'translate(-50%, -50%) scale(1) rotate(0deg) rotateY(0deg) rotateZ(0deg)';
                 imgItem.style.left = '50vw';
@@ -611,6 +637,7 @@ export default defineComponent({
                 nextIndex: number | false,
                 e: MouseEvent
             ) {
+                if (isClose) return;
                 if (nextIndex === false) {
                     let x: number | '50vw';
                     let y: number | '50vh';
@@ -629,7 +656,7 @@ export default defineComponent({
                     });
                     return;
                 }
-                const imgItem = imagesRef.value.childNodes[0];
+                const imgItem = img.el!;
                 // 获取当前图片的下标
                 const index = _option.index;
 
@@ -706,8 +733,7 @@ export default defineComponent({
                             clientHeight / imgRealHeight
                         ) / 1.4;
                     // 保存打开预览时的图片
-                    const imgItem = imagesRef.value.childNodes[0];
-                    imgItem.style['object-fit'] = 'fill';
+                    const imgItem = img.el!;
                     imgItem.style.width = imgRealWidth * scale + 'px';
                     imgItem.style.height = imgRealHeight * scale + 'px';
                     imgItem.style.left = '50vw';
@@ -748,6 +774,7 @@ export default defineComponent({
             }
             // 用户点击下载的函数
             function userDownload() {
+                if (isClose) return;
                 if (typeof props.toolbar.download === 'function') {
                     props.toolbar.download({
                         index: _option.index,
@@ -765,8 +792,16 @@ export default defineComponent({
                     });
                 }
             }
+            // 是否正在切换
+            let isChanging = false;
             // 用户切换图片的函数
             function userChangeImg(type: 'prev' | 'next', e: MouseEvent) {
+                if (isClose) return;
+                if (isChanging) return;
+                const lastChanging = setTimeout(() => {
+                    isChanging = false;
+                }, 300);
+                isChanging = true;
                 // 获取当前图片的下标
                 const index = _option.index;
                 // 获取图片的总数
@@ -788,6 +823,10 @@ export default defineComponent({
                         nextIndex = false;
                     }
                 }
+                if (nextIndex === false) {
+                    lastChanging && clearTimeout(lastChanging);
+                    isChanging = false;
+                }
                 const _changeImg = () => {
                     changeImg(type, nextIndex, e);
                 };
@@ -799,12 +838,13 @@ export default defineComponent({
             }
             // 更新工具栏位置到图片中心
             function initToolbarLocation() {
+                if (isClose) return;
                 if (!_option.modal) {
                     // 获取图片的位置
-                    const imgItem = imagesRef.value.childNodes[0];
+                    const imgItem = img.el! as HTMLImageElement;
                     const imgNow = getComputedStyle(imgItem);
                     const imgLeft =
-                        parseFloat(imgItem.left) || parseFloat(imgNow.left);
+                        parseFloat(imgNow.left) || parseFloat(imgNow.left);
                     if (
                         imgLeft > toolbarWidth / 2 + 10 &&
                         imgLeft < clientWidth - toolbarWidth / 2 - 10
@@ -886,6 +926,7 @@ export default defineComponent({
                     src: _option.imgList[_option.index],
                     fit: fit,
                     style: {
+                        position: 'absolute',
                         width: rect.width + 'px',
                         height: rect.height + 'px',
                         left: rect.left + 'px',
