@@ -157,4 +157,12 @@ export type TemporaryInstance = {
 
 export type ImgPreviewPropsType = PreviewType & { index: number } & { instance: Instance | TemporaryInstance };
 
-export type ImgPreviewProps = CreateProps<ImgPreviewPropsType>;
+
+export type LocationType = {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+};
+
+declare module '*.svg'

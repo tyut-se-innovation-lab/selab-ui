@@ -351,10 +351,10 @@ export default defineComponent({
                 }, 200);
                 // 获取当前图片
                 const imgItem = imagesRef.value.childNodes[0];
-                const imgNow = getComputedStyle(imgItem);
+                const imgNowStyle = getComputedStyle(imgItem);
                 // 获取当前图片的显示宽高
-                const imgWidth = parseFloat(imgNow.width);
-                const imgHeight = parseFloat(imgNow.height);
+                const imgWidth = parseFloat(imgNowStyle.width);
+                const imgHeight = parseFloat(imgNowStyle.height);
                 // 计算缩放前比例
                 const oldScale = imgWidth / imgWidthOriginal;
                 // 若当前缩放比例等于最小缩放比例或最大缩放比例, 则不缩放
@@ -369,8 +369,8 @@ export default defineComponent({
                 }
                 isScaling = true;
                 // 获取当前图片的位置
-                const imgLeft = parseFloat(imgNow.left);
-                const imgTop = parseFloat(imgNow.top);
+                const imgLeft = parseFloat(imgNowStyle.left);
+                const imgTop = parseFloat(imgNowStyle.top);
                 // 计算缩放后的宽高
                 let newWidth =
                     type === 'in'
@@ -422,31 +422,33 @@ export default defineComponent({
             // 控制旋转的函数
             function rotateImg(type: 'forward' | 'reverse') {
                 // 获取当前图片
-                const imgItem = imagesRef.value.childNodes[0];
+                const imgNowItem = imagesRef.value.childNodes[0];
                 // 获取之前的旋转角度
-                const imgRotate = parseInt(
-                    imgItem.style.transform.split('rotate(')[1].split('deg)')[0]
+                const imgOldRotate = parseInt(
+                    imgNowItem.style.transform
+                        .split('rotate(')[1]
+                        .split('deg)')[0]
                 );
                 const imgRotateY = parseInt(
-                    imgItem.style.transform
+                    imgNowItem.style.transform
                         .split('rotateY(')[1]
                         .split('deg)')[0]
                 );
                 const imgRotateZ = parseInt(
-                    imgItem.style.transform
+                    imgNowItem.style.transform
                         .split('rotateZ(')[1]
                         .split('deg)')[0]
                 );
                 const _newRotate =
-                    type === 'reverse' ? imgRotate + 90 : imgRotate - 90;
-                imgItem.style.transform = `translate(-50%, -50%) scale(1) rotate(${_newRotate}deg) rotateY(${imgRotateY}deg) rotateZ(${imgRotateZ}deg)`;
+                    type === 'reverse' ? imgOldRotate + 90 : imgOldRotate - 90;
+                imgNowItem.style.transform = `translate(-50%, -50%) scale(1) rotate(${_newRotate}deg) rotateY(${imgRotateY}deg) rotateZ(${imgRotateZ}deg)`;
                 setTimeout(() => {
                     if (_newRotate === 360 || _newRotate === -360) {
-                        imgItem.style.transition = 'none';
-                        imgItem.style.transform = `translate(-50%, -50%) scale(1) rotate(0deg) rotateY(${imgRotateY}deg) rotateZ(${imgRotateZ}deg)`;
+                        imgNowItem.style.transition = 'none';
+                        imgNowItem.style.transform = `translate(-50%, -50%) scale(1) rotate(0deg) rotateY(${imgRotateY}deg) rotateZ(${imgRotateZ}deg)`;
                     }
                     requestAnimationFrame(() => {
-                        imgItem.style.transition = '';
+                        imgNowItem.style.transition = '';
                     });
                 }, 300);
             }
@@ -892,7 +894,7 @@ export default defineComponent({
                     class: 'se-img-preview-img-item',
                     onError: props.onError
                 }),
-                [[contextmenu, false]]
+                [[contextmenu, props.contextmenu]]
             );
             img = _img;
             return (

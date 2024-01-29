@@ -7,6 +7,7 @@ import {
     TemporaryInstance
 } from './image.d';
 import { previewDefault } from './image';
+import { LocationType } from './image.d';
 import SePreview from './components/Preview';
 import { pupOpsMount } from '@selab-ui/utils';
 import { ContextmenuType } from '../../contextmenu/src/contextmenu.d';
@@ -118,21 +119,15 @@ function previewCheck(props: Readonly<ImgPropsType>): PreviewType | false {
 }
 
 // 注册预览图片
-function registerPreviewImage(
-    option: PreviewType,
-    mask: HTMLElement | null,
-    isTemporary = false,
-    location: {
-        x: number;
-        y: number;
-        width: number;
-        height: number;
-    }
-): Instance | TemporaryInstance {
+function registerPreviewImage<
+    A extends PreviewType,
+    T extends boolean,
+    K extends T extends true ? LocationType : HTMLElement
+>(option: A, isTemporary: T, location: K): Instance | TemporaryInstance {
     // 检测配置合法性
     if (!checkPreview(option)) throw new Error('Preview config is error.');
     // 如果是临时的, 则直接创建实例, 并添加事件监听器
-    if (isTemporary) {
+    if (isTemporary && !(location instanceof HTMLElement)) {
         const instance: TemporaryInstance = {
             preview: {
                 ...option,
@@ -154,44 +149,52 @@ function registerPreviewImage(
             location
         };
         return instance;
+    } else if (isTemporary && location instanceof HTMLElement) {
+        // 临时预览不能挂载到 HTMLElement 上, 必须提供位置信息
+        throw new Error('Temporary preview must provide location.');
     }
-    if (!mask) throw new Error('Mask is null.');
-    // 通过option创建用于实例化Preview.tsx的配置, 并添加到instances, 同时创建事件监听器
-    const _instance = instances.find((item) => {
-        if (item.preview.name === option.name) {
-            item.mask.push(mask);
-            return item;
+    if (!isTemporary && !(location instanceof HTMLElement)) {
+        // 非临时预览必须提供 HTMLElement, 用于添加启动预览的事件监听器
+        throw new Error('Mask HTMLElement is null.');
+    } else if (!isTemporary && location instanceof HTMLElement) {
+        // 通过option创建用于实例化Preview.tsx的配置, 并添加到instances, 同时创建事件监听器
+        const _instance = instances.find((item) => {
+            if (item.preview.name === option.name) {
+                item.mask.push(location);
+                return item;
+            }
+        });
+        if (_instance) {
+            location.addEventListener('click', _instance.clickMask);
+            return _instance;
         }
-    });
-    if (_instance) {
-        mask.addEventListener('click', _instance.clickMask);
-        return _instance;
+
+        const instance: Instance = {
+            preview: {
+                ...option,
+                toolbar: { ...option.toolbar }
+            },
+            mask: [location],
+            root: pupOpsMount(),
+            toolbar: { ...option.toolbar },
+            clickMask: function (e) {
+                const _openPreview = (index: number) => {
+                    previewImage(instance, index);
+                };
+                instance.mask.find((item, index) => {
+                    if (item.contains(e.target as Node)) {
+                        instance.preview.onOpen(() => _openPreview(index));
+                    }
+                });
+            },
+            vNode: null
+        };
+        instances.push(instance);
+
+        location.addEventListener('click', instance.clickMask);
+        return instance;
     }
-
-    const instance: Instance = {
-        preview: {
-            ...option,
-            toolbar: { ...option.toolbar }
-        },
-        mask: [mask],
-        root: pupOpsMount(),
-        toolbar: { ...option.toolbar },
-        clickMask: function (e) {
-            const _openPreview = (index: number) => {
-                previewImage(instance, index);
-            };
-            instance.mask.find((item, index) => {
-                if (item.contains(e.target as Node)) {
-                    instance.preview.onOpen(() => _openPreview(index));
-                }
-            });
-        },
-        vNode: null
-    };
-    instances.push(instance);
-
-    mask.addEventListener('click', instance.clickMask);
-    return instance;
+    throw new Error('Unknown error.');
 }
 
 // 注销预览图片
@@ -352,7 +355,6 @@ function createAlbum({
             onClose,
             src: ''
         },
-        null,
         true,
         _location
     ) as TemporaryInstance;

@@ -65,6 +65,7 @@ export default defineComponent({
             if (preview) {
                 instance = registerPreviewImage(
                     preview,
+                    false,
                     mask.value as HTMLDivElement
                 ) as Instance;
                 index = instance.mask.indexOf(mask.value as HTMLDivElement);
