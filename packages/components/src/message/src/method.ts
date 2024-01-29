@@ -48,7 +48,9 @@ watch(
 function toMegOption(msg: MessageOption | MessageMsg): MessageOption {
     // 如果没有传入参数, 则报错
     if (!msg) {
-        throw new Error('In the Message, the message or option is mandatory');
+        throw console.error(
+            'In the Message, the message or option is mandatory'
+        );
     }
     // 如果传入的不是 MessageOption 或 MessageMsg, 则报错
     if (
@@ -58,7 +60,7 @@ function toMegOption(msg: MessageOption | MessageMsg): MessageOption {
         typeof msg === 'object' &&
         !('message' in msg)
     ) {
-        throw new Error('In the Message, the message is mandatory');
+        throw console.error('In the Message, the message is mandatory');
     }
     // 如果传入的 message 是 string 或 VNode 或 function, 则返回一个 MessageOption
     if (typeof msg === 'string' || isVNode(msg) || typeof msg === 'function') {

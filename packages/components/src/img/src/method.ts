@@ -36,24 +36,29 @@ const observer = new IntersectionObserver(
 function checkPreview(option: PreviewType): boolean {
     if (option.album) {
         if (!option.albumList || option.albumList.length === 0) {
-            throw new Error('AlbumList is empty but it is must for album.');
+            console.error('AlbumList is empty but it is must for album.');
+            return false;
         }
     }
 
     if (option.scaleStep <= 0) {
-        throw new Error('ScaleStep must be greater than 0.');
+        console.error('ScaleStep must be greater than 0.');
+        return false;
     }
 
     if (option.minScale <= 0) {
-        throw new Error('MinScale must be greater than 0.');
+        console.error('MinScale must be greater than 0.');
+        return false;
     }
 
     if (option.maxScale < 1) {
-        throw new Error('MaxScale must be greater than 1.');
+        console.error('MaxScale must be greater than 1.');
+        return false;
     }
 
     if (option.minScale >= option.maxScale) {
-        throw new Error('MinScale must be less than MaxScale.');
+        console.error('MinScale must be less than MaxScale.');
+        return false;
     }
 
     return true;
@@ -84,10 +89,11 @@ function previewCheck(props: Readonly<ImgPropsType>): PreviewType | false {
             instances.find((item) => {
                 if (item.preview.name === (props.preview as PreviewType).name) {
                     // 若已有相同的相册名, 则报错
-                    if (item.preview.album)
-                        throw new Error(
+                    if (item.preview.album) {
+                        throw console.error(
                             `Img album name can't repeat, but name "${item.preview.name}" is repeat.`
                         );
+                    }
                     // 否则添加到照片群组
                     item.preview.albumList.push(
                         (props.preview as PreviewType).src || props.src
@@ -105,7 +111,7 @@ function previewCheck(props: Readonly<ImgPropsType>): PreviewType | false {
         //     (!props.preview.albumList || props.preview.albumList.length === 0)
         // ) {
         //     // 当开启相册预览时, 但是相册列表为空时, 报错
-        //     throw new Error('AlbumList is empty but it is must for album.');
+        //     throw console.error('AlbumList is empty but it is must for album.');
         // } else
 
         if (!props.preview.album) {
@@ -125,7 +131,7 @@ function registerPreviewImage<
     K extends T extends true ? LocationType : HTMLElement
 >(option: A, isTemporary: T, location: K): Instance | TemporaryInstance {
     // 检测配置合法性
-    if (!checkPreview(option)) throw new Error('Preview config is error.');
+    if (!checkPreview(option)) throw console.error('Preview config is error.');
     // 如果是临时的, 则直接创建实例, 并添加事件监听器
     if (isTemporary && !(location instanceof HTMLElement)) {
         const instance: TemporaryInstance = {
@@ -151,11 +157,11 @@ function registerPreviewImage<
         return instance;
     } else if (isTemporary && location instanceof HTMLElement) {
         // 临时预览不能挂载到 HTMLElement 上, 必须提供位置信息
-        throw new Error('Temporary preview must provide location.');
+        throw console.error('Temporary preview must provide location.');
     }
     if (!isTemporary && !(location instanceof HTMLElement)) {
         // 非临时预览必须提供 HTMLElement, 用于添加启动预览的事件监听器
-        throw new Error('Mask HTMLElement is null.');
+        throw console.error('Mask HTMLElement is null.');
     } else if (!isTemporary && location instanceof HTMLElement) {
         // 通过option创建用于实例化Preview.tsx的配置, 并添加到instances, 同时创建事件监听器
         const _instance = instances.find((item) => {
@@ -194,7 +200,7 @@ function registerPreviewImage<
         location.addEventListener('click', instance.clickMask);
         return instance;
     }
-    throw new Error('Unknown error.');
+    throw console.error('Unknown error.');
 }
 
 // 注销预览图片
@@ -230,7 +236,7 @@ function previewImage(instance: Instance | TemporaryInstance, index = 0) {
     if (previewInstance.value === instance) return;
     // 如果下标超出范围, 则重置为报错
     if (index >= instance.preview.albumList.length) {
-        throw new Error(
+        throw console.error(
             `Image Preview > Index out of range, index: ${index}, albumList: ${instance.preview.albumList.length}`
         );
     }
