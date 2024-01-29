@@ -157,6 +157,7 @@ export type TemporaryInstance = {
 
 export type ImgPreviewPropsType = PreviewType & { index: number } & { instance: Instance | TemporaryInstance };
 
+export type ImgPreviewProps = CreateProps<ImgPreviewPropsType>;
 
 export type LocationType = {
   x: number;
