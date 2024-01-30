@@ -29,7 +29,7 @@
             </template>
         </se-tag>
         <se-button @click="visible = true">dialog测试</se-button>
-        <se-dialog title="温馨提示" :visible.sync=visible @close="closed" >
+        <se-dialog  :visible.sync=visible @close="closed" >
             <template v-slot:footer>
                 <se-button type="success" @click="visible = false">取消</se-button>
                 <se-button type="success" @click="visible = false">确定</se-button>
