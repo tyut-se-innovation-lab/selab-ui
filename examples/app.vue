@@ -103,13 +103,13 @@
                 albumList: imgList,
                 animation: 'slide',
                 loop: false,
-                modal: true,
+                modal: false,
                 onChange: onImgChange,
                 onClose: onImgClose,
                 onOpen: onImgOpen,
-                // toolbar: {
-                //     show: false
-                // }
+                toolbar: {
+                    show: false
+                }
             }"
             :contextmenu="false"
         >
