@@ -37,3 +37,30 @@ export declare function _createVNode(
     unRender: () => void;
     render: () => void;
 };
+
+// 带单位的数字 字符串
+export type UnitNumber =
+    | `${number}%`
+    | `${number}cm`
+    | `${number}mm`
+    | `${number}Q`
+    | `${number}in`
+    | `${number}pc`
+    | `${number}pt`
+    | `${number}px`
+    | `${number}em`
+    | `${number}ex`
+    | `${number}ch`
+    | `${number}rem`
+    | `${number}vw`
+    | `${number}vh`
+    | `${number}vmin`
+    | `${number}vmax`
+    | `${number}vb`
+    | `${number}vi`
+    | `${number}svw`
+    | `${number}svh`
+    | `${number}lvw`
+    | `${number}lvh`
+    | `${number}dvw`
+    | `${number}dvh`;

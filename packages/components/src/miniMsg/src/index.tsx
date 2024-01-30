@@ -9,6 +9,7 @@ import {
 } from 'vue';
 import '../../less/components/miniMsg/index.less';
 import { getStringWidth, pupOpsMount } from '@selab-ui/utils';
+import { UnitNumber } from '@selab-ui/utils/type';
 
 const miniMsgComponent = defineComponent({
     name: 'se-img-previewMsg',
@@ -67,32 +68,7 @@ const miniMsgComponent = defineComponent({
 let nowMagClose: () => void;
 
 // 限制x y的值为数字或数字加单位字符串
-type locationType =
-    | number
-    | `${number}%`
-    | `${number}cm`
-    | `${number}mm`
-    | `${number}Q`
-    | `${number}in`
-    | `${number}pc`
-    | `${number}pt`
-    | `${number}px`
-    | `${number}em`
-    | `${number}ex`
-    | `${number}ch`
-    | `${number}rem`
-    | `${number}vw`
-    | `${number}vh`
-    | `${number}vmin`
-    | `${number}vmax`
-    | `${number}vb`
-    | `${number}vi`
-    | `${number}svw`
-    | `${number}svh`
-    | `${number}lvw`
-    | `${number}lvh`
-    | `${number}dvw`
-    | `${number}dvh`;
+type locationType = number | UnitNumber;
 
 /** 将location的位置规范化并添加单位 */
 function locationFormat(
