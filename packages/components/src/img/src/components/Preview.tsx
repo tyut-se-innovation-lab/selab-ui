@@ -317,7 +317,8 @@ export default defineComponent({
                 // 添加离开事件
                 imgItem.addEventListener('mouseleave', mouseUpLeave);
                 // 移除过渡
-                imgItem.style.transition = 'none';
+                imgItem.style.transition =
+                    'all .3s ease-in-out, left 0s, top 0s';
                 // 鼠标样式改为抓取
                 imgItem.style.cursor = 'grabbing';
             }
