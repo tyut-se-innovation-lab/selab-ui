@@ -16,6 +16,10 @@ export const dialogProps = {
       visible: {
         type: Boolean,
         default: true,
+      },
+      closeable:{
+        type:Boolean,
+        default:false
       }
 }
 export type DialogProps = ExtractPropTypes<typeof dialogProps>

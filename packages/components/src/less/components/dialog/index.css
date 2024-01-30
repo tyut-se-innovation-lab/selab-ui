@@ -43,8 +43,14 @@
   cursor: pointer;
   font-size: 16px;
 }
+.se-dialog_wrapper .se-dialog_header .se-dialog_headerbtn:hover {
+  color: rgba(0, 0, 0, 0.6);
+}
 .se-dialog_wrapper .se-dialog_header .se-dialog_headerbtn .se-icon-close {
-  color: 909399;
+  margin-left: 5px;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.3);
+  cursor: pointer;
 }
 .se-dialog_wrapper .se-dialog_body {
   padding: 30px 20px;

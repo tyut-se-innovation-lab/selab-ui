@@ -1,16 +1,19 @@
 <template>
   <!--   遮罩 -->
   <transition name="dialog-fade">
-    <div class="se-dialog_wrapper" v-show="visible" @click.self="handlClose">
-      <div class="se-dialog" :style="{ width: width, marginTop: top }">
+    <div class="se-dialog_wrapper" v-show="props.visible" @click.self="handlClose">
+      <div class="se-dialog" :style="{ width: props.width, marginTop: props.top }">
         <div class="se-dialog_header">
           <slot name="title">
-            <span class="se-dialog_title">{{ title }}</span>
+            <span class="se-dialog_title">{{ props.title }}</span>
           </slot>
 
-          <button class="se-dialog_headerbtn" @click="handlClose">
-            <i class="se-cion-close">x</i>
-          </button>
+          <span class="se-dialog_headerbtn" @click="handlClose" v-if="props.closeable">
+            <template v-if="slots.closeIcon">
+                <slot name="closeIcon"></slot>
+            </template>
+            <template v-else> x </template>
+          </span>
         </div>
         <div class="se-dialog_body">
           <!--   给一个默认插槽，传入任意内容  -->
@@ -30,7 +33,7 @@
 
 <script lang="ts" setup>
 import '../../less/components/dialog/index.less';
-import { defineProps } from 'vue';
+import { defineProps,useSlots } from 'vue';
 import { DialogProps, dialogProps } from './dialogTypes'
 defineOptions({ name: "se-dialog" });
 //定义组件的props
@@ -40,5 +43,7 @@ const emit = defineEmits(['close',])
 const handlClose = () => {
   emit('close', false)
 }
+//获取插槽的内容
+const slots = useSlots()
 
 </script>
