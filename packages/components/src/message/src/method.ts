@@ -37,7 +37,7 @@ watch(
         //         console.log(instance);
         //     });
         // }
-        console.log(val, oVal, val === oVal);
+        console.log('message 新旧值相同?', val, oVal, val === oVal);
     }
     // {
     //     deep: true
@@ -49,7 +49,7 @@ function toMegOption(msg: MessageOption | MessageMsg): MessageOption {
     // 如果没有传入参数, 则报错
     if (!msg) {
         throw console.error(
-            'In the Message, the message or option is mandatory'
+            'Message > In the Message, the message or option is mandatory'
         );
     }
     // 如果传入的不是 MessageOption 或 MessageMsg, 则报错
@@ -60,7 +60,9 @@ function toMegOption(msg: MessageOption | MessageMsg): MessageOption {
         typeof msg === 'object' &&
         !('message' in msg)
     ) {
-        throw console.error('In the Message, the message is mandatory');
+        throw console.error(
+            'Message > In the Message, the message is mandatory'
+        );
     }
     // 如果传入的 message 是 string 或 VNode 或 function, 则返回一个 MessageOption
     if (typeof msg === 'string' || isVNode(msg) || typeof msg === 'function') {
@@ -137,7 +139,7 @@ function defaultOptions(
         _option.type = msgDefault.type;
     } else if (!messageType.includes(option.type)) {
         console.warn(
-            `In the Message, the type must be one of ${messageType}, but got ${option.type}`
+            `Message > In the Message, the type must be one of ${messageType}, but got ${option.type}`
         );
         _option.type = msgDefault.type;
     } else {
@@ -242,8 +244,6 @@ const message: Message = function (
     }
 
     const id = `__se_message__${seed++}__`;
-
-    console.log(props.height);
 
     const top = computedTop(props);
 
