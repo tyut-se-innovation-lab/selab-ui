@@ -94,20 +94,27 @@
                 <span> mask </span>
             </template>
         </se-img>
-        <se-img :src="imgList[3]" fit="cover" width="400" lazy :preview="{
-            name: '测试1',
-            album: true,
-            albumList: imgList,
-            animation: 'slide',
-            loop: false,
-            modal: true,
-            onChange: onImgChange,
-            onClose: onImgClose,
-            onOpen: onImgOpen,
-            // toolbar: {
-            //     show: false
-            // }
-        }" :contextmenu="false">
+        <se-img
+            :src="imgList[3]"
+            fit="cover"
+            width="400"
+            lazy
+            :preview="{
+                name: '测试1',
+                album: true,
+                albumList: imgList,
+                animation: 'slide',
+                loop: false,
+                modal: false,
+                onChange: onImgChange,
+                onClose: onImgClose,
+                onOpen: onImgOpen,
+                toolbar: {
+                    show: false
+                }
+            }"
+            :contextmenu="false"
+        >
             <!-- <template #loading>
                 <div>loading</div>
             </template>
