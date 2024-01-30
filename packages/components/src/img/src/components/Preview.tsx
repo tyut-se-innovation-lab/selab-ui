@@ -213,13 +213,17 @@ export default defineComponent({
                     // 当鼠标在遮罩同位置移动时, 显示不同的鼠标样式
                     maskRef.value.addEventListener('mousemove', changeMouse);
                 } else {
+                    // 记录之前body overflow的值
+                    let bodyOverflow = '';
                     // 鼠标进入图片时禁用默认滚动
                     imgItem.addEventListener('mousemove', () => {
+                        if (document.body.style.overflow === 'hidden') return;
+                        bodyOverflow = document.body.style.overflow || '';
                         document.body.style.overflow = 'hidden';
                     });
                     // 鼠标离开图片时恢复默认滚动
                     imgItem.addEventListener('mouseleave', () => {
-                        document.body.style.overflow = '';
+                        document.body.style.overflow = bodyOverflow;
                     });
                 }
                 // esc键关闭预览

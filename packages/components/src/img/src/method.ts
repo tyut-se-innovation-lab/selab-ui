@@ -255,6 +255,9 @@ function unregisterPreviewImage(option: PreviewType, mask: HTMLElement) {
     });
 }
 
+// 记录之前body overflow的值
+let bodyOverflow = '';
+
 // 启动预览
 function previewImage(instance: Instance | TemporaryInstance, index = 0) {
     // 如果该预览已经存在, 则直接返回
@@ -274,7 +277,11 @@ function previewImage(instance: Instance | TemporaryInstance, index = 0) {
         index,
         instance
     });
-    if (instance.preview.modal) document.body.style.overflow = 'hidden';
+    if (instance.preview.modal && document.body.style.overflow !== 'hidden') {
+        bodyOverflow = document.body.style.overflow || '';
+        document.body.style.overflow = 'hidden';
+        console.log('previewImage => hidden');
+    }
     const domRood = document.createElement('div');
     domRood.className = 'se-img-preview-direct-root';
     (
@@ -293,7 +300,12 @@ function unPreviewImage() {
     const instance = previewInstance.value;
     if (instance.preview.modal)
         setTimeout(() => {
-            document.body.style.overflow = '';
+            // 若在300ms内再次打开预览, 且新预览有遮罩, 且, 则不恢复body overflow
+            if (previewInstance.value && previewInstance.value.preview.modal) {
+                return;
+            }
+            document.body.style.overflow = bodyOverflow;
+            console.log('previewImage => ""');
         }, 300);
     previewInstance.value = null;
     instance.vNode!.component!.exposed?._close();
