@@ -1,5 +1,6 @@
 <template>
     <div>
+
         <se-tooltip>
             <template #title>默认触发颜色</template>
             触发文本触发文本触发文本触发文本触发文本触发文本
@@ -20,31 +21,27 @@
         <se-tag type="warning" v-for="item in 3" :key="item" @click="tagclick">
             {{ item }}
         </se-tag>
+        
         <se-tag type="danger" closeable>
             测试
             <template #closeIcon>
                 <div>123</div>
             </template>
         </se-tag>
+        <se-button @click="visible = true">dialog测试</se-button>
+        <se-dialog  :visible.sync=visible @close="closed" >
+            <template v-slot:footer>
+                <se-button type="success" @click="visible = false">取消</se-button>
+                <se-button type="success" @click="visible = false">确定</se-button>
+            </template>
+        </se-dialog>
         <se-skeleton></se-skeleton>
         <se-skeleton :avatarShow="false" :active="true"></se-skeleton>
         <se-select :options="options" v-model="value"></se-select>
         <se-select :options="options" multiple v-model="value2"></se-select>
-        <se-select
-            :options="options"
-            filterable
-            :filter-method="filter"
-            multiple
-            v-model="value2"
-        ></se-select>
+        <se-select :options="options" filterable :filter-method="filter" multiple v-model="value2"></se-select>
 
-        <se-select
-            :options="options3"
-            multiple
-            remote
-            v-model="value3"
-            :queryMethod="query"
-        ></se-select>
+        <se-select :options="options3" multiple remote v-model="value3" :queryMethod="query"></se-select>
         <button @click="msg('success')">success</button>
         <button @click="msg('warning')">warning</button>
         <button @click="msg('danger')">danger</button>
@@ -53,35 +50,27 @@
         <button @click="miniMsg('info')">mini Msg</button>
         <button @click="myAlbum.open(2)">myAlbum open</button>
         <button @click="myAlbum.close()">myAlbum close</button>
-        <se-img
-            v-for="i of [...Array(6).keys()]"
-            :key="i"
-            :src="imgList[i]"
-            fit="contain"
-            width="400"
-            lazy
-            :preview="{
-                name: '测试',
-                minScale: 1,
-                maxScale: 50,
-                animation: 'fade',
-                loop: false,
-                toolbar: {
-                    show: true,
-                    zoom: true,
-                    rotate: true,
-                    reset: true,
-                    pagination: true,
-                    flip: true,
-                    download: onImgDownload
-                },
-                modal: true,
-                scaleStep: 0.5,
-                closeIcon: '滚',
-                closeOnClickModal: true,
-                closeOnPressEscape: true
-            }"
-        >
+        <se-img v-for="i of [...Array(6).keys()]" :key="i" :src="imgList[i]" fit="contain" width="400" lazy :preview="{
+            name: '测试',
+            minScale: 1,
+            maxScale: 50,
+            animation: 'fade',
+            loop: false,
+            toolbar: {
+                show: true,
+                zoom: true,
+                rotate: true,
+                reset: true,
+                pagination: true,
+                flip: true,
+                download: onImgDownload
+            },
+            modal: true,
+            scaleStep: 0.5,
+            closeIcon: '滚',
+            closeOnClickModal: true,
+            closeOnPressEscape: true
+        }">
             <template #loading>
                 <div>loading</div>
             </template>
@@ -123,6 +112,7 @@
                 <span> mask </span>
             </template> -->
         </se-img>
+
     </div>
 </template>
 <script lang="ts" setup>
@@ -134,7 +124,12 @@ import img3 from './src/assets/img/img (3).png';
 import img4 from './src/assets/img/img (4).png';
 import img5 from './src/assets/img/img (5).png';
 import img6 from './src/assets/img/img (6).png';
-
+import { visitFunctionBody } from 'typescript';
+//dialog测试函数
+const visible = ref(false)
+const closed = (value: any) => {
+    visible.value = value;
+}
 const imgList = [img1, img2, img3, img4, img5, img6];
 
 const options = ref(

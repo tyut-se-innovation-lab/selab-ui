@@ -82,6 +82,10 @@ export default {
             text: "Contextmenu",
             link: "/components/contextmenu/"
         },
+	{
+            text: "Dialog",
+            link: "/components/dialog/"
+        },
 	//]
 
                     ]
