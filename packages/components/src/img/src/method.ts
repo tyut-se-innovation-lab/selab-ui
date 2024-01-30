@@ -121,10 +121,13 @@ function previewCheck(props: Readonly<ImgPropsType>): PreviewType | false {
 
 // 注册预览图片
 function registerPreviewImage<
-    A extends PreviewType,
     T extends boolean,
     K extends T extends true ? LocationType : HTMLElement
->(option: A, isTemporary: T, location: K): Instance | TemporaryInstance {
+>(
+    option: PreviewType,
+    isTemporary: T,
+    location: K
+): Instance | TemporaryInstance {
     // 检测配置合法性
     if (!checkPreview(option))
         throw console.error('Image Preview > Preview config is error.');
@@ -181,7 +184,7 @@ function registerPreviewImage<
             mask: [location],
             root: pupOpsMount(),
             toolbar: { ...option.toolbar },
-            clickMask: function (e) {
+            clickMask: (e) => {
                 const _openPreview = (index: number) => {
                     previewImage(instance, index);
                 };
