@@ -8,7 +8,7 @@ import { getStyle } from '@selab-ui/utils';
 
 const messageType = getStyle();
 
-const iconType = messageType;
+const iconType = [...messageType, 'download'];
 
 const msgDefault: MessagePropsType = {
     id: '',
@@ -103,4 +103,4 @@ const msgProps: MessageProps = {
     }
 };
 
-export { messageType, msgDefault, msgProps };
+export { messageType, iconType, msgDefault, msgProps };

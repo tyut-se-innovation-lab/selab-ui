@@ -1,9 +1,4 @@
-@font-face {
-    font-family: iconfont; /* Project id  */
-    src: url('./icon-font.ttf') format('truetype');
-}
-
-.se-icon {
+.se-msg_icon {
     font-family: iconfont !important;
     font-size: 16px;
     font-style: normal;
@@ -11,22 +6,26 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
-.se-icon-close::before {
+.se-msg_icon-close::before {
     content: '\e646';
 }
 
-.se-icon-success::before {
-    content: '\e66f';
+.se-msg_icon-success::before {
+    content: '\e657';
 }
 
-.se-icon-warning::before {
-    content: '\e670';
+.se-msg_icon-warning::before {
+    content: '\e840';
 }
 
-.se-icon-danger::before {
-    content: '\e66e';
+.se-msg_icon-danger::before {
+    content: '\e659';
 }
 
-.se-icon-info::before {
-    content: '\e67d';
+.se-msg_icon-info::before {
+    content: '\e6e5';
+}
+
+.se-msg_icon-download::before {
+  content: '\e703';
 }

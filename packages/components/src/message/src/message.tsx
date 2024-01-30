@@ -125,9 +125,10 @@ export default defineComponent({
                                           32
                                         : '16'
                                 }px`}
-                                onClick={() => console.log(props.message)}
                             >
-                                <i class={`se-icon se-icon-${props.icon}`}></i>
+                                <i
+                                    class={`se-msg_icon se-msg_icon-${props.icon}`}
+                                ></i>
                             </div>
                         );
                 })()}

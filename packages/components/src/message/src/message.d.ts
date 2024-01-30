@@ -1,8 +1,10 @@
 import { VNode, ComponentInternalInstance } from 'vue';
 import { CreateProps } from '@selab-ui/utils/type';
-import { messageType } from './message.ts';
+import { messageType, iconType } from './message.ts';
 
 export type MessageType = (typeof messageType)[number] extends undefined ? 'info' : (typeof messageType)[number];
+
+export type IconType = (typeof iconType)[number] extends undefined ? 'info' : (typeof iconType)[number];
 
 // export type MessageMsg = string | VNode | VNode<any, any, any> | (() => VNode) | (() => VNode<any, any, any>);
 
@@ -22,7 +24,7 @@ export type MessageOption = {
     message: MessageMsg;
     type?: MessageType;
     duration?: number;
-    icon?: string;
+    icon?: IconType;
     showClose?: boolean;
     group?: boolean;
     size?: 'default' | 'small' | 'large' | 'mini';
@@ -35,7 +37,7 @@ export type MessagePropsType = {
     message: MessageMsg;
     type: MessageType;
     duration: number;
-    icon: string;
+    icon: IconType;
     showClose: boolean;
     group: boolean;
     size: 'default' | 'small' | 'large' | 'mini';

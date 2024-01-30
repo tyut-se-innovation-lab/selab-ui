@@ -3,11 +3,12 @@
 这是 `Message` (信息弹窗)组件的文档。
 ## 基础用法
 **从 `selab-ui` 引入**
-Message 注册了一个全局方法 `$seMsg`，也可以单独引入。
+`Message` 注册了一个全局方法 `$seMsg`，也可以单独引入。
+
 ```js
 import { seMsg } from 'selab-ui';
 ```
-`seMsg` 方法接受一个 option 作为其参数，可以通过设置其 `message` 属性设置文本内容，也可以传入一个 `VNode`，或一个返回值为 `VNode` 的函数。
+`seMsg` 方法接受一个 `option对象` 作为其参数，可以通过设置其 `message` 属性设置文本内容，也可以传入一个 `VNode`，或一个返回值为 `VNode` 的函数。
 
 当需要传入的属性只有 `message` 时，可以直接传入 `message`。
 
