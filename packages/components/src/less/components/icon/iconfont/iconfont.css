@@ -1621,3 +1621,6 @@
   content: "\e834";
 }
 
+.icon-round_warn_light:before {
+  content: "\e840";
+}
