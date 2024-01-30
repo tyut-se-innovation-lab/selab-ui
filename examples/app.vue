@@ -80,7 +80,7 @@
             },
             modal: true,
             scaleStep: 0.5,
-            closeIcon: '滚',
+            closeIcon: 'close',
             closeOnClickModal: true,
             closeOnPressEscape: true
         }">

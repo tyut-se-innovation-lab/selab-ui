@@ -5,7 +5,9 @@ import {
     ref,
     createVNode,
     render,
-    withDirectives
+    withDirectives,
+    computed,
+    isVNode
 } from 'vue';
 import '../../../less/components/imgPreview/index.less';
 import { imgPreviewProps } from '../image';
@@ -14,6 +16,7 @@ import SePreviewToolbar from './Toolbar';
 import seMiniMeg from '../../../miniMsg/src/index';
 import contextmenu from '../../../contextmenu/src/method';
 import { pupOpsMount } from '@selab-ui/utils';
+import SeIcon from '../../../icon/template/icon.vue';
 import leftCur from '../../../../../assets/mouseImg/left.ico';
 import rightIco from '../../../../../assets/mouseImg/right.ico';
 import closeIco from '../../../../../assets/mouseImg/close.ico';
@@ -63,6 +66,14 @@ export default defineComponent({
         const imagesRef = ref();
         const toolbarRef = ref();
         const msgRootRef = ref();
+        const closeIconComp = computed(() => {
+            if (isVNode(_option.closeIcon)) return _option.closeIcon;
+            return createVNode(SeIcon, {
+                name: _option.closeIcon,
+                color: '#fff',
+                iconSize: '16px'
+            });
+        });
         // 记录预览是否关闭, 关闭后将禁止全部操作
         let isClose = false;
         // 关闭预览的函数
@@ -960,7 +971,7 @@ export default defineComponent({
                             class="se-img-preview-close"
                             onClick={userClosePreview}
                         >
-                            {props.closeIcon}
+                            {closeIconComp.value}
                         </div>
                     )}
                     <div class="se-img-preview-msg" ref={msgRootRef}></div>
