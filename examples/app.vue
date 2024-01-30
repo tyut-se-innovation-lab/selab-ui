@@ -21,7 +21,7 @@
         <se-tag type="warning" v-for="item in 3" :key="item" @click="tagclick">
             {{ item }}
         </se-tag>
-        
+
         <se-tag type="danger" closeable>
             测试
             <template #closeIcon>
@@ -29,10 +29,23 @@
             </template>
         </se-tag>
         <se-button @click="visible = true">dialog测试</se-button>
-        <se-dialog  :visible.sync=visible @close="closed" >
+        <se-dialog title="温馨提示" :visible.sync=visible @close="closed" closeable>
+            <template #closeIcon>
+                <div>123</div>
+            </template>
             <template v-slot:footer>
-                <se-button type="success" @click="visible = false">取消</se-button>
-                <se-button type="success" @click="visible = false">确定</se-button>
+
+            </template>
+        </se-dialog>
+        <se-button @click="visible1 = true">dialog测试</se-button>
+        <se-dialog :visible.sync=visible1 @close="closed1" closeable>
+        
+            <template v-slot:title>
+                <h1>我是标题</h1>
+            </template>
+            <template v-slot:footer>
+                <se-button type="danger" @click="visible1 = false" style="margin-right: 30px;">取消</se-button>
+                <se-button type="success" @click="visible1 = false">确定</se-button>
             </template>
         </se-dialog>
         <se-skeleton></se-skeleton>
@@ -127,8 +140,12 @@ import img6 from './src/assets/img/img (6).png';
 import { visitFunctionBody } from 'typescript';
 //dialog测试函数
 const visible = ref(false)
+const visible1 = ref(false)
 const closed = (value: any) => {
     visible.value = value;
+}
+const closed1 = (value: any) => {
+    visible1.value = value;
 }
 const imgList = [img1, img2, img3, img4, img5, img6];
 
