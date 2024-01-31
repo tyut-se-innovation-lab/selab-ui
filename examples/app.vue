@@ -176,7 +176,7 @@ function msg(type: 'success' | 'warning' | 'danger' | 'info') {
         message: vNode,
         type,
         duration: Math.random() * 1000 + 1000,
-        icon: 'info',
+        icon: 'warning',
         showClose: true,
         size: 'default',
         beforeClose: (close) => {
