@@ -7,7 +7,8 @@ import {
     render,
     withDirectives,
     computed,
-    isVNode
+    isVNode,
+    onDeactivated
 } from 'vue';
 import '../../../less/components/imgPreview/index.less';
 import { imgPreviewProps } from '../image';
@@ -25,28 +26,38 @@ export default defineComponent({
     name: 'se-img-preview',
     props: imgPreviewProps,
     setup(props, { expose }): () => VNode {
-        // 获取点击图片的位置
+        // 记录点击图片的位置
         let rect: DOMRect;
         let fit: string;
-        if ('mask' in props.instance) {
-            let index = props.index;
-            if (!props.instance!.mask[index]) index = 0;
-            rect = props.instance!.mask[index].getBoundingClientRect();
-            fit = (
-                props.instance!.mask[index].parentNode
-                    ?.childNodes[0] as HTMLImageElement
-            ).classList[1]
-                .split('-')
-                .pop() as string;
-        } else {
-            rect = {
-                width: props.instance!.location.width,
-                height: props.instance!.location.height,
-                left: props.instance!.location.x,
-                top: props.instance!.location.y
-            } as DOMRect;
-            fit = 'fill';
+        /** 获取点击图片的位置 */
+        function getPreviewStartLocation() {
+            if ('mask' in props.instance) {
+                let index = props.index;
+                if (!props.instance!.mask[index]) index = 0;
+                rect = props.instance!.mask[index].getBoundingClientRect();
+                fit = (
+                    props.instance!.mask[index].parentNode
+                        ?.childNodes[0] as HTMLImageElement
+                ).classList[1]
+                    .split('-')
+                    .pop() as string;
+            } else {
+                rect = {
+                    width: props.instance!.location.width,
+                    height: props.instance!.location.height,
+                    left: props.instance!.location.x,
+                    top: props.instance!.location.y
+                } as DOMRect;
+                fit = 'fill';
+            }
         }
+        getPreviewStartLocation();
+        onMounted(() => {
+            window.addEventListener('resize', getPreviewStartLocation);
+        });
+        onDeactivated(() => {
+            window.removeEventListener('resize', getPreviewStartLocation);
+        });
         const _option = {
             index: props.index,
             imgList: props.albumList,
