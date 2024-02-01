@@ -55,6 +55,15 @@
   background-color: #00000022;
   color: #ffffffff;
 }
+.se-img-preview-toolbar-root ul li button span {
+  margin: 0;
+  white-space: nowrap;
+  transition: all 0.3s;
+  color: #ffffffaa;
+}
+.se-img-preview-toolbar-root ul li button:hover span {
+  color: #ffffffff;
+}
 .se-img-preview-toolbar-root ul li span {
   margin: 0 10px;
   white-space: nowrap;

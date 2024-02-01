@@ -1,6 +1,7 @@
 import { Ref, VNode, defineComponent, onMounted, ref } from 'vue';
 import { previewToolbarProps } from '../image';
 import { PreviewToolbarProps } from '../image.d';
+import SeIcon from '../../../icon/template/icon.vue';
 import '../../../less/components/imgPreviewToolbar/index.less';
 
 export default defineComponent({
@@ -75,10 +76,19 @@ export default defineComponent({
                         {content.zoom && (
                             <li>
                                 <button onClick={() => emit('zoom', 'out')}>
-                                    小
+                                    {/* 使用[color="#"]来规避SeIcon的默认颜色 */}
+                                    <SeIcon
+                                        name="zoom_out"
+                                        iconSize="16px"
+                                        color="#"
+                                    />
                                 </button>
                                 <button onClick={() => emit('zoom', 'in')}>
-                                    大
+                                    <SeIcon
+                                        name="zoom_in"
+                                        iconSize="16px"
+                                        color="#"
+                                    />
                                 </button>
                             </li>
                         )}
@@ -87,12 +97,20 @@ export default defineComponent({
                                 <button
                                     onClick={() => emit('rotate', 'forward')}
                                 >
-                                    左旋
+                                    <SeIcon
+                                        name="rotate_left"
+                                        iconSize="16px"
+                                        color="#"
+                                    />
                                 </button>
                                 <button
                                     onClick={() => emit('rotate', 'reverse')}
                                 >
-                                    右旋
+                                    <SeIcon
+                                        name="rotate_right"
+                                        iconSize="16px"
+                                        color="#"
+                                    />
                                 </button>
                             </li>
                         )}
@@ -101,26 +119,42 @@ export default defineComponent({
                                 <button
                                     onClick={() => emit('flip', 'horizontal')}
                                 >
-                                    水平翻转
+                                    <SeIcon
+                                        name="flip_horizontally_card"
+                                        iconSize="16px"
+                                        color="#"
+                                    />
                                 </button>
                                 <button
                                     onClick={() => emit('flip', 'vertical')}
                                 >
-                                    垂直翻转
+                                    <SeIcon
+                                        name="flip_vertically_card"
+                                        iconSize="16px"
+                                        color="#"
+                                    />
                                 </button>
                             </li>
                         )}
                         {content.reset && (
                             <li>
                                 <button onClick={() => emit('reset')}>
-                                    重置
+                                    <SeIcon
+                                        name="sync"
+                                        iconSize="16px"
+                                        color="#"
+                                    />
                                 </button>
                             </li>
                         )}
                         {content.download && (
                             <li>
                                 <button onClick={() => emit('download')}>
-                                    下载
+                                    <SeIcon
+                                        name="down"
+                                        iconSize="16px"
+                                        color="#"
+                                    />
                                 </button>
                             </li>
                         )}
@@ -131,14 +165,22 @@ export default defineComponent({
                                         emit('change', 'prev', e)
                                     }
                                 >
-                                    上一张
+                                    <SeIcon
+                                        name="back"
+                                        iconSize="16px"
+                                        color="#"
+                                    />
                                 </button>
                                 <button
                                     onClick={(e: MouseEvent) =>
                                         emit('change', 'next', e)
                                     }
                                 >
-                                    下一张
+                                    <SeIcon
+                                        name="right"
+                                        iconSize="16px"
+                                        color="#"
+                                    />
                                 </button>
                             </li>
                         )}
