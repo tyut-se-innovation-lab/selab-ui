@@ -103,13 +103,13 @@ export default defineComponent({
                 imgItem.style.top = rect.top + 'px';
                 imgItem.style.width = rect.width + 'px';
                 imgItem.style.height = rect.height + 'px';
-                imgItem.style.transform = `translate(0, 0) scale(1) rotate(0deg) rotateY(0deg) rotateZ(0deg)`;
+                imgItem.style.transform = `translate(0, 0) scale(1) rotate(0deg) rotateY(0deg) rotateX(0deg)`;
             } else {
                 const { clientWidth, clientHeight } = document.documentElement;
                 imgItem.style.top = clientHeight / 2 + 'px';
                 imgItem.style.left = clientWidth / 2 + 'px';
                 imgItem.style.transform =
-                    'translate(-50%, -50%) scale(0.2) rotate(0deg) rotateY(0deg) rotateZ(0deg)';
+                    'translate(-50%, -50%) scale(0.2) rotate(0deg) rotateY(0deg) rotateX(0deg)';
                 imgItem.style.opacity = '0';
             }
             // 若存在, 关闭遮罩
@@ -178,7 +178,7 @@ export default defineComponent({
                 imgItem.style.left = '50vw';
                 imgItem.style.top = '50vh';
                 imgItem.style.transform =
-                    'translate(-50%, -50%) scale(1) rotate(0deg) rotateY(0deg) rotateZ(0deg)';
+                    'translate(-50%, -50%) scale(1) rotate(0deg) rotateY(0deg) rotateX(0deg)';
                 // location存在说明本次预览不是通过点击图片,而是直接调用方法, 所以需要动画
                 if ('location' in props.instance) {
                     imgItem.classList.add('se-img-preview-img-only-preview');
@@ -488,18 +488,18 @@ export default defineComponent({
                         .split('rotateY(')[1]
                         .split('deg)')[0]
                 );
-                const imgRotateZ = parseInt(
+                const imgRotateX = parseInt(
                     imgNowItem.style.transform
-                        .split('rotateZ(')[1]
+                        .split('rotateX(')[1]
                         .split('deg)')[0]
                 );
                 const _newRotate =
                     type === 'reverse' ? imgOldRotate + 90 : imgOldRotate - 90;
-                imgNowItem.style.transform = `translate(-50%, -50%) scale(1) rotate(${_newRotate}deg) rotateY(${imgRotateY}deg) rotateZ(${imgRotateZ}deg)`;
+                imgNowItem.style.transform = `translate(-50%, -50%) scale(1) rotate(${_newRotate}deg) rotateY(${imgRotateY}deg) rotateX(${imgRotateX}deg)`;
                 setTimeout(() => {
                     if (_newRotate === 360 || _newRotate === -360) {
                         imgNowItem.style.transition = 'none';
-                        imgNowItem.style.transform = `translate(-50%, -50%) scale(1) rotate(0deg) rotateY(${imgRotateY}deg) rotateZ(${imgRotateZ}deg)`;
+                        imgNowItem.style.transform = `translate(-50%, -50%) scale(1) rotate(0deg) rotateY(${imgRotateY}deg) rotateX(${imgRotateX}deg)`;
                     }
                     requestAnimationFrame(() => {
                         imgNowItem.style.transition = '';
@@ -520,19 +520,19 @@ export default defineComponent({
                         .split('rotateY(')[1]
                         .split('deg)')[0]
                 );
-                const imgRotateZ = parseInt(
+                const imgRotateX = parseInt(
                     imgItem.style.transform
-                        .split('rotateZ(')[1]
+                        .split('rotateX(')[1]
                         .split('deg)')[0]
                 );
                 if (type === 'horizontal') {
                     imgItem.style.transform = `translate(-50%, -50%) scale(1) rotate(${imgRotate}deg) rotateY(${
                         imgRotateY === 180 ? 0 : 180
-                    }deg) rotateZ(${imgRotateZ}deg)`;
+                    }deg) rotateX(${imgRotateX}deg)`;
                 } else {
-                    imgItem.style.transform = `translate(-50%, -50%) scale(1) rotate(${imgRotate}deg) rotateY(${
-                        imgRotateY === 180 ? 0 : 180
-                    }deg) rotateZ(${imgRotateZ === 180 ? 0 : 180}deg)`;
+                    imgItem.style.transform = `translate(-50%, -50%) scale(1) rotate(${imgRotate}deg) rotateY(${imgRotateY}deg) rotateX(${
+                        imgRotateX === 180 ? 0 : 180
+                    }deg)`;
                 }
                 // 用canvas实现了镜像反转, 但是处理较慢, 然后想起css transform可以实现, 所以就不用canvas了
                 // 我是若子
@@ -655,7 +655,7 @@ export default defineComponent({
                 if (isClose) return;
                 const imgItem = img.el!;
                 imgItem.style.transform =
-                    'translate(-50%, -50%) scale(1) rotate(0deg) rotateY(0deg) rotateZ(0deg)';
+                    'translate(-50%, -50%) scale(1) rotate(0deg) rotateY(0deg) rotateX(0deg)';
                 imgItem.style.left = '50vw';
                 imgItem.style.top = '50vh';
                 imgItem.style.width = imgWidthOriginal + 'px';
@@ -732,7 +732,7 @@ export default defineComponent({
                         oldImgItem.style.width = imgWidthOriginal + 'px';
                         oldImgItem.style.height = imgHeightOriginal + 'px';
                         oldImgItem.style.transform =
-                            'translate(-50%, -50%) scale(1) rotate(0deg) rotateY(0deg) rotateZ(0deg)';
+                            'translate(-50%, -50%) scale(1) rotate(0deg) rotateY(0deg) rotateX(0deg)';
                         // 如果有遮罩, 则修改鼠标样式
                         if (_option.modal) {
                             changeMouse(e);
@@ -771,7 +771,7 @@ export default defineComponent({
                     imgItem.style.left = '50vw';
                     imgItem.style.top = '50vh';
                     imgItem.style.transform =
-                        'translate(-50%, -50%) scale(1) rotate(0deg) rotateY(0deg) rotateZ(0deg)';
+                        'translate(-50%, -50%) scale(1) rotate(0deg) rotateY(0deg) rotateX(0deg)';
                     if (_option.animation !== 'none') {
                         imgItem.style.transition = 'none';
                         if (_option.animation === 'fade') {
