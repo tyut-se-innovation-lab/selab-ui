@@ -1624,3 +1624,68 @@
 .icon-round_warn_light:before {
   content: "\e840";
 }
+
+.icon-sync:before {
+  content: "\e786";
+}
+
+.icon-undo:before {
+  content: "\e787";
+}
+
+.icon-redo:before {
+  content: "\e788";
+}
+
+.icon-shrink:before {
+  content: "\e841";
+}
+
+.icon-expansion:before {
+  content: "\e842";
+}
+
+.icon-swap:before {
+  content: "\e843";
+}
+
+.icon-code_slash:before {
+  content: "\e844";
+}
+
+.icon-zoom_out:before {
+  content: "\e845";
+}
+
+.icon-zoom_in:before {
+  content: "\e846";
+}
+
+.icon-code:before {
+  content: "\e847";
+}
+
+.icon-flip_horizontally:before {
+  content: "\e848";
+}
+
+.icon-flip_vertically:before {
+  content: "\e849";
+}
+
+.icon-flip_vertically_card:before {
+  content: "\e84a";
+}
+
+.icon-flip_horizontally_card:before {
+  content: "\e84b";
+}
+
+.icon-rotate_left:before {
+  content: "\e84c";
+}
+
+.icon-rotate_right:before {
+  content: "\e84d";
+}
+
