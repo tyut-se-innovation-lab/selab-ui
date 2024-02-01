@@ -187,7 +187,11 @@ export default defineComponent({
                         {isNoModal.value && (
                             <li>
                                 <button onClick={() => emit('close')}>
-                                    关闭
+                                    <SeIcon
+                                        name="close"
+                                        iconSize="16px"
+                                        color="#"
+                                    />
                                 </button>
                             </li>
                         )}
