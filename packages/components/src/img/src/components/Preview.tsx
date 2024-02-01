@@ -29,35 +29,6 @@ export default defineComponent({
         // 记录点击图片的位置
         let rect: DOMRect;
         let fit: string;
-        /** 获取点击图片的位置 */
-        function getPreviewStartLocation() {
-            if ('mask' in props.instance) {
-                let index = props.index;
-                if (!props.instance!.mask[index]) index = 0;
-                rect = props.instance!.mask[index].getBoundingClientRect();
-                fit = (
-                    props.instance!.mask[index].parentNode
-                        ?.childNodes[0] as HTMLImageElement
-                ).classList[1]
-                    .split('-')
-                    .pop() as string;
-            } else {
-                rect = {
-                    width: props.instance!.location.width,
-                    height: props.instance!.location.height,
-                    left: props.instance!.location.x,
-                    top: props.instance!.location.y
-                } as DOMRect;
-                fit = 'fill';
-            }
-        }
-        getPreviewStartLocation();
-        onMounted(() => {
-            window.addEventListener('resize', getPreviewStartLocation);
-        });
-        onDeactivated(() => {
-            window.removeEventListener('resize', getPreviewStartLocation);
-        });
         const _option = {
             index: props.index,
             imgList: props.albumList,
@@ -85,6 +56,29 @@ export default defineComponent({
                 iconSize: '16px'
             });
         });
+        /** 获取点击图片的位置 */
+        function getPreviewStartLocation() {
+            if ('mask' in props.instance) {
+                let index = _option.index;
+                if (!props.instance!.mask[index]) index = 0;
+                rect = props.instance!.mask[index].getBoundingClientRect();
+                fit = (
+                    props.instance!.mask[index].parentNode
+                        ?.childNodes[0] as HTMLImageElement
+                ).classList[1]
+                    .split('-')
+                    .pop() as string;
+            } else {
+                rect = {
+                    width: props.instance!.location.width,
+                    height: props.instance!.location.height,
+                    left: props.instance!.location.x,
+                    top: props.instance!.location.y
+                } as DOMRect;
+                fit = 'fill';
+            }
+        }
+        getPreviewStartLocation();
         // 记录预览是否关闭, 关闭后将禁止全部操作
         let isClose = false;
         // 关闭预览的函数
@@ -94,11 +88,8 @@ export default defineComponent({
             // 获取当前图片
             const imgItem = img.el!;
             // 关闭预览
-            if (
-                _option.modal &&
-                'mask' in props.instance &&
-                onOpenIndex === _option.index
-            ) {
+            if (_option.modal && 'mask' in props.instance) {
+                getPreviewStartLocation();
                 imgItem.style.left = rect.left + 'px';
                 imgItem.style.top = rect.top + 'px';
                 imgItem.style.width = rect.width + 'px';
