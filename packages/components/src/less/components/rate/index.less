@@ -1,3 +1,31 @@
 // Your component styles here
-    @import url('../../base/index.less');
-    
+@import url('../../base/index.less');
+
+.se-rate {
+  display: flex;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: #fadb14;
+  font-size: 20px;
+  outline: none;
+}
+
+.se-rate.star {
+  position: relative;
+  display: inline-block;
+  color: inherit;
+  cursor: pointer;
+
+  .ant-rate-star-first {
+    position: absolute;
+    top: 0;
+    inset-inline-start: 0;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+    opacity: 0;
+  }
+}
+

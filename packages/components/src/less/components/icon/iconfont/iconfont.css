@@ -1689,3 +1689,9 @@
   content: "\e84d";
 }
 
+.icon-star:before {
+  content:"\e672";
+}
+.icon-fangda:before {
+  content:"\e6a7";
+}

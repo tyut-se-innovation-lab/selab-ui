@@ -13,6 +13,7 @@
             <template #title>自定义触发颜色:#f50</template>
             触发文本触发文本触发文本
         </se-tooltip>
+        <se-rate/>
         <se-button type="primary">测试</se-button>
         <se-box type="type1">测试盒子</se-box>
         <se-card type="type1">测试卡片</se-card>
