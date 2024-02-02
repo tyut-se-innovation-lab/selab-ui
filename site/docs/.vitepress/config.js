@@ -89,6 +89,10 @@ export default {
 	{
             text: "Rate",
             link: "/components/rate/"
+    },{
+            text: "Switch",
+            link: "/components/switch/"
+
         },
 	//]
 

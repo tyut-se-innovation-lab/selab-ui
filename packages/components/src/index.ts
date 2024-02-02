@@ -30,3 +30,5 @@ export * from "./contextmenu";
 export * from "./dialog";
 // 导入评分
 export * from "./rate";
+// 导入选择器
+export * from "./switch";

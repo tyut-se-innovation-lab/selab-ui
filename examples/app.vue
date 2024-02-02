@@ -51,6 +51,8 @@
         </se-dialog>
         <se-skeleton></se-skeleton>
         <se-skeleton :avatarShow="false" :active="true"></se-skeleton>
+<!--        <se-skeleton></se-skeleton>-->
+<!--        <se-skeleton :avatarShow="false" :active="true"></se-skeleton>-->
         <se-select :options="options" v-model="value"></se-select>
         <se-select :options="options" multiple v-model="value2"></se-select>
         <se-select :options="options" filterable :filter-method="filter" multiple v-model="value2"></se-select>
@@ -127,6 +129,9 @@
             </template> -->
         </se-img>
 
+      <se-switch v-model="value4" switchDisabled></se-switch>
+      <se-switch v-model="value5" inactiveText="测试1" activeText="测试2"></se-switch>
+      <se-progress></se-progress>
     </div>
 </template>
 <script lang="ts" setup>
@@ -159,6 +164,9 @@ const options = ref(
 const options2 = ref([]);
 const value = ref(3);
 const value2 = ref([2, 5]);
+
+const value5 = ref(true)
+const value4 = ref(true)
 const tagclick = (e: any) => {
     console.log(e);
 };
@@ -261,3 +269,4 @@ const query = (value: string) => {
     }, 2000);
 };
 </script>
+

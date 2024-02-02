@@ -4,6 +4,7 @@ import {Contextmenu} from "./components/src";
 import {Tooltip} from "./components/src";
 import {MiniMsg} from "./components/src";
 import {Img} from "./components/src";
+import {Switch} from "./components/src";
 import {Icon} from "./components/src";
 import {Tag} from "./components/src";
 import {Skeleton} from "./components/src";
@@ -17,7 +18,8 @@ declare module "@vue/runtime-core" {
     export interface GlobalComponents {
         seButton: typeof Button;
         seBox: typeof Box;
-        //[		 seRate: typeof Rate;
+        //[
+		 seRate: typeof Rate;
 		 seDialog: typeof Dialog;
 		 seContextmenu: typeof Contextmenu;
 		 seTooltip: typeof Tooltip;
@@ -30,6 +32,9 @@ declare module "@vue/runtime-core" {
         seSelect: typeof Select;
         seCard: typeof Card;
         seMsg: typeof Msg;
+        //[
+		 seSwitch: typeof Switch;
+
 		 seIcon: typeof Icon;
         seTag: typeof Tag;
         seSkeleton: typeof Skeleton;

@@ -1,0 +1,112 @@
+// Your component styles here
+ @import url('../../base/index.less');
+.se-switch-external{
+    display: flex;
+    padding-top: 10px;
+}
+.se-switch {
+    position: relative;
+    display: inline-block;
+    width: 45px;
+    height: 27px;
+    //padding-top: 10px;
+}
+
+.se-switch--large{
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input {
+    display:none;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.se-slider--large:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: @bg-color-primary;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+
+.se-slider:before{
+    position: absolute;
+    content: "";
+    height: 22px;
+    width: 22px;
+    left: 1px;
+    bottom: 3px;
+    background-color: @bg-color-primary;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+input:checked + .slider {
+    background-color: @bg-color-accent;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px @bg-color-accent;
+}
+
+input:checked + .se-slider:before {
+    -webkit-transform: translateX(18px);
+    -ms-transform: translateX(18px);
+    transform: translateX(18px);
+}
+input:checked + .se-slider--large:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+.se-slider-forbidden{
+    cursor: not-allowed;
+}
+.slider.round:before {
+    border-radius: 50%;
+}
+
+.se-switch-frontText{
+    margin-right: 15px;
+    height: 27px;
+    line-height: 27px;
+    color: #000000;
+}
+.se-switch-followText{
+    margin-left: 15px;
+    height: 27px;
+    line-height: 27px;
+    color: #000000;
+}
+.activeText{
+    color: @text-color-accent;
+}
+
+.showText {
+    display: none;
+}
+
+    
