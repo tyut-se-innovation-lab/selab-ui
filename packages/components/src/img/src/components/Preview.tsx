@@ -7,8 +7,7 @@ import {
     render,
     withDirectives,
     computed,
-    isVNode,
-    onDeactivated
+    isVNode
 } from 'vue';
 import '../../../less/components/imgPreview/index.less';
 import { imgPreviewProps } from '../image';
@@ -30,6 +29,7 @@ export default defineComponent({
         let rect: DOMRect;
         let fit: string;
         const _option = {
+            openIndex: props.index,
             index: props.index,
             imgList: props.albumList,
             loop: props.loop,
@@ -42,7 +42,6 @@ export default defineComponent({
             'close-on-click-modal': props.closeOnClickModal,
             'close-on-press-escape': props.closeOnPressEscape
         };
-        const onOpenIndex = _option.index;
         const nowIndex = ref(_option.index);
         const maskRef = ref();
         const imagesRef = ref();
@@ -231,13 +230,18 @@ export default defineComponent({
                     // 鼠标进入图片时禁用默认滚动
                     imgItem.addEventListener('mousemove', () => {
                         if (document.body.style.overflow === 'hidden') return;
+                        if (isClose) resetBodyOverflow();
                         bodyOverflow = document.body.style.overflow || '';
                         document.body.style.overflow = 'hidden';
                     });
+                    // 恢复滚动的函数
+                    const resetBodyOverflow = () => {
+                        setTimeout(() => {
+                            document.body.style.overflow = bodyOverflow;
+                        }, 50);
+                    };
                     // 鼠标离开图片时恢复默认滚动
-                    imgItem.addEventListener('mouseleave', () => {
-                        document.body.style.overflow = bodyOverflow;
-                    });
+                    imgItem.addEventListener('mouseleave', resetBodyOverflow);
                 }
                 // esc键关闭预览
                 if (props.closeOnPressEscape) {
