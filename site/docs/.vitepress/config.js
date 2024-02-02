@@ -86,6 +86,10 @@ export default {
             text: "Dialog",
             link: "/components/dialog/"
         },
+	{
+            text: "Rate",
+            link: "/components/rate/"
+        },
 	//]
 
                     ]

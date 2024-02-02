@@ -28,3 +28,5 @@ export * from "./tooltip";
 export * from "./contextmenu";
 // 导入对话框
 export * from "./dialog";
+// 导入评分
+export * from "./rate";

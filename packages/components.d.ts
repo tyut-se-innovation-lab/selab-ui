@@ -1,3 +1,4 @@
+import {Rate} from "./components/src";
 import {Dialog} from "./components/src";
 import {Contextmenu} from "./components/src";
 import {Tooltip} from "./components/src";
@@ -16,7 +17,8 @@ declare module "@vue/runtime-core" {
     export interface GlobalComponents {
         seButton: typeof Button;
         seBox: typeof Box;
-        //[		 seDialog: typeof Dialog;
+        //[		 seRate: typeof Rate;
+		 seDialog: typeof Dialog;
 		 seContextmenu: typeof Contextmenu;
 		 seTooltip: typeof Tooltip;
 
