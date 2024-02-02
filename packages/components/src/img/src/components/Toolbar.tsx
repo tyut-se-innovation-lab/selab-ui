@@ -2,6 +2,7 @@ import { Ref, VNode, defineComponent, onMounted, ref } from 'vue';
 import { previewToolbarProps } from '../image';
 import { PreviewToolbarProps } from '../image.d';
 import SeIcon from '../../../icon/template/icon.vue';
+// import SeTooltip from '../../../tooltip/template/tooltip';
 import '../../../less/components/imgPreviewToolbar/index.less';
 
 export default defineComponent({

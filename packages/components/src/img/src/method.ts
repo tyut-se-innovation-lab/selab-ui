@@ -280,7 +280,6 @@ function previewImage(instance: Instance | TemporaryInstance, index = 0) {
     if (instance.preview.modal && document.body.style.overflow !== 'hidden') {
         bodyOverflow = document.body.style.overflow || '';
         document.body.style.overflow = 'hidden';
-        console.log('previewImage => hidden');
     }
     const domRood = document.createElement('div');
     domRood.className = 'se-img-preview-direct-root';
@@ -305,7 +304,6 @@ function unPreviewImage() {
                 return;
             }
             document.body.style.overflow = bodyOverflow;
-            console.log('previewImage => ""');
         }, 300);
     previewInstance.value = null;
     instance.vNode!.component!.exposed?._close();

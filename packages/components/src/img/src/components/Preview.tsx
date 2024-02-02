@@ -11,11 +11,13 @@ import {
 } from 'vue';
 import '../../../less/components/imgPreview/index.less';
 import { imgPreviewProps } from '../image';
+import { ImgPreviewPropsType } from '../image.d';
 import { unPreviewImage } from '../method';
 import SePreviewToolbar from './Toolbar';
 import seMiniMeg from '../../../miniMsg/src/index';
 import contextmenu from '../../../contextmenu/src/method';
 import { pupOpsMount } from '@selab-ui/utils';
+import useGetPreviewStartLocation from '../hooks/useGetPreviewStartLocation';
 import SeIcon from '../../../icon/template/icon.vue';
 import leftCur from '../../../../../assets/mouseImg/left.ico';
 import rightIco from '../../../../../assets/mouseImg/right.ico';
@@ -25,9 +27,6 @@ export default defineComponent({
     name: 'se-img-preview',
     props: imgPreviewProps,
     setup(props, { expose }): () => VNode {
-        // 记录点击图片的位置
-        let rect: DOMRect;
-        let fit: string;
         const _option = {
             openIndex: props.index,
             index: props.index,
@@ -42,6 +41,8 @@ export default defineComponent({
             'close-on-click-modal': props.closeOnClickModal,
             'close-on-press-escape': props.closeOnPressEscape
         };
+        const { rect, fit, getPreviewStartLocation } =
+            useGetPreviewStartLocation(props as ImgPreviewPropsType);
         const nowIndex = ref(_option.index);
         const maskRef = ref();
         const imagesRef = ref();
@@ -55,29 +56,6 @@ export default defineComponent({
                 iconSize: '16px'
             });
         });
-        /** 获取点击图片的位置 */
-        function getPreviewStartLocation() {
-            if ('mask' in props.instance) {
-                let index = _option.index;
-                if (!props.instance!.mask[index]) index = 0;
-                rect = props.instance!.mask[index].getBoundingClientRect();
-                fit = (
-                    props.instance!.mask[index].parentNode
-                        ?.childNodes[0] as HTMLImageElement
-                ).classList[1]
-                    .split('-')
-                    .pop() as string;
-            } else {
-                rect = {
-                    width: props.instance!.location.width,
-                    height: props.instance!.location.height,
-                    left: props.instance!.location.x,
-                    top: props.instance!.location.y
-                } as DOMRect;
-                fit = 'fill';
-            }
-        }
-        getPreviewStartLocation();
         // 记录预览是否关闭, 关闭后将禁止全部操作
         let isClose = false;
         // 关闭预览的函数
@@ -88,11 +66,11 @@ export default defineComponent({
             const imgItem = img.el!;
             // 关闭预览
             if (_option.modal && 'mask' in props.instance) {
-                getPreviewStartLocation();
-                imgItem.style.left = rect.left + 'px';
-                imgItem.style.top = rect.top + 'px';
-                imgItem.style.width = rect.width + 'px';
-                imgItem.style.height = rect.height + 'px';
+                getPreviewStartLocation(_option.index);
+                imgItem.style.left = rect.value.left + 'px';
+                imgItem.style.top = rect.value.top + 'px';
+                imgItem.style.width = rect.value.width + 'px';
+                imgItem.style.height = rect.value.height + 'px';
                 imgItem.style.transform = `translate(0, 0) scale(1) rotate(0deg) rotateY(0deg) rotateX(0deg)`;
             } else {
                 const { clientWidth, clientHeight } = document.documentElement;
@@ -162,7 +140,7 @@ export default defineComponent({
                     ) / 1.4;
                 // 保存打开预览时的图片
                 const imgItem = img.el!;
-                imgItem.style['object-fit'] = fit;
+                imgItem.style['object-fit'] = fit.value;
                 imgItem.style.width = imgRealWidth * scale + 'px';
                 imgItem.style.height = imgRealHeight * scale + 'px';
                 imgItem.style.left = '50vw';
@@ -177,17 +155,21 @@ export default defineComponent({
                 imgWidthOriginal = imgRealWidth * scale;
                 imgHeightOriginal = imgRealHeight * scale;
                 // 监听滚轮事件
-                imgItem.addEventListener('wheel', (e: WheelEvent) => {
-                    if (isClose) return;
-                    const toLeftBorder =
-                        e.clientX - imgItem.getBoundingClientRect().left;
-                    const toTopBorder =
-                        e.clientY - imgItem.getBoundingClientRect().top;
-                    scaleImg(e.deltaY > 0 ? 'out' : 'in', [
-                        toLeftBorder,
-                        toTopBorder
-                    ]);
-                });
+                imgItem.addEventListener(
+                    'wheel',
+                    (e: WheelEvent) => {
+                        if (isClose) return;
+                        const toLeftBorder =
+                            e.clientX - imgItem.getBoundingClientRect().left;
+                        const toTopBorder =
+                            e.clientY - imgItem.getBoundingClientRect().top;
+                        scaleImg(e.deltaY > 0 ? 'out' : 'in', [
+                            toLeftBorder,
+                            toTopBorder
+                        ]);
+                    },
+                    { passive: true }
+                );
                 imgItem.addEventListener('mousedown', mouseDown);
                 imgItem.addEventListener('dragstart', (e: DragEvent) => {
                     e.preventDefault();
@@ -230,18 +212,26 @@ export default defineComponent({
                     // 鼠标进入图片时禁用默认滚动
                     imgItem.addEventListener('mousemove', () => {
                         if (document.body.style.overflow === 'hidden') return;
-                        if (isClose) resetBodyOverflow();
+                        if (isClose) resetBodyOverflow(null);
                         bodyOverflow = document.body.style.overflow || '';
                         document.body.style.overflow = 'hidden';
                     });
                     // 恢复滚动的函数
-                    const resetBodyOverflow = () => {
+                    const resetBodyOverflow = (e: KeyboardEvent | null) => {
+                        if (e && e.key !== 'Escape') {
+                            return;
+                        }
                         setTimeout(() => {
                             document.body.style.overflow = bodyOverflow;
-                        }, 50);
+                        });
+                        document.removeEventListener(
+                            'keydown',
+                            resetBodyOverflow
+                        );
                     };
                     // 鼠标离开图片时恢复默认滚动
                     imgItem.addEventListener('mouseleave', resetBodyOverflow);
+                    document.addEventListener('keydown', resetBodyOverflow);
                 }
                 // esc键关闭预览
                 if (props.closeOnPressEscape) {
@@ -687,7 +677,6 @@ export default defineComponent({
                     // 生成一个切换前的图片节点覆盖到当前图片上
                     const oldImg = createVNode('img', {
                         src: _option.imgList[index],
-                        fit: fit,
                         style: {
                             position: 'absolute',
                             transition: 'all 0.3s ease-in-out',
@@ -948,13 +937,12 @@ export default defineComponent({
             const _img = withDirectives(
                 createVNode('img', {
                     src: _option.imgList[_option.index],
-                    fit: fit,
                     style: {
                         position: 'absolute',
-                        width: rect.width + 'px',
-                        height: rect.height + 'px',
-                        left: rect.left + 'px',
-                        top: rect.top + 'px'
+                        width: rect.value.width + 'px',
+                        height: rect.value.height + 'px',
+                        left: rect.value.left + 'px',
+                        top: rect.value.top + 'px'
                     },
                     class: 'se-img-preview-img-item',
                     onError: props.onError
