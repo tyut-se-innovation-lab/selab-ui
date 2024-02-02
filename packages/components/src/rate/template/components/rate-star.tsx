@@ -11,7 +11,9 @@ export default defineComponent({
             <li class={['se-rate-star']}>
                 <div>
                     <div class="se-rate-star-first">
-                        <span class={['action']}></span>
+                        <span
+                            class={['action', 'iconfont', 'icon-star']}
+                        ></span>
                     </div>
                     <div class="se-rate-star-second">
                         <span class={['action']}></span>
