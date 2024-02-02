@@ -328,11 +328,9 @@ export default defineComponent({
                 mouseDownPosition[0] = e.clientX;
                 mouseDownPosition[1] = e.clientY;
                 // 添加移动事件
-                imgItem.addEventListener('mousemove', mouseMove);
+                window.addEventListener('mousemove', mouseMove);
                 // 添加松开事件
-                imgItem.addEventListener('mouseup', mouseUpLeave);
-                // 添加离开事件
-                imgItem.addEventListener('mouseleave', mouseUpLeave);
+                window.addEventListener('mouseup', mouseUpLeave);
                 // 移除过渡
                 imgItem.style.transition =
                     'all .3s ease-in-out, left 0s, top 0s';
@@ -351,38 +349,31 @@ export default defineComponent({
                 const imgNow = getComputedStyle(imgItem);
                 const imgLeft = parseFloat(imgNow.left);
                 const imgTop = parseFloat(imgNow.top);
-                // const imgWidth = parseFloat(imgNow.width);
-                // const imgHeight = parseFloat(imgNow.height);
                 // 移动图片
                 imgItem.style.left = imgLeft + moveX + 'px';
                 imgItem.style.top = imgTop + moveY + 'px';
-                // 如果不显示遮罩, 则工具栏跟随移动
-                if (!_option.modal) {
-                    if (
-                        imgLeft > toolbarWidth / 2 + 10 &&
-                        imgLeft < clientWidth - toolbarWidth / 2 - 10
-                    ) {
-                        toolbarRef.value.style.left = imgLeft + moveX + 'px';
-                    }
-                }
                 // 保存当前鼠标位置
                 mouseDownPosition[0] = e.clientX;
                 mouseDownPosition[1] = e.clientY;
             }
-            // 松开事件和离开事件
+            // 松开事件
             function mouseUpLeave() {
                 if (isClose) return;
-                const imgItem = img.el!;
+                const imgItem = img.el! as HTMLImageElement;
                 // 移除移动事件
-                imgItem.removeEventListener('mousemove', mouseMove);
+                window.removeEventListener('mousemove', mouseMove);
                 // 移除松开事件
-                imgItem.removeEventListener('mouseup', mouseUpLeave);
+                window.removeEventListener('mouseup', mouseUpLeave);
                 // 恢复过渡
                 imgItem.style.transition = '';
                 toolbarRef.value.style.transition = '';
                 // 鼠标样式改为抓取
                 imgItem.style.cursor = 'grab';
                 checkImg();
+                // 如果不显示遮罩, 则工具栏跟随移动
+                if (!_option.modal) {
+                    initToolbarLocation();
+                }
             }
             // 是否正在缩放
             let isScaling = false;
@@ -873,6 +864,12 @@ export default defineComponent({
                         imgLeft < clientWidth - toolbarWidth / 2 - 10
                     ) {
                         toolbarRef.value.style.left = imgLeft + 'px';
+                    } else if (imgLeft <= toolbarWidth / 2 + 10) {
+                        toolbarRef.value.style.left =
+                            toolbarWidth / 2 + 10 + 'px';
+                    } else if (imgLeft >= clientWidth - toolbarWidth / 2 - 10) {
+                        toolbarRef.value.style.left =
+                            clientWidth - toolbarWidth / 2 - 10 + 'px';
                     }
                 }
             }
