@@ -49,7 +49,11 @@
   color: #2ecc71;
   border-color: #a8ebc4;
 }
-.se-msg-close-success:hover {
+.se-msg-success .se-msg-icon span {
+  color: #2ecc71;
+}
+.se-msg-close-success:hover,
+.se-msg-close-success span {
   color: #29b765;
 }
 .se-msg-num-success {
@@ -61,7 +65,11 @@
   color: #f39c12;
   border-color: #fad9a4;
 }
-.se-msg-close-warning:hover {
+.se-msg-warning .se-msg-icon span {
+  color: #f39c12;
+}
+.se-msg-close-warning:hover,
+.se-msg-close-warning span {
   color: #e08e0b;
 }
 .se-msg-num-warning {
@@ -73,7 +81,11 @@
   color: #e74c3c;
   border-color: #f8c9c4;
 }
-.se-msg-close-danger:hover {
+.se-msg-danger .se-msg-icon span {
+  color: #e74c3c;
+}
+.se-msg-close-danger:hover,
+.se-msg-close-danger span {
   color: #e43725;
 }
 .se-msg-num-danger {
@@ -85,7 +97,11 @@
   color: #3498db;
   border-color: #b6daf2;
 }
-.se-msg-close-info:hover {
+.se-msg-info .se-msg-icon span {
+  color: #3498db;
+}
+.se-msg-close-info:hover,
+.se-msg-close-info span {
   color: #258cd1;
 }
 .se-msg-num-info {

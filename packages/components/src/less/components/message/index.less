@@ -64,9 +64,13 @@ each(@seMsgColorMap, {
     background-color: extract(@value, 2);
     color: extract(@value, 1);
     border-color: lighten(extract(@value, 1), 30%);
+
+    & .se-msg-icon span {
+      color: extract(@value, 1);
+    }
   }
 
-  .se-msg-close-@{key}:hover {
+  .se-msg-close-@{key}:hover, .se-msg-close-@{key} span {
     color: darken(extract(@value, 1), 5%);
   }
 

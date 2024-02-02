@@ -8,7 +8,15 @@ import { getStyle } from '@selab-ui/utils';
 
 const messageType = getStyle();
 
-const iconType = [...messageType, 'download'];
+const iconType = [...messageType];
+
+export const iconMap = {
+    info: 'info',
+    success: 'roundcheck',
+    // hear
+    warning: 'round_warn_light',
+    danger: 'roundclose'
+};
 
 const msgDefault: MessagePropsType = {
     id: '',

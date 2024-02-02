@@ -1,7 +1,8 @@
 import { defineComponent, computed, VNode, ref, watch, onMounted } from 'vue';
 import '../../less/components/message/index.less';
 import { getSizeMap, getStringWidth } from '@selab-ui/utils';
-import { msgProps } from './message';
+import SeIcon from '../../icon/template/icon.vue';
+import { msgProps, iconMap } from './message';
 
 export default defineComponent({
     name: 'seMsg',
@@ -126,9 +127,13 @@ export default defineComponent({
                                         : '16'
                                 }px`}
                             >
-                                <i
-                                    class={`se-msg_icon se-msg_icon-${props.icon}`}
-                                ></i>
+                                <SeIcon
+                                    name={iconMap[props.icon]}
+                                    iconSize={
+                                        getSizeMap(props.size) * 16 + 'px'
+                                    }
+                                    color="#"
+                                />
                             </div>
                         );
                 })()}
@@ -149,7 +154,13 @@ export default defineComponent({
                                 class={`se-msg-close se-msg-close-${props.type}`}
                                 onClick={onCloseClick}
                             >
-                                <i class="se-icon se-icon-close"></i>
+                                <SeIcon
+                                    name="close"
+                                    iconSize={
+                                        getSizeMap(props.size) * 16 + 'px'
+                                    }
+                                    color="#"
+                                />
                             </div>
                         );
                 })()}
