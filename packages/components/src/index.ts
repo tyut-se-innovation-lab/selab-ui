@@ -32,3 +32,6 @@ export * from "./dialog";
 export * from "./rate";
 // 导入选择器
 export * from "./switch";
+
+// 导入单选框
+export * from "./radio";

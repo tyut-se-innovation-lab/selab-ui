@@ -94,6 +94,10 @@ export default {
             link: "/components/switch/"
 
         },
+	{
+            text: "Radio",
+            link: "/components/radio/"
+        },
 	//]
 
                     ]
