@@ -15,6 +15,7 @@ import {Card} from "./components/src";
 import {Button} from "./components/src";
 import {Box} from "./components/src";
 import {Msg} from "./components/src";
+import { ComponentCustomProperties } from "vue";
 
 declare module "@vue/runtime-core" {
     export interface GlobalComponents {
