@@ -19,7 +19,8 @@ declare module "@vue/runtime-core" {
     export interface GlobalComponents {
         seButton: typeof Button;
         seBox: typeof Box;
-        //[		 seRadio: typeof Radio;
+        //[
+		 seRadio: typeof Radio;
 
 		 seRate: typeof Rate;
 		 seDialog: typeof Dialog;
@@ -27,13 +28,13 @@ declare module "@vue/runtime-core" {
 		 seTooltip: typeof Tooltip;
 
 
-		 seMiniMsg: typeof MiniMsg;
+		 SeMiniMsg: typeof MiniMsg;
 
  seImg: typeof Img;        seTag: typeof Tag;
         seSkeleton: typeof Skeleton;
         seSelect: typeof Select;
         seCard: typeof Card;
-        seMsg: typeof Msg;
+        SeMsg: typeof Msg;
         //[
 		 seSwitch: typeof Switch;
 

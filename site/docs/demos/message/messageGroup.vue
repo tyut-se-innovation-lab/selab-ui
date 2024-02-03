@@ -4,14 +4,14 @@
 </template>
 
 <script setup lang="ts">
-import { seMsg } from 'selab-ui';
+import { SeMsg } from 'selab-ui';
 function msg1() {
-    seMsg({
+    SeMsg({
         message: '分组合并'
     });
 }
 function msg2() {
-    seMsg({
+    SeMsg({
         message: '分组不合并',
         group: false
     });

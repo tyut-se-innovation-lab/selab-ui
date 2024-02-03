@@ -5,7 +5,7 @@ import SeIcon from '../../icon/template/icon.vue';
 import { msgProps, iconMap } from './message';
 
 export default defineComponent({
-    name: 'seMsg',
+    name: 'SeMsg',
     props: msgProps,
     expose: ['close'],
     setup(props, { expose }): () => VNode {

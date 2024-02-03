@@ -6,9 +6,9 @@
 </template>
 
 <script setup lang="ts">
-import { seMsg } from 'selab-ui';
+import { SeMsg } from 'selab-ui';
 function msg(duration: number, msg: string) {
-    seMsg({
+    SeMsg({
         message: msg,
         duration,
         showClose: true

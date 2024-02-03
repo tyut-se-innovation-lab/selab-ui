@@ -62,7 +62,7 @@
         <button @click="msg('warning')">warning</button>
         <button @click="msg('danger')">danger</button>
         <button @click="msg('info')">info</button>
-        <button @click="$seMsg('info')">$seMsg</button>
+        <button @click="$SeMsg('info')">$SeMsg</button>
         <button @click="miniMsg('info')">mini Msg</button>
         <button @click="myAlbum.open(2)">myAlbum open</button>
         <button @click="myAlbum.close()">myAlbum close</button>
@@ -136,7 +136,7 @@
 </template>
 <script lang="ts" setup>
 import { ref, createVNode } from 'vue';
-import { seMsg, seMiniMsg, seCreateAlbum } from 'selab-ui';
+import { SeMsg, SeMiniMsg, seCreateAlbum } from 'selab-ui';
 import img1 from './src/assets/img/img (1).png';
 import img2 from './src/assets/img/img (2).png';
 import img3 from './src/assets/img/img (3).png';
@@ -181,7 +181,7 @@ function msg(type: 'success' | 'warning' | 'danger' | 'info') {
         'createVNode测试'
     );
     // const msgA =
-    seMsg({
+    SeMsg({
         message: vNode,
         type,
         duration: Math.random() * 1000 + 1000,
@@ -203,7 +203,7 @@ function msg(type: 'success' | 'warning' | 'danger' | 'info') {
 }
 
 function miniMsg(type: 'success' | 'warning' | 'danger' | 'info') {
-    seMiniMsg({
+    SeMiniMsg({
         type: type,
         message: 'This is a success message',
         duration: 3000,

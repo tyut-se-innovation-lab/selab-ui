@@ -1,7 +1,7 @@
 // Your component styles here
 @import url('../../base/index.less');
 
-@seMiniMsgColorMap: {
+@SeMiniMsgColorMap: {
   success: @success-color,
       lighten(saturate(spin(@success-color, -35%), 1), 40%);
   warning: @warning-color,
@@ -40,7 +40,7 @@
     -ms-user-select: none;
     user-select: none;
 
-    each(@seMiniMsgColorMap,{
+    each(@SeMiniMsgColorMap,{
       &.se-msg-mini-@{key} {
         color: extract(@value, 1);
         border-color: lighten(extract(@value, 1), 30%);

@@ -4,9 +4,9 @@
 </template>
 
 <script setup lang="ts">
-import { seMsg } from 'selab-ui';
+import { SeMsg } from 'selab-ui';
 function msg(showClose: boolean) {
-    seMsg({
+    SeMsg({
         message: showClose ? '可关闭' : '不可关闭',
         showClose
     });
