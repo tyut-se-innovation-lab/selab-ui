@@ -60,7 +60,7 @@ export default defineComponent({
                             root.value.childNodes[0]
                                 .childNodes[0] as HTMLLIElement
                         ).style.cssText = 'transition: all .3s; opacity: 1;';
-                        emit('initToolbarLocation');
+                        setTimeout(() => emit('initToolbarLocation'), 300);
                     };
                 }
             });
