@@ -165,5 +165,3 @@ export type LocationType = {
   width: number;
   height: number;
 };
-
-declare module '*.svg'
