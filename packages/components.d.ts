@@ -1,3 +1,4 @@
+import {Slider} from "./components/src";
 import {Radio} from "./components/src";
 import {Rate} from "./components/src";
 import {Dialog} from "./components/src";
@@ -19,7 +20,8 @@ declare module "@vue/runtime-core" {
     export interface GlobalComponents {
         seButton: typeof Button;
         seBox: typeof Box;
-        //[
+        //[		 seSlider: typeof Slider;
+
 		 seRadio: typeof Radio;
 
 		 seRate: typeof Rate;
@@ -43,6 +45,12 @@ declare module "@vue/runtime-core" {
         seSkeleton: typeof Skeleton;
         seSelect: typeof Select;
         seCard: typeof Card;
+    }
+
+    // 声明全局变量属性
+    export interface ComponentCustomProperties {
+        $SeMsg: typeof Msg;
+        $SeMiniMsg: typeof MiniMsg;
     }
 }
 
