@@ -98,6 +98,10 @@ export default {
             text: "Radio",
             link: "/components/radio/"
         },
+	{
+            text: "Slider",
+            link: "/components/slider/"
+        },
 	//]
 
                     ]

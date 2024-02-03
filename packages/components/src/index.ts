@@ -35,3 +35,5 @@ export * from "./switch";
 
 // 导入单选框
 export * from "./radio";
+// 导入滑动输入条
+export * from "./Slider";
