@@ -13,7 +13,7 @@ export const radioProps = {
         type: String,
         default: ''
     },
-    disable: {
+    disabled: {
         type: Boolean,
         default: false
     }

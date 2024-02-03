@@ -18,15 +18,15 @@ export default defineComponent({
           <label key={index} class={`se-radio-label`}>
             <input
               type="radio"
-              name={`se-radio-group${props.name ? 'props.name' : ''}`}
-              class={`se-radio-round ${props.disable ? 'disabled' : ''}`}
+              name={`se-radio-group${props.name ? props.name : ''}`}
+              class={`se-radio-round ${props.disabled ? 'disabled' : ''}`}
               value={option}
               v-model={selectedOption}
               onChange={() => handleChange(option)}
-              disabled={props.disable}
+              disabled={props.disabled}
             ></input>
             <p
-              class={`se-radio-text ${props.disable ? 'disabled' : ''}`}
+              class={`se-radio-text ${props.disabled ? 'disabled' : ''}`}
             >{option}</p>
           </label>
         ))}
