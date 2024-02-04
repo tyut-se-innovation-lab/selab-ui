@@ -1,30 +1,29 @@
 @import url('../../base/index.less');
 
-.se-radio {
+.se-checkbox {
     width: fit-content;
     display: flex;
     margin: 20px 20px;
     font-size: 15px;
 
-    .se-radio-label {
+    .se-checkbox-label {
         width: fit-content;
         height: 30px;
     }
 
-    .se-radio-round {
+    .se-checkbox-square {
         width: 13px;
         height: 13px;
     }
 
-
     &--small {
         font-size: 13px;
 
-        .se-radio-label {
+        .se-checkbox-label {
             height: 20px;
         }
 
-        .se-radio-round {
+        .se-checkbox-square {
             width: 12px;
             height: 12px;
         }
@@ -33,11 +32,11 @@
     &--middle {
         font-size: 15px;
 
-        .se-radio-label {
+        .se-checkbox-label {
             height: 30px;
         }
 
-        .se-radio-round {
+        .se-checkbox-square {
             width: 13px;
             height: 13px;
         }
@@ -46,32 +45,32 @@
     &--large {
         font-size: 20px;
 
-        .se-radio-label {
+        .se-checkbox-label {
 
             height: 40px;
         }
 
-        .se-radio-round {
+        .se-checkbox-square {
             width: 14px;
             height: 14px;
         }
     }
 }
 
-.se-radio-label {
+.se-checkbox-label {
     display: inline-flex;
     align-items: center;
     margin-right: 36px;
     cursor: pointer;
+
 }
 
-
-.se-radio-round {
+.se-checkbox-square {
     cursor: pointer;
     margin: 0 0;
     accent-color: @text-color-accent;
 
-    &:checked+.se-radio-text {
+    &:checked+.se-checkbox-text {
         color: #3498db; // 选中状态下的文字颜色，你可以替换为其他颜色
     }
 
@@ -80,7 +79,7 @@
     }
 }
 
-.se-radio-text {
+.se-checkbox-text {
     padding-left: 12px;
 
     &.disabled {

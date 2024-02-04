@@ -1,3 +1,4 @@
+import {Checkbox} from "./components/src";
 import {Radio} from "./components/src";
 import {Rate} from "./components/src";
 import {Dialog} from "./components/src";
@@ -19,7 +20,8 @@ declare module "@vue/runtime-core" {
     export interface GlobalComponents {
         seButton: typeof Button;
         seBox: typeof Box;
-        //[		 seRadio: typeof Radio;
+        //[		 seCheckbox: typeof Checkbox;
+		 seRadio: typeof Radio;
 
 		 seRate: typeof Rate;
 		 seDialog: typeof Dialog;

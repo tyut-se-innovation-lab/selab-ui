@@ -35,3 +35,5 @@ export * from "./switch";
 
 // 导入单选框
 export * from "./radio";
+// 导入多选框
+export * from "./checkbox";
