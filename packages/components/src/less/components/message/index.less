@@ -60,29 +60,29 @@
 }
 
 each(@SeMsgColorMap, {
-  .se-msg-@{key} {
-    background-color: extract(@value, 2);
-    color: extract(@value, 1);
-    border-color: lighten(extract(@value, 1), 30%);
+    .se-msg-@{key} {
+        background-color: extract(@value, 2);
+        color: extract(@value, 1);
+        border-color: lighten(extract(@value, 1), 30%);
 
-    & .se-msg-icon span {
-      color: extract(@value, 1);
+        & .se-msg-icon span {
+          color: extract(@value, 1);
+        }
     }
-  }
 
-  .se-msg-close-@{key}:hover, .se-msg-close-@{key} span {
-    color: darken(extract(@value, 1), 5%);
-  }
+    .se-msg-close-@{key}:hover, .se-msg-close-@{key} span {
+      color: darken(extract(@value, 1), 5%);
+    }
 
-  .se-msg-num-@{key} {
+    .se-msg-num-@{key} {
     // color: extract(@value, 1);
-    border-color: lighten(extract(@value, 1), 30%);
-    background-color: extract(@value, 2);
-  }
+        border-color: lighten(extract(@value, 1), 30%);
+        background-color: extract(@value, 2);
+    }
 });
 
 each(@SeMsgSizeMag, {
-  .se-msg-@{value} {
-    transform: translateX(-50%) scale(0.6 + (@index - 1) * 0.2);
-  }
+    .se-msg-@{value} {
+          transform: translateX(-50%) scale(0.6 + (@index - 1) * 0.2);
+    }
 });

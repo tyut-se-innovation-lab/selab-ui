@@ -1,13 +1,12 @@
 import {
-    VNode,
+    computed,
+    createVNode,
     defineComponent,
+    isVNode,
     onMounted,
     ref,
-    createVNode,
     render,
-    withDirectives,
-    computed,
-    isVNode
+    VNode
 } from 'vue';
 import '../../../less/components/imgPreview/index.less';
 import { imgPreviewProps } from '../image';
@@ -24,6 +23,9 @@ import SeIcon from '../../../icon/template/icon.vue';
 export default defineComponent({
     name: 'se-img-preview',
     props: imgPreviewProps,
+    directives: {
+        contextmenu
+    },
     setup(props, { expose }): () => VNode {
         const _option = {
             openIndex: props.index,
@@ -61,7 +63,7 @@ export default defineComponent({
             if (isClose.value) return;
             isClose.value = true;
             // 获取当前图片
-            const imgItem = img.el!;
+            const imgItem = img.value;
             // 关闭预览
             if (_option.modal && 'mask' in props.instance) {
                 getPreviewStartLocation(_option.index);
@@ -88,7 +90,7 @@ export default defineComponent({
             ) as HTMLDivElement;
             closeBtn && (closeBtn.style.opacity = '0');
             // 若存在, 关闭工具栏
-            if (props.toolbar.show !== false || !_option.modal) {
+            if (props.toolbar.show || !_option.modal) {
                 toolbarRef.value.style.transform =
                     'translateX(-50%) translateY(50%)';
                 toolbarRef.value.style.opacity = '0';
@@ -114,9 +116,8 @@ export default defineComponent({
             }
         }
         // 用于保存在render函数里创建的带有指令的图片实例
-        let img: VNode;
+        const img = ref<HTMLImageElement>({} as HTMLImageElement);
         onMounted(() => {
-            render(img, imagesRef.value);
             // 计算图片的真实宽高比
             const imgReal = new Image();
             imgReal.src = _option.imgList[_option.index];
@@ -137,8 +138,8 @@ export default defineComponent({
                         clientHeight / imgRealHeight
                     ) / 1.4;
                 // 保存打开预览时的图片
-                const imgItem = img.el!;
-                imgItem.style['object-fit'] = fit.value;
+                const imgItem = img.value;
+                imgItem.style.objectFit = fit.value;
                 imgItem.style.width = imgRealWidth * scale + 'px';
                 imgItem.style.height = imgRealHeight * scale + 'px';
                 imgItem.style.left = '50vw';
@@ -215,8 +216,10 @@ export default defineComponent({
                         document.body.style.overflow = 'hidden';
                     });
                     // 恢复滚动的函数
-                    const resetBodyOverflow = (e: KeyboardEvent | null) => {
-                        if (e && e.key !== 'Escape') {
+                    const resetBodyOverflow = (
+                        e: KeyboardEvent | MouseEvent | null
+                    ) => {
+                        if (e && 'key' in e && e.key !== 'Escape') {
                             return;
                         }
                         setTimeout(() => {
@@ -249,7 +252,7 @@ export default defineComponent({
             } = useOperate(
                 props as ImgPreviewPropsType,
                 _option,
-                img.el! as HTMLImageElement,
+                img.value as HTMLImageElement,
                 isClose,
                 maskRef,
                 { imgWidthOriginal, imgHeightOriginal },
@@ -265,7 +268,7 @@ export default defineComponent({
             const { userChangeImg } = useChangeImg(
                 props as ImgPreviewPropsType,
                 _option,
-                img.el! as HTMLImageElement,
+                img.value as HTMLImageElement,
                 isClose,
                 nowIndex,
                 {
@@ -303,7 +306,7 @@ export default defineComponent({
                 });
                 render(_toolbar, toolbarRef.value);
             } else if (
-                props.toolbar.show === false &&
+                !props.toolbar.show &&
                 !props.modal &&
                 _option.imgList.length > 1
             ) {
@@ -341,30 +344,28 @@ export default defineComponent({
             }
         });
         return () => {
-            // 因为 withDirectives 只能在render函数中使用, 所以在这里创建图片实例, 再赋值给img变量, 就能在外面用了
-            // 创建图片实例, 并且挂载到dom上, 初始位置为点击的图片位置, 以及图片的宽高, 以及图片的fit, 在0.3s后移动到中心位置
-            const _img = withDirectives(
-                createVNode('img', {
-                    src: _option.imgList[_option.index],
-                    style: {
-                        position: 'absolute',
-                        width: rect.value.width + 'px',
-                        height: rect.value.height + 'px',
-                        left: rect.value.left + 'px',
-                        top: rect.value.top + 'px'
-                    },
-                    class: 'se-img-preview-img-item',
-                    onError: props.onError
-                }),
-                [[contextmenu, props.contextmenu]]
-            );
-            img = _img;
             return (
                 <div class="se-img-preview">
                     {props.modal && (
                         <div class="se-img-preview-mask" ref={maskRef}></div>
                     )}
-                    <div class="se-img-preview-img" ref={imagesRef}></div>
+                    <div class="se-img-preview-img" ref={imagesRef}>
+                        <img
+                            src={_option.imgList[_option.index]}
+                            style={{
+                                position: 'absolute',
+                                width: rect.value.width + 'px',
+                                height: rect.value.height + 'px',
+                                left: rect.value.left + 'px',
+                                top: rect.value.top + 'px'
+                            }}
+                            class="se-img-preview-img-item"
+                            onError={props.onError}
+                            ref={img}
+                            alt={undefined}
+                            v-contextmenu={props.contextmenu}
+                        />
+                    </div>
                     <div class="se-img-preview-toolbar" ref={toolbarRef}></div>
                     {props.modal && (
                         <div
