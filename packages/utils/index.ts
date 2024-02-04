@@ -11,7 +11,19 @@ export const testFun = (a: number, b: number): number => {
 export const clickOutside = {
     mounted(el: any, binding: any) {
         function eventHandler(e: MouseEvent) {
+            let isOutside = true;
             if (el.contains(e.target)) {
+                isOutside = false;
+            } else {
+                Array.isArray(binding.arg) &&
+                    binding.arg.forEach((el: HTMLElement) => {
+                        if (!(e.target instanceof Node) || !isOutside) return;
+                        if (el.contains(e.target)) {
+                            isOutside = false;
+                        }
+                    });
+            }
+            if (!isOutside) {
                 return false;
             }
             if (binding.value && typeof binding.value === 'function') {
