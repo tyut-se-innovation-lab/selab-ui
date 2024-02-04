@@ -1,6 +1,5 @@
 <template>
     <div>
-
         <se-tooltip>
             <template #title>默认触发颜色</template>
             触发文本触发文本触发文本触发文本触发文本触发文本
@@ -13,7 +12,7 @@
             <template #title>自定义触发颜色:#f50</template>
             触发文本触发文本触发文本
         </se-tooltip>
-        <se-rate/>
+        <se-rate />
         <se-button type="primary">测试</se-button>
         <se-box type="type1">测试盒子</se-box>
         <se-card type="type1">测试卡片</se-card>
@@ -30,63 +29,111 @@
             </template>
         </se-tag>
         <se-button @click="visible = true">dialog测试</se-button>
-        <se-dialog title="温馨提示" :visible.sync=visible @close="closed" closeable>
+        <se-dialog
+            title="温馨提示"
+            v-model:visible="visible"
+            @close="closed"
+            closeable
+        >
             <template #closeIcon>
                 <div>123</div>
             </template>
-            <template v-slot:footer>
-
-            </template>
+            <template v-slot:footer> </template>
         </se-dialog>
         <se-button @click="visible1 = true">dialog测试</se-button>
-        <se-dialog :visible.sync=visible1 @close="closed1" closeable>
-        
+        <se-dialog v-model:visible="visible1" @close="closed1" closeable>
             <template v-slot:title>
                 <h1>我是标题</h1>
             </template>
             <template v-slot:footer>
-                <se-button type="danger" @click="visible1 = false" style="margin-right: 30px;">取消</se-button>
-                <se-button type="success" @click="visible1 = false">确定</se-button>
+                <se-button
+                    type="danger"
+                    @click="visible1 = false"
+                    style="margin-right: 30px"
+                    >取消</se-button
+                >
+                <se-button type="success" @click="visible1 = false"
+                    >确定</se-button
+                >
             </template>
         </se-dialog>
         <se-skeleton></se-skeleton>
         <se-skeleton :avatarShow="false" :active="true"></se-skeleton>
-<!--        <se-skeleton></se-skeleton>-->
-<!--        <se-skeleton :avatarShow="false" :active="true"></se-skeleton>-->
+        <!--        <se-skeleton></se-skeleton>-->
+        <!--        <se-skeleton :avatarShow="false" :active="true"></se-skeleton>-->
         <se-select :options="options" v-model="value"></se-select>
         <se-select :options="options" multiple v-model="value2"></se-select>
-        <se-select :options="options" filterable :filter-method="filter" multiple v-model="value2"></se-select>
+        <se-select
+            :options="options"
+            filterable
+            :filter-method="filter"
+            multiple
+            v-model="value2"
+        ></se-select>
 
-        <se-select :options="options3" multiple remote v-model="value3" :queryMethod="query"></se-select>
+        <se-select
+            :options="options3"
+            multiple
+            remote
+            v-model="value3"
+            :queryMethod="query"
+        ></se-select>
         <button @click="msg('success')">success</button>
         <button @click="msg('warning')">warning</button>
         <button @click="msg('danger')">danger</button>
         <button @click="msg('info')">info</button>
         <button @click="$SeMsg('info')">$SeMsg</button>
         <button @click="miniMsg('info')">mini Msg</button>
-        <button @click="myAlbum.open(2)">myAlbum open</button>
+        <button @click="myAlbum.open(1)">myAlbum open</button>
         <button @click="myAlbum.close()">myAlbum close</button>
-        <se-img v-for="i of [...Array(6).keys()]" :key="i" :src="imgList[i]" fit="contain" width="400" lazy :preview="{
-            name: '测试',
-            minScale: 1,
-            maxScale: 50,
-            animation: 'fade',
-            loop: false,
-            toolbar: {
-                show: true,
-                zoom: true,
-                rotate: true,
-                reset: true,
-                pagination: true,
-                flip: true,
-                download: onImgDownload
-            },
-            modal: true,
-            scaleStep: 0.5,
-            closeIcon: 'close',
-            closeOnClickModal: true,
-            closeOnPressEscape: true
-        }">
+        <se-img
+            v-for="i of [...Array(6).keys()]"
+            :key="i"
+            :src="imgList[i]"
+            fit="contain"
+            width="400"
+            lazy
+            :preview="{
+                name: '测试',
+                minScale: 1,
+                maxScale: 50,
+                animation: 'fade',
+                loop: true,
+                toolbar: {
+                    show: true,
+                    zoom: true,
+                    rotate: true,
+                    reset: true,
+                    pagination: true,
+                    flip: true,
+                    download: onImgDownload
+                },
+                modal: true,
+                scaleStep: 0.5,
+                closeIcon: 'close',
+                closeOnClickModal: true,
+                closeOnPressEscape: true,
+                contextmenu: [
+                    {
+                        name: '测试1',
+                        onClick: () => {
+                            console.log('测试1');
+                        },
+                        children: [
+                            {
+                                name: '测试1.1',
+                                onClick: () => {
+                                    console.log('测试1.1');
+                                },
+                                icon: 'close'
+                            }
+                        ],
+                        hidden: false
+                    }
+                ]
+            }"
+            :contextmenu="false"
+        >
             <template #loading>
                 <div>loading</div>
             </template>
@@ -105,7 +152,7 @@
             :preview="{
                 name: '测试1',
                 album: true,
-                albumList: imgList,
+                albumList: [imgList[1]],
                 animation: 'slide',
                 loop: false,
                 modal: false,
@@ -113,7 +160,11 @@
                 onClose: onImgClose,
                 onOpen: onImgOpen,
                 toolbar: {
-                    show: false
+                    zoom: false,
+                    rotate: false,
+                    reset: false,
+                    pagination: true,
+                    flip: true,
                 }
             }"
             :contextmenu="false"
@@ -123,15 +174,40 @@
             </template>
             <template #error>
                 <div>error</div>
-            </template>
-            <template #mask>
-                <span> mask </span>
             </template> -->
+            <template #mask>
+                <span
+                    v-contextmenu="[
+                        {
+                            name: '测试2',
+                            onClick: () => {
+                                console.log('测试2');
+                            },
+                            children: [
+                                {
+                                    name: '测试2.1',
+                                    onClick: () => {
+                                        console.log('测试2.1');
+                                    },
+                                    icon: 'close'
+                                }
+                            ],
+                            hidden: false
+                        }
+                    ]"
+                >
+                    mask
+                </span>
+            </template>
         </se-img>
 
-      <se-switch v-model="value4" switchDisabled></se-switch>
-      <se-switch v-model="value5" inactiveText="测试1" activeText="测试2"></se-switch>
-      <se-progress></se-progress>
+        <se-switch v-model="value4" switchDisabled></se-switch>
+        <se-switch
+            v-model="value5"
+            inactiveText="测试1"
+            activeText="测试2"
+        ></se-switch>
+        <se-progress></se-progress>
     </div>
 </template>
 <script lang="ts" setup>
@@ -145,14 +221,14 @@ import img5 from './src/assets/img/img (5).png';
 import img6 from './src/assets/img/img (6).png';
 import { visitFunctionBody } from 'typescript';
 //dialog测试函数
-const visible = ref(false)
-const visible1 = ref(false)
+const visible = ref(false);
+const visible1 = ref(false);
 const closed = (value: any) => {
     visible.value = value;
-}
+};
 const closed1 = (value: any) => {
     visible1.value = value;
-}
+};
 const imgList = [img1, img2, img3, img4, img5, img6];
 
 const options = ref(
@@ -165,8 +241,8 @@ const options2 = ref([]);
 const value = ref(3);
 const value2 = ref([2, 5]);
 
-const value5 = ref(true)
-const value4 = ref(true)
+const value5 = ref(true);
+const value4 = ref(true);
 const tagclick = (e: any) => {
     console.log(e);
 };
@@ -269,4 +345,3 @@ const query = (value: string) => {
     }, 2000);
 };
 </script>
-

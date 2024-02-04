@@ -26,11 +26,13 @@
   margin: 0;
   transition: all 0.3s;
   cursor: default;
+  box-sizing: content-box;
 }
 .se-img-preview-toolbar-root ul li {
   display: flex;
   transition: all 0.3s;
   margin-right: 10px;
+  font-size: 12px;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -59,6 +61,7 @@
   margin: 0;
   white-space: nowrap;
   transition: all 0.3s;
+  line-height: 32px;
   color: #ffffffaa;
 }
 .se-img-preview-toolbar-root ul li button:hover span {

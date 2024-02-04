@@ -106,16 +106,18 @@ export default defineComponent({
                 <img
                     ref={seImg}
                     class={imgClassName.value}
+                    style={`width:${props.width}px;height:${props.height}px`}
                     src={_src.value}
                     alt={props.alt}
-                    height={props.height}
-                    width={props.width}
                     onError={errorHandle}
                     onLoad={loadHandle}
                     {...attrs}
                 />
                 {isLoading.value && (
-                    <div class="se-img-loading">
+                    <div
+                        class="se-img-loading"
+                        style={`width:${props.width}px;height:${props.height}px`}
+                    >
                         {slots.loading ? (
                             slots.loading()
                         ) : (
@@ -124,7 +126,10 @@ export default defineComponent({
                     </div>
                 )}
                 {!isLoading.value && !isLoadSuccess.value && (
-                    <div class="se-img-error">
+                    <div
+                        class="se-img-error"
+                        style={`width:${props.width}px;height:${props.height}px`}
+                    >
                         {slots.error ? (
                             slots.error()
                         ) : (
@@ -133,7 +138,11 @@ export default defineComponent({
                     </div>
                 )}
                 {props.preview && (
-                    <div class="se-img-mask" ref={mask}>
+                    <div
+                        class="se-img-mask"
+                        style={`width:${props.width}px;height:${props.height}px`}
+                        ref={mask}
+                    >
                         {slots.mask ? (
                             slots.mask()
                         ) : (

@@ -33,6 +33,8 @@ export type PartialContextmenuType = PartialContextmenuItemType[];
 
 export type ContextmenuPropsType = {
     contextmenu: ContextmenuType;
+    top: number;
+    left: number;
 };
 
 export type ContextmenuProps = CreateProps<ContextmenuPropsType>;
@@ -43,5 +45,3 @@ export interface ContextmenuHTMLElement extends HTMLElement {
         clickOutsideHandler: (e: MouseEvent) => void;
     }
 }
-
-export type Chect<T> = T extends boolean ? boolean : PartialContextmenuItemType;

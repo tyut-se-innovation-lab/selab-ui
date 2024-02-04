@@ -71,6 +71,8 @@ export default defineComponent({
                 imgItem.style.top = rect.value.top + 'px';
                 imgItem.style.width = rect.value.width + 'px';
                 imgItem.style.height = rect.value.height + 'px';
+                imgItem.style.minWidth = rect.value.width + 'px';
+                imgItem.style.minHeight = rect.value.height + 'px';
                 imgItem.style.transform = `translate(0, 0) scale(1) rotate(0deg) rotateY(0deg) rotateX(0deg)`;
             } else {
                 const { clientWidth, clientHeight } = document.documentElement;
@@ -139,9 +141,12 @@ export default defineComponent({
                     ) / 1.4;
                 // 保存打开预览时的图片
                 const imgItem = img.value;
+                console.log(imgItem, 'imgItem');
                 imgItem.style.objectFit = fit.value;
                 imgItem.style.width = imgRealWidth * scale + 'px';
                 imgItem.style.height = imgRealHeight * scale + 'px';
+                imgItem.style.minWidth = imgRealWidth * scale + 'px';
+                imgItem.style.minHeight = imgRealHeight * scale + 'px';
                 imgItem.style.left = '50vw';
                 imgItem.style.top = '50vh';
                 imgItem.style.transform =
@@ -305,11 +310,7 @@ export default defineComponent({
                         : ''
                 });
                 render(_toolbar, toolbarRef.value);
-            } else if (
-                !props.toolbar.show &&
-                !props.modal &&
-                _option.imgList.length > 1
-            ) {
+            } else if (!props.toolbar.show && !props.modal) {
                 // 若工具栏不显示, 且遮罩不存在, 则显示工具栏且只显示切换按钮
                 const _toolbar = createVNode(SePreviewToolbar, {
                     index: nowIndex,
@@ -356,11 +357,14 @@ export default defineComponent({
                                 position: 'absolute',
                                 width: rect.value.width + 'px',
                                 height: rect.value.height + 'px',
+                                minWidth: rect.value.width + 'px',
+                                minHeight: rect.value.height + 'px',
                                 left: rect.value.left + 'px',
                                 top: rect.value.top + 'px'
                             }}
                             class="se-img-preview-img-item"
                             onError={props.onError}
+                            onLoad={() => {}}
                             ref={img}
                             alt={undefined}
                             v-contextmenu={props.contextmenu}

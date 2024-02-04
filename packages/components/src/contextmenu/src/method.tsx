@@ -21,12 +21,12 @@ function itemCheck(option: PartialContextmenuItemType): ContextmenuItemType {
             'Contextmenu > customize contextmenu item children must be array'
         );
     } else if (option.children) {
-        const children = check(option.children);
+        const _children = check(option.children);
 
         return {
             ...contextmenuDefault,
             ...option,
-            children
+            children: _children
         };
     } else {
         return {

@@ -86,7 +86,7 @@ export const imgProps: ImgProps = {
         default: imgDefault.rootClassName
     },
     contextmenu: {
-        type: [Boolean],
+        type: Boolean,
         default: imgDefault.contextmenu
     },
     onError: {

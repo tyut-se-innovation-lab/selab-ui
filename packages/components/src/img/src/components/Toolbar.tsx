@@ -35,33 +35,14 @@ export default defineComponent({
                             root.value.childNodes[0] as HTMLUListElement
                         ).width
                     );
+                    // if (!(content.pagination && props.total > 1)) {
                     (root.value.childNodes[0] as HTMLUListElement).style.width =
-                        '32px';
-                    root.value.onmouseenter = () => {
-                        (
-                            root.value.childNodes[0] as HTMLUListElement
-                        ).style.width = ulWidth - 40 + 'px';
-                        (
-                            root.value.childNodes[0] as HTMLUListElement
-                        ).style.left = -40 + 'px';
-                        (
-                            root.value.childNodes[0]
-                                .childNodes[0] as HTMLLIElement
-                        ).style.cssText = 'transition: all .3s; opacity: 0;';
-                    };
-                    root.value.onmouseleave = () => {
-                        (
-                            root.value.childNodes[0] as HTMLUListElement
-                        ).style.width = '32px';
-                        (
-                            root.value.childNodes[0] as HTMLUListElement
-                        ).style.left = 0 + 'px';
-                        (
-                            root.value.childNodes[0]
-                                .childNodes[0] as HTMLLIElement
-                        ).style.cssText = 'transition: all .3s; opacity: 1;';
-                        setTimeout(() => emit('initToolbarLocation'), 300);
-                    };
+                        ulWidth +
+                        (content.pagination && props.total > 1 ? 0 : 10) +
+                        'px';
+                    root.value.addEventListener('mouseleave', () => {
+                        emit('initToolbarLocation');
+                    });
                 }
             });
         });
@@ -69,11 +50,6 @@ export default defineComponent({
             return (
                 <div class="se-img-preview-toolbar-root" ref={root}>
                     <ul>
-                        {isNoModal.value && (
-                            <li>
-                                <nav>more</nav>
-                            </li>
-                        )}
                         {content.zoom && (
                             <li>
                                 <button onClick={() => emit('zoom', 'out')}>

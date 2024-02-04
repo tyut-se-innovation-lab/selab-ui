@@ -69,6 +69,8 @@ export default function useOperate(
                     transition: 'all 0.3s ease-in-out',
                     width: oldWidth,
                     height: oldHeight,
+                    minWidth: oldWidth,
+                    minHeight: oldHeight,
                     left: oldLeft,
                     top: oldTop,
                     transform: oldTransform
@@ -128,6 +130,8 @@ export default function useOperate(
             // 保存打开预览时的图片
             imgItem.style.width = imgRealWidth * scale + 'px';
             imgItem.style.height = imgRealHeight * scale + 'px';
+            imgItem.style.minWidth = imgRealWidth * scale + 'px';
+            imgItem.style.minHeight = imgRealHeight * scale + 'px';
             imgItem.style.left = '50vw';
             imgItem.style.top = '50vh';
             imgItem.style.transform =

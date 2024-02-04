@@ -17,7 +17,6 @@
   left: 0;
   width: 0;
   height: 0;
-  z-index: 999;
 }
 .se-img-preview .se-img-preview-mask {
   position: absolute;
@@ -31,9 +30,12 @@
   animation-iteration-count: 1;
   animation: showPreview 0.3s;
 }
+.se-img-preview .se-img-preview-img {
+  overflow: visible;
+}
 .se-img-preview .se-img-preview-img .se-img-preview-img-item {
   position: absolute;
-  transition: left 0.3s ease-in-out, top 0.3s ease-in-out, width 0.3s ease-in-out, height 0.3s ease-in-out, transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  transition: left 0.3s ease-in-out, top 0.3s ease-in-out, width 0.3s ease-in-out, height 0.3s ease-in-out, min-width 0.3s ease-in-out, min-height 0.3s ease-in-out, transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
   cursor: grab;
 }
 .se-img-preview .se-img-preview-img .se-img-preview-img-item.se-img-preview-img-only-preview {

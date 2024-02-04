@@ -7,7 +7,15 @@ export default defineComponent({
     setup(props): () => VNode {
         console.log('tsx', props);
         return () => {
-            return <div class={`se-contextmenu`}></div>;
+            return (
+                <div
+                    class={`se-contextmenu`}
+                    style={{
+                        top: `${props.top}px`,
+                        left: `${props.left}px`
+                    }}
+                ></div>
+            );
         };
     }
 });

@@ -23,11 +23,13 @@
     margin: 0;
     transition: all .3s;
     cursor: default;
+    box-sizing: content-box;
 
     & li {
       display: flex;
       transition: all .3s;
       margin-right: 10px;
+      font-size: 12px;
       -webkit-user-select: none;
       -moz-user-select: none;
       -ms-user-select: none;
@@ -58,6 +60,7 @@
           margin: 0;
           white-space: nowrap;
           transition: all .3s;
+          line-height: 32px;
           color: #ffffffaa;
         }
 
@@ -72,7 +75,7 @@
         transition: all .3s;
 
         &:hover {
-        color: #ffffffff;
+          color: #ffffffff;
         }
       }
 

@@ -167,6 +167,8 @@ export default function useOperate(
         // 缩放
         imgItem.style.width = newWidth + 'px';
         imgItem.style.height = newHeight + 'px';
+        imgItem.style.minWidth = newWidth + 'px';
+        imgItem.style.minHeight = newHeight + 'px';
         imgItem.style.left = newLeft + 'px';
         imgItem.style.top = newTop + 'px';
         setTimeout(() => {
@@ -425,6 +427,8 @@ export default function useOperate(
         imgItem.style.top = '50vh';
         imgItem.style.width = imgWidthOriginal.value + 'px';
         imgItem.style.height = imgHeightOriginal.value + 'px';
+        imgItem.style.minWidth = imgWidthOriginal.value + 'px';
+        imgItem.style.minHeight = imgHeightOriginal.value + 'px';
     }
 
     return {

@@ -14,7 +14,7 @@
   left: 0;
   width: 0;
   height: 0;
-  z-index: 999;
+  // z-index: 999;
 
   & .se-img-preview-mask {
     position: absolute;
@@ -30,6 +30,8 @@
   }
 
   & .se-img-preview-img {
+    overflow: visible;
+
     & .se-img-preview-img-item {
       position: absolute;
       transition:
@@ -37,6 +39,8 @@
           top .3s ease-in-out,
           width .3s ease-in-out,
           height .3s ease-in-out,
+          min-width .3s ease-in-out,
+          min-height .3s ease-in-out,
           transform .3s ease-in-out,
           opacity .3s ease-in-out;
       cursor: grab;

@@ -23,5 +23,13 @@ export const contextmenuProps: ContextmenuProps = {
                 ...contextmenuDefault
             }
         ]
+    },
+    top: {
+        type: Number,
+        default: 0
+    },
+    left: {
+        type: Number,
+        default: 0
     }
 };
