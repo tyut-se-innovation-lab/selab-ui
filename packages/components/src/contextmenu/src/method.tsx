@@ -43,7 +43,8 @@ export function check<
     K extends T extends PartialContextmenuType ? ContextmenuType : boolean
 >(option: T): K {
     if (typeof option === 'boolean') {
-        return option as unknown as K;
+        const _option = option as boolean;
+        return _option as K;
     }
 
     if (!Array.isArray(option)) {
@@ -52,5 +53,5 @@ export function check<
 
     const _option = option.map((item) => itemCheck(item)) as ContextmenuType;
 
-    return _option as unknown as K;
+    return _option as K;
 }
