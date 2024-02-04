@@ -7,9 +7,9 @@
 </template>
 
 <script setup lang="ts">
-import { seMsg } from 'selab-ui';
+import { SeMsg } from 'selab-ui';
 function msg(icon: 'success' | 'warning' | 'danger' | 'info' | '') {
-    seMsg({
+    SeMsg({
         message: 'icon',
         icon
     });

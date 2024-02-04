@@ -37,3 +37,5 @@ export * from "./switch";
 export * from "./radio";
 // 导入多选框
 export * from "./checkbox";
+// 导入滑动输入条
+export * from "./Slider";

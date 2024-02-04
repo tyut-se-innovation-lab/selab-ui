@@ -32,9 +32,9 @@
 
 <script setup lang="ts">
 import { createVNode, VNode } from 'vue';
-import { seMsg } from 'selab-ui';
+import { SeMsg } from 'selab-ui';
 function msg(msg: string | VNode | (() => VNode)) {
-    seMsg(msg);
+    SeMsg(msg);
 }
 const event = {
     onmouseenter: () => {
@@ -49,7 +49,7 @@ const event = {
     },
     onclick: () => {
         console.log('VNode Button Click');
-        seMsg.closeAll();
+        SeMsg.closeAll();
     }
 };
 </script>

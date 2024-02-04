@@ -12,15 +12,15 @@
 
 <script setup lang="ts">
 import { createVNode } from 'vue';
-import { seMsg } from 'selab-ui';
+import { SeMsg } from 'selab-ui';
 function msg1(type: 'success' | 'warning' | 'danger' | 'info') {
-    seMsg({
+    SeMsg({
         message: type,
         type
     });
 }
 function msg2(type: 'success' | 'warning' | 'danger' | 'info') {
-    seMsg[type]({
+    SeMsg[type]({
         message: createVNode(
             'div',
             {

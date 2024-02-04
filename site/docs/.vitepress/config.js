@@ -7,11 +7,11 @@ export default {
     themeConfig: {
         siteTitle: "selab-ui",
         nav: [
-            {text: "指南", link: "/guild/"},
-            {text: "组件", link: "/components/"}
+            { text: "指南", link: "/guild/" },
+            { text: "组件", link: "/components/" }
         ],
         socialLinks: [
-            {icon: "github", "link": "https://github.com/tyut-se-innovation-lab/selab-ui"}
+            { icon: "github", "link": "https://github.com/tyut-se-innovation-lab/selab-ui" }
         ],
         sidebar: {
             "/guild/": [
@@ -58,51 +58,56 @@ export default {
                             link: "/components/tag/"
                         },
                         {
-                text: "Message",
-                link: "/components/message/"
-            },
-	{
-                text: "Img",
-                link: "/components/img/"
-            },
+                            text: "Message",
+                            link: "/components/message/"
+                        },
+                        {
+                            text: "Img",
+                            link: "/components/img/"
+                        },
 
-	{
-            text: "Icon",
-            link: "/components/icon/"
-        },
-	{
-            text: "MiniMsg",
-            link: "/components/minimsg/"
-        },
-	{
-            text: "Tooltip",
-            link: "/components/tooltip/"
-        },
-	{
-            text: "Contextmenu",
-            link: "/components/contextmenu/"
-        },
-	{
-            text: "Dialog",
-            link: "/components/dialog/"
-        },
-	{
-            text: "Rate",
-            link: "/components/rate/"
-    },{
-            text: "Switch",
-            link: "/components/switch/"
+                        {
+                            text: "Icon",
+                            link: "/components/icon/"
+                        },
+                        {
+                            text: "MiniMsg",
+                            link: "/components/minimsg/"
+                        },
+                        {
+                            text: "Tooltip",
+                            link: "/components/tooltip/"
+                        },
+                        {
+                            text: "Contextmenu",
+                            link: "/components/contextmenu/"
+                        },
+                        {
+                            text: "Dialog",
+                            link: "/components/dialog/"
+                        },
+                        {
+                            text: "Rate",
+                            link: "/components/rate/"
+                        }, {
+                            text: "Switch",
+                            link: "/components/switch/"
 
-        },
-	{
-            text: "Radio",
-            link: "/components/radio/"
-        },
-	{
-            text: "Checkbox",
-            link: "/components/checkbox/"
-        },
-	//]
+                        },
+                        {
+                            text: "Radio",
+                            link: "/components/radio/"
+                        },
+                        {
+                            text: "Checkbox",
+                            link: "/components/checkbox/"
+                        },
+                        {
+
+                            text: "Slider",
+                            link: "/components/slider/"
+                        },
+                        //]
 
                     ]
                 }

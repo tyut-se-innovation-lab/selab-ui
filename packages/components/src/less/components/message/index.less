@@ -2,7 +2,7 @@
 @import url('../../base/index.less');
 @import url('./icon-font/icon-font.css');
 
-@seMsgColorMap: {
+@SeMsgColorMap: {
     success: @success-color,
         lighten(saturate(spin(@success-color, -35%), 1), 40%);
     warning: @warning-color,
@@ -12,7 +12,7 @@
         lighten(saturate(spin(@brand-color-primary, -30%), 1), 35%);
 };
 
-@seMsgSizeMag: mini, small, default, large;
+@SeMsgSizeMag: mini, small, default, large;
 
 .se-msg {
     position: fixed;
@@ -59,7 +59,7 @@
     box-sizing: content-box;
 }
 
-each(@seMsgColorMap, {
+each(@SeMsgColorMap, {
   .se-msg-@{key} {
     background-color: extract(@value, 2);
     color: extract(@value, 1);
@@ -81,7 +81,7 @@ each(@seMsgColorMap, {
   }
 });
 
-each(@seMsgSizeMag, {
+each(@SeMsgSizeMag, {
   .se-msg-@{value} {
     transform: translateX(-50%) scale(0.6 + (@index - 1) * 0.2);
   }

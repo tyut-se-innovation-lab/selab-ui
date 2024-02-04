@@ -14,7 +14,7 @@ export const iconMap = {
     info: 'info',
     success: 'roundcheck',
     // hear
-    warning: 'round_warn_light',
+    warning: 'round_warn',
     danger: 'roundclose'
 };
 
