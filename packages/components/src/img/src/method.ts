@@ -32,7 +32,7 @@ const observer = new IntersectionObserver(
     { threshold: 0.01 }
 );
 
-// 判断配置合法性
+/** 判断配置合法性 */
 function checkPreview(option: PreviewType): boolean {
     if (option.album) {
         if (!option.albumList || option.albumList.length === 0) {
@@ -66,7 +66,7 @@ function checkPreview(option: PreviewType): boolean {
     return true;
 }
 
-// 通过img设置的preview配置检测
+/** 通过img设置的preview配置检测 */
 function previewCheck(props: Readonly<ImgPropsType>): PreviewType | false {
     if (typeof props.preview === 'boolean') {
         if (props.preview) {

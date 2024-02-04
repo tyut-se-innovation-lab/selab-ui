@@ -13,7 +13,7 @@ import { imgPreviewProps } from '../image';
 import { ImgPreviewPropsType } from '../image.d';
 import { unPreviewImage } from '../method';
 import SePreviewToolbar from './Toolbar';
-import contextmenu from '../../../contextmenu/src/method';
+import contextmenu from '../../../contextmenu/src/directive';
 import useGetPreviewStartLocation from '../hooks/useGetPreviewStartLocation';
 import useOperate from '../hooks/useOperate';
 import useChangeImg from '../hooks/useChangeImg';

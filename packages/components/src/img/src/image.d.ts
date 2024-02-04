@@ -1,6 +1,6 @@
 import { VNode, Slot } from "vue";
 import { CreateProps } from '@selab-ui/utils/type';
-import { ContextmenuType } from "../../contextmenu/src/contextmenu";
+import { ContextmenuType, PartialContextmenuItemType } from "../../contextmenu/src/contextmenu.d";
 
 declare module "*.png" {
   const value: any;
@@ -69,8 +69,8 @@ export type PreviewType = {
     loop: boolean;
     // 图片切换样式, 默认 slide
     animation: 'none' | 'slide' | 'fade';
-    // 上下文菜单, 默认 false, 当为 true 时, 会使用默认的上下文菜单, 当为 false 时, 不会显示上下文菜单, 当为ContextmenuType时, 会使用自定义的上下文菜单
-    contextmenu: boolean | ContextmenuType;
+    // 上下文菜单, 默认 false, 当为 true 时, 会使用默认的上下文菜单, 当为 false 时, 不会显示上下文菜单, 当为PartialContextmenuItemType时, 会使用自定义的上下文菜单
+    contextmenu: boolean | PartialContextmenuItemType;
     // 是否可以通过点击遮罩关闭预览, 默认 true
     closeOnClickModal: boolean;
     // 是否可以通过Esc关闭预览, 默认 true

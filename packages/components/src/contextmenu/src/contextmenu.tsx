@@ -1,11 +1,13 @@
 import { defineComponent, VNode } from 'vue';
 import '../../less/components/contextmenu/index.less';
-import { contextmenuProps } from './contextmenu.ts';
+import { contextmenuProps } from './contextmenu';
 export default defineComponent({
     name: 'se-contextmenu',
     props: contextmenuProps,
     setup(props): () => VNode {
         console.log('tsx', props);
-        return () => <div class={`se-contextmenu`}></div>;
+        return () => {
+            return <div class={`se-contextmenu`}></div>;
+        };
     }
 });

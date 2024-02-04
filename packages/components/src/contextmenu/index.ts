@@ -1,4 +1,4 @@
-import _Contextmenu from './src/method';
+import _Contextmenu from './src/directive';
 import { withInstallDirectives } from '@selab-ui/utils';
 
 export const Contextmenu = withInstallDirectives(_Contextmenu, 'contextmenu');
