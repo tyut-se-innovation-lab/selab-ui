@@ -53,6 +53,8 @@ export default function useOperate(
         // 获取当前图片的下标
         const index = _option.index;
 
+        let changeOldImg: (() => void) | null = null;
+
         // 将切换前的图片节点挂载到dom上
         if (_option.animation !== 'none') {
             // 获取当前图片的样式
@@ -90,27 +92,39 @@ export default function useOperate(
             requestAnimationFrame(() => {
                 // 恢复初始化
                 const oldImgItem = oldImgDom.childNodes[0] as HTMLImageElement;
-                oldImgItem.style.left = '50vw';
-                oldImgItem.style.top = '50vh';
-                oldImgItem.style.width = imgWidthOriginal.value + 'px';
-                oldImgItem.style.height = imgHeightOriginal.value + 'px';
-                oldImgItem.style.transform =
-                    'translate(-50%, -50%) scale(1) rotate(0deg) rotateY(0deg) rotateX(0deg)';
+                function locationInit() {
+                    oldImgItem.style.left = '50vw';
+                    oldImgItem.style.top = '50vh';
+                    oldImgItem.style.width = imgWidthOriginal.value + 'px';
+                    oldImgItem.style.height = imgHeightOriginal.value + 'px';
+                    oldImgItem.style.minWidth = imgWidthOriginal.value + 'px';
+                    oldImgItem.style.minHeight = imgHeightOriginal.value + 'px';
+                    oldImgItem.style.transform = oldTransform;
+                    oldImgItem.style.transform =
+                        'translate(-50%, -50%) scale(1) rotate(0deg) rotateY(0deg) rotateX(0deg)';
+                }
                 // 如果有遮罩, 则修改鼠标样式
                 if (_option.modal) {
                     changeMouse(e);
                 }
-                setTimeout(() => {
+                changeOldImg = (() => {
                     if (_option.animation === 'fade') {
-                        oldImgDom.style.opacity = '0';
+                        return () => {
+                            locationInit();
+                            oldImgDom.style.opacity = '0';
+                            setTimeout(unmount, 300);
+                        };
                     } else if (_option.animation === 'slide') {
-                        oldImgDom.style.left =
-                            type === 'prev' ? '150vw' : '-150vw';
+                        return () => {
+                            locationInit();
+                            oldImgDom.style.left =
+                                type === 'prev' ? '150vw' : '-150vw';
+                            setTimeout(unmount, 300);
+                        };
+                    } else {
+                        return locationInit;
                     }
-                });
-                setTimeout(() => {
-                    unmount();
-                }, 300);
+                })();
             });
         }
         //计算图片的真实宽高比
@@ -150,6 +164,8 @@ export default function useOperate(
                     } else if (_option.animation === 'slide') {
                         imgItem.style.left = '50vw';
                     }
+                    changeOldImg && changeOldImg();
+                    changeOldImg = null;
                 });
             }
             imgItem.src = _option.imgList[nextIndex];

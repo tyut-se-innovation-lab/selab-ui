@@ -1,4 +1,4 @@
-import { Ref, VNode, defineComponent, onMounted, ref } from 'vue';
+import { Ref, VNode, defineComponent, onMounted, ref, watch } from 'vue';
 import { previewToolbarProps } from '../image';
 import { PreviewToolbarProps } from '../image.d';
 import SeIcon from '../../../icon/template/icon.vue';
@@ -19,7 +19,12 @@ export default defineComponent({
                     : false;
             }
         );
+        // 是否无遮罩
         const isNoModal = ref(false);
+        // 是否鼠标在内部
+        const isMouseIn = ref(false);
+        // 是否处于切换中
+        const isChanging = ref(false);
         onMounted(() => {
             emit(
                 'exportToolbarWidth',
@@ -27,6 +32,18 @@ export default defineComponent({
             );
             isNoModal.value = root.value.classList.contains(
                 'se-img-preview-toolbar-noModal'
+            );
+            watch(
+                () => props.index.value,
+                () => {
+                    // isChanging.value = false;
+                    setTimeout(() => {
+                        isChanging.value = false;
+                        if (!isMouseIn.value) {
+                            emit('initToolbarLocation');
+                        }
+                    }, 300);
+                }
             );
             setTimeout(() => {
                 if (isNoModal.value) {
@@ -41,7 +58,13 @@ export default defineComponent({
                         (content.pagination && props.total > 1 ? 0 : 10) +
                         'px';
                     root.value.addEventListener('mouseleave', () => {
-                        emit('initToolbarLocation');
+                        setTimeout(() => {
+                            !isChanging.value && emit('initToolbarLocation');
+                        }, 300);
+                        isMouseIn.value = false;
+                    });
+                    root.value.addEventListener('mouseenter', () => {
+                        isMouseIn.value = true;
                     });
                 }
             });
@@ -138,9 +161,17 @@ export default defineComponent({
                         {props.total > 1 && (
                             <li>
                                 <button
-                                    onClick={(e: MouseEvent) =>
-                                        emit('change', 'prev', e)
-                                    }
+                                    onClick={(e: MouseEvent) => {
+                                        if (isChanging.value) return;
+                                        emit('change', 'prev', e);
+                                        if (
+                                            props.index.value === 0 ||
+                                            props.index.value ===
+                                                props.total - 1
+                                        )
+                                            return;
+                                        isChanging.value = true;
+                                    }}
                                 >
                                     <SeIcon
                                         name="back"
@@ -149,9 +180,17 @@ export default defineComponent({
                                     />
                                 </button>
                                 <button
-                                    onClick={(e: MouseEvent) =>
-                                        emit('change', 'next', e)
-                                    }
+                                    onClick={(e: MouseEvent) => {
+                                        if (isChanging.value) return;
+                                        emit('change', 'next', e);
+                                        if (
+                                            props.index.value === 0 ||
+                                            props.index.value ===
+                                                props.total - 1
+                                        )
+                                            return;
+                                        isChanging.value = true;
+                                    }}
                                 >
                                     <SeIcon
                                         name="right"
