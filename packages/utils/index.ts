@@ -1,6 +1,7 @@
 import { App, Directive, VNode, createVNode, render } from 'vue';
 import { COMPInstallWithContext, COMPWithInstall, _createVNode } from './type';
-import inputAutoFocus from './inputAutoFocus';
+import inputAutoFocusDirective from './inputAutoFocus';
+import _docEvent from './docEvent';
 
 export const testFun = (a: number, b: number): number => {
     return a + b;
@@ -45,7 +46,9 @@ export const clickOutside = {
     }
 };
 
-export const inputAutoFocusDirective = inputAutoFocus;
+export const inputAutoFocus = inputAutoFocusDirective;
+
+export const docEvent = _docEvent;
 
 export const getStyle = (): ['info', 'success', 'warning', 'danger'] => [
     'info',

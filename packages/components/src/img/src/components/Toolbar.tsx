@@ -2,7 +2,7 @@ import { Ref, VNode, defineComponent, onMounted, ref, watch } from 'vue';
 import { previewToolbarProps } from '../image';
 import { PreviewToolbarProps } from '../image.d';
 import SeIcon from '../../../icon/template/icon.vue';
-import { inputAutoFocusDirective } from '@selab-ui/utils';
+import { inputAutoFocus } from '@selab-ui/utils';
 // import SeTooltip from '../../../tooltip/template/tooltip';
 import '../../../less/components/imgPreviewToolbar/index.less';
 
@@ -10,7 +10,7 @@ export default defineComponent({
     name: 'se-img',
     props: previewToolbarProps,
     directives: {
-        inputAutoFocus: inputAutoFocusDirective
+        inputAutoFocus
     },
     setup(props, { emit, expose }): () => VNode {
         const root = ref() as Ref<HTMLDivElement>;
@@ -35,6 +35,7 @@ export default defineComponent({
         const inputValue = ref(props.index.value + 1);
         /** 当点击页码, 切换为输入框 */
         const changeInput = () => {
+            inputValue.value = props.index.value + 1;
             isInput.value = true;
         };
         /** 当输入框提交, 切换为页码 */
@@ -58,7 +59,6 @@ export default defineComponent({
             watch(
                 () => props.index.value,
                 (v) => {
-                    // isChanging.value = false;
                     setTimeout(() => {
                         isChanging.value = false;
                         inputValue.value = v;
@@ -85,7 +85,8 @@ export default defineComponent({
         expose({
             _changeError: () => {
                 isChanging.value = false;
-            }
+            },
+            _changeInput: changeInput
         });
         return () => {
             return (
@@ -247,7 +248,7 @@ export default defineComponent({
                                             max={props.total}
                                             value={props.index.value + 1}
                                             onBlur={blurInput}
-                                            onChange={(e) =>
+                                            onInput={(e) =>
                                                 (inputValue.value = (
                                                     e.target as HTMLInputElement
                                                 ).value)
