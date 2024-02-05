@@ -276,6 +276,7 @@ export default defineComponent({
                 img.value as HTMLImageElement,
                 isClose,
                 nowIndex,
+                toolbarRef,
                 {
                     imgWidthOriginal,
                     imgHeightOriginal

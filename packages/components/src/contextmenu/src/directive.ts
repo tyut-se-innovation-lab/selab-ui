@@ -12,7 +12,7 @@ export default {
         const checkResult = check(value);
         console.log('contextmenu mounted', checkResult);
         const { render: pRender } = pupOpsMount();
-        let unmount = null;
+        let unmount: (() => void) | null = null;
         const contextmenuNodes: RendererNode[] = [];
         const contextmenuHandler = (() => {
             console.log('contextmenu mounted');

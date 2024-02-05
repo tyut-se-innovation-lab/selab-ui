@@ -8,7 +8,7 @@ import '../../../less/components/imgPreviewToolbar/index.less';
 export default defineComponent({
     name: 'se-img',
     props: previewToolbarProps,
-    setup(props, { emit }): () => VNode {
+    setup(props, { emit, expose }): () => VNode {
         const root = ref() as Ref<HTMLDivElement>;
         // 显示的内容
         const content: { [key: string]: boolean } = {};
@@ -68,6 +68,11 @@ export default defineComponent({
                     });
                 }
             });
+        });
+        expose({
+            _changeError: () => {
+                isChanging.value = false;
+            }
         });
         return () => {
             return (

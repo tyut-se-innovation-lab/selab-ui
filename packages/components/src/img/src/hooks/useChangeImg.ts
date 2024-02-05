@@ -18,6 +18,7 @@ export default function useOperate(
     imgItem: HTMLImageElement,
     isClose: Ref<boolean>,
     nowIndex: Ref<number>,
+    toolBarRef: Ref<HTMLElement | null>,
     {
         imgWidthOriginal,
         imgHeightOriginal
@@ -53,7 +54,7 @@ export default function useOperate(
         // 获取当前图片的下标
         const index = _option.index;
 
-        let changeOldImg: (() => void) | null = null;
+        let changeOldImg: ((isErr?: boolean) => void) | null = null;
 
         // 将切换前的图片节点挂载到dom上
         if (_option.animation !== 'none') {
@@ -109,17 +110,23 @@ export default function useOperate(
                 }
                 changeOldImg = (() => {
                     if (_option.animation === 'fade') {
-                        return () => {
+                        return (isErr = false) => {
+                            setTimeout(unmount, 300);
+                            if (isErr) {
+                                return;
+                            }
                             locationInit();
                             oldImgDom.style.opacity = '0';
-                            setTimeout(unmount, 300);
                         };
                     } else if (_option.animation === 'slide') {
-                        return () => {
+                        return (isErr = false) => {
+                            setTimeout(unmount, 300);
+                            if (isErr) {
+                                return;
+                            }
                             locationInit();
                             oldImgDom.style.left =
                                 type === 'prev' ? '150vw' : '-150vw';
-                            setTimeout(unmount, 300);
                         };
                     } else {
                         return locationInit;
@@ -179,6 +186,20 @@ export default function useOperate(
             setTimeout(() => {
                 document.getElementById('se-oldImg-preview-item')?.remove();
             }, 300);
+        };
+        imgReal.onerror = () => {
+            changeOldImg && changeOldImg(true);
+            (
+                toolBarRef.value as HTMLDivElement & {
+                    _vnode: {
+                        component: { exposed: { _changeError: () => void } };
+                    };
+                }
+            )?._vnode!.component.exposed._changeError();
+            console.log(toolBarRef);
+            throw console.error(
+                `Img Preview > 图片加载失败: ${_option.imgList[nextIndex]}`
+            );
         };
     }
 
