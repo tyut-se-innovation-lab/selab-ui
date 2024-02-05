@@ -26,25 +26,44 @@ export default function useOperate(
     changeMouse: (e: MouseEvent) => void
 ) {
     const { clientWidth, clientHeight } = document.documentElement;
-    /* 切换图片的函数 */
+    /* 切换图片的函数, 当nextIndex是false, 表示到头了, */
     function changeImg(
         type: 'prev' | 'next',
-        nextIndex: number | false,
+        nextIndex: number | 'isFirst' | 'isLast' | 'itIs' | false,
         e: MouseEvent
     ) {
         if (isClose.value) return;
-        if (nextIndex === false) {
-            let x: number | '50vw';
-            let y: number | '50vh';
-            if (_option.modal) {
-                x = e.clientX;
-                y = e.clientY;
-            } else {
-                x = '50vw';
-                y = '50vh';
-            }
+        let x: number | '50vw';
+        let y: number | '50vh';
+        if (_option.modal) {
+            x = e.clientX || '50vw';
+            y = e.clientY || '50vh';
+        } else {
+            x = '50vw';
+            y = '50vh';
+        }
+        if (nextIndex === 'isFirst' || nextIndex === 'isLast') {
             seMiniMeg({
-                message: '已经到头了',
+                message:
+                    nextIndex === 'isFirst'
+                        ? '已经是第一张了'
+                        : '已经是最后一张了',
+                type: 'warning',
+                location: { x, y },
+                duration: 1000
+            });
+            return;
+        } else if (nextIndex === 'itIs') {
+            seMiniMeg({
+                message: '已经是当前图片了',
+                type: 'warning',
+                location: { x, y },
+                duration: 1000
+            });
+            return;
+        } else if (nextIndex === false) {
+            seMiniMeg({
+                message: '错误的图片下标',
                 type: 'warning',
                 location: { x, y },
                 duration: 1000
@@ -100,7 +119,6 @@ export default function useOperate(
                     oldImgItem.style.height = imgHeightOriginal.value + 'px';
                     oldImgItem.style.minWidth = imgWidthOriginal.value + 'px';
                     oldImgItem.style.minHeight = imgHeightOriginal.value + 'px';
-                    oldImgItem.style.transform = oldTransform;
                     oldImgItem.style.transform =
                         'translate(-50%, -50%) scale(1) rotate(0deg) rotateY(0deg) rotateX(0deg)';
                 }
@@ -206,7 +224,11 @@ export default function useOperate(
     // 是否正在切换
     let isChanging = false;
     /* 用户切换图片的函数 */
-    function userChangeImg(type: 'prev' | 'next', e: MouseEvent) {
+    function userChangeImg(
+        type: 'prev' | 'next',
+        e: MouseEvent,
+        specifyIndex?: number
+    ) {
         if (isClose.value) return;
         if (isChanging) return;
         const lastChanging = setTimeout(() => {
@@ -218,21 +240,44 @@ export default function useOperate(
         // 获取图片的总数
         const total = _option.imgList.length;
         // 记录下一张图片的下标
-        let nextIndex: number | false = 0;
-        if (_option.loop) {
+        let nextIndex: number | 'isFirst' | 'isLast' | 'itIs' | false;
+        if (typeof specifyIndex !== 'number' && _option.loop) {
             if (type === 'prev') {
                 nextIndex = index === 0 ? total - 1 : index - 1;
             } else {
                 nextIndex = index === total - 1 ? 0 : index + 1;
             }
-        } else {
+        } else if (typeof specifyIndex !== 'number' && !_option.loop) {
             if (type === 'prev' && index !== 0) {
                 nextIndex = index - 1;
             } else if (type === 'next' && index !== total - 1) {
                 nextIndex = index + 1;
+            } else if (type === 'prev' && index === 0) {
+                nextIndex = 'isFirst';
+            } else if (type === 'next' && index === total - 1) {
+                nextIndex = 'isLast';
             } else {
                 nextIndex = false;
             }
+        } else if (typeof specifyIndex === 'number') {
+            if (
+                specifyIndex >= 0 &&
+                specifyIndex < total &&
+                specifyIndex !== index
+            ) {
+                nextIndex = specifyIndex;
+                if (nextIndex > index) {
+                    type = 'next';
+                } else {
+                    type = 'prev';
+                }
+            } else if (specifyIndex === index) {
+                nextIndex = 'itIs';
+            } else {
+                nextIndex = false;
+            }
+        } else {
+            nextIndex = false;
         }
         if (nextIndex === false) {
             lastChanging && clearTimeout(lastChanging);
@@ -241,10 +286,10 @@ export default function useOperate(
         const _changeImg = () => {
             changeImg(type, nextIndex, e);
         };
-        if (typeof props.onChange === 'function') {
-            props.onChange(_changeImg, nextIndex);
+        if (typeof props.onSwitch === 'function') {
+            props.onSwitch(_changeImg, nextIndex);
         } else {
-            throw new TypeError('onChange is not a function');
+            throw console.error('TypeError onSwitch is not a function');
         }
     }
 

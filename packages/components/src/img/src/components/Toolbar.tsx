@@ -2,12 +2,16 @@ import { Ref, VNode, defineComponent, onMounted, ref, watch } from 'vue';
 import { previewToolbarProps } from '../image';
 import { PreviewToolbarProps } from '../image.d';
 import SeIcon from '../../../icon/template/icon.vue';
+import { inputAutoFocusDirective } from '@selab-ui/utils';
 // import SeTooltip from '../../../tooltip/template/tooltip';
 import '../../../less/components/imgPreviewToolbar/index.less';
 
 export default defineComponent({
     name: 'se-img',
     props: previewToolbarProps,
+    directives: {
+        inputAutoFocus: inputAutoFocusDirective
+    },
     setup(props, { emit, expose }): () => VNode {
         const root = ref() as Ref<HTMLDivElement>;
         // 显示的内容
@@ -25,6 +29,24 @@ export default defineComponent({
         const isMouseIn = ref(false);
         // 是否处于切换中
         const isChanging = ref(false);
+        // 是否处于页码输入中
+        const isInput = ref(false);
+        // 页码输入框的值
+        const inputValue = ref(props.index.value + 1);
+        /** 当点击页码, 切换为输入框 */
+        const changeInput = () => {
+            isInput.value = true;
+        };
+        /** 当输入框提交, 切换为页码 */
+        const submitInput = (e: Event) => {
+            emit('switch', 'next', e, inputValue.value - 1);
+            isInput.value = false;
+        };
+        /** 当输入框失焦, 放弃操作 */
+        const blurInput = () => {
+            isInput.value = false;
+            inputValue.value = props.index.value + 1;
+        };
         onMounted(() => {
             emit(
                 'exportToolbarWidth',
@@ -35,10 +57,11 @@ export default defineComponent({
             );
             watch(
                 () => props.index.value,
-                () => {
+                (v) => {
                     // isChanging.value = false;
                     setTimeout(() => {
                         isChanging.value = false;
+                        inputValue.value = v;
                         if (!isMouseIn.value) {
                             emit('initToolbarLocation');
                         }
@@ -208,9 +231,31 @@ export default defineComponent({
                         )}
                         {content.pagination && props.total > 1 && (
                             <li>
-                                <span>
-                                    {props.index.value + 1} / {props.total}
-                                </span>
+                                {!isInput.value && (
+                                    <span
+                                        onClick={changeInput}
+                                        class="se-img-preview-toolbar-pagination"
+                                    >
+                                        {props.index.value + 1} / {props.total}
+                                    </span>
+                                )}
+                                {isInput.value && (
+                                    <form onSubmit={submitInput}>
+                                        <input
+                                            type="number"
+                                            min="1"
+                                            max={props.total}
+                                            value={props.index.value + 1}
+                                            onBlur={blurInput}
+                                            onChange={(e) =>
+                                                (inputValue.value = (
+                                                    e.target as HTMLInputElement
+                                                ).value)
+                                            }
+                                            v-inputAutoFocus
+                                        />
+                                    </form>
+                                )}
                             </li>
                         )}
                     </ul>

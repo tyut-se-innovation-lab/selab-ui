@@ -84,10 +84,12 @@
         <button @click="msg('info')">info</button>
         <button @click="$SeMsg('info')">$SeMsg</button>
         <button @click="miniMsg('info')">mini Msg</button>
-        <button @click="myAlbum.open(1)">myAlbum open</button>
+        <button @click="myAlbum.open(Math.floor(Math.random() * 211) + 1)">
+            myAlbum open
+        </button>
         <button @click="myAlbum.close()">myAlbum close</button>
         <se-img
-            v-for="i of [...Array(6).keys()]"
+            v-for="i of [...Array(9).keys()]"
             :key="i"
             :src="imgList[i]"
             fit="contain"
@@ -152,11 +154,11 @@
             :preview="{
                 name: '测试1',
                 album: true,
-                albumList: [imgList[1]],
+                albumList: imgList,
                 animation: 'slide',
                 loop: false,
                 modal: false,
-                onChange: onImgChange,
+                onSwitch: onImgChange,
                 onClose: onImgClose,
                 onOpen: onImgOpen,
                 toolbar: {
@@ -164,10 +166,28 @@
                     rotate: false,
                     reset: false,
                     pagination: true,
-                    flip: true,
+                    flip: true
                 }
             }"
             :contextmenu="false"
+            v-contextmenu="[
+                {
+                    name: '测试2',
+                    onClick: () => {
+                        console.log('测试2');
+                    },
+                    children: [
+                        {
+                            name: '测试2.1',
+                            onClick: () => {
+                                console.log('测试2.1');
+                            },
+                            icon: 'close'
+                        }
+                    ],
+                    hidden: false
+                }
+            ]"
         >
             <!-- <template #loading>
                 <div>loading</div>
@@ -179,15 +199,15 @@
                 <span
                     v-contextmenu="[
                         {
-                            name: '测试2',
+                            name: '测试3',
                             onClick: () => {
-                                console.log('测试2');
+                                console.log('测试3');
                             },
                             children: [
                                 {
-                                    name: '测试2.1',
+                                    name: '测试3.1',
                                     onClick: () => {
-                                        console.log('测试2.1');
+                                        console.log('测试3.1');
                                     },
                                     icon: 'close'
                                 }
@@ -231,6 +251,10 @@ const closed1 = (value: any) => {
 };
 const imgList = [img1, img2, img3, img4, img5, img6];
 
+for (let i = 1; i <= 211; i++) {
+    imgList.push(`http://127.0.0.1:9000/img?index=${i}`);
+}
+
 const options = ref(
     [...Array(25)].map((_, i) => ({
         label: (i + 10).toString(36) + (i + 1),
@@ -252,7 +276,16 @@ function msg(type: 'success' | 'warning' | 'danger' | 'info') {
         'button',
         {
             key: 'buttonVNode',
-            onClick: () => console.log('createVNode测试')
+            onClick: () => {
+                console.log('createVNode测试');
+                const xhr = new XMLHttpRequest();
+                xhr.open('GET', 'http://127.0.0.1:9000/test', true);
+                xhr.onload = function (e) {
+                    console.log('xhr.onload', e);
+                };
+                xhr.send();
+                msg('success');
+            }
         },
         'createVNode测试'
     );
@@ -290,8 +323,11 @@ function miniMsg(type: 'success' | 'warning' | 'danger' | 'info') {
     });
 }
 
-const onImgChange = (change: () => void, index: number | false) => {
-    change();
+const onImgChange = (
+    done: () => void,
+    index: number | false | 'isFirst' | 'isLast' | 'itIs'
+) => {
+    done();
     console.log('onImgChange', index);
 };
 const onImgClose = (close: () => void) => {
@@ -323,7 +359,7 @@ const myAlbum = seCreateAlbum({
     loop: true,
     modal: false,
     location: albumLocation,
-    onChange: onImgChange,
+    onSwitch: onImgChange,
     onClose: onImgClose,
     onOpen: onImgOpen,
     toolbar: {

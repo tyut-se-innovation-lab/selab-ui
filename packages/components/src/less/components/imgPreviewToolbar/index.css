@@ -71,8 +71,34 @@
   margin: 0 10px;
   white-space: nowrap;
   transition: all 0.3s;
+  cursor: text;
+  font-size: 12px;
 }
 .se-img-preview-toolbar-root ul li span:hover {
+  color: #ffffffff;
+}
+.se-img-preview-toolbar-root ul li form input {
+  margin: 0 10px;
+  padding: 0 10px;
+  height: 32px;
+  border-radius: 4px;
+  border: none;
+  background-color: #00000022;
+  color: #ffffffaa;
+  font-size: 12px;
+  transition: all 0.3s;
+  outline: none;
+  text-align: center;
+  -moz-appearance: textfield;
+  appearance: none;
+}
+.se-img-preview-toolbar-root ul li form input::-webkit-inner-spin-button,
+.se-img-preview-toolbar-root ul li form input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.se-img-preview-toolbar-root ul li form input:hover {
+  background-color: #00000044;
   color: #ffffffff;
 }
 .se-img-preview-toolbar-root ul li:last-child {

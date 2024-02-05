@@ -73,8 +73,36 @@
         margin: 0 10px;
         white-space: nowrap;
         transition: all .3s;
+        cursor: text;
+        font-size: 12px;
 
         &:hover {
+          color: #ffffffff;
+        }
+      }
+
+      & form input {
+        margin: 0 10px;
+        padding: 0 10px;
+        height: 32px;
+        border-radius: 4px;
+        border: none;
+        background-color: #00000022;
+        color: #ffffffaa;
+        font-size: 12px;
+        transition: all .3s;
+        outline: none;  
+        text-align: center;
+        -moz-appearance: textfield;
+        &::-webkit-inner-spin-button,
+        &::-webkit-outer-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
+        appearance: none;
+
+        &:hover {
+          background-color: #00000044;
           color: #ffffffff;
         }
       }
