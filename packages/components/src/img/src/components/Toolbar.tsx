@@ -5,6 +5,7 @@ import SeIcon from '../../../icon/template/icon.vue';
 import { inputAutoFocus } from '@selab-ui/utils';
 // import SeTooltip from '../../../tooltip/template/tooltip';
 import '../../../less/components/imgPreviewToolbar/index.less';
+import select from 'packages/components/src/select';
 
 export default defineComponent({
     name: 'se-img',
@@ -249,6 +250,12 @@ export default defineComponent({
                                             max={props.total}
                                             value={props.index.value + 1}
                                             onBlur={blurInput}
+                                            onFocus={(e: FocusEvent) =>
+                                                e.target &&
+                                                (
+                                                    e.target as HTMLInputElement
+                                                ).select()
+                                            }
                                             onInput={(e) =>
                                                 (inputValue.value = (
                                                     e.target as HTMLInputElement
