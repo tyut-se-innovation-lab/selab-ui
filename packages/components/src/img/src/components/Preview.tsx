@@ -299,7 +299,7 @@ export default defineComponent({
                     onRotate: rotateImg,
                     onFlip: flipImg,
                     onReset: resetImg,
-                    onChange: userChangeImg,
+                    onSwitch: userChangeImg,
                     onDownload: userDownload,
                     onClose: userClosePreview,
                     onExportToolbarWidth: (width: number) => {
@@ -326,7 +326,7 @@ export default defineComponent({
                     onRotate: rotateImg,
                     onFlip: flipImg,
                     onReset: resetImg,
-                    onChange: userChangeImg,
+                    onSwitch: userChangeImg,
                     onDownload: userDownload,
                     onClose: userClosePreview,
                     onExportToolbarWidth: (width: number) => {

@@ -339,7 +339,7 @@ function createAlbum({
     closeOnClickModal = true,
     closeOnPressEscape = true,
     onError = () => {},
-    onChange = (change: () => void) => change(),
+    onSwitch = (done: () => void) => done(),
     onOpen = (open: () => void) => open(),
     onClose = (close: () => void) => close()
 }: {
@@ -362,7 +362,10 @@ function createAlbum({
     closeOnClickModal?: boolean;
     closeOnPressEscape?: boolean;
     onError?: (e: Event) => void;
-    onChange?: (change: () => void, index: number | false) => void;
+    onSwitch?: (
+        done: () => void,
+        index: number | false | 'isFirst' | 'isLast' | 'itIs'
+    ) => void;
     onOpen?: (open: () => void) => void;
     onClose?: (close: () => void) => void;
 }): {
@@ -393,7 +396,7 @@ function createAlbum({
             closeOnClickModal,
             closeOnPressEscape,
             onError,
-            onChange,
+            onSwitch,
             onOpen,
             onClose,
             src: ''

@@ -47,16 +47,6 @@ export default defineComponent({
             );
             setTimeout(() => {
                 if (isNoModal.value) {
-                    const ulWidth = parseFloat(
-                        getComputedStyle(
-                            root.value.childNodes[0] as HTMLUListElement
-                        ).width
-                    );
-                    // if (!(content.pagination && props.total > 1)) {
-                    (root.value.childNodes[0] as HTMLUListElement).style.width =
-                        ulWidth +
-                        (content.pagination && props.total > 1 ? 0 : 10) +
-                        'px';
                     root.value.addEventListener('mouseleave', () => {
                         setTimeout(() => {
                             !isChanging.value && emit('initToolbarLocation');
@@ -168,7 +158,7 @@ export default defineComponent({
                                 <button
                                     onClick={(e: MouseEvent) => {
                                         if (isChanging.value) return;
-                                        emit('change', 'prev', e);
+                                        emit('switch', 'prev', e);
                                         if (
                                             props.index.value === 0 ||
                                             props.index.value ===
@@ -187,7 +177,7 @@ export default defineComponent({
                                 <button
                                     onClick={(e: MouseEvent) => {
                                         if (isChanging.value) return;
-                                        emit('change', 'next', e);
+                                        emit('switch', 'next', e);
                                         if (
                                             props.index.value === 0 ||
                                             props.index.value ===

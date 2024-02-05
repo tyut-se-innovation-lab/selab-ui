@@ -78,7 +78,7 @@ export type PreviewType = {
     // 图片加载失败的回调
     onError: (e: Event) => void;
     // 图片切换的回调
-    onChange: (change: () => void, index: number | false) => void;
+    onSwitch: (done: () => void, index: number | 'isFirst' | 'isLast' | 'itIs' | false) => void;
     // 打开预览的回调, 当用户点击图片打开时拦截
     onOpen: (open: () => void) => void;
     // 关闭预览的回调, 当用户点击关闭按钮、遮罩或Esc关闭时拦截

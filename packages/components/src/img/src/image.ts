@@ -34,7 +34,7 @@ export const previewDefault: PreviewType = {
     closeOnClickModal: true,
     closeOnPressEscape: true,
     onError: () => {},
-    onChange: (change) => change(),
+    onSwitch: (done) => done(),
     onOpen: (open) => open(),
     onClose: (close) => close()
 };
@@ -168,11 +168,14 @@ export const imgPreviewProps: ImgPreviewProps = {
         type: Function as PropType<(e: Event) => void>,
         default: previewDefault.onError
     },
-    onChange: {
+    onSwitch: {
         type: Function as PropType<
-            (change: () => void, index: number | false) => void
+            (
+                change: () => void,
+                index: number | false | 'isFirst' | 'isLast' | 'itIs'
+            ) => void
         >,
-        default: previewDefault.onChange
+        default: previewDefault.onSwitch
     },
     onOpen: {
         type: Function as PropType<(open: () => void) => void>,
