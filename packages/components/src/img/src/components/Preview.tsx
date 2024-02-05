@@ -363,7 +363,11 @@ export default defineComponent({
                                 left: rect.value.left + 'px',
                                 top: rect.value.top + 'px'
                             }}
-                            class="se-img-preview-img-item"
+                            class={`se-img-preview-img-item ${
+                                props.modal
+                                    ? 'se-img-preview-img-item-modal'
+                                    : 'se-img-preview-img-item-noModal'
+                            }`}
                             onError={props.onError}
                             onLoad={() => {}}
                             ref={img}

@@ -67,14 +67,14 @@
 .se-img-preview-toolbar-root ul li button:hover span {
   color: #ffffffff;
 }
-.se-img-preview-toolbar-root ul li span {
+.se-img-preview-toolbar-root ul li span.se-img-preview-toolbar-pagination {
   margin: 0 10px;
   white-space: nowrap;
   transition: all 0.3s;
   cursor: text;
   font-size: 12px;
 }
-.se-img-preview-toolbar-root ul li span:hover {
+.se-img-preview-toolbar-root ul li span.se-img-preview-toolbar-pagination:hover {
   color: #ffffffff;
 }
 .se-img-preview-toolbar-root ul li form input {

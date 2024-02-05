@@ -41,6 +41,10 @@
 .se-img-preview .se-img-preview-img .se-img-preview-img-item.se-img-preview-img-only-preview {
   animation: showPreview 0.3s;
 }
+.se-img-preview .se-img-preview-img .se-img-preview-img-item.se-img-preview-img-item-noModal {
+  -webkit-filter: drop-shadow(0 0 6px #33333333);
+  filter: drop-shadow(0 0 6px #33333333);
+}
 .se-img-preview .se-img-preview-toolbar {
   position: fixed;
   top: calc(100vh - 80px);
