@@ -110,7 +110,7 @@
                     flip: true,
                     download: onImgDownload
                 },
-                modal: true,
+                modal: false,
                 scaleStep: 0.5,
                 closeIcon: 'close',
                 closeOnClickModal: true,
@@ -157,7 +157,7 @@
                 albumList: imgList,
                 animation: 'slide',
                 loop: false,
-                modal: false,
+                modal: true,
                 onSwitch: onImgChange,
                 onClose: onImgClose,
                 onOpen: onImgOpen,
@@ -166,7 +166,8 @@
                     rotate: false,
                     reset: false,
                     pagination: true,
-                    flip: true
+                    flip: true,
+                    show: true
                 }
             }"
             :contextmenu="false"

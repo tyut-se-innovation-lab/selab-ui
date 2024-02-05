@@ -3,7 +3,9 @@ import {
     createVNode,
     defineComponent,
     isVNode,
+    onDeactivated,
     onMounted,
+    Ref,
     ref,
     render,
     VNode
@@ -12,6 +14,7 @@ import '../../../less/components/imgPreview/index.less';
 import { imgPreviewProps } from '../image';
 import { ImgPreviewPropsType } from '../image.d';
 import { unPreviewImage } from '../method';
+import { docEvent } from '@selab-ui/utils';
 import SePreviewToolbar from './Toolbar';
 import contextmenu from '../../../contextmenu/src/directive';
 import useGetPreviewStartLocation from '../hooks/useGetPreviewStartLocation';
@@ -56,6 +59,7 @@ export default defineComponent({
                 iconSize: '16px'
             });
         });
+        let tabToInput: (e: KeyboardEvent) => void;
         // 记录预览是否关闭, 关闭后将禁止全部操作
         const isClose = ref(false);
         // 关闭预览的函数
@@ -245,6 +249,8 @@ export default defineComponent({
                 }
             };
 
+            const _toolbarRef: Ref<VNode | null> = ref(null);
+
             const {
                 changeMouse,
                 scaleImg,
@@ -276,7 +282,7 @@ export default defineComponent({
                 img.value as HTMLImageElement,
                 isClose,
                 nowIndex,
-                toolbarRef,
+                _toolbarRef,
                 {
                     imgWidthOriginal,
                     imgHeightOriginal
@@ -285,8 +291,8 @@ export default defineComponent({
             );
 
             // 创建工具栏
-            if (props.toolbar.show !== false) {
-                const _toolbar = createVNode(SePreviewToolbar, {
+            if (props.toolbar.show) {
+                _toolbarRef.value = createVNode(SePreviewToolbar, {
                     ...props.toolbar,
                     index: nowIndex,
                     total: _option.imgList.length,
@@ -310,10 +316,10 @@ export default defineComponent({
                         ? 'se-img-preview-toolbar-noModal'
                         : ''
                 });
-                render(_toolbar, toolbarRef.value);
+                render(_toolbarRef.value, toolbarRef.value);
             } else if (!props.toolbar.show && !props.modal) {
                 // 若工具栏不显示, 且遮罩不存在, 则显示工具栏且只显示切换按钮
-                const _toolbar = createVNode(SePreviewToolbar, {
+                _toolbarRef.value = createVNode(SePreviewToolbar, {
                     index: nowIndex,
                     total: _option.imgList.length,
                     zoom: false,
@@ -337,8 +343,19 @@ export default defineComponent({
                         ? 'se-img-preview-toolbar-noModal'
                         : ''
                 });
-                render(_toolbar, toolbarRef.value);
+                render(_toolbarRef.value, toolbarRef.value);
             }
+            tabToInput = (e: KeyboardEvent) => {
+                if (e.key === 'Tab') {
+                    e.preventDefault();
+                    _toolbarRef.value &&
+                        _toolbarRef.value?.component!.exposed!._changeInput();
+                }
+            };
+            docEvent.on('keydown', tabToInput);
+        });
+        onDeactivated(() => {
+            docEvent.off('keydown', tabToInput);
         });
         expose({
             _close: () => {
@@ -375,7 +392,9 @@ export default defineComponent({
                             v-contextmenu={props.contextmenu}
                         />
                     </div>
-                    <div class="se-img-preview-toolbar" ref={toolbarRef}></div>
+                    <div class="se-img-preview-toolbar" ref={toolbarRef}>
+                        {}
+                    </div>
                     {props.modal && (
                         <div
                             class="se-img-preview-close"

@@ -140,15 +140,12 @@ function registerPreviewImage<
             },
             root: pupOpsMount(),
             toolbar: { ...option.toolbar },
-            open: (page: number) => {
-                if (
-                    page >= instance.preview.albumList.length + 1 ||
-                    page <= 0
-                ) {
+            open: (index: number) => {
+                if (index >= instance.preview.albumList.length || index < 0) {
                     console.error('Image Preview > Index out of range.');
                     return;
                 }
-                previewImage(instance, page - 1);
+                previewImage(instance, index);
             },
             vNode: null,
             location
@@ -216,7 +213,6 @@ function registerPreviewImage<
                 } else {
                     instance.preview.onOpen(() => _openPreview(index));
                 }
-                // instance.preview.onOpen(() => _openPreview(5));
             },
             vNode: null
         };
@@ -404,8 +400,8 @@ function createAlbum({
         true,
         _location
     ) as TemporaryInstance;
-    const open = (page = 1) => {
-        instance.open(page);
+    const open = (index = 0) => {
+        instance.open(index);
     };
     const close = () => {
         if (previewInstance.value === instance) unPreviewImage();

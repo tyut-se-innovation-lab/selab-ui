@@ -1,4 +1,4 @@
-import { Ref, createVNode, render } from 'vue';
+import { Ref, VNode, createVNode, render } from 'vue';
 import { ImgPreviewPropsType } from '../image.d';
 import { pupOpsMount } from '@selab-ui/utils';
 import seMiniMeg from '../../../miniMsg/src/index';
@@ -18,7 +18,7 @@ export default function useOperate(
     imgItem: HTMLImageElement,
     isClose: Ref<boolean>,
     nowIndex: Ref<number>,
-    toolBarRef: Ref<HTMLElement | null>,
+    toolBarVNode: Ref<VNode | null>,
     {
         imgWidthOriginal,
         imgHeightOriginal
@@ -207,14 +207,8 @@ export default function useOperate(
         };
         imgReal.onerror = () => {
             changeOldImg && changeOldImg(true);
-            (
-                toolBarRef.value as HTMLDivElement & {
-                    _vnode: {
-                        component: { exposed: { _changeError: () => void } };
-                    };
-                }
-            )?._vnode!.component.exposed._changeError();
-            console.log(toolBarRef);
+            toolBarVNode.value &&
+                toolBarVNode.value.component!.exposed!._changeError();
             throw console.error(
                 `Img Preview > 图片加载失败: ${_option.imgList[nextIndex]}`
             );

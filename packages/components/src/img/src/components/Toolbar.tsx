@@ -35,6 +35,7 @@ export default defineComponent({
         const inputValue = ref(props.index.value + 1);
         /** 当点击页码, 切换为输入框 */
         const changeInput = () => {
+            if (isInput.value || props.total === 1 || !props.pagination) return;
             inputValue.value = props.index.value + 1;
             isInput.value = true;
         };
