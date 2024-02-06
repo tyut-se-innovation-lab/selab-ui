@@ -86,6 +86,7 @@ export default defineComponent({
             'object-fit': fit.value,
             width: `${rect.value.width}px`,
             height: `${rect.value.height}px`,
+            /* 这里是minWidth测试位置 */
             minWidth: `${rect.value.width}px`,
             left: `${rect.value.left}px`,
             top: `${rect.value.top}px`,
@@ -112,6 +113,7 @@ export default defineComponent({
                     'object-fit': fit.value,
                     width: `${rect.value.width}px`,
                     height: `${rect.value.height}px`,
+                    /* 这里是minWidth测试位置 */
                     minWidth: `${rect.value.width}px`,
                     left: `${rect.value.left}px`,
                     top: `${rect.value.top}px`,
@@ -123,6 +125,7 @@ export default defineComponent({
                     'object-fit': fit.value,
                     width: `${imgWidthOriginal.value}px`,
                     height: `${imgHeightOriginal.value}px`,
+                    /* 这里是minWidth测试位置 */
                     minWidth: `${imgWidthOriginal.value}px`,
                     left: `${clientWidth / 2}px`,
                     top: `${clientHeight / 2}px`,
@@ -190,8 +193,8 @@ export default defineComponent({
                     'object-fit': fit.value,
                     width: `${imgRealWidth * scale}px`,
                     height: `${imgRealHeight * scale}px`,
+                    /* 这里是minWidth测试位置 */
                     minWidth: `${imgRealWidth * scale}px`,
-                    // minHeight: `${imgRealHeight * scale}px`,
                     left: '50vw',
                     top: '50vh',
                     transform: `translate(-50%, -50%) scale(1) rotate(0deg) rotateY(0deg) rotateX(0deg)`

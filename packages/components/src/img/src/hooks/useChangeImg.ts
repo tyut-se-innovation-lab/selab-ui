@@ -93,8 +93,8 @@ export default function useOperate(
                     transition: 'all 0.3s ease-in-out',
                     width: oldWidth,
                     height: oldHeight,
+                    /* 这里是minWidth测试位置 */
                     minWidth: oldWidth,
-                    // minHeight: oldHeight,
                     left: oldLeft,
                     top: oldTop,
                     transform: oldTransform
@@ -119,8 +119,8 @@ export default function useOperate(
                     oldImgItem.style.top = '50vh';
                     oldImgItem.style.width = imgWidthOriginal.value + 'px';
                     oldImgItem.style.height = imgHeightOriginal.value + 'px';
+                    /* 这里是minWidth测试位置 */
                     oldImgItem.style.minWidth = imgWidthOriginal.value + 'px';
-                    // oldImgItem.style.minHeight = imgHeightOriginal.value + 'px';
                     oldImgItem.style.transform =
                         'translate(-50%, -50%) scale(1) rotate(0deg) rotateY(0deg) rotateX(0deg)';
                 }
@@ -172,6 +172,7 @@ export default function useOperate(
             imgStyle.setImgStyleValues({
                 width: imgRealWidth * scale + 'px',
                 height: imgRealHeight * scale + 'px',
+                /* 这里是minWidth测试位置 */
                 minWidth: imgRealWidth * scale + 'px',
                 left: '50vw',
                 top: '50vh',

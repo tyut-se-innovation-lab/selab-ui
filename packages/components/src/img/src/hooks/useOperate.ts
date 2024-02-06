@@ -173,6 +173,7 @@ export default function useOperate(
             top: newTop + 'px',
             width: newWidth + 'px',
             height: newHeight + 'px',
+            /* 这里是minWidth测试位置 */
             minWidth: newWidth + 'px'
         });
         setTimeout(() => {
@@ -323,6 +324,7 @@ export default function useOperate(
                         top: '50vh',
                         width: imgWidthOriginal.value + 'px',
                         height: imgHeightOriginal.value + 'px',
+                        /* 这里是minWidth测试位置 */
                         minWidth: imgWidthOriginal.value + 'px'
                     };
                 } else {
@@ -334,6 +336,7 @@ export default function useOperate(
                         top: '50vh',
                         width: imgWidthOriginal.value + 'px',
                         height: imgHeightOriginal.value + 'px',
+                        /* 这里是minWidth测试位置 */
                         minWidth: imgWidthOriginal.value + 'px'
                     };
                 }
@@ -467,6 +470,7 @@ export default function useOperate(
             top: '50vh',
             width: imgWidthOriginal.value + 'px',
             height: imgHeightOriginal.value + 'px',
+            /* 这里是minWidth测试位置 */
             minWidth: imgWidthOriginal.value + 'px'
         });
     }
