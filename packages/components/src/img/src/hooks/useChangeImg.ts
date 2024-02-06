@@ -2,7 +2,7 @@ import { Ref, VNode, createVNode, ref, render } from 'vue';
 import { ImgPreviewPropsType } from '../image.d';
 import { pupOpsMount } from '@selab-ui/utils';
 import seMiniMeg from '../../../miniMsg/src/index';
-import { SetImgStyle } from './useImgStyleValue';
+import { ImgStyle } from './useImgStyleValue';
 
 export default function useOperate(
     props: ImgPreviewPropsType,
@@ -25,7 +25,7 @@ export default function useOperate(
         imgHeightOriginal
     }: { imgWidthOriginal: Ref<number>; imgHeightOriginal: Ref<number> },
     changeMouse: (e: MouseEvent) => void,
-    setImgStyle: SetImgStyle
+    imgStyle: ImgStyle
 ) {
     const { clientWidth, clientHeight } = document.documentElement;
     /* 切换图片的函数, 当nextIndex是false, 表示到头了, */
@@ -80,11 +80,11 @@ export default function useOperate(
         // 将切换前的图片节点挂载到dom上
         if (_option.animation !== 'none') {
             // 获取当前图片的样式
-            const oldLeft = imgItem.style.left;
-            const oldTop = imgItem.style.top;
-            const oldWidth = imgItem.style.width;
-            const oldHeight = imgItem.style.height;
-            const oldTransform = imgItem.style.transform;
+            const oldLeft = imgStyle.getImgStyleValue('left');
+            const oldTop = imgStyle.getImgStyleValue('top');
+            const oldWidth = imgStyle.getImgStyleValue('width');
+            const oldHeight = imgStyle.getImgStyleValue('height');
+            const oldTransform = imgStyle.getImgStyleValue('transform');
             // 生成一个切换前的图片节点覆盖到当前图片上
             const oldImg = createVNode('img', {
                 src: _option.imgList[index],
@@ -169,7 +169,7 @@ export default function useOperate(
                     clientHeight / imgRealHeight
                 ) / 1.4;
             // 保存打开预览时的图片
-            setImgStyle.setImgStyleValues({
+            imgStyle.setImgStyleValues({
                 width: imgRealWidth * scale + 'px',
                 height: imgRealHeight * scale + 'px',
                 minWidth: imgRealWidth * scale + 'px',
@@ -179,26 +179,26 @@ export default function useOperate(
                     'translate(-50%, -50%) scale(1) rotate(0deg) rotateY(0deg) rotateX(0deg)'
             });
             if (_option.animation !== 'none') {
-                setImgStyle.setImgStyleValue('transition', 'none');
+                imgStyle.setImgStyleValue('transition', 'none');
                 // imgItem.style.transition = 'none';
                 if (_option.animation === 'fade') {
-                    setImgStyle.setImgStyleValue('opacity', '0');
+                    imgStyle.setImgStyleValue('opacity', '0');
                     // imgItem.style.opacity = '0';
                 } else if (_option.animation === 'slide') {
-                    setImgStyle.setImgStyleValue(
+                    imgStyle.setImgStyleValue(
                         'left',
                         type === 'prev' ? '-150vw' : '150vw'
                     );
                     // imgItem.style.left = type === 'prev' ? '-150vw' : '150vw';
                 }
                 requestAnimationFrame(() => {
-                    setImgStyle.setImgStyleValue('transition', '');
+                    imgStyle.setImgStyleValue('transition', '');
                     // imgItem.style.transition = '';
                     if (_option.animation === 'fade') {
-                        setImgStyle.setImgStyleValue('opacity', '');
+                        imgStyle.setImgStyleValue('opacity', '');
                         // imgItem.style.opacity = '';
                     } else if (_option.animation === 'slide') {
-                        setImgStyle.setImgStyleValue('left', '50vw');
+                        imgStyle.setImgStyleValue('left', '50vw');
                         // imgItem.style.left = '50vw';
                     }
                     changeOldImg && changeOldImg();

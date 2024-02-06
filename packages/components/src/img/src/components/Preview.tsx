@@ -71,9 +71,8 @@ export default defineComponent({
             return _alt;
         });
 
-        const setImgStyle = useImgStyleValue();
-        const { imgStyleValue, setImgStyleValue, setImgStyleValues } =
-            setImgStyle;
+        const imgStyle = useImgStyleValue();
+        const { imgStyleValue, setImgStyleValue, setImgStyleValues } = imgStyle;
         setImgStyleValue('object-fit', fit.value);
         setImgStyleValue('width', `${rect.value.width}px`);
         setImgStyleValue('height', `${rect.value.height}px`);
@@ -178,15 +177,16 @@ export default defineComponent({
                     ) / 1.4;
                 // 保存打开预览时的图片
                 const imgItem = img.value;
-                imgItem.style.objectFit = fit.value;
-                imgItem.style.width = imgRealWidth * scale + 'px';
-                imgItem.style.height = imgRealHeight * scale + 'px';
-                imgItem.style.minWidth = imgRealWidth * scale + 'px';
-                // imgItem.style.minHeight = imgRealHeight * scale + 'px';
-                imgItem.style.left = '50vw';
-                imgItem.style.top = '50vh';
-                imgItem.style.transform =
-                    'translate(-50%, -50%) scale(1) rotate(0deg) rotateY(0deg) rotateX(0deg)';
+                setImgStyleValues({
+                    'object-fit': fit.value,
+                    width: `${imgRealWidth * scale}px`,
+                    height: `${imgRealHeight * scale}px`,
+                    minWidth: `${imgRealWidth * scale}px`,
+                    // minHeight: `${imgRealHeight * scale}px`,
+                    left: '50vw',
+                    top: '50vh',
+                    transform: `translate(-50%, -50%) scale(1) rotate(0deg) rotateY(0deg) rotateX(0deg)`
+                } as CSSProperties);
 
                 // location存在说明本次预览不是通过点击图片,而是直接调用方法, 所以需要动画
                 if ('location' in props.instance) {
@@ -301,7 +301,7 @@ export default defineComponent({
                 maskRef,
                 { imgWidthOriginal, imgHeightOriginal },
                 toolbarRef,
-                setImgStyle
+                imgStyle
             );
 
             const { userDownload } = useDownload(
@@ -322,7 +322,7 @@ export default defineComponent({
                     imgHeightOriginal
                 },
                 changeMouse,
-                setImgStyle
+                imgStyle
             );
 
             // 创建工具栏

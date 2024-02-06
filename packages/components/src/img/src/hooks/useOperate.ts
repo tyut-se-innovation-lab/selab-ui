@@ -3,7 +3,7 @@ import { ImgPreviewPropsType } from '../image.d';
 import leftCur from '../../../../../assets/mouseImg/left.ico';
 import rightIco from '../../../../../assets/mouseImg/right.ico';
 import closeIco from '../../../../../assets/mouseImg/close.ico';
-import { SetImgStyle } from './useImgStyleValue';
+import { ImgStyle } from './useImgStyleValue';
 
 export default function useOperate(
     props: ImgPreviewPropsType,
@@ -24,7 +24,7 @@ export default function useOperate(
         imgHeightOriginal
     }: { imgWidthOriginal: Ref<number>; imgHeightOriginal: Ref<number> },
     toolbarRef: Ref<HTMLDivElement>,
-    setImgStyle: SetImgStyle
+    imgStyle: ImgStyle
 ) {
     const { clientWidth, clientHeight } = document.documentElement;
     /** 检测鼠标在遮罩上的位置, 更改鼠标样式 */
@@ -167,7 +167,7 @@ export default function useOperate(
                 : (_origin[1] - imgHeight / 2) * (1 - realScale);
         const newTop = imgTop + topChange;
         // 缩放
-        setImgStyle.setImgStyleValues({
+        imgStyle.setImgStyleValues({
             // transform: `translate(-50%, -50%) scale(${realScale}) rotate(0deg) rotateY(0deg) rotateX(0deg)`,
             left: newLeft + 'px',
             top: newTop + 'px',
@@ -193,12 +193,12 @@ export default function useOperate(
         // 添加松开事件
         window.addEventListener('mouseup', mouseUpLeave);
         // 移除过渡
-        setImgStyle.setImgStyleValue(
+        imgStyle.setImgStyleValue(
             'transition',
             'all .3s ease-in-out, left 0s, top 0s'
         );
         // 鼠标样式改为抓取
-        setImgStyle.setImgStyleValue('cursor', 'grabbing');
+        imgStyle.setImgStyleValue('cursor', 'grabbing');
     }
     /** 移动事件 */
     function mouseMove(e: MouseEvent) {
@@ -211,7 +211,7 @@ export default function useOperate(
         const imgLeft = parseFloat(imgNow.left);
         const imgTop = parseFloat(imgNow.top);
         // 移动图片
-        setImgStyle.setImgStyleValues({
+        imgStyle.setImgStyleValues({
             left: imgLeft + moveX + 'px',
             top: imgTop + moveY + 'px'
         });
@@ -227,11 +227,11 @@ export default function useOperate(
         // 移除松开事件
         window.removeEventListener('mouseup', mouseUpLeave);
         // 恢复过渡
-        setImgStyle.setImgStyleValue('transition', '');
+        imgStyle.setImgStyleValue('transition', '');
         // imgItem.style.transition = '';
         toolbarRef.value.style.transition = '';
         // 鼠标样式改为抓取
-        setImgStyle.setImgStyleValue('cursor', 'grab');
+        imgStyle.setImgStyleValue('cursor', 'grab');
         // imgItem.style.cursor = 'grab';
         checkImg();
         // 如果不显示遮罩, 则工具栏跟随移动
@@ -278,22 +278,22 @@ export default function useOperate(
         );
         const _newRotate =
             type === 'reverse' ? imgOldRotate + 90 : imgOldRotate - 90;
-        setImgStyle.setImgStyleValue(
+        imgStyle.setImgStyleValue(
             'transform',
             `translate(-50%, -50%) scale(1) rotate(${_newRotate}deg) rotateY(${imgRotateY}deg) rotateX(${imgRotateX}deg)`
         );
         // imgItem.style.transform = `translate(-50%, -50%) scale(1) rotate(${_newRotate}deg) rotateY(${imgRotateY}deg) rotateX(${imgRotateX}deg)`;
         setTimeout(() => {
             if (_newRotate === 360 || _newRotate === -360) {
-                setImgStyle.setImgStyleValue(
+                imgStyle.setImgStyleValue(
                     'transform',
                     `translate(-50%, -50%) scale(1) rotate(0deg) rotateY(${imgRotateY}deg) rotateX(${imgRotateX}deg)`
                 );
-                setImgStyle.setImgStyleValue('transition', 'none');
+                imgStyle.setImgStyleValue('transition', 'none');
             }
             requestAnimationFrame(() => {
                 imgItem.style.transition = '';
-                setImgStyle.setImgStyleValue('transition', '');
+                imgStyle.setImgStyleValue('transition', '');
             });
         }, 300);
     }
@@ -312,7 +312,7 @@ export default function useOperate(
             imgItem.style.transform.split('rotateX(')[1].split('deg)')[0]
         );
 
-        setImgStyle.setImgStyleValues(
+        imgStyle.setImgStyleValues(
             (() => {
                 if (type === 'horizontal') {
                     return {
@@ -460,7 +460,7 @@ export default function useOperate(
     /* 还原图片的函数 */
     function resetImg() {
         if (isClose.value) return;
-        setImgStyle.setImgStyleValues({
+        imgStyle.setImgStyleValues({
             transform:
                 'translate(-50%, -50%) scale(1) rotate(0deg) rotateY(0deg) rotateX(0deg)',
             left: '50vw',
