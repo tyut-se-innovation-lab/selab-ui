@@ -34,7 +34,7 @@ const observer = new IntersectionObserver(
 
 /** 判断配置合法性 */
 function checkPreview(option: PreviewType): boolean {
-    if (option.album) {
+    if (option.isAlbum) {
         if (!option.albumList || option.albumList.length === 0) {
             console.error(
                 'Image Preview > AlbumList is empty but it is must for album.'
@@ -91,7 +91,7 @@ function previewCheck(props: Readonly<ImgPropsType>): PreviewType | false {
             instances.find((item) => {
                 if (item.preview.name === (props.preview as PreviewType).name) {
                     // 若已有相同的相册名, 则报错
-                    if (item.preview.album) {
+                    if (item.preview.isAlbum) {
                         throw console.error(
                             `Image Preview > Img album name can't repeat, but name "${item.preview.name}" is repeat.`
                         );
@@ -109,7 +109,7 @@ function previewCheck(props: Readonly<ImgPropsType>): PreviewType | false {
             props.preview.name ||
             Math.floor(Math.random() * 999999999999999).toString(36);
 
-        if (!props.preview.album) {
+        if (!props.preview.isAlbum) {
             // 当不是相册预览时, 直接使用 img 的 src
             props.preview.albumList = [];
             props.preview.albumList.push(props.preview.src || props.src);
@@ -185,7 +185,7 @@ function registerPreviewImage<
                 const _openPreview = (index: number) => {
                     previewImage(instance, index);
                 };
-                if (!option.album) {
+                if (!option.isAlbum) {
                     instance.mask.find((item, index) => {
                         if (item.contains(e.target as Node)) {
                             instance.preview.onOpen(() => _openPreview(index));
@@ -235,11 +235,11 @@ function unregisterPreviewImage(option: PreviewType, mask: HTMLElement) {
                     // 从mask数组中移除
                     item.mask.splice(index, 1);
                     // 若不是相册预览, 则移除对应图片
-                    if (!item.preview.album) {
+                    if (!item.preview.isAlbum) {
                         item.preview.albumList.splice(index, 1);
                     }
                     // 若mask数组为空或是相册, 则移除实例
-                    if (item.mask.length === 0 || item.preview.album) {
+                    if (item.mask.length === 0 || item.preview.isAlbum) {
                         instances.splice(
                             instances.findIndex((i) => i === item),
                             1
@@ -377,7 +377,7 @@ function createAlbum({
     };
     const instance: TemporaryInstance = registerPreviewImage(
         {
-            album: true,
+            isAlbum: true,
             albumList,
             name: Math.floor(Math.random() * 999999999999999).toString(36),
             modal,

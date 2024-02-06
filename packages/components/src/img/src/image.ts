@@ -26,7 +26,7 @@ export const previewDefault: PreviewType = {
         show: true
     },
     name: '',
-    album: false,
+    isAlbum: false,
     albumList: [],
     loop: true,
     animation: 'slide',
@@ -35,8 +35,8 @@ export const previewDefault: PreviewType = {
     closeOnPressEscape: true,
     onError: () => {},
     onSwitch: (done) => done(),
-    onOpen: (open) => open(),
-    onClose: (close) => close()
+    onOpen: (done) => done(),
+    onClose: (done) => done()
 };
 
 export const imgDefault: ImgPropsType = {
@@ -136,9 +136,9 @@ export const imgPreviewProps: ImgPreviewProps = {
         type: String,
         default: previewDefault.name
     },
-    album: {
+    isAlbum: {
         type: Boolean,
-        default: previewDefault.album
+        default: previewDefault.isAlbum
     },
     albumList: {
         type: Array as PropType<string[]>,
@@ -178,11 +178,11 @@ export const imgPreviewProps: ImgPreviewProps = {
         default: previewDefault.onSwitch
     },
     onOpen: {
-        type: Function as PropType<(open: () => void) => void>,
+        type: Function as PropType<(done: () => void) => void>,
         default: previewDefault.onOpen
     },
     onClose: {
-        type: Function as PropType<(close: () => void) => void>,
+        type: Function as PropType<(done: () => void) => void>,
         default: previewDefault.onClose
     },
     index: {

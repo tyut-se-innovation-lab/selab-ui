@@ -59,6 +59,15 @@ export default defineComponent({
                 iconSize: '16px'
             });
         });
+        const previewAlt = computed(() => {
+            let _alt = '';
+            if (props.isAlbum) {
+                _alt += `这是相册中的第${nowIndex.value + 1}张图片`;
+            } else {
+                _alt += `这是图片组中的第${nowIndex.value + 1}张图片`;
+            }
+            return _alt;
+        });
         let tabToInput: (e: KeyboardEvent) => void;
         // 记录预览是否关闭, 关闭后将禁止全部操作
         const isClose = ref(false);
@@ -388,13 +397,11 @@ export default defineComponent({
                             onError={props.onError}
                             onLoad={() => {}}
                             ref={img}
-                            alt={undefined}
+                            alt={previewAlt.value}
                             v-contextmenu={props.contextmenu}
                         />
                     </div>
-                    <div class="se-img-preview-toolbar" ref={toolbarRef}>
-                        {}
-                    </div>
+                    <div class="se-img-preview-toolbar" ref={toolbarRef}></div>
                     {props.modal && (
                         <div
                             class="se-img-preview-close"

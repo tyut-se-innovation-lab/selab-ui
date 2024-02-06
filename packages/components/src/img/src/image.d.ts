@@ -62,7 +62,7 @@ export type PreviewType = {
     // 命名, 当不是相册时, 用于区分不同组的预览, 当是相册时, 是相册名, 默认为随机字符
     name: string;
     // 是否是相册, 默认 false
-    album: boolean;
+    isAlbum: boolean;
     // 相册图片列表, 当 album 为 true 时, 必填
     albumList: string[];
     // 是否无限循环, 默认 false
@@ -80,9 +80,9 @@ export type PreviewType = {
     // 图片切换的回调
     onSwitch: (done: () => void, index: number | 'isFirst' | 'isLast' | 'itIs' | false) => void;
     // 打开预览的回调, 当用户点击图片打开时拦截
-    onOpen: (open: () => void) => void;
+    onOpen: (done: () => void) => void;
     // 关闭预览的回调, 当用户点击关闭按钮、遮罩或Esc关闭时拦截
-    onClose: (close: () => void) => void;
+    onClose: (done: () => void) => void;
 };
 
 export type ImgPropsType = {

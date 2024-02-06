@@ -5,7 +5,6 @@ import SeIcon from '../../../icon/template/icon.vue';
 import { inputAutoFocus } from '@selab-ui/utils';
 // import SeTooltip from '../../../tooltip/template/tooltip';
 import '../../../less/components/imgPreviewToolbar/index.less';
-import select from 'packages/components/src/select';
 
 export default defineComponent({
     name: 'se-img',
