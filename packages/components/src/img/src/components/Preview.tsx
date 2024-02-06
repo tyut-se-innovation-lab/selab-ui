@@ -48,11 +48,20 @@ export default defineComponent({
         };
         const { rect, fit, getPreviewStartLocation } =
             useGetPreviewStartLocation(props as ImgPreviewPropsType);
+        // 当前图片的索引
         const nowIndex = ref(_option.index);
+        // 遮罩的组件
         const maskRef = ref();
+        // 图片的容器
         const imagesRef = ref();
+        // 工具栏的组件
         const toolbarRef = ref();
-        const msgRootRef = ref();
+        // 记录原始显示的图片的宽高
+        const imgWidthOriginal = ref(0);
+        const imgHeightOriginal = ref(0);
+        // 貌似没什么用,先保留意见
+        // const msgRootRef = ref();
+        // 关闭按钮的组件
         const closeIconComp = computed(() => {
             if (isVNode(_option.closeIcon)) return _option.closeIcon;
             return createVNode(SeIcon, {
@@ -72,13 +81,16 @@ export default defineComponent({
         });
 
         const imgStyle = useImgStyleValue();
-        const { imgStyleValue, setImgStyleValue, setImgStyleValues } = imgStyle;
-        setImgStyleValue('object-fit', fit.value);
-        setImgStyleValue('width', `${rect.value.width}px`);
-        setImgStyleValue('height', `${rect.value.height}px`);
-        setImgStyleValue('minWidth', `${rect.value.width}px`);
-        setImgStyleValue('left', `${rect.value.left}px`);
-        setImgStyleValue('top', `${rect.value.top}px`);
+        const { imgStyleValue, setImgStyleValues } = imgStyle;
+        setImgStyleValues({
+            'object-fit': fit.value,
+            width: `${rect.value.width}px`,
+            height: `${rect.value.height}px`,
+            minWidth: `${rect.value.width}px`,
+            left: `${rect.value.left}px`,
+            top: `${rect.value.top}px`,
+            transform: `translate(0, 0) scale(1) rotate(0deg) rotateY(0deg) rotateX(0deg)`
+        } as CSSProperties);
         let tabToInput: (e: KeyboardEvent) => void;
         // 记录预览是否关闭, 关闭后将禁止全部操作
         const isClose = ref(false);
@@ -109,9 +121,9 @@ export default defineComponent({
                 const { clientWidth, clientHeight } = document.documentElement;
                 setImgStyleValues({
                     'object-fit': fit.value,
-                    width: `${clientWidth}px`,
-                    height: `${clientHeight}px`,
-                    minWidth: `${clientWidth}px`,
+                    width: `${imgWidthOriginal.value}px`,
+                    height: `${imgHeightOriginal.value}px`,
+                    minWidth: `${imgWidthOriginal.value}px`,
                     left: `${clientWidth / 2}px`,
                     top: `${clientHeight / 2}px`,
                     transform: `translate(-50%, -50%) scale(0.2) rotate(0deg) rotateY(0deg) rotateX(0deg)`,
@@ -161,9 +173,6 @@ export default defineComponent({
             imgReal.src = _option.imgList[_option.index];
             let imgRealWidth = 0,
                 imgRealHeight = 0;
-            // 记录原始显示的图片的宽高
-            const imgWidthOriginal = ref(0);
-            const imgHeightOriginal = ref(0);
             // 获取浏览器视口宽高
             const { clientWidth, clientHeight } = document.documentElement;
             imgReal.onload = () => {
@@ -428,7 +437,7 @@ export default defineComponent({
                             {closeIconComp.value}
                         </div>
                     )}
-                    <div class="se-img-preview-msg" ref={msgRootRef}></div>
+                    {/* 貌似没什么用,先保留意见 {<div class="se-img-preview-msg" ref={msgRootRef}></div>} */}
                 </div>
             );
         };
