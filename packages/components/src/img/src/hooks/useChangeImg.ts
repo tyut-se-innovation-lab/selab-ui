@@ -1,4 +1,4 @@
-import { Ref, VNode, createVNode, render } from 'vue';
+import { Ref, VNode, createVNode, ref, render } from 'vue';
 import { ImgPreviewPropsType } from '../image.d';
 import { pupOpsMount } from '@selab-ui/utils';
 import seMiniMeg from '../../../miniMsg/src/index';
@@ -92,7 +92,6 @@ export default function useOperate(
                     width: oldWidth,
                     height: oldHeight,
                     minWidth: oldWidth,
-                    minHeight: oldHeight,
                     left: oldLeft,
                     top: oldTop,
                     transform: oldTransform
@@ -117,8 +116,6 @@ export default function useOperate(
                     oldImgItem.style.top = '50vh';
                     oldImgItem.style.width = imgWidthOriginal.value + 'px';
                     oldImgItem.style.height = imgHeightOriginal.value + 'px';
-                    oldImgItem.style.minWidth = imgWidthOriginal.value + 'px';
-                    oldImgItem.style.minHeight = imgHeightOriginal.value + 'px';
                     oldImgItem.style.transform =
                         'translate(-50%, -50%) scale(1) rotate(0deg) rotateY(0deg) rotateX(0deg)';
                 }
@@ -169,8 +166,6 @@ export default function useOperate(
             // 保存打开预览时的图片
             imgItem.style.width = imgRealWidth * scale + 'px';
             imgItem.style.height = imgRealHeight * scale + 'px';
-            imgItem.style.minWidth = imgRealWidth * scale + 'px';
-            imgItem.style.minHeight = imgRealHeight * scale + 'px';
             imgItem.style.left = '50vw';
             imgItem.style.top = '50vh';
             imgItem.style.transform =
@@ -216,7 +211,7 @@ export default function useOperate(
     }
 
     // 是否正在切换
-    let isChanging = false;
+    const isChanging = ref(false);
     /* 用户切换图片的函数 */
     function userChangeImg(
         type: 'prev' | 'next',
@@ -224,11 +219,11 @@ export default function useOperate(
         specifyIndex?: number
     ) {
         if (isClose.value) return;
-        if (isChanging) return;
+        if (isChanging.value) return;
         const lastChanging = setTimeout(() => {
-            isChanging = false;
+            isChanging.value = false;
         }, 300);
-        isChanging = true;
+        isChanging.value = true;
         // 获取当前图片的下标
         const index = _option.index;
         // 获取图片的总数
@@ -275,7 +270,7 @@ export default function useOperate(
         }
         if (nextIndex === false) {
             lastChanging && clearTimeout(lastChanging);
-            isChanging = false;
+            isChanging.value = false;
         }
         const _changeImg = () => {
             changeImg(type, nextIndex, e);
@@ -289,6 +284,7 @@ export default function useOperate(
 
     return {
         changeImg,
-        userChangeImg
+        userChangeImg,
+        isChanging
     };
 }

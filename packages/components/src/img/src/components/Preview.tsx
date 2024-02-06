@@ -78,14 +78,17 @@ export default defineComponent({
             // 获取当前图片
             const imgItem = img.value;
             // 关闭预览
-            if (_option.modal && 'mask' in props.instance) {
+            if (
+                _option.modal &&
+                'mask' in props.instance &&
+                (!props.isAlbum ||
+                    (props.isAlbum && _option.openIndex === _option.index))
+            ) {
                 getPreviewStartLocation(_option.index);
                 imgItem.style.left = rect.value.left + 'px';
                 imgItem.style.top = rect.value.top + 'px';
                 imgItem.style.width = rect.value.width + 'px';
                 imgItem.style.height = rect.value.height + 'px';
-                imgItem.style.minWidth = rect.value.width + 'px';
-                imgItem.style.minHeight = rect.value.height + 'px';
                 imgItem.style.transform = `translate(0, 0) scale(1) rotate(0deg) rotateY(0deg) rotateX(0deg)`;
             } else {
                 const { clientWidth, clientHeight } = document.documentElement;
@@ -154,16 +157,14 @@ export default defineComponent({
                     ) / 1.4;
                 // 保存打开预览时的图片
                 const imgItem = img.value;
-                console.log(imgItem, 'imgItem');
                 imgItem.style.objectFit = fit.value;
                 imgItem.style.width = imgRealWidth * scale + 'px';
                 imgItem.style.height = imgRealHeight * scale + 'px';
-                imgItem.style.minWidth = imgRealWidth * scale + 'px';
-                imgItem.style.minHeight = imgRealHeight * scale + 'px';
                 imgItem.style.left = '50vw';
                 imgItem.style.top = '50vh';
                 imgItem.style.transform =
                     'translate(-50%, -50%) scale(1) rotate(0deg) rotateY(0deg) rotateX(0deg)';
+
                 // location存在说明本次预览不是通过点击图片,而是直接调用方法, 所以需要动画
                 if ('location' in props.instance) {
                     imgItem.classList.add('se-img-preview-img-only-preview');
@@ -285,7 +286,7 @@ export default defineComponent({
                 isClose
             );
 
-            const { userChangeImg } = useChangeImg(
+            const { userChangeImg, isChanging } = useChangeImg(
                 props as ImgPreviewPropsType,
                 _option,
                 img.value as HTMLImageElement,
@@ -355,7 +356,7 @@ export default defineComponent({
                 render(_toolbarRef.value, toolbarRef.value);
             }
             tabToInput = (e: KeyboardEvent) => {
-                if (e.key === 'Tab') {
+                if (e.key === 'Tab' && !isChanging.value) {
                     e.preventDefault();
                     _toolbarRef.value &&
                         _toolbarRef.value?.component!.exposed!._changeInput();
@@ -380,15 +381,14 @@ export default defineComponent({
                     <div class="se-img-preview-img" ref={imagesRef}>
                         <img
                             src={_option.imgList[_option.index]}
-                            style={{
-                                position: 'absolute',
-                                width: rect.value.width + 'px',
-                                height: rect.value.height + 'px',
-                                minWidth: rect.value.width + 'px',
-                                minHeight: rect.value.height + 'px',
-                                left: rect.value.left + 'px',
-                                top: rect.value.top + 'px'
-                            }}
+                            style={`
+                                position: absolute,
+                                object-fit: ${fit.value};
+                                width: ${rect.value.width}px;
+                                height: ${rect.value.height}px;
+                                left: ${rect.value.left}px;
+                                top: ${rect.value.top}px;
+                            `}
                             class={`se-img-preview-img-item ${
                                 props.modal
                                     ? 'se-img-preview-img-item-modal'

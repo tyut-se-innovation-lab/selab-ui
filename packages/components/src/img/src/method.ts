@@ -15,7 +15,13 @@ import { ContextmenuType } from '../../contextmenu/src/contextmenu.d';
 // 全部预览实例
 const instances = shallowReactive<Array<Instance>>([]);
 
+// 当前预览实例
 const previewInstance = shallowRef<Instance | TemporaryInstance | null>(null);
+
+// 正在关闭的预览实例
+const closingPreviewInstance = shallowRef<Instance | TemporaryInstance | null>(
+    null
+);
 
 // 懒加载交叉监控器
 const observer = new IntersectionObserver(
@@ -257,7 +263,11 @@ let bodyOverflow = '';
 // 启动预览
 function previewImage(instance: Instance | TemporaryInstance, index = 0) {
     // 如果该预览已经存在, 则直接返回
-    if (previewInstance.value === instance) return;
+    if (
+        previewInstance.value === instance ||
+        closingPreviewInstance.value === instance
+    )
+        return;
     // 如果下标超出范围, 则重置为报错
     if (index >= instance.preview.albumList.length) {
         throw console.error(
@@ -279,11 +289,12 @@ function previewImage(instance: Instance | TemporaryInstance, index = 0) {
     }
     const domRood = document.createElement('div');
     domRood.className = 'se-img-preview-direct-root';
-    (
-        instance.root as {
-            mountDiv: (childDom: HTMLDivElement) => void;
-        }
-    ).mountDiv(domRood);
+    if (
+        'mountDiv' in instance.root &&
+        typeof instance.root.mountDiv === 'function'
+    ) {
+        instance.root.mountDiv(domRood);
+    }
     render(instance.vNode, domRood);
     previewInstance.value = instance;
     instance.root = domRood;
@@ -293,6 +304,7 @@ function previewImage(instance: Instance | TemporaryInstance, index = 0) {
 function unPreviewImage() {
     if (!previewInstance.value) return;
     const instance = previewInstance.value;
+    closingPreviewInstance.value = instance;
     if (instance.preview.modal)
         setTimeout(() => {
             // 若在300ms内再次打开预览, 且新预览有遮罩, 且, 则不恢复body overflow
@@ -302,12 +314,13 @@ function unPreviewImage() {
             document.body.style.overflow = bodyOverflow;
         }, 300);
     previewInstance.value = null;
-    instance.vNode!.component!.exposed?._close();
+    instance.vNode && instance.vNode.component!.exposed?._close();
     setTimeout(() => {
         render(null, instance.root as HTMLElement);
         instance.vNode = null;
         (instance.root as HTMLElement).remove();
         instance.root = pupOpsMount();
+        closingPreviewInstance.value = null;
     }, 300);
 }
 

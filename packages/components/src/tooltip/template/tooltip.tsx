@@ -172,7 +172,7 @@ export default defineComponent({
                     <div
                         class="se-tooltip-content"
                         v-show={isTooltipVisible.value}
-                        style={{ zIndex: zIndexNum.value }}
+                        style={`z-index: ${zIndexNum.value};`}
                     >
                         {/* 小箭头 */}
                         <div class="se-tooltip-arrow">

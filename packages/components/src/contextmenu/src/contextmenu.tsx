@@ -10,10 +10,10 @@ export default defineComponent({
             return (
                 <div
                     class={`se-contextmenu`}
-                    style={{
-                        top: `${props.top}px`,
-                        left: `${props.left}px`
-                    }}
+                    style={`
+                        top: ${props.top}px;
+                        left: ${props.left}px
+                    `}
                 ></div>
             );
         };
