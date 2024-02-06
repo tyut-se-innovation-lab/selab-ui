@@ -3,6 +3,7 @@ import { ImgPreviewPropsType } from '../image.d';
 import leftCur from '../../../../../assets/mouseImg/left.ico';
 import rightIco from '../../../../../assets/mouseImg/right.ico';
 import closeIco from '../../../../../assets/mouseImg/close.ico';
+import { SetImgStyle } from './useImgStyleValue';
 
 export default function useOperate(
     props: ImgPreviewPropsType,
@@ -22,7 +23,8 @@ export default function useOperate(
         imgWidthOriginal,
         imgHeightOriginal
     }: { imgWidthOriginal: Ref<number>; imgHeightOriginal: Ref<number> },
-    toolbarRef: Ref<HTMLDivElement>
+    toolbarRef: Ref<HTMLDivElement>,
+    setImgStyle: SetImgStyle
 ) {
     const { clientWidth, clientHeight } = document.documentElement;
     /** 检测鼠标在遮罩上的位置, 更改鼠标样式 */
@@ -165,12 +167,14 @@ export default function useOperate(
                 : (_origin[1] - imgHeight / 2) * (1 - realScale);
         const newTop = imgTop + topChange;
         // 缩放
-        imgItem.style.width = newWidth + 'px';
-        imgItem.style.height = newHeight + 'px';
-        // imgItem.style.minWidth = newWidth + 'px';
-        // imgItem.style.minHeight = newHeight + 'px';
-        imgItem.style.left = newLeft + 'px';
-        imgItem.style.top = newTop + 'px';
+        setImgStyle.setImgStyleValues({
+            // transform: `translate(-50%, -50%) scale(${realScale}) rotate(0deg) rotateY(0deg) rotateX(0deg)`,
+            left: newLeft + 'px',
+            top: newTop + 'px',
+            width: newWidth + 'px',
+            height: newHeight + 'px',
+            minWidth: newWidth + 'px'
+        });
         setTimeout(() => {
             checkImg();
         }, 300);
@@ -189,9 +193,12 @@ export default function useOperate(
         // 添加松开事件
         window.addEventListener('mouseup', mouseUpLeave);
         // 移除过渡
-        imgItem.style.transition = 'all .3s ease-in-out, left 0s, top 0s';
+        setImgStyle.setImgStyleValue(
+            'transition',
+            'all .3s ease-in-out, left 0s, top 0s'
+        );
         // 鼠标样式改为抓取
-        imgItem.style.cursor = 'grabbing';
+        setImgStyle.setImgStyleValue('cursor', 'grabbing');
     }
     /** 移动事件 */
     function mouseMove(e: MouseEvent) {
@@ -204,8 +211,10 @@ export default function useOperate(
         const imgLeft = parseFloat(imgNow.left);
         const imgTop = parseFloat(imgNow.top);
         // 移动图片
-        imgItem.style.left = imgLeft + moveX + 'px';
-        imgItem.style.top = imgTop + moveY + 'px';
+        setImgStyle.setImgStyleValues({
+            left: imgLeft + moveX + 'px',
+            top: imgTop + moveY + 'px'
+        });
         // 保存当前鼠标位置
         mouseDownPosition[0] = e.clientX;
         mouseDownPosition[1] = e.clientY;
@@ -218,10 +227,12 @@ export default function useOperate(
         // 移除松开事件
         window.removeEventListener('mouseup', mouseUpLeave);
         // 恢复过渡
-        imgItem.style.transition = '';
+        setImgStyle.setImgStyleValue('transition', '');
+        // imgItem.style.transition = '';
         toolbarRef.value.style.transition = '';
         // 鼠标样式改为抓取
-        imgItem.style.cursor = 'grab';
+        setImgStyle.setImgStyleValue('cursor', 'grab');
+        // imgItem.style.cursor = 'grab';
         checkImg();
         // 如果不显示遮罩, 则工具栏跟随移动
         if (!_option.modal) {
@@ -267,14 +278,22 @@ export default function useOperate(
         );
         const _newRotate =
             type === 'reverse' ? imgOldRotate + 90 : imgOldRotate - 90;
-        imgItem.style.transform = `translate(-50%, -50%) scale(1) rotate(${_newRotate}deg) rotateY(${imgRotateY}deg) rotateX(${imgRotateX}deg)`;
+        setImgStyle.setImgStyleValue(
+            'transform',
+            `translate(-50%, -50%) scale(1) rotate(${_newRotate}deg) rotateY(${imgRotateY}deg) rotateX(${imgRotateX}deg)`
+        );
+        // imgItem.style.transform = `translate(-50%, -50%) scale(1) rotate(${_newRotate}deg) rotateY(${imgRotateY}deg) rotateX(${imgRotateX}deg)`;
         setTimeout(() => {
             if (_newRotate === 360 || _newRotate === -360) {
-                imgItem.style.transition = 'none';
-                imgItem.style.transform = `translate(-50%, -50%) scale(1) rotate(0deg) rotateY(${imgRotateY}deg) rotateX(${imgRotateX}deg)`;
+                setImgStyle.setImgStyleValue(
+                    'transform',
+                    `translate(-50%, -50%) scale(1) rotate(0deg) rotateY(${imgRotateY}deg) rotateX(${imgRotateX}deg)`
+                );
+                setImgStyle.setImgStyleValue('transition', 'none');
             }
             requestAnimationFrame(() => {
                 imgItem.style.transition = '';
+                setImgStyle.setImgStyleValue('transition', '');
             });
         }, 300);
     }
@@ -292,15 +311,35 @@ export default function useOperate(
         const imgRotateX = parseInt(
             imgItem.style.transform.split('rotateX(')[1].split('deg)')[0]
         );
-        if (type === 'horizontal') {
-            imgItem.style.transform = `translate(-50%, -50%) scale(1) rotate(${imgRotate}deg) rotateY(${
-                imgRotateY === 180 ? 0 : 180
-            }deg) rotateX(${imgRotateX}deg)`;
-        } else {
-            imgItem.style.transform = `translate(-50%, -50%) scale(1) rotate(${imgRotate}deg) rotateY(${imgRotateY}deg) rotateX(${
-                imgRotateX === 180 ? 0 : 180
-            }deg)`;
-        }
+
+        setImgStyle.setImgStyleValues(
+            (() => {
+                if (type === 'horizontal') {
+                    return {
+                        transform: `translate(-50%, -50%) scale(1) rotate(${imgRotate}deg) rotateY(${
+                            imgRotateY === 180 ? 0 : 180
+                        }deg) rotateX(${imgRotateX}deg)`,
+                        left: '50vw',
+                        top: '50vh',
+                        width: imgWidthOriginal.value + 'px',
+                        height: imgHeightOriginal.value + 'px',
+                        minWidth: imgWidthOriginal.value + 'px'
+                    };
+                } else {
+                    return {
+                        transform: `translate(-50%, -50%) scale(1) rotate(${imgRotate}deg) rotateY(${imgRotateY}deg) rotateX(${
+                            imgRotateX === 180 ? 0 : 180
+                        }deg)`,
+                        left: '50vw',
+                        top: '50vh',
+                        width: imgWidthOriginal.value + 'px',
+                        height: imgHeightOriginal.value + 'px',
+                        minWidth: imgWidthOriginal.value + 'px'
+                    };
+                }
+            })()
+        );
+
         // 用canvas实现了镜像反转, 但是处理较慢, 然后想起css transform可以实现, 所以就不用canvas了
         // 我是若子
         // 折叠
@@ -421,14 +460,15 @@ export default function useOperate(
     /* 还原图片的函数 */
     function resetImg() {
         if (isClose.value) return;
-        imgItem.style.transform =
-            'translate(-50%, -50%) scale(1) rotate(0deg) rotateY(0deg) rotateX(0deg)';
-        imgItem.style.left = '50vw';
-        imgItem.style.top = '50vh';
-        imgItem.style.width = imgWidthOriginal.value + 'px';
-        imgItem.style.height = imgHeightOriginal.value + 'px';
-        // imgItem.style.minWidth = imgWidthOriginal.value + 'px';
-        // imgItem.style.minHeight = imgHeightOriginal.value + 'px';
+        setImgStyle.setImgStyleValues({
+            transform:
+                'translate(-50%, -50%) scale(1) rotate(0deg) rotateY(0deg) rotateX(0deg)',
+            left: '50vw',
+            top: '50vh',
+            width: imgWidthOriginal.value + 'px',
+            height: imgHeightOriginal.value + 'px',
+            minWidth: imgWidthOriginal.value + 'px'
+        });
     }
 
     return {

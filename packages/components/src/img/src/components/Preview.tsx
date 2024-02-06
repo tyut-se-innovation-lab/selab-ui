@@ -1,6 +1,7 @@
 import {
     computed,
     createVNode,
+    CSSProperties,
     defineComponent,
     isVNode,
     onDeactivated,
@@ -21,6 +22,7 @@ import useGetPreviewStartLocation from '../hooks/useGetPreviewStartLocation';
 import useOperate from '../hooks/useOperate';
 import useChangeImg from '../hooks/useChangeImg';
 import useDownload from '../hooks/useDownload';
+import useImgStyleValue from '../hooks/useImgStyleValue';
 import SeIcon from '../../../icon/template/icon.vue';
 
 export default defineComponent({
@@ -68,6 +70,16 @@ export default defineComponent({
             }
             return _alt;
         });
+
+        const setImgStyle = useImgStyleValue();
+        const { imgStyleValue, setImgStyleValue, setImgStyleValues } =
+            setImgStyle;
+        setImgStyleValue('object-fit', fit.value);
+        setImgStyleValue('width', `${rect.value.width}px`);
+        setImgStyleValue('height', `${rect.value.height}px`);
+        setImgStyleValue('minWidth', `${rect.value.width}px`);
+        setImgStyleValue('left', `${rect.value.left}px`);
+        setImgStyleValue('top', `${rect.value.top}px`);
         let tabToInput: (e: KeyboardEvent) => void;
         // 记录预览是否关闭, 关闭后将禁止全部操作
         const isClose = ref(false);
@@ -76,7 +88,7 @@ export default defineComponent({
             if (isClose.value) return;
             isClose.value = true;
             // 获取当前图片
-            const imgItem = img.value;
+            // const imgItem = img.value;
             // 关闭预览
             if (
                 _option.modal &&
@@ -85,18 +97,27 @@ export default defineComponent({
                     (props.isAlbum && _option.openIndex === _option.index))
             ) {
                 getPreviewStartLocation(_option.index);
-                imgItem.style.left = rect.value.left + 'px';
-                imgItem.style.top = rect.value.top + 'px';
-                imgItem.style.width = rect.value.width + 'px';
-                imgItem.style.height = rect.value.height + 'px';
-                imgItem.style.transform = `translate(0, 0) scale(1) rotate(0deg) rotateY(0deg) rotateX(0deg)`;
+                setImgStyleValues({
+                    'object-fit': fit.value,
+                    width: `${rect.value.width}px`,
+                    height: `${rect.value.height}px`,
+                    minWidth: `${rect.value.width}px`,
+                    left: `${rect.value.left}px`,
+                    top: `${rect.value.top}px`,
+                    transform: `translate(0, 0) scale(1) rotate(0deg) rotateY(0deg) rotateX(0deg)`
+                } as CSSProperties);
             } else {
                 const { clientWidth, clientHeight } = document.documentElement;
-                imgItem.style.top = clientHeight / 2 + 'px';
-                imgItem.style.left = clientWidth / 2 + 'px';
-                imgItem.style.transform =
-                    'translate(-50%, -50%) scale(0.2) rotate(0deg) rotateY(0deg) rotateX(0deg)';
-                imgItem.style.opacity = '0';
+                setImgStyleValues({
+                    'object-fit': fit.value,
+                    width: `${clientWidth}px`,
+                    height: `${clientHeight}px`,
+                    minWidth: `${clientWidth}px`,
+                    left: `${clientWidth / 2}px`,
+                    top: `${clientHeight / 2}px`,
+                    transform: `translate(-50%, -50%) scale(0.2) rotate(0deg) rotateY(0deg) rotateX(0deg)`,
+                    opacity: '0'
+                } as CSSProperties);
             }
             // 若存在, 关闭遮罩
             if (props.modal) {
@@ -160,6 +181,8 @@ export default defineComponent({
                 imgItem.style.objectFit = fit.value;
                 imgItem.style.width = imgRealWidth * scale + 'px';
                 imgItem.style.height = imgRealHeight * scale + 'px';
+                imgItem.style.minWidth = imgRealWidth * scale + 'px';
+                // imgItem.style.minHeight = imgRealHeight * scale + 'px';
                 imgItem.style.left = '50vw';
                 imgItem.style.top = '50vh';
                 imgItem.style.transform =
@@ -277,7 +300,8 @@ export default defineComponent({
                 isClose,
                 maskRef,
                 { imgWidthOriginal, imgHeightOriginal },
-                toolbarRef
+                toolbarRef,
+                setImgStyle
             );
 
             const { userDownload } = useDownload(
@@ -297,7 +321,8 @@ export default defineComponent({
                     imgWidthOriginal,
                     imgHeightOriginal
                 },
-                changeMouse
+                changeMouse,
+                setImgStyle
             );
 
             // 创建工具栏
@@ -381,14 +406,7 @@ export default defineComponent({
                     <div class="se-img-preview-img" ref={imagesRef}>
                         <img
                             src={_option.imgList[_option.index]}
-                            style={`
-                                position: absolute,
-                                object-fit: ${fit.value};
-                                width: ${rect.value.width}px;
-                                height: ${rect.value.height}px;
-                                left: ${rect.value.left}px;
-                                top: ${rect.value.top}px;
-                            `}
+                            style={imgStyleValue.value}
                             class={`se-img-preview-img-item ${
                                 props.modal
                                     ? 'se-img-preview-img-item-modal'

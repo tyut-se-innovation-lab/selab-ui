@@ -2,6 +2,7 @@ import { Ref, VNode, createVNode, ref, render } from 'vue';
 import { ImgPreviewPropsType } from '../image.d';
 import { pupOpsMount } from '@selab-ui/utils';
 import seMiniMeg from '../../../miniMsg/src/index';
+import { SetImgStyle } from './useImgStyleValue';
 
 export default function useOperate(
     props: ImgPreviewPropsType,
@@ -23,7 +24,8 @@ export default function useOperate(
         imgWidthOriginal,
         imgHeightOriginal
     }: { imgWidthOriginal: Ref<number>; imgHeightOriginal: Ref<number> },
-    changeMouse: (e: MouseEvent) => void
+    changeMouse: (e: MouseEvent) => void,
+    setImgStyle: SetImgStyle
 ) {
     const { clientWidth, clientHeight } = document.documentElement;
     /* 切换图片的函数, 当nextIndex是false, 表示到头了, */
@@ -92,6 +94,7 @@ export default function useOperate(
                     width: oldWidth,
                     height: oldHeight,
                     minWidth: oldWidth,
+                    // minHeight: oldHeight,
                     left: oldLeft,
                     top: oldTop,
                     transform: oldTransform
@@ -116,6 +119,8 @@ export default function useOperate(
                     oldImgItem.style.top = '50vh';
                     oldImgItem.style.width = imgWidthOriginal.value + 'px';
                     oldImgItem.style.height = imgHeightOriginal.value + 'px';
+                    oldImgItem.style.minWidth = imgWidthOriginal.value + 'px';
+                    // oldImgItem.style.minHeight = imgHeightOriginal.value + 'px';
                     oldImgItem.style.transform =
                         'translate(-50%, -50%) scale(1) rotate(0deg) rotateY(0deg) rotateX(0deg)';
                 }
@@ -164,25 +169,37 @@ export default function useOperate(
                     clientHeight / imgRealHeight
                 ) / 1.4;
             // 保存打开预览时的图片
-            imgItem.style.width = imgRealWidth * scale + 'px';
-            imgItem.style.height = imgRealHeight * scale + 'px';
-            imgItem.style.left = '50vw';
-            imgItem.style.top = '50vh';
-            imgItem.style.transform =
-                'translate(-50%, -50%) scale(1) rotate(0deg) rotateY(0deg) rotateX(0deg)';
+            setImgStyle.setImgStyleValues({
+                width: imgRealWidth * scale + 'px',
+                height: imgRealHeight * scale + 'px',
+                minWidth: imgRealWidth * scale + 'px',
+                left: '50vw',
+                top: '50vh',
+                transform:
+                    'translate(-50%, -50%) scale(1) rotate(0deg) rotateY(0deg) rotateX(0deg)'
+            });
             if (_option.animation !== 'none') {
-                imgItem.style.transition = 'none';
+                setImgStyle.setImgStyleValue('transition', 'none');
+                // imgItem.style.transition = 'none';
                 if (_option.animation === 'fade') {
-                    imgItem.style.opacity = '0';
+                    setImgStyle.setImgStyleValue('opacity', '0');
+                    // imgItem.style.opacity = '0';
                 } else if (_option.animation === 'slide') {
-                    imgItem.style.left = type === 'prev' ? '-150vw' : '150vw';
+                    setImgStyle.setImgStyleValue(
+                        'left',
+                        type === 'prev' ? '-150vw' : '150vw'
+                    );
+                    // imgItem.style.left = type === 'prev' ? '-150vw' : '150vw';
                 }
                 requestAnimationFrame(() => {
-                    imgItem.style.transition = '';
+                    setImgStyle.setImgStyleValue('transition', '');
+                    // imgItem.style.transition = '';
                     if (_option.animation === 'fade') {
-                        imgItem.style.opacity = '';
+                        setImgStyle.setImgStyleValue('opacity', '');
+                        // imgItem.style.opacity = '';
                     } else if (_option.animation === 'slide') {
-                        imgItem.style.left = '50vw';
+                        setImgStyle.setImgStyleValue('left', '50vw');
+                        // imgItem.style.left = '50vw';
                     }
                     changeOldImg && changeOldImg();
                     changeOldImg = null;
