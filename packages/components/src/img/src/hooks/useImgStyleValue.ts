@@ -1,13 +1,14 @@
 import { CSSProperties, ShallowRef, StyleValue, shallowRef } from 'vue';
 
 export type ImgStyle = {
+    imgStyleValue: ShallowRef<CSSProperties>;
     setImgStyleValue: (
         key: string,
         value: string | number | StyleValue
     ) => void;
     setImgStyleValues: (style: CSSProperties) => void;
     getImgStyleValue: (key: string) => string | number | StyleValue;
-    imgStyleValue: ShallowRef<CSSProperties>;
+    deleteImgStyleValue: (key: string) => void;
 };
 
 export default function useImgStyleValue(): ImgStyle {
@@ -30,10 +31,16 @@ export default function useImgStyleValue(): ImgStyle {
     function getImgStyleValue(key: string) {
         return imgStyleValue.value[key as keyof CSSProperties] || '';
     }
+    function deleteImgStyleValue(key: string) {
+        const _imgStyleValue = imgStyleValue.value;
+        delete _imgStyleValue[key as keyof CSSProperties];
+        imgStyleValue.value = _imgStyleValue;
+    }
     return {
+        imgStyleValue,
         setImgStyleValue,
         setImgStyleValues,
         getImgStyleValue,
-        imgStyleValue
+        deleteImgStyleValue
     };
 }
