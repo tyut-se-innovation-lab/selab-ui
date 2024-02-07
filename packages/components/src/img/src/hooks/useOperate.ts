@@ -3,7 +3,7 @@ import { ImgPreviewPropsType } from '../image.d';
 import leftCur from '../../../../../assets/mouseImg/left.ico';
 import rightIco from '../../../../../assets/mouseImg/right.ico';
 import closeIco from '../../../../../assets/mouseImg/close.ico';
-import { ImgStyle } from './useImgStyleValue';
+import { ImgStyle } from './useStyleValue';
 
 export default function useOperate(
     props: ImgPreviewPropsType,
@@ -167,7 +167,7 @@ export default function useOperate(
                 : (_origin[1] - imgHeight / 2) * (1 - realScale);
         const newTop = imgTop + topChange;
         // 缩放
-        imgStyle.setImgStyleValues({
+        imgStyle.setStyleValues({
             // transform: `translate(-50%, -50%) scale(${realScale}) rotate(0deg) rotateY(0deg) rotateX(0deg)`,
             left: newLeft + 'px',
             top: newTop + 'px',
@@ -194,12 +194,12 @@ export default function useOperate(
         // 添加松开事件
         window.addEventListener('mouseup', mouseUpLeave);
         // 移除过渡
-        imgStyle.setImgStyleValue(
+        imgStyle.setStyleValue(
             'transition',
             'all .3s ease-in-out, left 0s, top 0s'
         );
         // 鼠标样式改为抓取
-        imgStyle.setImgStyleValue('cursor', 'grabbing');
+        imgStyle.setStyleValue('cursor', 'grabbing');
     }
     /** 移动事件 */
     function mouseMove(e: MouseEvent) {
@@ -212,7 +212,7 @@ export default function useOperate(
         const imgLeft = parseFloat(imgNow.left);
         const imgTop = parseFloat(imgNow.top);
         // 移动图片
-        imgStyle.setImgStyleValues({
+        imgStyle.setStyleValues({
             left: imgLeft + moveX + 'px',
             top: imgTop + moveY + 'px'
         });
@@ -228,11 +228,11 @@ export default function useOperate(
         // 移除松开事件
         window.removeEventListener('mouseup', mouseUpLeave);
         // 恢复过渡
-        imgStyle.setImgStyleValue('transition', '');
+        imgStyle.setStyleValue('transition', '');
         // imgItem.style.transition = '';
         toolbarRef.value.style.transition = '';
         // 鼠标样式改为抓取
-        imgStyle.setImgStyleValue('cursor', 'grab');
+        imgStyle.setStyleValue('cursor', 'grab');
         // imgItem.style.cursor = 'grab';
         checkImg();
         // 如果不显示遮罩, 则工具栏跟随移动
@@ -279,22 +279,22 @@ export default function useOperate(
         );
         const _newRotate =
             type === 'reverse' ? imgOldRotate + 90 : imgOldRotate - 90;
-        imgStyle.setImgStyleValue(
+        imgStyle.setStyleValue(
             'transform',
             `translate(-50%, -50%) scale(1) rotate(${_newRotate}deg) rotateY(${imgRotateY}deg) rotateX(${imgRotateX}deg)`
         );
         // imgItem.style.transform = `translate(-50%, -50%) scale(1) rotate(${_newRotate}deg) rotateY(${imgRotateY}deg) rotateX(${imgRotateX}deg)`;
         setTimeout(() => {
             if (_newRotate === 360 || _newRotate === -360) {
-                imgStyle.setImgStyleValue(
+                imgStyle.setStyleValue(
                     'transform',
                     `translate(-50%, -50%) scale(1) rotate(0deg) rotateY(${imgRotateY}deg) rotateX(${imgRotateX}deg)`
                 );
-                imgStyle.setImgStyleValue('transition', 'none');
+                imgStyle.setStyleValue('transition', 'none');
             }
             requestAnimationFrame(() => {
                 imgItem.style.transition = '';
-                imgStyle.setImgStyleValue('transition', '');
+                imgStyle.setStyleValue('transition', '');
             });
         }, 300);
     }
@@ -313,7 +313,7 @@ export default function useOperate(
             imgItem.style.transform.split('rotateX(')[1].split('deg)')[0]
         );
 
-        imgStyle.setImgStyleValues(
+        imgStyle.setStyleValues(
             (() => {
                 if (type === 'horizontal') {
                     return {
@@ -463,7 +463,7 @@ export default function useOperate(
     /* 还原图片的函数 */
     function resetImg() {
         if (isClose.value) return;
-        imgStyle.setImgStyleValues({
+        imgStyle.setStyleValues({
             transform:
                 'translate(-50%, -50%) scale(1) rotate(0deg) rotateY(0deg) rotateX(0deg)',
             left: '50vw',

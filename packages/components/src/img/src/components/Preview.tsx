@@ -22,7 +22,7 @@ import useGetPreviewStartLocation from '../hooks/useGetPreviewStartLocation';
 import useOperate from '../hooks/useOperate';
 import useChangeImg from '../hooks/useChangeImg';
 import useDownload from '../hooks/useDownload';
-import useImgStyleValue from '../hooks/useImgStyleValue';
+import useStyleValue from '../hooks/useStyleValue';
 import SeIcon from '../../../icon/template/icon.vue';
 
 export default defineComponent({
@@ -80,8 +80,9 @@ export default defineComponent({
             return _alt;
         });
 
-        const imgStyle = useImgStyleValue();
-        const { imgStyleValue, setImgStyleValues } = imgStyle;
+        const imgStyle = useStyleValue();
+        const { styleValue: imgStyleValue, setStyleValues: setImgStyleValues } =
+            imgStyle;
         setImgStyleValues({
             'object-fit': fit.value,
             width: `${rect.value.width}px`,

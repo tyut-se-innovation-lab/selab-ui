@@ -7,7 +7,7 @@ declare module "*.png" {
   export default value;
 }
 
-type DownloadEvent = {
+export type ImgDownloadEvent = {
     // 下载的图片地址
     src: string;
     // 下载的图片名称
@@ -30,7 +30,7 @@ type ToolBar = {
     // 是否显示还原按钮, 默认 true
     reset: boolean;
     // 下载按钮事件, 默认 false
-    download: false | ((event: DownloadEvent) => void);
+    download: false | ((event: ImgDownloadEvent) => void);
     // 是否显示页码, 默认 true
     pagination: boolean;
 };

@@ -2,7 +2,7 @@ import { Ref, VNode, createVNode, ref, render } from 'vue';
 import { ImgPreviewPropsType } from '../image.d';
 import { pupOpsMount } from '@selab-ui/utils';
 import seMiniMeg from '../../../miniMsg/src/index';
-import { ImgStyle } from './useImgStyleValue';
+import { ImgStyle } from './useStyleValue';
 
 export default function useOperate(
     props: ImgPreviewPropsType,
@@ -80,11 +80,11 @@ export default function useOperate(
         // 将切换前的图片节点挂载到dom上
         if (_option.animation !== 'none') {
             // 获取当前图片的样式
-            const oldLeft = imgStyle.getImgStyleValue('left');
-            const oldTop = imgStyle.getImgStyleValue('top');
-            const oldWidth = imgStyle.getImgStyleValue('width');
-            const oldHeight = imgStyle.getImgStyleValue('height');
-            const oldTransform = imgStyle.getImgStyleValue('transform');
+            const oldLeft = imgStyle.getStyleValue('left');
+            const oldTop = imgStyle.getStyleValue('top');
+            const oldWidth = imgStyle.getStyleValue('width');
+            const oldHeight = imgStyle.getStyleValue('height');
+            const oldTransform = imgStyle.getStyleValue('transform');
             // 生成一个切换前的图片节点覆盖到当前图片上
             const oldImg = createVNode('img', {
                 src: _option.imgList[index],
@@ -169,7 +169,7 @@ export default function useOperate(
                     clientHeight / imgRealHeight
                 ) / 1.4;
             // 保存打开预览时的图片
-            imgStyle.setImgStyleValues({
+            imgStyle.setStyleValues({
                 width: imgRealWidth * scale + 'px',
                 height: imgRealHeight * scale + 'px',
                 /* 这里是minWidth测试位置 */
@@ -180,26 +180,26 @@ export default function useOperate(
                     'translate(-50%, -50%) scale(1) rotate(0deg) rotateY(0deg) rotateX(0deg)'
             });
             if (_option.animation !== 'none') {
-                imgStyle.setImgStyleValue('transition', 'none');
+                imgStyle.setStyleValue('transition', 'none');
                 // imgItem.style.transition = 'none';
                 if (_option.animation === 'fade') {
-                    imgStyle.setImgStyleValue('opacity', '0');
+                    imgStyle.setStyleValue('opacity', '0');
                     // imgItem.style.opacity = '0';
                 } else if (_option.animation === 'slide') {
-                    imgStyle.setImgStyleValue(
+                    imgStyle.setStyleValue(
                         'left',
                         type === 'prev' ? '-150vw' : '150vw'
                     );
                     // imgItem.style.left = type === 'prev' ? '-150vw' : '150vw';
                 }
                 requestAnimationFrame(() => {
-                    imgStyle.setImgStyleValue('transition', '');
+                    imgStyle.setStyleValue('transition', '');
                     // imgItem.style.transition = '';
                     if (_option.animation === 'fade') {
-                        imgStyle.setImgStyleValue('opacity', '');
+                        imgStyle.setStyleValue('opacity', '');
                         // imgItem.style.opacity = '';
                     } else if (_option.animation === 'slide') {
-                        imgStyle.setImgStyleValue('left', '50vw');
+                        imgStyle.setStyleValue('left', '50vw');
                         // imgItem.style.left = '50vw';
                     }
                     changeOldImg && changeOldImg();
