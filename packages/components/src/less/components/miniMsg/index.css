@@ -36,21 +36,25 @@
   color: #2ecc71;
   border-color: #a8ebc4;
   background-color: #d7f5d1;
+  white-space: nowrap;
 }
 .se-msg-mini-root .se-msg-mini.se-msg-mini-warning {
   color: #f39c12;
   border-color: #fad9a4;
   background-color: #fceebc;
+  white-space: nowrap;
 }
 .se-msg-mini-root .se-msg-mini.se-msg-mini-danger {
   color: #e74c3c;
   border-color: #f8c9c4;
   background-color: #fbdbe8;
+  white-space: nowrap;
 }
 .se-msg-mini-root .se-msg-mini.se-msg-mini-info {
   color: #3498db;
   border-color: #b6daf2;
   background-color: #cbf6f2;
+  white-space: nowrap;
 }
 @keyframes showMiniMsg {
   0% {

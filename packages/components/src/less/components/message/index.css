@@ -1,4 +1,3 @@
-@import url('icon-font/icon-font.css');
 .hover-underline:hover {
   text-decoration: underline;
 }
@@ -17,6 +16,13 @@
   transition: all 0.3s;
   transform: translateX(-50%);
   box-sizing: content-box;
+}
+.se-msg-content {
+  white-space: nowrap;
+  max-width: 80vw;
+  overflow-x: hidden;
+  overflow-y: visible;
+  text-overflow: ellipsis;
 }
 .se-msg-icon {
   margin-right: 10px;

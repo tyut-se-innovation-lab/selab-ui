@@ -2,7 +2,7 @@ import * as components from './src/index';
 import { App, Plugin } from 'vue';
 import SeMsg from './src/message/src/method';
 import SeMiniMsg from './src/miniMsg/src/index';
-import seCreateAlbum from './src/img/src/method';
+import SeCreateAlbum from './src/img/src/method';
 import { clickOutside } from '../utils/index';
 
 export * from './src/index';
@@ -22,6 +22,6 @@ const myPlugin: Plugin = {
     }
 };
 
-export { SeMsg, SeMiniMsg, seCreateAlbum };
+export { SeMsg, SeMiniMsg, SeCreateAlbum };
 
 export default myPlugin;

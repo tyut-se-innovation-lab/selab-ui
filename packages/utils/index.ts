@@ -1,7 +1,5 @@
 import { App, Directive, VNode, createVNode, render } from 'vue';
 import { COMPInstallWithContext, COMPWithInstall, _createVNode } from './type';
-import inputAutoFocusDirective from './inputAutoFocus';
-import _docEvent from './docEvent';
 
 export const testFun = (a: number, b: number): number => {
     return a + b;
@@ -46,9 +44,9 @@ export const clickOutside = {
     }
 };
 
-export const inputAutoFocus = inputAutoFocusDirective;
+export { default as inputAutoFocus } from './inputAutoFocus';
 
-export const docEvent = _docEvent;
+export { default as docEvent } from './docEvent';
 
 export const getStyle = (): ['info', 'success', 'warning', 'danger'] => [
     'info',
@@ -220,7 +218,7 @@ export const withInstall = <T>(fn: T) => {
     return fn as COMPWithInstall<T>;
 };
 
-/** 注册调用 */
+/** 注册方法 */
 export const withInstallFunction = <T>(fn: T, name: string) => {
     (fn as COMPWithInstall<T>).install = (app: App) => {
         (fn as COMPInstallWithContext<T>)._context = app._context;

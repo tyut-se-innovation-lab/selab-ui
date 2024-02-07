@@ -1,6 +1,5 @@
 // Your component styles here
 @import url('../../base/index.less');
-@import url('./icon-font/icon-font.css');
 
 @SeMsgColorMap: {
     success: @success-color,
@@ -28,6 +27,15 @@
     transition: all 0.3s;
     transform: translateX(-50%);
     box-sizing: content-box;
+}
+
+.se-msg-content {
+    white-space: nowrap;
+    max-width: 80vw;
+    // 超出部分省略号
+    overflow-x: hidden;
+    overflow-y: visible;
+    text-overflow: ellipsis;
 }
 
 .se-msg-icon {

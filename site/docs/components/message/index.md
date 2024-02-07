@@ -3,7 +3,7 @@
 这是 `Message` (信息弹窗)组件的文档。
 ## 基础用法
 **从 `selab-ui` 引入**
-`Message` 注册了一个全局方法 `$SeMsg`，也可以单独引入。
+`Message` 注册了一个全局方法 `$seMsg`，也可以单独引入。
 
 ```js
 import { SeMsg } from 'selab-ui';

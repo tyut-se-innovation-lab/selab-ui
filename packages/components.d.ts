@@ -16,7 +16,7 @@ import { Card } from "./components/src";
 import { Button } from "./components/src";
 import { Box } from "./components/src";
 import { Msg } from "./components/src";
-import { ComponentCustomProperties } from "vue";
+import "@vue/runtime-core";
 
 declare module "@vue/runtime-core" {
     export interface GlobalComponents {
@@ -52,12 +52,13 @@ declare module "@vue/runtime-core" {
         seCard: typeof Card;
     }
 
-    // 声明全局变量属性
-    export interface ComponentCustomProperties {
-        $SeMsg: typeof Msg;
-        $SeMiniMsg: typeof MiniMsg;
+    interface ComponentCustomProperties {
+        $seMsg: typeof Msg;
+        $seMiniMsg: typeof MiniMsg;
     }
 }
 
 
 //]
+
+export {};
