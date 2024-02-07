@@ -4,6 +4,33 @@ import { SeMsg, SeMiniMsg, SeCreateAlbum } from 'selab-ui';
 import { ImgDownloadEvent } from 'selab-ui/src/img/src/image.d';
 import useImg from './hooks/useImg.ts';
 
+const imgPreview1 = ref();
+
+const imgPreviewIndex = ref(0);
+
+const options = [
+    { label: 'img1', value: 0 },
+    { label: 'img2', value: 1 },
+    { label: 'img3', value: 2 },
+    { label: 'img4', value: 3 },
+    { label: 'img5', value: 4 },
+    { label: 'img6', value: 5 },
+    { label: 'img7', value: 6 },
+    { label: 'img8', value: 7 },
+    { label: 'img9', value: 8 }
+];
+
+const openPreview = (index: number) => {
+    console.log('openPreview', index);
+    imgPreview1.value[index].openPreview();
+};
+
+const closePreview = (index: number) => {
+    imgPreview1.value[index].closePreview();
+};
+
+const imgPreview2 = ref();
+
 const { imgList } = useImg();
 
 function msg(
@@ -142,39 +169,46 @@ const myAlbum = SeCreateAlbum({
             $seMiniMsg
         </se-button>
         <se-button
-            @click="
-                myAlbum.open(Math.floor(Math.random() * imgList.length) + 1)
-            "
+            @click="myAlbum.open(Math.floor(Math.random() * imgList.length))"
         >
-            打开相册
+            打开无外部展示相册
         </se-button>
-        <se-button @click="myAlbum.close()">关闭相册</se-button>
+        <se-button @click="myAlbum.close()">关闭无外部展示相册</se-button>
         <se-button @click="visible1 = true">dialog img 嵌套测试</se-button>
         <se-dialog
             title="温馨提示"
             v-model:visible="visible1"
+            width="90vw"
             @close="closed1"
             closeable
         >
             <template #closeIcon>
                 <div>123</div>
             </template>
-            <se-button @click="visible2 = true">dialog img 嵌套测试</se-button>
+            <se-button @click="visible2 = true"
+                >dialog img 二级嵌套测试</se-button
+            >
+            <se-button @click="imgPreview2.openPreview()"
+                >打开外层展示相册预览</se-button
+            >
+            <se-button @click="imgPreview2.closePreview()">关闭预览</se-button>
             <se-dialog
                 title="温馨提示"
                 v-model:visible="visible2"
+                width="70vw"
                 @close="closed2"
                 closeable
-                ><se-img
-                    v-for="i of [...Array(2).keys()]"
-                    :key="i + 11"
-                    :src="imgList[i + 11]"
+            >
+                <se-img
+                    v-for="i of [...Array(3).keys()]"
+                    :key="i + 10"
+                    :src="imgList[i + 10]"
                     fit="contain"
                     width="200"
-                    height="200"
+                    height="400"
                     lazy
                     :preview="{
-                        name: '测试',
+                        name: '测试1',
                         minScale: 1,
                         maxScale: 50,
                         animation: 'fade',
@@ -188,22 +222,22 @@ const myAlbum = SeCreateAlbum({
                             flip: true,
                             download: onImgDownload
                         },
-                        modal: true,
+                        modal: false,
                         scaleStep: 0.5,
                         closeIcon: 'close',
                         closeOnClickModal: true,
                         closeOnPressEscape: true,
                         contextmenu: [
                             {
-                                name: '测试1',
+                                name: 'contextmenu测试1',
                                 onClick: () => {
-                                    console.log('测试1');
+                                    console.log('contextmenu测试1');
                                 },
                                 children: [
                                     {
-                                        name: '测试1.1',
+                                        name: 'contextmenu测试1.1',
                                         onClick: () => {
-                                            console.log('测试1.1');
+                                            console.log('contextmenu测试1.1');
                                         },
                                         icon: 'close'
                                     }
@@ -227,50 +261,14 @@ const myAlbum = SeCreateAlbum({
             >
             <se-img
                 v-for="i of [...Array(2).keys()]"
-                :key="i + 9"
-                :src="imgList[i + 9]"
+                :key="i + 8"
+                :src="imgList[i + 8]"
                 fit="contain"
                 width="200"
-                height="200"
+                height="400"
                 lazy
                 :preview="{
-                    name: '测试',
-                    minScale: 1,
-                    maxScale: 50,
-                    animation: 'fade',
-                    loop: true,
-                    toolbar: {
-                        show: true,
-                        zoom: true,
-                        rotate: true,
-                        reset: true,
-                        pagination: true,
-                        flip: true,
-                        download: onImgDownload
-                    },
-                    modal: true,
-                    scaleStep: 0.5,
-                    closeIcon: 'close',
-                    closeOnClickModal: true,
-                    closeOnPressEscape: true,
-                    contextmenu: [
-                        {
-                            name: '测试1',
-                            onClick: () => {
-                                console.log('测试1');
-                            },
-                            children: [
-                                {
-                                    name: '测试1.1',
-                                    onClick: () => {
-                                        console.log('测试1.1');
-                                    },
-                                    icon: 'close'
-                                }
-                            ],
-                            hidden: false
-                        }
-                    ]
+                    name: '测试1'
                 }"
                 :contextmenu="false"
             >
@@ -286,51 +284,25 @@ const myAlbum = SeCreateAlbum({
             </se-img>
             <template v-slot:footer></template>
         </se-dialog>
+        <se-box
+            ><se-select :options="options" v-model="imgPreviewIndex" />
+            <se-button @click="openPreview(imgPreviewIndex)"
+                >打开预览{{ imgPreviewIndex + 1 }}</se-button
+            >
+            <se-button @click="closePreview(imgPreviewIndex)"
+                >关闭预览</se-button
+            ></se-box
+        >
         <se-img
-            v-for="i of [...Array(9).keys()]"
+            ref="imgPreview1"
+            v-for="i of [...Array(8).keys()]"
             :key="i"
             :src="imgList[i]"
-            fit="contain"
+            fit="cover"
             width="400"
             lazy
             :preview="{
-                name: '测试',
-                minScale: 1,
-                maxScale: 50,
-                animation: 'fade',
-                loop: true,
-                toolbar: {
-                    show: true,
-                    zoom: true,
-                    rotate: true,
-                    reset: true,
-                    pagination: true,
-                    flip: true,
-                    download: onImgDownload
-                },
-                modal: true,
-                scaleStep: 0.5,
-                closeIcon: 'close',
-                closeOnClickModal: true,
-                closeOnPressEscape: true,
-                contextmenu: [
-                    {
-                        name: '测试1',
-                        onClick: () => {
-                            console.log('测试1');
-                        },
-                        children: [
-                            {
-                                name: '测试1.1',
-                                onClick: () => {
-                                    console.log('测试1.1');
-                                },
-                                icon: 'close'
-                            }
-                        ],
-                        hidden: false
-                    }
-                ]
+                name: '测试1'
             }"
             :contextmenu="false"
         >
@@ -345,12 +317,13 @@ const myAlbum = SeCreateAlbum({
             </template>
         </se-img>
         <se-img
+            ref="imgPreview2"
             :src="imgList[3]"
             fit="cover"
             width="800"
             lazy
             :preview="{
-                name: '测试1',
+                name: '测试2',
                 isAlbum: true,
                 albumList: imgList,
                 animation: 'slide',
@@ -371,15 +344,15 @@ const myAlbum = SeCreateAlbum({
             :contextmenu="false"
             v-contextmenu="[
                 {
-                    name: '测试2',
+                    name: 'contextmenu测试2',
                     onClick: () => {
-                        console.log('测试2');
+                        console.log('contextmenu测试2');
                     },
                     children: [
                         {
-                            name: '测试2.1',
+                            name: 'contextmenu测试2.1',
                             onClick: () => {
-                                console.log('测试2.1');
+                                console.log('contextmenu测试2.1');
                             },
                             icon: 'close'
                         }
@@ -398,15 +371,15 @@ const myAlbum = SeCreateAlbum({
                 <span
                     v-contextmenu="[
                         {
-                            name: '测试3',
+                            name: 'contextmenu测试3',
                             onClick: () => {
-                                console.log('测试3');
+                                console.log('contextmenu测试3');
                             },
                             children: [
                                 {
-                                    name: '测试3.1',
+                                    name: 'contextmenu测试3.1',
                                     onClick: () => {
-                                        console.log('测试3.1');
+                                        console.log('contextmenu测试3.1');
                                     },
                                     icon: 'close'
                                 }

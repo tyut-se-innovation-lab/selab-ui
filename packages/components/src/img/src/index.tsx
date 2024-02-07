@@ -68,7 +68,12 @@ export default defineComponent({
                     false,
                     mask.value as HTMLDivElement
                 ) as Instance;
-                index = instance.mask.indexOf(mask.value as HTMLDivElement);
+                if (preview.isAlbum) {
+                    index = preview.albumList.indexOf(props.src);
+                } else {
+                    index = instance.mask.indexOf(mask.value as HTMLDivElement);
+                }
+                if (index === -1) index = 0;
             }
             if (props.lazy) {
                 seImg.value.setAttribute('data-src', props.src);
