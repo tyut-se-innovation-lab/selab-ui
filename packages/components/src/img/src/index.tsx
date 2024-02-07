@@ -93,16 +93,30 @@ export default defineComponent({
                 unregisterPreviewImage(preview, mask.value as HTMLDivElement);
             if (props.lazy) observer.unobserve(seImg.value);
         });
-        if (props.preview) {
-            expose({
-                openPreview: () => {
-                    previewImage(instance, index);
-                },
-                closePreview: () => {
+        expose(
+            (() => {
+                const openPreview = (() => {
+                    if (props.preview) {
+                        return () => {
+                            previewImage(instance, index);
+                        };
+                    } else {
+                        return () => {
+                            console.warn(
+                                `Img Preview > ${props.src} 未开启预览功能`
+                            );
+                        };
+                    }
+                })();
+                const closePreview = () => {
                     unPreviewImage();
-                }
-            });
-        }
+                };
+                return {
+                    openPreview,
+                    closePreview
+                };
+            })()
+        );
         return () => (
             <div
                 class={`se-img-root ${props.rootClassName}`}
