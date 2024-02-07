@@ -307,13 +307,13 @@ const myAlbum = SeCreateAlbum({
             :contextmenu="false"
         >
             <template #loading>
-                <div>loading</div>
+                <se-icon name="loading" color="#fff" iconSize="48px" />
             </template>
             <template #error>
-                <div>error</div>
+                <se-icon name="roundclose" color="#fff" iconSize="48px" />
             </template>
             <template #mask>
-                <span> mask </span>
+                <se-icon name="piclight" color="#fff" iconSize="48px" />
             </template>
         </se-img>
         <se-img

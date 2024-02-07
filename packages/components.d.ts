@@ -35,13 +35,11 @@ declare module "@vue/runtime-core" {
         seTooltip: typeof Tooltip;
 
 
-        SeMiniMsg: typeof MiniMsg;
 
         seImg: typeof Img; seTag: typeof Tag;
         seSkeleton: typeof Skeleton;
         seSelect: typeof Select;
         seCard: typeof Card;
-        SeMsg: typeof Msg;
         //[
         seSwitch: typeof Switch;
 
@@ -52,7 +50,14 @@ declare module "@vue/runtime-core" {
         seCard: typeof Card;
     }
 
-    interface ComponentCustomProperties {
+    // export interface ComponentCustomProperties {
+    //     $seMsg: typeof Msg;
+    //     $seMiniMsg: typeof MiniMsg;
+    // }
+}
+
+declare module "vue" {
+    export interface ComponentCustomProperties {
         $seMsg: typeof Msg;
         $seMiniMsg: typeof MiniMsg;
     }
