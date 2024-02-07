@@ -4,6 +4,40 @@ import { SeMsg, SeMiniMsg, SeCreateAlbum } from 'selab-ui';
 import { ImgDownloadEvent } from 'selab-ui/src/img/src/image.d';
 import useImg from './hooks/useImg.ts';
 
+const edgeProgressTest = ref(15);
+
+const edgeProgressOptions = {
+    color: '#0066ff',
+    height: '5px',
+    position: 'top'
+};
+
+const edgeProgressChange = (e: WheelEvent) => {
+    if (edgeProgressTest.value < 0) {
+        edgeProgressTest.value = 0;
+    } else if (edgeProgressTest.value > 100) {
+        edgeProgressTest.value = 100;
+    }
+    edgeProgressTest.value -= e.deltaY / 10;
+};
+
+const banDocumentWheel = () => (document.body.style.overflow = 'hidden');
+
+const allowDocumentWheel = () => (document.body.style.overflow = 'auto');
+
+const edgeProgressOptionsChange = () => {
+    console.log('edgeProgressOptionsChange');
+    edgeProgressOptions.color = `#${Math.floor(
+        Math.random() * 16777215
+    ).toString(16)}`;
+    edgeProgressOptions.height = `${Math.floor(Math.random() * 10 + 1)}px`;
+    edgeProgressOptions.position = Math.random() > 0.5 ? 'top' : 'bottom';
+    edgeProgressTest.value -= 0.1;
+    setTimeout(() => {
+        edgeProgressTest.value += 0.1;
+    });
+};
+
 const imgPreview1 = ref();
 
 const imgPreviewIndex = ref(0);
@@ -147,6 +181,16 @@ const myAlbum = SeCreateAlbum({
 
 <template>
     <div>
+        <div
+            v-edge-progress:[edgeProgressOptions]="edgeProgressTest"
+            class="edge-progress"
+            @wheel="edgeProgressChange"
+            @click="edgeProgressOptionsChange"
+            @mouseenter="banDocumentWheel"
+            @mouseleave="allowDocumentWheel"
+        >
+            在此处滚动鼠标滚轮调整进度条长度, 点击此处改变进度条颜色、高度和位置
+        </div>
         <se-button @click="msg('success')">Msg success</se-button>
         <se-button @click="msg('warning')">Msg warning</se-button>
         <se-button @click="msg('danger')">Msg danger</se-button>
@@ -394,3 +438,19 @@ const myAlbum = SeCreateAlbum({
         </se-img>
     </div>
 </template>
+
+<style scoped lang="less">
+.edge-progress {
+    width: 50vw;
+    padding: 10px;
+    border: 1px solid #000;
+    user-select: none;
+    transition: all 0.3s;
+    cursor: pointer;
+    overflow-x: hidden;
+
+    &:hover {
+        background-color: #f0f0f0;
+    }
+}
+</style>

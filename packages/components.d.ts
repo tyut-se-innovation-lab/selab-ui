@@ -1,3 +1,4 @@
+import { EdgeProgress } from "./components/src";
 import { Checkbox } from "./components/src";
 import { Radio } from "./components/src";
 import { Slider } from "./components/src";
@@ -22,38 +23,26 @@ declare module "@vue/runtime-core" {
     export interface GlobalComponents {
         seButton: typeof Button;
         seBox: typeof Box;
-
         seCheckbox: typeof Checkbox;
         seRadio: typeof Radio;
         //[
         seSlider: typeof Slider;
-
-
         seRate: typeof Rate;
         seDialog: typeof Dialog;
-        seContextmenu: typeof Contextmenu;
         seTooltip: typeof Tooltip;
-
-
-
-        seImg: typeof Img; seTag: typeof Tag;
+        seImg: typeof Img;
+        seTag: typeof Tag;
         seSkeleton: typeof Skeleton;
         seSelect: typeof Select;
         seCard: typeof Card;
         //[
         seSwitch: typeof Switch;
-
         seIcon: typeof Icon;
         seTag: typeof Tag;
         seSkeleton: typeof Skeleton;
         seSelect: typeof Select;
         seCard: typeof Card;
     }
-
-    // export interface ComponentCustomProperties {
-    //     $seMsg: typeof Msg;
-    //     $seMiniMsg: typeof MiniMsg;
-    // }
 }
 
 declare module "vue" {

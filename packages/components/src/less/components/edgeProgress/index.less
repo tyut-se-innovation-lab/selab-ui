@@ -1,0 +1,16 @@
+// Your component styles here
+@import url('../../base/index.less');
+
+
+.se-edge-progress::before {
+    content: '';
+    position: absolute;
+    top: var(--se-edge-progress-top);
+    bottom: var(--se-edge-progress-bottom);
+    left: 0;
+    width: var(--se-edge-progress-width);
+    height: var(--se-edge-progress-height);
+    background-color: var(--se-edge-progress-color);
+    border-radius: 0 999px 999px 0;
+    transition: width .2s linear;
+}

@@ -1,5 +1,10 @@
 import { App, Directive, VNode, createVNode, render } from 'vue';
-import { COMPInstallWithContext, COMPWithInstall, _createVNode } from './type';
+import {
+    COMPInstallWithContext,
+    COMPWithInstall,
+    _createVNode,
+    UnitNumber
+} from './type';
 
 export const testFun = (a: number, b: number): number => {
     return a + b;
@@ -178,6 +183,18 @@ export const getStringWidth = (msg: string, fontSize?: number): number => {
     const width = stringWidthDom.offsetWidth;
     document.body.removeChild(stringWidthDom);
     return width;
+};
+
+/** 计算任意单位数字的高度(px) */
+export const getUnitHeight = (unit: UnitNumber | number): number => {
+    const unitHeightDom = document.createElement('div');
+    unitHeightDom.style.position = 'absolute';
+    unitHeightDom.style.left = '-9999px';
+    unitHeightDom.style.height = typeof unit === 'number' ? unit + 'px' : unit;
+    document.body.appendChild(unitHeightDom);
+    const height = unitHeightDom.offsetHeight;
+    document.body.removeChild(unitHeightDom);
+    return height;
 };
 
 /** 获取静态vNode的高度(px) */

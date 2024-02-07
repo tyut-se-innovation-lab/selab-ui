@@ -107,7 +107,11 @@ export default {
                             text: "Slider",
                             link: "/components/slider/"
                         },
-                        //]
+                        {
+            text: "EdgeProgress",
+            link: "/components/edgeprogress/"
+        },
+	//]
 
                     ]
                 }

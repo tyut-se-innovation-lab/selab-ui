@@ -1,0 +1,19 @@
+.edge-progress-box {
+    width: 70%;
+    padding: 10px;
+    border: 1px solid #000;
+    user-select: none;
+    transition: all 0.3s;
+    overflow-x: hidden;
+
+    &.value {
+        cursor: col-resize;
+    }
+
+    &.style {
+        cursor: pointer;
+        &:hover {
+            background-color: #f0f0f0;
+        }
+    }
+}

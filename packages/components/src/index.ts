@@ -39,3 +39,6 @@ export * from "./radio";
 export * from "./checkbox";
 // 导入滑动输入条
 export * from "./Slider";
+
+// 导入边缘进度条
+export * from "./edgeProgress";
