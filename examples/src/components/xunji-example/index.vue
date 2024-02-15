@@ -8,7 +8,7 @@ const edgeProgressTest = ref(15);
 
 const edgeProgressOptions = {
     color: '#0066ff',
-    height: '5px',
+    strokeWidth: '3px',
     position: 'top'
 };
 
@@ -30,7 +30,7 @@ const edgeProgressOptionsChange = () => {
     edgeProgressOptions.color = `#${Math.floor(
         Math.random() * 16777215
     ).toString(16)}`;
-    edgeProgressOptions.height = `${Math.floor(Math.random() * 10 + 1)}px`;
+    edgeProgressOptions.strokeWidth = `${Math.floor(Math.random() * 10 + 1)}px`;
     edgeProgressOptions.position = Math.random() > 0.5 ? 'top' : 'bottom';
     edgeProgressTest.value -= 0.1;
     setTimeout(() => {

@@ -4,10 +4,10 @@ type EdgeProgressArgString = `#${ number } ${number | UnitNumber} ${'top' | 'bot
 
 export type EdgeProgressArgObj = {
     color: string;
-    height: UnitNumber;
+    strokeWidth: UnitNumber;
     position: 'top' | 'bottom';
 };
 
-export type EdgeProgressArg = Partial<EdgeProgressArgObj & { height: number | UnitNumber }> | EdgeProgressArgString;
+export type EdgeProgressArg = Partial<EdgeProgressArgObj & { strokeWidth: number | UnitNumber }> | EdgeProgressArgString;
 
 

@@ -16,13 +16,13 @@ import { ref } from 'vue';
 const value = ref(50);
 const style = {
     color: '#0066ff',
-    height: '5px',
+    strokeWidth: '3px',
     position: 'top'
 };
 
 const styleChange = () => {
     style.color = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
-    style.height = `${Math.floor(Math.random() * 10 + 1)}px`;
+    style.strokeWidth = `${Math.floor(Math.random() * 10 + 1)}px`;
     style.position = Math.random() > 0.5 ? 'top' : 'bottom';
     value.value -= 0.1;
     setTimeout(() => {

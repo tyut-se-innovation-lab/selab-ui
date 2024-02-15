@@ -21,7 +21,7 @@ export default {
                 el
             );
         }
-        const { color, height, position } = argCheck(arg);
+        const { color, strokeWidth, position } = argCheck(arg);
         const _position = getComputedStyle(el).position;
         if (_position === 'static') el.style.position = 'relative';
         el.classList.add('se-edge-progress');
@@ -35,9 +35,9 @@ export default {
         );
         el.style.setProperty(
             '--se-edge-progress-width',
-            valueCheck(value, height)
+            valueCheck(value, strokeWidth)
         );
-        el.style.setProperty('--se-edge-progress-height', height);
+        el.style.setProperty('--se-edge-progress-height', strokeWidth);
         el.style.setProperty('--se-edge-progress-color', color);
     },
     updated(
@@ -46,7 +46,7 @@ export default {
     ) {
         const _elClassList = el.classList;
         if (!_elClassList.contains('se-edge-progress')) return;
-        const { color, height, position } = argCheck(arg);
+        const { color, strokeWidth, position } = argCheck(arg);
         el.style.setProperty(
             '--se-edge-progress-top',
             position === 'top' ? '0' : 'auto'
@@ -57,9 +57,9 @@ export default {
         );
         el.style.setProperty(
             '--se-edge-progress-width',
-            valueCheck(value, height)
+            valueCheck(value, strokeWidth)
         );
-        el.style.setProperty('--se-edge-progress-height', height);
+        el.style.setProperty('--se-edge-progress-height', strokeWidth);
         el.style.setProperty('--se-edge-progress-color', color);
     }
 } as Directive;
