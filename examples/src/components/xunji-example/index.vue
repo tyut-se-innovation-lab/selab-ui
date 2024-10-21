@@ -82,6 +82,7 @@ function msg(
                 xhr.onload = function (e) {
                     console.log('xhr.onload', e);
                     msg('success', `xhr.onload > ${e.timeStamp}`);
+                    msg('info', `端口9000返回内容 > ${xhr.responseText}`);
                 };
                 xhr.onerror = function (e) {
                     console.log('xhr.onerror', e);
