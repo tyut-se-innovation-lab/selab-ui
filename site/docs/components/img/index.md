@@ -6,6 +6,8 @@ contextmenu只搞了边框
 
 下载按钮没做完
 
+加问号的是还没实现
+
 设计方案
 
 ```txt
@@ -31,6 +33,7 @@ base64存储图片
 getBoundingClientRect 获取图片位置和宽高，用于预览打开关闭动画
 图片分组预览的配置将以第一个为准
 是相册时必须打开预览
+在预览时可点击toolbar上最右侧(显示当前位置)直接切换到指定页面，点tab键也行
 
 插槽
 error 加载失败容错 默认icon VNode
@@ -49,7 +52,7 @@ onError 加载错误回调
 close-on-click-modal 是否可以通过点击遮罩层关闭
 close-on-press-escape 是否可以通过按下 ESC 关闭
 
-PreviewType
+PreviewType预览参数类型
 visible 是否显示 用于外部控制
 src 自定义预览 src  默认同 img src
 groupName 图片组名，会显示，当不是相册时，将会进行图片分组，当是相册是，是相册名，且是相册的命名必须唯一，分组和相册不能重名，主动报错
@@ -89,6 +92,13 @@ onClose 点击遮罩和关闭按钮或esc关闭预览的回调 拦截?
 ### Img的基础配置
 
 ### Img 参数
+
+参数类型声明先看这里
+
+```
+packages\components\src\img\src\image.ts
+packages\components\src\img\src\image.d.ts
+```
 
 | 参数名 | 类型 | 默认值 | 描述 | 跳转 Demo |
 | :----- | :--- | :----- | :--- | :-------- |

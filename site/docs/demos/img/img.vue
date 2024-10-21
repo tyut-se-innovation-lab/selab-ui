@@ -18,12 +18,12 @@
             }"
             :contextmenu="false"
         >
-            <!-- <template #loading>
+            <template #loading>
                 <div>loading</div>
             </template>
             <template #error>
                 <div>error</div>
-            </template> -->
+            </template>
             <template #mask>
                 <span
                     v-contextmenu="[
