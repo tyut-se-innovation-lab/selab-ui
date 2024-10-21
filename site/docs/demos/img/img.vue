@@ -1,20 +1,20 @@
 <template>
     <div>
         <se-img
-            src="https://t7.baidu.com/it/u=1595072465,3644073269&fm=193&f=GIF"
-            fit="cover"
+            src="https://pic.imgdb.cn/item/65c1fec99f345e8d03a4d7b4.jpg"
+            fit="contain"
             width="400"
             lazy
             :preview="{
                 name: '测试1',
                 animation: 'slide',
-                album: true,
+                isAlbum: true,
                 albumList: [
-                    'https://t7.baidu.com/it/u=1595072465,3644073269&fm=193&f=GIF',
-                    'https://t7.baidu.com/it/u=2529476510,3041785782&fm=193&f=GIF'
+                    'https://pic.imgdb.cn/item/65c1fec99f345e8d03a4d7b4.jpg',
+                    'https://pic.imgdb.cn/item/65c1ff5d9f345e8d03a66b58.jpg'
                 ],
-                loop: false,
-                modal: false
+                loop: true,
+                modal: true
             }"
             :contextmenu="false"
         >

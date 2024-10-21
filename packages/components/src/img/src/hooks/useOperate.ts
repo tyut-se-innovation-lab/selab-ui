@@ -59,43 +59,55 @@ export default function useOperate(
         const imgHeight = parseFloat(imgNow.height);
         // x轴方向, 若图片中点超出视口边界, 且图片的一半小于视口, 则图片中点移动到视口边界
         if (imgLeft < 0 && imgWidth / 2 < clientWidth) {
-            imgItem.style.left = '0px';
+            imgStyle.setStyleValue('left', '0px');
         }
         if (imgLeft > clientWidth && imgWidth / 2 < clientWidth) {
-            imgItem.style.left = clientWidth + 'px';
+            imgStyle.setStyleValue('left', clientWidth + 'px');
         }
         // x轴方向, 若图片边界超出视口中点, 且图片的一半大于视口, 则图片边界移动到视口中点
         if (
             imgLeft + imgWidth / 2 < clientWidth / 2 &&
             imgWidth / 2 > clientWidth
         ) {
-            imgItem.style.left = clientWidth / 2 - imgWidth / 2 + 'px';
+            imgStyle.setStyleValue(
+                'left',
+                clientWidth / 2 - imgWidth / 2 + 'px'
+            );
         }
         if (
             imgLeft - imgWidth / 2 > clientWidth / 2 &&
             imgWidth / 2 > clientWidth
         ) {
-            imgItem.style.left = clientWidth / 2 + imgWidth / 2 + 'px';
+            imgStyle.setStyleValue(
+                'left',
+                clientWidth / 2 + imgWidth / 2 + 'px'
+            );
         }
         // y轴方向, 若图片中点超出视口边界, 且图片的一半小于视口, 则图片中点移动到视口边界
         if (imgTop < 0 && imgHeight / 2 < clientHeight) {
-            imgItem.style.top = '0px';
+            imgStyle.setStyleValue('top', '0px');
         }
         if (imgTop > clientHeight && imgHeight / 2 < clientHeight) {
-            imgItem.style.top = clientHeight + 'px';
+            imgStyle.setStyleValue('top', clientHeight + 'px');
         }
         // y轴方向, 若图片边界超出视口中点, 且图片的一半大于视口, 则图片边界移动到视口中点
         if (
             imgTop + imgHeight / 2 < clientHeight / 2 &&
             imgHeight / 2 > clientHeight
         ) {
-            imgItem.style.top = clientHeight / 2 - imgHeight / 2 + 'px';
+            imgStyle.setStyleValue(
+                'top',
+                clientHeight / 2 - imgHeight / 2 + 'px'
+            );
         }
         if (
             imgTop - imgHeight / 2 > clientHeight / 2 &&
             imgHeight / 2 > clientHeight
         ) {
-            imgItem.style.top = clientHeight / 2 + imgHeight / 2 + 'px';
+            imgStyle.setStyleValue(
+                'top',
+                clientHeight / 2 + imgHeight / 2 + 'px'
+            );
         }
     }
 
@@ -234,7 +246,9 @@ export default function useOperate(
         // 鼠标样式改为抓取
         imgStyle.setStyleValue('cursor', 'grab');
         // imgItem.style.cursor = 'grab';
-        checkImg();
+        setTimeout(() => {
+            checkImg();
+        });
         // 如果不显示遮罩, 则工具栏跟随移动
         if (!_option.modal) {
             initToolbarLocation();
@@ -293,7 +307,7 @@ export default function useOperate(
                 imgStyle.setStyleValue('transition', 'none');
             }
             requestAnimationFrame(() => {
-                imgItem.style.transition = '';
+                // imgItem.style.transition = '';
                 imgStyle.setStyleValue('transition', '');
             });
         }, 300);

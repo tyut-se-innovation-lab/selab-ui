@@ -45,11 +45,18 @@ declare module "@vue/runtime-core" {
     }
 }
 
+// import { ContextmenuType } from './components/src/contextmenu/src/contextmenu.d';
+
 declare module "vue" {
     export interface ComponentCustomProperties {
         $seMsg: typeof Msg;
         $seMiniMsg: typeof MiniMsg;
     }
+
+    // export interface ComponentCustomProps {
+    //     'v-contextmenu'?: ContextmenuType;
+    //     'v-edge-progress'?: EdgeProgressArg;
+    // }
 }
 
 

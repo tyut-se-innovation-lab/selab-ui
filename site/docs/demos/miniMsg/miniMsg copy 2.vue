@@ -1,21 +1,23 @@
 <template>
     <div>
-        <button @click="success">test</button>
+        <button ref="button1" @click="success">test</button>
     </div>
 </template>
 
 <script setup lang="ts">
 import { SeMiniMsg } from 'selab-ui';
-
+import { ref } from 'vue';
+const button1 = ref<HTMLElement>();
 function success() {
     SeMiniMsg({
         type: 'success',
         message: 'This is a success message',
         duration: 3000,
         location: {
-            x: '50vw',
-            y: '50vh'
-        }
+            x: 0,
+            y: 0
+        },
+        root: button1.value as HTMLElement
     });
 }
 </script>
