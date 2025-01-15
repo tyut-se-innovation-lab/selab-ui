@@ -1,0 +1,34 @@
+// Your component styles here
+    @import url('../../base/index.less');
+.se-table-container {
+    position: relative;
+    height: 500px; /* 可视区域的高度 */
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    background-color: #fff;
+}
+
+.se-table-spacer {
+    width: 100%;
+}
+
+.se-table-viewport {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+}
+
+.se-table-row {
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    border-bottom: 1px solid #f0f0f0;
+    box-sizing: border-box;
+    background-color: #fff;
+    transition: background-color 0.3s;
+}
+
+.se-table-row:hover {
+    background-color: #f9f9f9;
+}
