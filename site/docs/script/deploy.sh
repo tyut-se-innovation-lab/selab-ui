@@ -12,16 +12,22 @@ pnpm docs:build
 echo "进入待发布的目录..."
 cd docs/.vitepress/dist
 
-echo "初始化 Git 仓库..."
-git init
+# 检查当前目录是否已经是一个 Git 仓库，如果不是，则初始化 Git 仓库
+if [ ! -d ".git" ]; then
+  echo "初始化 Git 仓库..."
+  git init
+  git remote add origin https://github.com/tyut-se-innovation-lab/selab-ui.git
+fi
+
+# 添加所有更改到 Git 仓库
 git add .
 git commit -m 'deploy'
 
 echo "部署到用户页面..."
-git push -f git@github.com:tyut-se-innovation-lab/selab-ui.git
+git push -f origin main
 
 # 返回项目根目录
-cd ../../../
+cd ../../../../
 
 echo "提交代码到 GitHub 仓库..."
 git add .
