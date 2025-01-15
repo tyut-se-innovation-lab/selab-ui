@@ -7,8 +7,8 @@ export default {
     themeConfig: {
         siteTitle: "selab-ui",
         nav: [
-            { text: "指南", link: "/guild/" },
-            { text: "组件", link: "/components/" }
+            { text: "指南", link: "/guild/installation/" },
+            { text: "组件", link: "/components/button/" }
         ],
         socialLinks: [
             { icon: "github", "link": "https://github.com/tyut-se-innovation-lab/selab-ui" }
@@ -19,12 +19,12 @@ export default {
                     text: "基础",
                     items: [
                         {
-                            text: "安装",
+                            text: "快速开始",
                             link: "/guild/installation/",
                         },
                         {
-                            text: "快速开始",
-                            link: "/guild/quickstart/",
+                            text: "更新日志",
+                            link: "/guild/updateLog/",
                         }
                     ]
                 }

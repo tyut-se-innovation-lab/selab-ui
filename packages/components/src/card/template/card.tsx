@@ -2,32 +2,58 @@
 import { defineComponent, computed } from 'vue';
 import '../../less/components/card/index.less';
 
-// Define the component
 export default defineComponent({
-    // Set the component name
     name: 'se-card',
 
-    // Define the props
     props: {
-        type: String
+        type: {
+            type: String,
+            default: 'default',
+            validator: (value:string) => ['default', 'primary', 'secondary', 'success', 'warning', 'danger'].includes(value),
+        },
+        title: {
+            type: String,
+            default: '',
+        },
+        icon: {
+            type: String,
+            default: '',
+        },
+        hoverable: {
+            type: Boolean,
+            default: false,
+        },
+        bordered: {
+            type: Boolean,
+            default: true,
+        },
     },
 
-    // Define the setup function
     setup(props, { slots }) {
-        const buttonStyle = computed(() => {
-            return props.type ? { ['se-card--' + props.type]: true } : {};
-        });
+        // Compute dynamic class names
+        const cardClass = computed(() => ({
+            'se-card': true,
+            [`se-card--${props.type}`]: !!props.type,
+            'se-card--hoverable': props.hoverable,
+            'se-card--bordered': props.bordered,
+        }));
 
         return () => (
-            <div
-                class={`se-card ${
-                    buttonStyle.value
-                        ? Object.keys(buttonStyle.value).join(' ')
-                        : ''
-                }`}
-            >
-                {slots.default && slots.default()}
+            <div class={cardClass.value}>
+                {/* Optional Icon */}
+                {props.icon && <div class="se-card-icon">{props.icon}</div>}
+
+                {/* Optional Title */}
+                {props.title && <div class="se-card-title">{props.title}</div>}
+
+                {/* Main Content */}
+                <div class="se-card-content">
+                    {slots.default ? slots.default() : <span>No Content Available</span>}
+                </div>
+
+                {/* Footer Slot */}
+                {slots.footer && <div class="se-card-footer">{slots.footer()}</div>}
             </div>
         );
-    }
+    },
 });
