@@ -4,9 +4,11 @@ import {
 } from '@vitepress-demo-preview/plugin'
 
 export default {
+    base: '/selab-ui/',
     themeConfig: {
         siteTitle: "selab-ui",
-        base: '/selab-ui/',
+        description: 'selab-ui 组件库',
+
         nav: [
             { text: "指南", link: "/guild/installation/" },
             { text: "组件", link: "/components/button/" }
@@ -14,6 +16,16 @@ export default {
         socialLinks: [
             { icon: "github", "link": "https://github.com/tyut-se-innovation-lab/selab-ui" }
         ],
+        footer: {
+            message: 'Released under the MIT License.',
+            copyright: 'Copyright © 2023-present The Muse Catcher',
+        },
+        algolia: { // algolia 搜索服务 与 内置 search 可二选一
+            appId: 'SHDNEYGA8Z',
+            apiKey: '91419401b0b0efd31b610e54e5b97249',
+            indexName: 'vue-amazing-ui'
+        },
+
         sidebar: {
             "/guild/": [
                 {
