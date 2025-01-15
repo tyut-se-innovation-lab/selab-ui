@@ -2,13 +2,13 @@ import {
     componentPreview,
     containerPreview
 } from '@vitepress-demo-preview/plugin'
+import {defineConfig} from "vite";
 
-export default {
+export default defineConfig( {
     base: '/selab-ui/',
+    siteTitle: "selab-ui",
+    description: 'selab-ui 组件库',
     themeConfig: {
-        siteTitle: "selab-ui",
-        description: 'selab-ui 组件库',
-
         nav: [
             { text: "指南", link: "/guild/installation/" },
             { text: "组件", link: "/components/button/" }
@@ -21,9 +21,9 @@ export default {
             copyright: 'Copyright © 2023-present The Muse Catcher',
         },
         algolia: { // algolia 搜索服务 与 内置 search 可二选一
-            appId: 'SHDNEYGA8Z',
-            apiKey: '91419401b0b0efd31b610e54e5b97249',
-            indexName: 'vue-amazing-ui'
+            appId: '5R1TA78ZVE',
+            apiKey: '91c28b4dbea5ab4226c670e9b00216b14',
+            indexName: 'tyut-se-innovation-labio'
         },
 
         sidebar: {
@@ -143,4 +143,4 @@ export default {
             md.use(containerPreview)
         }
     }
-}
+})
