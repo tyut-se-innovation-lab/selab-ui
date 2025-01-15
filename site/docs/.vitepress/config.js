@@ -6,7 +6,7 @@ import {
 export default {
     themeConfig: {
         siteTitle: "selab-ui",
-        base: '',
+        base: '/selab-ui/',
         nav: [
             { text: "指南", link: "/guild/installation/" },
             { text: "组件", link: "/components/button/" }
