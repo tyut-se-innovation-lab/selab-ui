@@ -6,7 +6,9 @@
   "scripts": {
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
-    "docs:preview": "vitepress preview docs"
+    "docs:preview": "vitepress preview docs",
+    "docs:deploy": "sh ./docs/script/deploy.sh",
+    "pub": "sh ./docs/script/publish.sh"
   },
   "keywords": [],
   "author": "",

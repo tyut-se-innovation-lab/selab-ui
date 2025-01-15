@@ -23,20 +23,6 @@ const closingPreviewInstance = shallowRef<Instance | TemporaryInstance | null>(
     null
 );
 
-// 懒加载交叉监控器
-const observer = new IntersectionObserver(
-    (entries) => {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-                const img = entry.target as HTMLImageElement;
-                img.src = img.dataset.src as string;
-                img.removeAttribute('data-src');
-                observer.unobserve(img);
-            }
-        });
-    },
-    { threshold: 0.01 }
-);
 
 /** 判断配置合法性 */
 function checkPreview(option: PreviewType): boolean {
@@ -423,7 +409,7 @@ function createAlbum({
 }
 
 export {
-    observer,
+
     previewCheck,
     registerPreviewImage,
     unregisterPreviewImage,
