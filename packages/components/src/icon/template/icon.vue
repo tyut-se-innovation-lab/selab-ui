@@ -1,7 +1,8 @@
 <template>
   <span class="iconfont"
         :class="iconName"
-        :style="{ fontSize: iconSize, color: iconColor }"></span>
+        :style="{ fontSize: iconSize, color: iconColor,}"
+  ></span>
 </template>
 
 <script lang="ts">

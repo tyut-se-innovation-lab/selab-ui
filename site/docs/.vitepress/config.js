@@ -111,6 +111,10 @@ export default {
             text: "EdgeProgress",
             link: "/components/edgeprogress/"
         },
+	{
+            text: "Table",
+            link: "/components/table/"
+        },
 	//]
 
                     ]

@@ -1,3 +1,4 @@
+import {Table} from "./components/src";
 import { EdgeProgress } from "./components/src";
 import { Checkbox } from "./components/src";
 import { Radio } from "./components/src";
@@ -25,7 +26,8 @@ declare module "@vue/runtime-core" {
         seBox: typeof Box;
         seCheckbox: typeof Checkbox;
         seRadio: typeof Radio;
-        //[
+        //[		 seTable: typeof Table;
+
         seSlider: typeof Slider;
         seRate: typeof Rate;
         seDialog: typeof Dialog;
