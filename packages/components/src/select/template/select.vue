@@ -75,7 +75,7 @@
 <script lang="ts" setup>
 import '../../less/components/select/index.less';
 import { computed, ref, watch, withDefaults } from 'vue';
-import { debounce } from '../../../../utils/index';
+import { debounce } from '@selab-ui/utils';
 defineOptions({ name: 'se-select' });
 
 type ISelectProps = {
@@ -83,7 +83,7 @@ type ISelectProps = {
     options: ISelectOption[];
     multiple?: boolean;
     autoClearSearchValue?: boolean;
-    modelValue: string | number | string[] | number[];
+    modelValue: string | number | string[] | number[] |null;
     filterable?: boolean;
     filterMethod?: (value: string) => ISelectOption[];
     queryMethod?: (value: string) => any;

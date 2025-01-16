@@ -1,59 +1,106 @@
 // Your component styles here
 @import url('../../base/index.less');
-
+// 基础样式
 .se-tag {
-    position: relative;
-    box-sizing: border-box;
     display: inline-flex;
     align-items: center;
-    padding: @spacing-xxs @spacing-xs;
-    font-size: 12px;
-    color: @brand-color-primary;
-    white-space: nowrap;
-    background-color: #ecf5ff;
-    border: 1px solid #d9ecff;
-    border-radius: 4px;
-}
+    font-size: 14px;
+    line-height: 1.5;
+    padding: 4px 10px;
+    cursor: default;
+    margin: 5px;
+    user-select: none;
+    transition: all 0.3s ease-in-out;
+    border-radius: 4px;  // 默认的圆角
 
-.se-tag.se-tag--success {
-    color: @brand-color-secondary;
-    background-color: #f0f9eb;
-    border-color: #e1f3d8;
-}
+    &__close-icon {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 8px;
+        font-size: 12px;
+        cursor: pointer;
+        transition: color 0.2s ease-in-out;
 
-.se-tag.se-tag--warning {
-    color: @brand-color-highlight;
-    background-color: #fdf6ec;
-    border-color: #faecd8;
-}
-
-.se-tag.se-tag--danger {
-    color: @brand-color-accent;
-    background-color: #fef0f0;
-    border-color: #fde2e2;
-}
-
-.se-tag.se-tag--info {
-    color: #909399;
-    background-color: #f4f4f5;
-    border-color: #e9e9eb;
-}
-
-.se-tag-close-icon {
-    margin-left: 5px;
-    font-size: 12px;
-    color: rgb(0 0 0 / 30%);
-    cursor: pointer;
-
-    &:hover {
-        color: rgb(0 0 0 / 60%);
+        &:hover {
+            color: #f56c6c; // Hover color
+        }
     }
 }
 
-.se-tag--hide {
-    display: none;
+// 状态样式
+.se-tag--success {
+    background-color: #f0f9eb;
+    color: #67c23a;
 }
 
-.se-tag + .se-tag {
-    margin-left: 5px;
+.se-tag--info {
+    background-color: #f4f4f5;
+    color: #909399;
+}
+
+.se-tag--warning {
+    background-color: #fdf6ec;
+    color: #e6a23c;
+}
+
+.se-tag--danger {
+    background-color: #fef0f0;
+    color: #f56c6c;
+}
+
+.se-tag--primary {
+    background-color: #409eff;
+    color: white;
+}
+
+.se-tag--default {
+    background-color: #e4e7ed;
+    color: #909399;
+}
+
+// 形状样式
+.se-tag--round {
+    border-radius: 12px;  // 圆角
+}
+
+.se-tag--square {
+    border-radius: 0px;  // 方角
+}
+
+// 标签大小样式
+.se-tag--small {
+    font-size: 12px;
+    padding: 2px 6px;
+}
+
+.se-tag--medium {
+    font-size: 14px;
+    padding: 4px 10px;
+}
+
+.se-tag--large {
+    font-size: 16px;
+    padding: 6px 12px;
+}
+
+// 隐藏标签
+.se-tag--hide {
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+// 自定义插槽样式
+.se-tag__close-icon {
+    display: inline-block;
+    margin-left: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: color 0.2s ease-in-out;
+    color: #909399;
+
+    &:hover {
+        color: #f56c6c; // Hover color for the close icon
+    }
 }
