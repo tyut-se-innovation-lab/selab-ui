@@ -1,3 +1,5 @@
+import {VirtualScroller} from "./components/src";
+import {Input} from "./components/src";
 import {Table} from "./components/src";
 import { EdgeProgress } from "./components/src";
 import { Checkbox } from "./components/src";
@@ -26,7 +28,10 @@ declare module "@vue/runtime-core" {
         seBox: typeof Box;
         seCheckbox: typeof Checkbox;
         seRadio: typeof Radio;
-        //[		 seTable: typeof Table;
+        //[		 seVirtualScroller: typeof VirtualScroller;
+
+		 seInput: typeof Input;
+		 seTable: typeof Table;
 
         seSlider: typeof Slider;
         seRate: typeof Rate;
@@ -63,5 +68,7 @@ declare module "vue" {
 
 
 //]
+
+
 
 export {};

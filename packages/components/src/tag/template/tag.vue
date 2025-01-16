@@ -37,7 +37,7 @@ const props = withDefaults(defineProps<{
   size?: TagSize; // 控制标签大小
 }>(), {
   type: 'info',
-  closeable: false,
+  closeable: true,
   show: true,
   shape: 'round',
   size: 'medium',

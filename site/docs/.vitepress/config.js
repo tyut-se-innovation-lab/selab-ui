@@ -126,6 +126,14 @@ export default defineConfig( {
             text: "Table",
             link: "/components/table/"
         },
+	{
+            text: "Input",
+            link: "/components/input/"
+        },
+	{
+            text: "VirtualScroller",
+            link: "/components/virtualscroller/"
+        },
 	//]
 
                     ]

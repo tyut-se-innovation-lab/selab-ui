@@ -1,0 +1,30 @@
+// Your component styles here
+    @import url('../../base/index.less');
+.virtual-scroller-container {
+    position: relative;
+    overflow-y: auto;
+    height: 300px; // 可根据需要调整高度
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.virtual-scroller-phantom {
+    position: relative;
+    width: 100%;
+}
+
+.virtual-scroller-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+.virtual-scroller-item {
+    height: 40px; // 与 itemHeight 保持一致
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    border-bottom: 1px solid #f0f0f0;
+    box-sizing: border-box;
+}

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="height: 450px;">
     <h2>单选示例</h2>
     <se-select
         v-model:modelValue="singleSelectValue"
@@ -16,17 +16,6 @@
         multiple
     />
     <p>当前选择: {{ multiSelectValue }}</p>
-  </div>
-  <div>
-    <h2>搜索示例</h2>
-    <se-select
-        v-model:modelValue="selectedValue"
-        :options="filteredOptions"
-        placeholder="请输入关键字搜索"
-        :filterable="true"
-        :filterMethod="customFilter"
-    />
-    <p>当前选择: {{ selectedValue }}</p>
   </div>
 </template>
 

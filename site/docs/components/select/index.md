@@ -3,7 +3,7 @@
 `Select` 是一个通用的下拉选择组件，支持单选、多选、可搜索等多种功能，满足不同场景的需求。
 
 ## 预览
-<preview path="../../demos/select/select.vue" title="基本使用" description=" "></preview>
+<preview path="../../demos/select/select.vue" ></preview>
 
 ### 基本使用
 通过传递必要的属性即可快速使用。

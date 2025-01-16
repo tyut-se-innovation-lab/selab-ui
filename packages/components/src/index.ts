@@ -44,3 +44,7 @@ export * from "./Slider";
 export * from "./edgeProgress";
 // 导入表格
 export * from "./table";
+// 导入输入框
+export * from "./input";
+// 导入虚拟滚动列表
+export * from "./VirtualScroller";
