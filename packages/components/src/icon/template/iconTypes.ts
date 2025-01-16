@@ -12,8 +12,10 @@ export const iconProps = {
     color: {
         type: String,
         default: 'black'
-
     },
+    border:{
+        type:String
+    }
 
 
 }

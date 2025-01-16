@@ -1,89 +1,169 @@
 @import url('../../base/index.less');
 
+/* 根容器样式 */
 .se-checkbox {
-    width: fit-content;
-    display: flex;
-    margin: 20px 20px;
-    font-size: 15px;
+    display: inline-block;
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 16px;
+    padding: 20px;
+    width: 100%;
+    background-color: var(--background-color, #fff);
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
 
-    .se-checkbox-label {
-        width: fit-content;
-        height: 30px;
+/* 按钮样式：全选、清除 */
+.se-checkbox-select-all {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border-color, #ddd);
+
+    button {
+        padding: 8px 18px;
+        background-color: var(--button-bg, #3498db);
+        color: var(--button-text-color, white);
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        font-size: 14px;
+        transition: background-color 0.3s, transform 0.3s;
+
+        &:hover {
+            background-color: var(--button-bg-hover, #2980b9);
+            transform: scale(1.05);
+        }
+
+        &:disabled {
+            background-color: var(--button-bg-disabled, #ccc);
+            cursor: not-allowed;
+        }
     }
+}
+
+/* 单个复选框项 */
+.se-checkbox-label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    position: relative;
 
     .se-checkbox-square {
-        width: 13px;
-        height: 13px;
-    }
+        width: 20px;
+        height: 20px;
+        margin-right: 12px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        background-color: var(--checkbox-bg, #fff);
+        border: 2px solid var(--checkbox-border-color, #ccc);
 
-    &--small {
-        font-size: 13px;
-
-        .se-checkbox-label {
-            height: 20px;
+        &:checked {
+            background-color: var(--checkbox-checked-bg, #3498db);
+            border-color: var(--checkbox-checked-border, #3498db);
         }
 
+        &:hover {
+            border-color: var(--checkbox-border-hover, #3498db);
+        }
+
+        &:disabled {
+            background-color: var(--checkbox-disabled-bg, #e0e0e0);
+            border-color: var(--checkbox-disabled-border, #ccc);
+        }
+    }
+
+    .se-checkbox-text {
+        font-size: 16px;
+        color: var(--checkbox-text-color, #333);
+        cursor: pointer;
+        font-weight: 500;
+
+        &.disabled {
+            color: var(--checkbox-text-disabled-color, #ccc);
+        }
+    }
+
+    &:hover {
         .se-checkbox-square {
-            width: 12px;
-            height: 12px;
+            border-color: var(--checkbox-border-hover, #3498db);
         }
     }
 
-    &--middle {
-        font-size: 15px;
-
-        .se-checkbox-label {
-            height: 30px;
-        }
-
-        .se-checkbox-square {
-            width: 13px;
-            height: 13px;
-        }
-    }
-
-    &--large {
-        font-size: 20px;
-
-        .se-checkbox-label {
-
-            height: 40px;
-        }
-
-        .se-checkbox-square {
-            width: 14px;
-            height: 14px;
-        }
-    }
-}
-
-.se-checkbox-label {
-    display: inline-flex;
-    align-items: center;
-    margin-right: 36px;
-    cursor: pointer;
-
-}
-
-.se-checkbox-square {
-    cursor: pointer;
-    margin: 0 0;
-    accent-color: @text-color-accent;
-
-    &:checked+.se-checkbox-text {
-        color: #3498db; // 选中状态下的文字颜色，你可以替换为其他颜色
-    }
-
-    &.disabled {
-        cursor: not-allowed; // 设置鼠标样式为不可用
-    }
-}
-
-.se-checkbox-text {
-    padding-left: 12px;
-
-    &.disabled {
-        color: rgb(178, 178, 178);
+    &:disabled {
         cursor: not-allowed;
+
+        .se-checkbox-square {
+            cursor: not-allowed;
+        }
+
+        .se-checkbox-text {
+            color: var(--checkbox-text-disabled-color, #ccc);
+        }
     }
 }
+
+/* 不同大小的复选框 */
+.se-checkbox--small .se-checkbox-square {
+    width: 14px;
+    height: 14px;
+}
+
+.se-checkbox--middle .se-checkbox-square {
+    width: 18px;
+    height: 18px;
+}
+
+.se-checkbox--large .se-checkbox-square {
+    width: 22px;
+    height: 22px;
+}
+
+/* 禁用状态样式 */
+.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+/* 白天模式 */
+//@media (prefers-color-scheme: light) {
+//    :root {
+//        --text-color: #333;
+//        --background-color: #fff;
+//        --button-bg: #3498db;
+//        --button-text-color: white;
+//        --button-bg-hover: #2980b9;
+//        --button-bg-disabled: #ccc;
+//        --checkbox-bg: #fff;
+//        --checkbox-border-color: #ccc;
+//        --checkbox-checked-bg: #3498db;
+//        --checkbox-checked-border: #3498db;
+//        --checkbox-text-color: #333;
+//        --checkbox-border-hover: #3498db;
+//        --checkbox-text-disabled-color: #ccc;
+//        --border-color: #ddd;
+//    }
+//}
+//
+///* 黑夜模式 */
+//@media (prefers-color-scheme: dark) {
+//    :root {
+//        --text-color: #fff;
+//        --background-color: #333;
+//        --button-bg: #1f8ecd;
+//        --button-text-color: #fff;
+//        --button-bg-hover: #17788b;
+//        --button-bg-disabled: #444;
+//        --checkbox-bg: #444;
+//        --checkbox-border-color: #666;
+//        --checkbox-checked-bg: #1f8ecd;
+//        --checkbox-checked-border: #1f8ecd;
+//        --checkbox-text-color: #fff;
+//        --checkbox-border-hover: #1f8ecd;
+//        --checkbox-text-disabled-color: #555;
+//        --border-color: #555;
+//    }
+//}
+//

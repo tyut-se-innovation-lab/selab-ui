@@ -1,17 +1,30 @@
 import { ExtractPropTypes } from "@vue/runtime-core"
+import {PropType} from "vue";
 
 export const checkboxProps = {
-    size: {
-        type: String,
-        default: ''
+    modelValue: {
+        type: Array as PropType<Array<string | number>>,
+        default: () => [],
     },
     options: {
-        type: Array as () => (String | Number | Boolean | null)[],
-        default: () => []
+        type: Array as PropType<Array<string | number>>,
+        required: true,
+    },
+    size: {
+        type: String as PropType<'small' | 'middle' | 'large'>,
+        default: 'middle',
     },
     disabled: {
         type: Boolean,
-        default: false
-    }
-}
+        default: false,
+    },
+    checkAllText: {
+        type: String,
+        default: '全选',
+    },
+    checkClearText: {
+        type: String,
+        default: '清除',
+    },
+};
 export type CheckboxProps = ExtractPropTypes<typeof checkboxProps>

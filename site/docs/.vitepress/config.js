@@ -2,29 +2,42 @@ import {
     componentPreview,
     containerPreview
 } from '@vitepress-demo-preview/plugin'
+import {defineConfig} from "vite";
 
-export default {
+export default defineConfig( {
+    base: '/selab-ui/',
+    siteTitle: "selab-ui",
+    description: 'selab-ui 组件库',
     themeConfig: {
-        siteTitle: "selab-ui",
         nav: [
-            { text: "指南", link: "/guild/" },
-            { text: "组件", link: "/components/" }
+            { text: "指南", link: "/guild/installation/" },
+            { text: "组件", link: "/components/button/" }
         ],
         socialLinks: [
             { icon: "github", "link": "https://github.com/tyut-se-innovation-lab/selab-ui" }
         ],
+        footer: {
+            message: 'Released under the MIT License.',
+            copyright: 'Copyright © 2023-present The Muse Catcher',
+        },
+        algolia: { // algolia 搜索服务 与 内置 search 可二选一
+            appId: '5R1TA78ZVE',
+            apiKey: '91c28b4dbea5ab4226c670e9b00216b14',
+            indexName: 'tyut-se-innovation-labio'
+        },
+
         sidebar: {
             "/guild/": [
                 {
                     text: "基础",
                     items: [
                         {
-                            text: "安装",
+                            text: "快速开始",
                             link: "/guild/installation/",
                         },
                         {
-                            text: "快速开始",
-                            link: "/guild/quickstart/",
+                            text: "更新日志",
+                            link: "/guild/updateLog/",
                         }
                     ]
                 }
@@ -111,6 +124,10 @@ export default {
             text: "EdgeProgress",
             link: "/components/edgeprogress/"
         },
+	{
+            text: "Table",
+            link: "/components/table/"
+        },
 	//]
 
                     ]
@@ -126,4 +143,4 @@ export default {
             md.use(containerPreview)
         }
     }
-}
+})

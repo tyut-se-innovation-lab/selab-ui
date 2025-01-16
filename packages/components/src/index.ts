@@ -42,3 +42,5 @@ export * from "./Slider";
 
 // 导入边缘进度条
 export * from "./edgeProgress";
+// 导入表格
+export * from "./table";

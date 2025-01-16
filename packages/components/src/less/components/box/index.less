@@ -1,32 +1,87 @@
 @import url('../../base/index.less');
 
 .se-box {
-    padding: 10px;
-    margin: 5px;
-    border: 1px solid @border-width-thin;
-    border-radius: @border-rounded;
+    // 通用样式
+    display: block;
+    padding: 16px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: center;
+    transition: all 0.3s ease;
+    margin: 12px 0;
 
-    &--type1 {
-        font-weight: bold;
-        color: @text-color-primary;
-        background-color: @bg-color-secondary;
+    // 不同类型的样式
+    &--primary {
+        background-color: #007bff;
+        color: #ffffff;
+        border: 1px solid #007bff;
+
+        &:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
     }
 
-    &--type2 {
-        color: @text-color-white;
-        text-align: center;
-        background-color: @brand-color-primary;
+    &--secondary {
+        background-color: #6c757d;
+        color: #ffffff;
+        border: 1px solid #6c757d;
+
+        &:hover {
+            background-color: #5a6268;
+            border-color: #5a6268;
+        }
     }
 
-    &--rounded {
-        border-radius: @border-radius-large;
+    &--success {
+        background-color: #28a745;
+        color: #ffffff;
+        border: 1px solid #28a745;
+
+        &:hover {
+            background-color: #218838;
+            border-color: #218838;
+        }
     }
 
-    &:hover {
-        box-shadow: @box-shadow-small;
+    &--warning {
+        background-color: #ffc107;
+        color: #212529;
+        border: 1px solid #ffc107;
+
+        &:hover {
+            background-color: #e0a800;
+            border-color: #d39e00;
+        }
     }
 
-    .box-content {
-        font-size: @font-size-normal;
+    &--info {
+        background-color: #17a2b8;
+        color: #ffffff;
+        border: 1px solid #17a2b8;
+
+        &:hover {
+            background-color: #138496;
+            border-color: #117a8b;
+        }
     }
+
+    &--custom {
+        background-color: #f8f9fa;
+        color: #212529;
+        border: 1px dashed #ced4da;
+
+        &:hover {
+            background-color: #e9ecef;
+            border-color: #adb5bd;
+        }
+    }
+}
+
+// 自定义类名的辅助样式
+.custom-style {
+    border: 2px dashed red;
+    background-color: #fff4f4;
+    padding: 12px;
 }
