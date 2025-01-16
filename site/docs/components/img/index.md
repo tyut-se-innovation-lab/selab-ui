@@ -81,7 +81,7 @@ onClose 点击遮罩和关闭按钮或esc关闭预览的回调 拦截?
 
 ## 预览
 
-<preview path="../../demos/img/img.vue" title="基本使用" description=" "></preview>
+<preview path="../../demos/img/img.vue" title="基本使用" description=" " client-only></preview>
 
 #### 示例
 

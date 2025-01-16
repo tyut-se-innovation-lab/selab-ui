@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import img from '../template/img';
+import img from '../src';
 import { describe, expect, it } from 'vitest';
 describe('img Test', () => {
   it('renders component properly', () => {

@@ -10,7 +10,7 @@ import {
 import '../../less/components/img/index.less';
 import { imgProps } from './image';
 import {
-
+    getObserver,
     registerPreviewImage,
     unregisterPreviewImage,
     previewImage,
@@ -22,7 +22,8 @@ import lazyImg from './assets/lazy.png';
 export default defineComponent({
     name: 'se-img',
     props: imgProps,
-    setup(props, { slots, attrs, expose }): () => VNode {
+  setup (props, { slots, attrs, expose }): () => VNode {
+      const observer = getObserver();
         const imgClassName = computed(() => {
             const { fit } = props;
             return {
@@ -30,20 +31,6 @@ export default defineComponent({
                 [`se-img-fit-${fit}`]: true
             };
         });
-        // 懒加载交叉监控器
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        const img = entry.target as HTMLImageElement;
-                        img.src = img.dataset.src as string;
-                        img.removeAttribute('data-src');
-                        observer.unobserve(img);
-                    }
-                });
-            },
-            { threshold: 0.01 }
-        );
 
         const _src = computed(() => {
             if (props.lazy) {
