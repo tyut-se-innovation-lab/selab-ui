@@ -20,10 +20,8 @@ export default defineConfig( {
             message: 'Released under the MIT License.',
             copyright: 'Copyright © 2023-present The Muse Catcher',
         },
-        algolia: { // algolia 搜索服务 与 内置 search 可二选一
-            appId: '5R1TA78ZVE',
-            apiKey: '91c28b4dbea5ab4226c670e9b00216b14',
-            indexName: 'tyut-se-innovation-labio'
+        search: {
+            provider: 'local'
         },
 
         sidebar: {
