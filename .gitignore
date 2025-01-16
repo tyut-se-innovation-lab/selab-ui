@@ -6,3 +6,4 @@ node_modules
 coverage
 /packages/selab/
 *.vscode
+/site/docs/.vitepress/dist
