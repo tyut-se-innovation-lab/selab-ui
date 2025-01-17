@@ -1,6 +1,7 @@
 .input-with-virtual-dropdown {
   position: relative;
-  width: 300px;
+  width: 100%;
+  max-width: 300px;
   font-family: Arial, sans-serif;
 
   .input-container {
@@ -8,7 +9,7 @@
     flex-wrap: wrap;
     align-items: center;
     gap: 8px;
-    padding: 4px;
+    padding: 6px;
     border: 1px solid #ccc;
     border-radius: 4px;
     background-color: #fff;
@@ -17,12 +18,13 @@
 
     &:focus-within {
       border-color: #007aff;
+      box-shadow: 0 0 3px rgba(0, 122, 255, 0.4);
     }
 
     .input-field {
       flex: 1;
-      min-width: 80px; /* 防止输入框宽度过窄 */
-      padding: 4px;
+      min-width: 100px; /* 防止输入框宽度过窄 */
+      padding: 6px;
       border: none;
       font-size: 14px;
       outline: none;
@@ -65,15 +67,30 @@
     background: #fff;
     border: 1px solid #ccc;
     border-radius: 4px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     overflow-y: auto;
     z-index: 1000;
+
+    /* 滚动条样式 */
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #ccc;
+      border-radius: 4px;
+
+      &:hover {
+        background: #bbb;
+      }
+    }
 
     .dropdown-item {
       padding: 8px 12px;
       font-size: 14px;
       color: #333;
       cursor: pointer;
+      transition: background-color 0.2s ease;
 
       &:hover {
         background-color: #f5f5f5;
@@ -81,6 +98,17 @@
 
       &:active {
         background-color: #e0e0e0;
+      }
+    }
+
+    .dropdown-item-disabled {
+      color: #ccc;
+      pointer-events: none;
+      cursor: not-allowed;
+      background-color: #f9f9f9;
+
+      &:hover {
+        background-color: #f9f9f9; /* 禁用项保持背景一致 */
       }
     }
   }
