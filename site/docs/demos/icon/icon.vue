@@ -1,31 +1,11 @@
-
 <template>
-  <span v-for="(item,index) in IconArray()" style="display: inline-block;width: 100%">
-  <span>{{ index + 1}}</span> <se-icon style="display: inline-block;" :name="item" :color="getRandomColor()" ></se-icon> <span>{{item}}</span>
-  </span>
+  <div style="display:inline-flex">
+    <se-icon :icon="iconName1"  color ="gray"></se-icon>
+    <se-icon :icon = "iconName2" color ="gray"></se-icon>
+  </div>
 
 </template>
-
-<script>
-
-import {IconArray} from "./output";
-import {defineComponent} from "vue";
-import {getRandomColor} from "../utils/getRandomColor";
-
-
-export default defineComponent({
-  methods: {
-    getRandomColor,
-    IconArray() {
-      return IconArray
-    }
-  }
-})
-
+<script lang="ts" setup>
+ const  iconName1 = `mdi:content-copy`
+ const iconName2 =`material-symbols:10k`
 </script>
-
-<style scoped>
-span{
-  margin: 20px;
-}
-</style>

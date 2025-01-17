@@ -1,13 +1,12 @@
 <template>
-  <div style="height: 450px;">
+  <div style="height: 500px;">
     <h2>单选示例</h2>
     <se-select
         v-model:modelValue="singleSelectValue"
         :options="options"
         placeholder="请选择一个选项"
     />
-    <p>当前选择: {{ singleSelectValue }}</p>
-
+    <br><br><br>
     <h2>多选示例</h2>
     <se-select
         v-model:modelValue="multiSelectValue"
@@ -15,7 +14,6 @@
         placeholder="请选择多个选项"
         multiple
     />
-    <p>当前选择: {{ multiSelectValue }}</p>
   </div>
 </template>
 
