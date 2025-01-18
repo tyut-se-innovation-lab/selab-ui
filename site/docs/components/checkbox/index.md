@@ -1,5 +1,5 @@
-# Checkbox (多选框) 组件文档
-
+# Checkbox (多选框) 
+## 概述
 `Checkbox` 组件用于在页面上创建多选框控件，允许用户选择一个或多个选项，广泛应用于表单填写、列表选择等场景。
 ## 预览
 <preview path="../../demos/checkbox/checkbox.vue" title="基本使用" description=" "></preview>
@@ -140,7 +140,7 @@ export default defineComponent({
 </script>
 ```
 
-### 注意事项
+## 注意
 
 - **性能优化**：如果选项很多，建议通过虚拟滚动（Virtual Scroll）或分页的方式展示选项，以避免一次性加载所有选项导致性能问题。
 

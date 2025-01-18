@@ -4,17 +4,17 @@ import {
 } from '@vitepress-demo-preview/plugin'
 import {defineConfig} from "vite";
 
-export default defineConfig( {
+export default defineConfig({
     base: '/selab-ui/',
     siteTitle: "selab-ui",
     description: 'selab-ui 组件库',
     themeConfig: {
         nav: [
-            { text: "指南", link: "/guild/installation/" },
-            { text: "组件", link: "/components/button/" }
+            {text: "指南", link: "/guild/installation/"},
+            {text: "组件", link: "/components/button/"}
         ],
         socialLinks: [
-            { icon: "github", "link": "https://github.com/tyut-se-innovation-lab/selab-ui" }
+            {icon: "github", "link": "https://github.com/tyut-se-innovation-lab/selab-ui"}
         ],
         footer: {
             message: 'Released under the MIT License.',
@@ -42,12 +42,28 @@ export default defineConfig( {
             ],
             "/components/": [
                 {
-                    text: "基础组件",
+                    text: "通用组件",
+                    collapsed: false,
                     items: [
+                        {
+                            text: "Typography",
+                            link: "/components/typography/"
+                        },
                         {
                             text: "Button",
                             link: "/components/button/",
                         },
+                        {
+                            text: "Icon",
+                            link: "/components/icon/"
+                        },
+
+                    ]
+                },
+                {
+                    text: "布局组件",
+                    collapsed: false,
+                    items: [
                         {
                             text: "Box",
                             link: "/components/box/"
@@ -56,89 +72,123 @@ export default defineConfig( {
                             text: "Card",
                             link: "/components/card/"
                         },
-                        {
-                            text: "Select",
-                            link: "/components/select/"
-                        },
-                        {
-                            text: "Skeleton",
-                            link: "/components/skeleton/"
-                        },
-                        {
-                            text: "Tag",
-                            link: "/components/tag/"
-                        },
-                        {
-                            text: "Message",
-                            link: "/components/message/"
-                        },
-                        {
-                            text: "Img",
-                            link: "/components/img/"
-                        },
 
-                        {
-                            text: "Icon",
-                            link: "/components/icon/"
-                        },
-                        {
-                            text: "MiniMsg",
-                            link: "/components/minimsg/"
-                        },
-                        {
-                            text: "Tooltip",
-                            link: "/components/tooltip/"
-                        },
+                    ]
+                },
+                {
+                    text: "导航组件",
+                    collapsed: false,
+                    items: [
                         {
                             text: "Contextmenu",
                             link: "/components/contextmenu/"
                         },
+                    ]
+                },
+                {
+                    text: "数据录入",
+                    collapsed: false,
+                    items: [
                         {
-                            text: "Dialog",
-                            link: "/components/dialog/"
+                            text: "Checkbox",
+                            link: "/components/checkbox/"
                         },
                         {
-                            text: "Rate",
-                            link: "/components/rate/"
-                        }, {
-                            text: "Switch",
-                            link: "/components/switch/"
-
+                            text: "EdgeProgress",
+                            link: "/components/edgeprogress/"
+                        },
+                        {
+                            text: "Input",
+                            link: "/components/input/"
                         },
                         {
                             text: "Radio",
                             link: "/components/radio/"
                         },
                         {
-                            text: "Checkbox",
-                            link: "/components/checkbox/"
+                            text: "Rate",
+                            link: "/components/rate/"
                         },
                         {
+                            text: "Select",
+                            link: "/components/select/"
+                        },
+                        {
+                            text: "Switch",
+                            link: "/components/switch/"
 
+                        },
+                        {
                             text: "Slider",
                             link: "/components/slider/"
                         },
+                    ]
+                },
+                {
+                    text: "数据展示",
+                    collapsed: false,
+                    items: [
                         {
-            text: "EdgeProgress",
-            link: "/components/edgeprogress/"
-        },
-	{
-            text: "Table",
-            link: "/components/table/"
-        },
-	{
-            text: "Input",
-            link: "/components/input/"
-        },
-	{
-            text: "VirtualScroller",
-            link: "/components/virtualscroller/"
-        },
-	//]
+                            text: "Img",
+                            link: "/components/img/"
+                        },
+
+                        {
+                            text: "Tag",
+                            link: "/components/tag/"
+                        },
+                        {
+                            text: "Table",
+                            link: "/components/table/"
+                        },
+                        {
+                            text: "Tooltip",
+                            link: "/components/tooltip/"
+                        },
+                    ]
+                },
+                {
+                    text: "反馈组件",
+                    collapsed: false,
+                    items: [
+                        {
+                            text: "Dialog",
+                            link: "/components/dialog/"
+                        },
+                        {
+                            text: "Message",
+                            link: "/components/message/"
+                        },
+                        {
+                            text: "MiniMsg",
+                            link: "/components/minimsg/"
+                        },
+                        {
+                            text: "Skeleton",
+                            link: "/components/skeleton/"
+                        },
+                    ]
+                },
+                {
+                    text: "其他组件",
+                    collapsed: false,
+                    items: [
+
+
+
+                        {
+                            text: "VirtualScroller",
+                            link: "/components/virtualscroller/"
+                        },
+
+                        //]
 
                     ]
-                }
-            ]
+                },
+
+            ],
+
+            "/currency/": []
         }
 
     },

@@ -1,11 +1,11 @@
-# Skeleton
-
-## 预览
-<preview path="../../demos/skeleton/skeleton.vue" title="基本使用" description=" "></preview>
-
+# Skeleton(骨架屏)
 ## **概述**
 `se-skeleton`  
 加载状态的占位符组件，用于在数据加载过程中提供视觉占位效果，提升用户体验。
+## 预览
+<preview path="../../demos/skeleton/skeleton.vue" title="基本使用" description=" "></preview>
+
+
 
 ## **功能概述**
 
