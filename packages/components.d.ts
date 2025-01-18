@@ -1,3 +1,4 @@
+import {Typography} from "./components/src";
 import {VirtualScroller} from "./components/src";
 import {Input} from "./components/src";
 import {Table} from "./components/src";
@@ -28,7 +29,8 @@ declare module "@vue/runtime-core" {
         seBox: typeof Box;
         seCheckbox: typeof Checkbox;
         seRadio: typeof Radio;
-        //[		 seVirtualScroller: typeof VirtualScroller;
+        //[		 seTypography: typeof Typography;
+		 seVirtualScroller: typeof VirtualScroller;
 
 		 seInput: typeof Input;
 		 seTable: typeof Table;

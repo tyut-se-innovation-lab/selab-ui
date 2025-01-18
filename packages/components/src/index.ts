@@ -48,3 +48,5 @@ export * from "./table";
 export * from "./input";
 // 导入虚拟滚动列表
 export * from "./VirtualScroller";
+// 导入排版
+export * from "./Typography";

@@ -3,9 +3,11 @@ import vue from '@vitejs/plugin-vue';
 import DefineOptions from 'unplugin-vue-define-options/vite';
 import dts from 'vite-plugin-dts';
 import vueJsx from "@vitejs/plugin-vue-jsx";
+import PurgeIcons from 'vite-plugin-purge-icons'
+
 export default defineConfig({
     test: {
-        environment: 'happy-dom'
+        environment: 'selab-dom'
     },
     build: {
         //打包文件目录
@@ -55,6 +57,9 @@ export default defineConfig({
             tsConfigFilePath: '../../tsconfig.json'
         }),
         DefineOptions(),
+        PurgeIcons({
+            /* 配置选项 */
+        }),
         {
             name: 'style',
             generateBundle(config, bundle) {

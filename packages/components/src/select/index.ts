@@ -1,4 +1,4 @@
-import _Select from './template/select.vue';
+import _Select from './template/select.js';
 import type { App, Plugin } from 'vue';
 type SFCWithInstall<T> = T & Plugin;
 const withInstall = <T>(comp: T) => {
