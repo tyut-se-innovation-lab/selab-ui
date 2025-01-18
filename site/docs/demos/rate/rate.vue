@@ -1,13 +1,10 @@
-
 <template>
   <div>
-    <se-rate>测试</se-rate>
+    <h3>基础评分组件</h3>
+    <se-rate />
   </div>
 </template>
 
 <script>
 
 </script>
-
-<style scoped>
-</style>
