@@ -24,8 +24,6 @@ export * from "./miniMsg";
 
 // 导入文字提示
 export * from "./tooltip";
-// 导入上下文菜单
-export * from "./contextmenu";
 // 导入对话框
 export * from "./dialog";
 // 导入评分

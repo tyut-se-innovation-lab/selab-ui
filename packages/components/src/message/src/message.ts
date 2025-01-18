@@ -1,8 +1,4 @@
-import type {
-    MessageContext,
-    MessageProps,
-    MessagePropsType
-} from './message.d';
+import type { MessageProps, MessagePropsType } from './message.d';
 import { VNode, PropType } from 'vue';
 import { getStyle } from '@selab-ui/utils';
 
@@ -11,11 +7,11 @@ const messageType = getStyle();
 const iconType = [...messageType];
 
 export const iconMap = {
-    info: 'info',
-    success: 'roundcheck',
+    info: 'information',
+    success: 'success',
     // hear
-    warning: 'round_warn',
-    danger: 'roundclose'
+    warning: 'warning-circle',
+    danger: 'close-circle'
 };
 
 const msgDefault: MessagePropsType = {
@@ -98,7 +94,7 @@ const msgProps: MessageProps = {
         default: msgDefault.beforeClose
     },
     onCloseClick: {
-        type: Function as PropType<(instance: MessageContext) => void>,
+        type: Function as PropType<() => void>,
         default: msgDefault.onCloseClick
     },
     onClose: {

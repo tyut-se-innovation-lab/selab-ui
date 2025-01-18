@@ -21,7 +21,7 @@
                         },
                         ...event
                     },
-                    'VNode: 这是一个高60px的按钮'
+                    '点我关闭'
                 )
             )
         "
@@ -38,13 +38,13 @@ function msg(msg: string | VNode | (() => VNode)) {
 }
 const event = {
     onmouseenter: () => {
-        document.getElementsByClassName(
-            'buttonVNode'
+        document.querySelectorAll<HTMLButtonElement>(
+            '.buttonVNode'
         )[0].style.backgroundColor = '#6c89ff';
     },
     onmouseleave: () => {
-        document.getElementsByClassName(
-            'buttonVNode'
+        document.querySelectorAll<HTMLButtonElement>(
+            '.buttonVNode'
         )[0].style.backgroundColor = '#6c9dff';
     },
     onclick: () => {

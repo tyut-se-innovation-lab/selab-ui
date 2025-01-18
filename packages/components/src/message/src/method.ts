@@ -18,31 +18,12 @@ const instances: Array<MessageContext> = shallowReactive([]);
 
 const msgZIndex = ref(msgDefault.zIndex);
 
-watch(
-    instances,
-    (val, oVal) => {
-        if (val.length === 0) {
-            msgZIndex.value = msgDefault.zIndex;
-            return;
-        }
-        // if (val.length < oVal.length) {
-        //     // let deleteIndex = -1;
-        //     oVal.forEach((instance: MessageContext, index: number) => {
-        //         if (instance === val[index]) {
-        //             // if (deleteIndex !== -1) deleteIndex = index;
-        //             val[index].props.index--;
-        //             // val[index].props.top -=
-        //             //     getSizeMap(oVal[deleteIndex].props.size) * 60;
-        //         }
-        //         console.log(instance);
-        //     });
-        // }
-        console.log('message 新旧值相同?', val, oVal, val === oVal);
+watch(instances, (val) => {
+    if (val.length === 0) {
+        msgZIndex.value = msgDefault.zIndex;
+        return;
     }
-    // {
-    //     deep: true
-    // }
-);
+});
 
 /** 将传入的数据转换成符合MessageOption的对象 */
 function toMegOption(msg: MessageOption | MessageMsg): MessageOption {

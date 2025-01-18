@@ -71,6 +71,9 @@
   transition: all 0.3s;
   z-index: 99;
 }
+.se-img-preview .se-img-preview-close > div {
+  padding: 2px;
+}
 .se-img-preview .se-img-preview-close:hover {
   background-color: #00000055;
 }

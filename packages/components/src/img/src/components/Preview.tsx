@@ -17,20 +17,15 @@ import { ImgPreviewPropsType } from '../image.d';
 import { unPreviewImage } from '../method';
 import { docEvent } from '@selab-ui/utils';
 import SePreviewToolbar from './Toolbar';
-import contextmenu from '../../../contextmenu/src/directive';
 import useGetPreviewStartLocation from '../hooks/useGetPreviewStartLocation';
 import useOperate from '../hooks/useOperate';
 import useChangeImg from '../hooks/useChangeImg';
-import useDownload from '../hooks/useDownload';
 import useStyleValue from '../hooks/useStyleValue';
 import SeIcon from '../../../icon/template/icon.vue';
 
 export default defineComponent({
     name: 'se-img-preview',
     props: imgPreviewProps,
-    directives: {
-        contextmenu
-    },
     setup(props, { expose }): () => VNode {
         const _option = {
             openIndex: props.index,
@@ -65,9 +60,9 @@ export default defineComponent({
         const closeIconComp = computed(() => {
             if (isVNode(_option.closeIcon)) return _option.closeIcon;
             return createVNode(SeIcon, {
-                name: _option.closeIcon,
+                icon: _option.closeIcon,
                 color: '#fff',
-                iconSize: '16px'
+                size: 16
             });
         });
         const previewAlt = computed(() => {
@@ -317,12 +312,6 @@ export default defineComponent({
                 imgStyle
             );
 
-            const { userDownload } = useDownload(
-                props as ImgPreviewPropsType,
-                _option,
-                isClose
-            );
-
             const { userChangeImg, isChanging } = useChangeImg(
                 props as ImgPreviewPropsType,
                 _option,
@@ -348,13 +337,11 @@ export default defineComponent({
                         _option.imgList.length > 1
                             ? props.toolbar.pagination
                             : false,
-                    download: props.toolbar.download ? true : false,
                     onZoom: scaleImg,
                     onRotate: rotateImg,
                     onFlip: flipImg,
                     onReset: resetImg,
                     onSwitch: userChangeImg,
-                    onDownload: userDownload,
                     onClose: userClosePreview,
                     onExportToolbarWidth: (width: number) => {
                         toolbarWidth.value = width;
@@ -375,13 +362,12 @@ export default defineComponent({
                     flip: false,
                     reset: false,
                     pagination: false,
-                    download: false,
                     onZoom: scaleImg,
                     onRotate: rotateImg,
                     onFlip: flipImg,
                     onReset: resetImg,
                     onSwitch: userChangeImg,
-                    onDownload: userDownload,
+
                     onClose: userClosePreview,
                     onExportToolbarWidth: (width: number) => {
                         toolbarWidth.value = width;
@@ -429,7 +415,6 @@ export default defineComponent({
                             onLoad={() => {}}
                             ref={img}
                             alt={previewAlt.value}
-                            v-contextmenu={props.contextmenu}
                         />
                     </div>
                     <div class="se-img-preview-toolbar" ref={toolbarRef}></div>

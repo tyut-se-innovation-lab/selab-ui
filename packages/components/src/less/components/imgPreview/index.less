@@ -1,125 +1,126 @@
 @import url('../../base/index.less');
 
 .se-img-preview-direct-root {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 0;
-  height: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
 }
 
 .se-img-preview {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 0;
-  height: 0;
-  // z-index: 999;
-
-  & .se-img-preview-mask {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: #00000066;
-    transition: all .3s;
-    animation-name: showPreview;
-    animation-iteration-count: 1;
-    animation: showPreview .3s;
-  }
+    width: 0;
+    height: 0;
+    // z-index: 999;
 
-  & .se-img-preview-img {
-    overflow: visible;
-
-    & .se-img-preview-img-item {
-      position: absolute;
-      transition:
-          left .3s ease-in-out,
-          top .3s ease-in-out,
-          width .3s ease-in-out,
-          height .3s ease-in-out,
-          min-width .3s ease-in-out,
-          min-height .3s ease-in-out,
-          transform .3s ease-in-out,
-          opacity .3s ease-in-out;
-      cursor: grab;
-
-      &.se-img-preview-img-only-preview {
-        animation: showPreview .3s;
-      }
-
-      &.se-img-preview-img-item-noModal {
-          -webkit-filter: drop-shadow(0 0 6px #33333333);
-          filter: drop-shadow(0 0 6px #33333333);
-          // border: 1px solid #000000;
-          // width: 400px;
-      }
+    & .se-img-preview-mask {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: #00000066;
+        transition: all 0.3s;
+        animation-name: showPreview;
+        animation-iteration-count: 1;
+        animation: showPreview 0.3s;
     }
-  }
 
-  & .se-img-preview-toolbar {
-    position: fixed;
-    top: calc(100vh - 80px);
-    left: 50vw;
-    transform: translateX(-50%);
-    transition: all .3s;
-    animation-name: showToolbar;
-    animation-iteration-count: 1;
-    animation: showToolbar .3s;
-  }
+    & .se-img-preview-img {
+        overflow: visible;
 
-  & .se-img-preview-close {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    background-color: #00000033;
-    color: #fff;
-    text-align: center;
-    line-height: 30px;
-    backdrop-filter: blur(10px);
-    cursor: pointer;
-    transition: all .3s;
-    z-index: 99;
+        & .se-img-preview-img-item {
+            position: absolute;
+            transition:
+                left 0.3s ease-in-out,
+                top 0.3s ease-in-out,
+                width 0.3s ease-in-out,
+                height 0.3s ease-in-out,
+                min-width 0.3s ease-in-out,
+                min-height 0.3s ease-in-out,
+                transform 0.3s ease-in-out,
+                opacity 0.3s ease-in-out;
+            cursor: grab;
 
-    &:hover {
-      background-color: #00000055;
+            &.se-img-preview-img-only-preview {
+                animation: showPreview 0.3s;
+            }
+
+            &.se-img-preview-img-item-noModal {
+                -webkit-filter: drop-shadow(0 0 6px #33333333);
+                filter: drop-shadow(0 0 6px #33333333);
+                // border: 1px solid #000000;
+                // width: 400px;
+            }
+        }
     }
-  }
 
-  & .se-img-preview-msg {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: #fff;
-    text-align: center;
-    font-size: 20px;
-    font-weight: bold;
-    z-index: 99;
-  }
+    & .se-img-preview-toolbar {
+        position: fixed;
+        top: calc(100vh - 80px);
+        left: 50vw;
+        transform: translateX(-50%);
+        transition: all 0.3s;
+        animation-name: showToolbar;
+        animation-iteration-count: 1;
+        animation: showToolbar 0.3s;
+    }
+
+    & .se-img-preview-close {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-color: #00000033;
+        color: #fff;
+        text-align: center;
+        line-height: 30px;
+        backdrop-filter: blur(10px);
+        cursor: pointer;
+        transition: all 0.3s;
+        z-index: 99;
+
+        & > div {
+            padding: 2px;
+        }
+
+        &:hover {
+            background-color: #00000055;
+        }
+    }
+
+    & .se-img-preview-msg {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: #fff;
+        text-align: center;
+        font-size: 20px;
+        font-weight: bold;
+        z-index: 99;
+    }
 }
 
 @keyframes showPreview {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
 }
 
 @keyframes showToolbar {
-  0% {
-    transform: translateX(-50%) translateY(200%);
-  }
-  100% {
-    transform: translateX(-50%) translateY(0);
-  }
-  
+    0% {
+        transform: translateX(-50%) translateY(200%);
+    }
+    100% {
+        transform: translateX(-50%) translateY(0);
+    }
 }
-
-

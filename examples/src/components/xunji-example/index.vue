@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref, createVNode } from 'vue';
 import { SeMsg, SeMiniMsg, SeCreateAlbum } from 'selab-ui';
-import { ImgDownloadEvent } from 'selab-ui/src/img/src/image.d';
 import useImg from './hooks/useImg.ts';
 
 const edgeProgressTest = ref(15);
@@ -142,9 +141,6 @@ const onImgOpen = (done: () => void) => {
     done();
     console.log('onImgOpen');
 };
-const onImgDownload = (e: ImgDownloadEvent) => {
-    console.log('onImgDownload', e);
-};
 
 const albumLocation = {
     x: document.documentElement.clientWidth / 2 - 250,
@@ -264,34 +260,14 @@ const myAlbum = SeCreateAlbum({
                             rotate: true,
                             reset: true,
                             pagination: true,
-                            flip: true,
-                            download: onImgDownload
+                            flip: true
                         },
                         modal: false,
                         scaleStep: 0.5,
                         closeIcon: 'close',
                         closeOnClickModal: true,
-                        closeOnPressEscape: true,
-                        contextmenu: [
-                            {
-                                name: 'contextmenu测试1',
-                                onClick: () => {
-                                    console.log('contextmenu测试1');
-                                },
-                                children: [
-                                    {
-                                        name: 'contextmenu测试1.1',
-                                        onClick: () => {
-                                            console.log('contextmenu测试1.1');
-                                        },
-                                        icon: 'close'
-                                    }
-                                ],
-                                hidden: false
-                            }
-                        ]
+                        closeOnPressEscape: true
                     }"
-                    :contextmenu="false"
                 >
                     <template #loading>
                         <div>loading</div>
@@ -315,7 +291,6 @@ const myAlbum = SeCreateAlbum({
                 :preview="{
                     name: '测试1'
                 }"
-                :contextmenu="false"
             >
                 <template #loading>
                     <div>loading</div>
@@ -349,7 +324,6 @@ const myAlbum = SeCreateAlbum({
             :preview="{
                 name: '测试1'
             }"
-            :contextmenu="false"
         >
             <template #loading>
                 <se-icon name="loading" color="#fff" iconSize="48px" />
@@ -386,25 +360,6 @@ const myAlbum = SeCreateAlbum({
                     show: true
                 }
             }"
-            :contextmenu="false"
-            v-contextmenu="[
-                {
-                    name: 'contextmenu测试2',
-                    onClick: () => {
-                        console.log('contextmenu测试2');
-                    },
-                    children: [
-                        {
-                            name: 'contextmenu测试2.1',
-                            onClick: () => {
-                                console.log('contextmenu测试2.1');
-                            },
-                            icon: 'close'
-                        }
-                    ],
-                    hidden: false
-                }
-            ]"
         >
             <!-- <template #loading>
                 <div>loading</div>
@@ -413,28 +368,7 @@ const myAlbum = SeCreateAlbum({
                 <div>error</div>
             </template> -->
             <template #mask>
-                <span
-                    v-contextmenu="[
-                        {
-                            name: 'contextmenu测试3',
-                            onClick: () => {
-                                console.log('contextmenu测试3');
-                            },
-                            children: [
-                                {
-                                    name: 'contextmenu测试3.1',
-                                    onClick: () => {
-                                        console.log('contextmenu测试3.1');
-                                    },
-                                    icon: 'close'
-                                }
-                            ],
-                            hidden: false
-                        }
-                    ]"
-                >
-                    mask
-                </span>
+                <span> mask </span>
             </template>
         </se-img>
     </div>

@@ -9,7 +9,6 @@ export default defineComponent({
     props: msgProps,
     expose: ['close'],
     setup(props, { expose }): () => VNode {
-        console.log((props.height - 12) / getSizeMap(props.size) - 30);
         const messageClasses = computed(() => {
             return {
                 ['se-msg']: true,
@@ -49,7 +48,7 @@ export default defineComponent({
         });
 
         function onCloseClick(): void {
-            props.onCloseClick!();
+            props.onCloseClick?.();
             setVisible(false);
         }
 
@@ -128,10 +127,8 @@ export default defineComponent({
                                 }px`}
                             >
                                 <SeIcon
-                                    name={iconMap[props.icon]}
-                                    iconSize={
-                                        getSizeMap(props.size) * 16 + 'px'
-                                    }
+                                    icon={'mdi:' + iconMap[props.icon]}
+                                    size={getSizeMap(props.size) * 16}
                                     color="#"
                                 />
                             </div>
@@ -155,10 +152,8 @@ export default defineComponent({
                                 onClick={onCloseClick}
                             >
                                 <SeIcon
-                                    name="close"
-                                    iconSize={
-                                        getSizeMap(props.size) * 16 + 'px'
-                                    }
+                                    icon="mdi:close"
+                                    size={getSizeMap(props.size) * 16}
                                     color="#"
                                 />
                             </div>

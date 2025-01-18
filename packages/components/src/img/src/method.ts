@@ -10,7 +10,6 @@ import { previewDefault } from './image';
 import { LocationType } from './image.d';
 import SePreview from './components/Preview';
 import { pupOpsMount } from '@selab-ui/utils';
-import { ContextmenuType } from '../../contextmenu/src/contextmenu.d';
 
 // 全部预览实例
 const instances = shallowReactive<Array<Instance>>([]);
@@ -22,30 +21,6 @@ const previewInstance = shallowRef<Instance | TemporaryInstance | null>(null);
 const closingPreviewInstance = shallowRef<Instance | TemporaryInstance | null>(
     null
 );
-
-// 懒加载交叉监控器
-const observer = typeof IntersectionObserver === 'function' ? new IntersectionObserver(
-    (entries) => {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-                const img = entry.target as HTMLImageElement;
-                img.src = img.dataset.src as string;
-                img.removeAttribute('data-src');
-                observer.unobserve(img);
-            }
-        });
-    },
-    { threshold: 0.01 }
-) : {
-    observe: (target: Element) => {
-        const img = target as HTMLImageElement;
-        img.src = img.dataset.src as string;
-        img.removeAttribute('data-src');
-    },
-    unobserve: () => {}
-}
-
-const getObserver = () => observer;
 
 /** 判断配置合法性 */
 function checkPreview(option: PreviewType): boolean {
@@ -107,14 +82,17 @@ function previewCheck(props: Readonly<ImgPropsType>): PreviewType | false {
                 if (item.preview.name === (props.preview as PreviewType).name) {
                     // 若已有相同的相册名, 则报错
                     if (item.preview.isAlbum) {
-                        throw console.error(
+                        console.error(
                             `Image Preview > Img album name can't repeat, but name "${item.preview.name}" is repeat.`
                         );
+                        return;
                     }
                     // 否则添加到照片群组
                     item.preview.albumList.push(
                         (props.preview as PreviewType).src || props.src
                     );
+
+                    return item;
                 }
             });
         // instance 不为 undefined 时, 说明该命名的相册群组存在, 直接返回
@@ -142,10 +120,12 @@ function registerPreviewImage<
     option: PreviewType,
     isTemporary: T,
     location: K
-): Instance | TemporaryInstance {
+): Instance | TemporaryInstance | void {
     // 检测配置合法性
-    if (!checkPreview(option))
-        throw console.error('Image Preview > Preview config is error.');
+    if (!checkPreview(option)) {
+        console.error('Image Preview > Preview config is error.');
+        return;
+    }
     // 如果是临时的, 则直接创建实例, 并添加事件监听器
     if (isTemporary && !(location instanceof HTMLElement)) {
         const instance: TemporaryInstance = {
@@ -168,13 +148,15 @@ function registerPreviewImage<
         return instance;
     } else if (isTemporary && location instanceof HTMLElement) {
         // 临时预览不能挂载到 HTMLElement 上, 必须提供位置信息
-        throw console.error(
+        console.error(
             'Image Preview > Temporary preview must provide location.'
         );
+        return;
     }
     if (!isTemporary && !(location instanceof HTMLElement)) {
         // 非临时预览必须提供 HTMLElement, 用于添加启动预览的事件监听器
-        throw console.error('Image Preview > Mask HTMLElement is null.');
+        console.error('Image Preview > Mask HTMLElement is null.');
+        return;
     } else if (!isTemporary && location instanceof HTMLElement) {
         // 通过option创建用于实例化Preview.tsx的配置, 并添加到instances, 同时创建事件监听器
         const _instance = instances.find((item) => {
@@ -236,12 +218,14 @@ function registerPreviewImage<
         location.addEventListener('click', instance.clickMask);
         return instance;
     }
-    throw console.error('Image Preview > Unknown error.');
+    console.error('Image Preview > Unknown error.');
+    return;
 }
 
 // 注销预览图片
 function unregisterPreviewImage(option: PreviewType, mask: HTMLElement) {
     instances.find((item) => {
+        if (!item) return false;
         // 找到对应的预览实例, 并移除事件监听器
         if (item.preview.name === option.name) {
             item.mask.find((it, index) => {
@@ -279,11 +263,12 @@ function previewImage(instance: Instance | TemporaryInstance, index = 0) {
         return;
     // 如果下标超出范围, 则重置为报错
     if (index >= instance.preview.albumList.length) {
-        throw console.error(
+        console.error(
             `Image Preview > Index out of range, index: ${index}, page: ${
                 index + 1
             }, albumList: ${instance.preview.albumList.length}`
         );
+        return;
     }
     unPreviewImage();
     // 创建Preview组件实例, 挂载到instance.root上
@@ -346,19 +331,16 @@ function createAlbum({
         rotate: true,
         flip: true,
         reset: true,
-        download: false,
         pagination: true,
         show: true
     },
     loop = true,
     animation = 'slide',
-    contextmenu = false,
     location,
     closeOnClickModal = true,
     closeOnPressEscape = true,
     onError = () => {},
     onSwitch = (done: () => void) => done(),
-    onOpen = (open: () => void) => open(),
     onClose = (close: () => void) => close()
 }: {
     albumList: string[];
@@ -370,7 +352,6 @@ function createAlbum({
     toolbar?: Partial<ToolBar>;
     loop?: boolean;
     animation?: 'none' | 'slide' | 'fade';
-    contextmenu?: boolean | ContextmenuType;
     location?: {
         x?: number;
         y?: number;
@@ -384,12 +365,12 @@ function createAlbum({
         done: () => void,
         index: number | false | 'isFirst' | 'isLast' | 'itIs'
     ) => void;
-    onOpen?: (open: () => void) => void;
     onClose?: (close: () => void) => void;
 }): {
     open: (page: number) => void;
     close: () => void;
 } {
+    const onOpen = (open: () => void) => open();
     const _location = {
         x: 0,
         y: 0,
@@ -410,7 +391,6 @@ function createAlbum({
             toolbar: { ...toolbar } as ToolBar,
             loop,
             animation,
-            contextmenu,
             closeOnClickModal,
             closeOnPressEscape,
             onError,
@@ -432,7 +412,6 @@ function createAlbum({
 }
 
 export {
-    getObserver,
     previewCheck,
     registerPreviewImage,
     unregisterPreviewImage,

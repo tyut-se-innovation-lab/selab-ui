@@ -2,15 +2,22 @@ import { VNode, ComponentInternalInstance } from 'vue';
 import { CreateProps } from '@selab-ui/utils/type';
 import { messageType, iconType } from './message.ts';
 
-export type MessageType = (typeof messageType)[number] extends undefined ? 'info' : (typeof messageType)[number];
+export type MessageType = (typeof messageType)[number] extends undefined
+    ? 'info'
+    : (typeof messageType)[number];
 
-export type IconType = (typeof iconType)[number] extends undefined ? 'info' : (typeof iconType)[number];
+export type IconType = (typeof iconType)[number] extends undefined
+    ? 'info'
+    : (typeof iconType)[number];
 
 // export type MessageMsg = string | VNode | VNode<any, any, any> | (() => VNode) | (() => VNode<any, any, any>);
 
 // export type MessageMsg = string | VNode | VNode_2 | (() => VNode | VNode_2);
 
-export type MessageMsg = string | VNode<any, any, any> | (() => VNode<any, any, any>);
+export type MessageMsg =
+    | string
+    | VNode<any, any, any>
+    | (() => VNode<any, any, any>);
 
 export type MessageHandler = {
     close: () => void;
@@ -29,7 +36,7 @@ export type MessageOption = {
     group?: boolean;
     size?: 'default' | 'small' | 'large' | 'mini';
     beforeClose?: (close: () => void) => void;
-    onCloseClick?: (instance: MessageContext) => void;
+    onCloseClick?: () => void;
 };
 
 export type MessagePropsType = {
@@ -47,7 +54,7 @@ export type MessagePropsType = {
     top: number;
     height: number;
     beforeClose: (close: () => void) => void;
-    onCloseClick: (instance: MessageContext) => void;
+    onCloseClick: () => void;
     onClose: (id: string) => void;
     onDestroy: () => void;
 };
@@ -67,7 +74,7 @@ export type MessageContext = {
     handler: MessageHandler;
     _handler: Message_Handler;
     vm: ComponentInternalInstance;
-    props: ComponentInternalInstance.props<MessagePropsType>
+    props: ComponentInternalInstance.props<MessagePropsType>;
 };
 
 export type MessageOptionNoType = Omit<MessagePropsType, 'type'>;

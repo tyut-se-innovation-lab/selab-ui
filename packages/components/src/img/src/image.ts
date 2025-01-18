@@ -15,13 +15,12 @@ export const previewDefault: PreviewType = {
     scaleStep: 0.5,
     minScale: 1,
     maxScale: 50,
-    closeIcon: 'close',
+    closeIcon: 'mdi:close',
     toolbar: {
         zoom: true,
         rotate: true,
         flip: true,
         reset: true,
-        download: false,
         pagination: true,
         show: true
     },
@@ -30,7 +29,6 @@ export const previewDefault: PreviewType = {
     albumList: [],
     loop: true,
     animation: 'slide',
-    contextmenu: false,
     closeOnClickModal: true,
     closeOnPressEscape: true,
     onError: () => {},
@@ -47,7 +45,6 @@ export const imgDefault: ImgPropsType = {
     src: '',
     lazy: false,
     rootClassName: '',
-    contextmenu: true,
     onError: () => {},
     onLoad: () => {},
     preview: previewDefault
@@ -84,10 +81,6 @@ export const imgProps: ImgProps = {
     rootClassName: {
         type: String,
         default: imgDefault.rootClassName
-    },
-    contextmenu: {
-        type: Boolean,
-        default: imgDefault.contextmenu
     },
     onError: {
         type: Function as PropType<(e: Event) => void>,
@@ -152,10 +145,6 @@ export const imgPreviewProps: ImgPreviewProps = {
         type: String as PropType<'none' | 'slide' | 'fade'>,
         default: previewDefault.animation
     },
-    contextmenu: {
-        type: [Boolean, Array] as PropType<PreviewType['contextmenu']>,
-        default: previewDefault.contextmenu
-    },
     closeOnClickModal: {
         type: Boolean,
         default: previewDefault.closeOnClickModal
@@ -216,10 +205,6 @@ export const previewToolbarProps: PreviewToolbarProps = {
     reset: {
         type: Boolean,
         default: previewDefault.toolbar.reset
-    },
-    download: {
-        type: [Boolean, Function] as PropType<false | (() => void)>,
-        default: previewDefault.toolbar.download
     },
     pagination: {
         type: Boolean,

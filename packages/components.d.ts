@@ -8,7 +8,6 @@ import { Radio } from "./components/src";
 import { Slider } from "./components/src";
 import { Rate } from "./components/src";
 import { Dialog } from "./components/src";
-import { Contextmenu } from "./components/src";
 import { Tooltip } from "./components/src";
 import { MiniMsg } from "./components/src";
 import { Img } from "./components/src";
@@ -29,7 +28,8 @@ declare module "@vue/runtime-core" {
         seBox: typeof Box;
         seCheckbox: typeof Checkbox;
         seRadio: typeof Radio;
-        //[		 seTypography: typeof Typography;
+        //[
+		 seTypography: typeof Typography;
 		 seVirtualScroller: typeof VirtualScroller;
 
 		 seInput: typeof Input;
@@ -54,18 +54,11 @@ declare module "@vue/runtime-core" {
     }
 }
 
-// import { ContextmenuType } from './components/src/contextmenu/src/contextmenu.d';
-
 declare module "vue" {
     export interface ComponentCustomProperties {
         $seMsg: typeof Msg;
         $seMiniMsg: typeof MiniMsg;
     }
-
-    // export interface ComponentCustomProps {
-    //     'v-contextmenu'?: ContextmenuType;
-    //     'v-edge-progress'?: EdgeProgressArg;
-    // }
 }
 
 

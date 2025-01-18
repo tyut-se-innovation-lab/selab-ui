@@ -76,16 +76,6 @@ export default defineConfig({
                     ]
                 },
                 {
-                    text: "导航组件",
-                    collapsed: false,
-                    items: [
-                        {
-                            text: "Contextmenu",
-                            link: "/components/contextmenu/"
-                        },
-                    ]
-                },
-                {
                     text: "数据录入",
                     collapsed: false,
                     items: [

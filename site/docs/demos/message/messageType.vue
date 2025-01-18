@@ -11,7 +11,6 @@
 </template>
 
 <script setup lang="ts">
-import { createVNode } from 'vue';
 import { SeMsg } from 'selab-ui';
 function msg1(type: 'success' | 'warning' | 'danger' | 'info') {
     SeMsg({
@@ -20,17 +19,7 @@ function msg1(type: 'success' | 'warning' | 'danger' | 'info') {
     });
 }
 function msg2(type: 'success' | 'warning' | 'danger' | 'info') {
-    SeMsg[type]({
-        message: createVNode(
-            'div',
-            {
-                style: {
-                    height: '16px'
-                }
-            },
-            type
-        )
-    });
+    SeMsg[type](type);
 }
 </script>
 

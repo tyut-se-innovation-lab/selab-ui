@@ -16,13 +16,11 @@ export default defineComponent({
         const root = ref() as Ref<HTMLDivElement>;
         // 显示的内容
         const content: { [key: string]: boolean } = {};
-        ['zoom', 'rotate', 'reset', 'flip', 'download', 'pagination'].forEach(
-            (item) => {
-                content[item] = props[item as keyof PreviewToolbarProps]
-                    ? true
-                    : false;
-            }
-        );
+        ['zoom', 'rotate', 'reset', 'flip', 'pagination'].forEach((item) => {
+            content[item] = props[item as keyof PreviewToolbarProps]
+                ? true
+                : false;
+        });
         // 是否无遮罩
         const isNoModal = ref(false);
         // 是否鼠标在内部
@@ -98,15 +96,15 @@ export default defineComponent({
                                 <button onClick={() => emit('zoom', 'out')}>
                                     {/* 使用[color="#"]来规避SeIcon的默认颜色 */}
                                     <SeIcon
-                                        name="zoom_out"
-                                        iconSize="16px"
+                                        icon="mdi:zoom-out-outline"
+                                        size={22}
                                         color="#"
                                     />
                                 </button>
                                 <button onClick={() => emit('zoom', 'in')}>
                                     <SeIcon
-                                        name="zoom_in"
-                                        iconSize="16px"
+                                        icon="mdi:zoom-in-outline"
+                                        size={22}
                                         color="#"
                                     />
                                 </button>
@@ -118,8 +116,8 @@ export default defineComponent({
                                     onClick={() => emit('rotate', 'forward')}
                                 >
                                     <SeIcon
-                                        name="rotate_left"
-                                        iconSize="16px"
+                                        icon="mdi:rotate-counter-clockwise"
+                                        size={20}
                                         color="#"
                                     />
                                 </button>
@@ -127,8 +125,8 @@ export default defineComponent({
                                     onClick={() => emit('rotate', 'reverse')}
                                 >
                                     <SeIcon
-                                        name="rotate_right"
-                                        iconSize="16px"
+                                        icon="mdi:rotate-clockwise"
+                                        size={20}
                                         color="#"
                                     />
                                 </button>
@@ -140,8 +138,8 @@ export default defineComponent({
                                     onClick={() => emit('flip', 'horizontal')}
                                 >
                                     <SeIcon
-                                        name="flip_horizontally_card"
-                                        iconSize="16px"
+                                        icon="mdi:axis-z-rotate-clockwise"
+                                        size={20}
                                         color="#"
                                     />
                                 </button>
@@ -149,8 +147,8 @@ export default defineComponent({
                                     onClick={() => emit('flip', 'vertical')}
                                 >
                                     <SeIcon
-                                        name="flip_vertically_card"
-                                        iconSize="16px"
+                                        icon="mdi:horizontal-rotate-counterclockwise"
+                                        size={20}
                                         color="#"
                                     />
                                 </button>
@@ -160,19 +158,8 @@ export default defineComponent({
                             <li>
                                 <button onClick={() => emit('reset')}>
                                     <SeIcon
-                                        name="sync"
-                                        iconSize="16px"
-                                        color="#"
-                                    />
-                                </button>
-                            </li>
-                        )}
-                        {content.download && (
-                            <li>
-                                <button onClick={() => emit('download')}>
-                                    <SeIcon
-                                        name="down"
-                                        iconSize="16px"
+                                        icon="mdi:backup-restore"
+                                        size={20}
                                         color="#"
                                     />
                                 </button>
@@ -194,8 +181,8 @@ export default defineComponent({
                                     }}
                                 >
                                     <SeIcon
-                                        name="back"
-                                        iconSize="16px"
+                                        icon="mdi:arrow-left-circle-outline"
+                                        size={20}
                                         color="#"
                                     />
                                 </button>
@@ -213,8 +200,8 @@ export default defineComponent({
                                     }}
                                 >
                                     <SeIcon
-                                        name="right"
-                                        iconSize="16px"
+                                        icon="mdi:arrow-right-circle-outline"
+                                        size={20}
                                         color="#"
                                     />
                                 </button>
@@ -224,8 +211,8 @@ export default defineComponent({
                             <li>
                                 <button onClick={() => emit('close')}>
                                     <SeIcon
-                                        name="close"
-                                        iconSize="16px"
+                                        icon="mdi:close"
+                                        size={20}
                                         color="#"
                                     />
                                 </button>

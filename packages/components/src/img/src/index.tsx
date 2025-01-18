@@ -5,12 +5,12 @@ import {
     VNode,
     onMounted,
     onDeactivated,
-    Ref
+    watch,
+    onBeforeUnmount
 } from 'vue';
 import '../../less/components/img/index.less';
 import { imgProps } from './image';
 import {
-    getObserver,
     registerPreviewImage,
     unregisterPreviewImage,
     previewImage,
@@ -18,12 +18,10 @@ import {
     previewCheck
 } from './method';
 import { ImgPropsType, Instance, PreviewType } from './image.d';
-import lazyImg from './assets/lazy.png';
 export default defineComponent({
     name: 'se-img',
     props: imgProps,
-  setup (props, { slots, attrs, expose }): () => VNode {
-      const observer = getObserver();
+    setup(props, { slots, attrs, expose }): () => VNode {
         const imgClassName = computed(() => {
             const { fit } = props;
             return {
@@ -33,9 +31,7 @@ export default defineComponent({
         });
 
         const _src = computed(() => {
-            if (props.lazy) {
-                return lazyImg;
-            } else return props.src;
+            return props.src;
         });
         function errorHandle(e: Event) {
             isLoadSuccess.value = false;
@@ -44,10 +40,6 @@ export default defineComponent({
             props.onError?.(e);
         }
         function loadHandle(e: Event) {
-            if (props.lazy && seImg.value.dataset.src) {
-                // 若是懒加载, 且当前加载的图片是懒加载的占位图, 则不触发onLoad事件
-                return;
-            }
             isLoadSuccess.value = true;
             isLoading.value = false;
             props.onLoad?.(e);
@@ -56,20 +48,19 @@ export default defineComponent({
         const isLoading = ref(true);
         let preview: PreviewType | false;
         const seImg = ref();
-        let mask: Ref<HTMLDivElement | undefined>;
+        const mask = ref<HTMLDivElement>();
         let instance: Instance;
         let index: number;
-        if (props.preview) {
-            mask = ref();
-        }
         onMounted(() => {
             preview = previewCheck(props as ImgPropsType);
             if (preview) {
-                instance = registerPreviewImage(
+                const ins = registerPreviewImage(
                     preview,
                     false,
                     mask.value as HTMLDivElement
-                ) as Instance;
+                );
+                if (!ins) return;
+                instance = ins as Instance;
                 if (preview.isAlbum) {
                     index = preview.albumList.indexOf(props.src);
                 } else {
@@ -77,24 +68,20 @@ export default defineComponent({
                 }
                 if (index === -1) index = 0;
             }
-            if (props.lazy) {
-                seImg.value.setAttribute('data-src', props.src);
-                observer.observe(seImg.value);
-            }
-            if (!props.contextmenu) {
-                seImg.value.addEventListener('contextmenu', (e: Event) => {
-                    e.preventDefault();
-                });
-                mask.value?.addEventListener('contextmenu', (e: Event) => {
-                    e.preventDefault();
-                });
-            }
+        });
+        let maskEle: HTMLDivElement;
+        watch(mask, (v) => {
+            if (v) maskEle = v as HTMLDivElement;
         });
         onDeactivated(() => {
             if (preview)
-                unregisterPreviewImage(preview, mask.value as HTMLDivElement);
-            if (props.lazy) observer.unobserve(seImg.value);
+                unregisterPreviewImage(preview, maskEle as HTMLDivElement);
         });
+        onBeforeUnmount(() => {
+            if (preview)
+                unregisterPreviewImage(preview, maskEle as HTMLDivElement);
+        });
+
         expose(
             (() => {
                 const openPreview = (() => {
@@ -132,6 +119,7 @@ export default defineComponent({
                     alt={props.alt}
                     onError={errorHandle}
                     onLoad={loadHandle}
+                    loading={props.lazy ? 'lazy' : 'eager'}
                     {...attrs}
                 />
                 {isLoading.value && (

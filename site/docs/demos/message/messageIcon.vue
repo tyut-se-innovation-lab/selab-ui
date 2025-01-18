@@ -3,12 +3,12 @@
     <button @click="msg('warning')">警告icon</button>
     <button @click="msg('danger')">错误icon</button>
     <button @click="msg('info')">信息icon</button>
-    <button @click="msg('')">无icon</button>
+    <button @click="msg()">无icon</button>
 </template>
 
 <script setup lang="ts">
 import { SeMsg } from 'selab-ui';
-function msg(icon: 'success' | 'warning' | 'danger' | 'info' | '') {
+function msg(icon?: 'success' | 'warning' | 'danger' | 'info') {
     SeMsg({
         message: 'icon',
         icon
