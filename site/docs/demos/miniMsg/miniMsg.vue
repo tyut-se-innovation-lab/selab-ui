@@ -1,40 +1,44 @@
 <template>
-    <div>
-        <button @click="success">test</button>
-    </div>
+    <se-button @click="msg('success')">success</se-button>
+    &nbsp;
+    <se-button @click="msg('info')">info</se-button>
+    &nbsp;
+    <se-button @click="msg('warning')">warning</se-button>
+    &nbsp;
+    <se-button @click="msg('danger')">danger</se-button>
 </template>
 
 <script setup lang="ts">
 import { SeMiniMsg } from 'selab-ui';
 
-function success() {
+const position = {
+    success: {
+        x: '20vw',
+        y: '10vh'
+    },
+    info: {
+        x: '80vw',
+        y: '90vh'
+    },
+    warning: {
+        x: '20vw',
+        y: '90vh'
+    },
+    danger: {
+        x: '80vw',
+        y: '10vh'
+    }
+} as const;
+
+function msg(type: 'success' | 'info' | 'warning' | 'danger') {
     SeMiniMsg({
-        type: 'success',
-        message: 'This is a success message',
+        type: type,
+        message: `This is a ${type} message`,
         duration: 3000,
         location: {
-            x: '50vw',
-            y: '50vh'
+            x: position[type].x,
+            y: position[type].y
         }
     });
 }
 </script>
-
-<style scoped>
-button {
-    position: relative;
-    margin-right: 10px;
-    width: 60px;
-    height: 30px;
-    background-color: #6c9dff;
-    color: #fff;
-    font-size: 12px;
-    border-radius: 5px;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    &:hover {
-        background-color: #6c89ff;
-    }
-}
-</style>

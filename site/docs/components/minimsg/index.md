@@ -16,12 +16,18 @@ import { SeMiniMsg } from 'selab-ui';
 
 <preview path="../../demos/miniMsg/miniMsg.vue" title="基本使用" description=" "></preview>
 
-### Mini Message 参数
+只能同时存在一个 Mini Message 实例。
 
-| 参数名   | 类型                                         | 默认值                   | 描述                   | 跳转 Demo             |
-| :------- | :------------------------------------------- | :----------------------- | :--------------------- | :-------------------- |
-| type     | 'info' \| 'success' \| 'danger' \| 'warning' | 'info'                   | 消息类型               | [基础用法](#基础用法) |
-| message  | string                                       |                          | 消息内容               | [基础用法](#基础用法) |
-| duration | number                                       | 1000(ms)                 | 持续时长               | [基础用法](#基础用法) |
-| location | { x: string \| number; y: string \| number } | { x: '50%', y: '50%' }   | 显示位置(相对挂载位置) | [基础用法](#基础用法) |
-| root     | HTMLElement                                  | Document.documentElement | 挂载节点               | [基础用法](#基础用法) |
+当呼出多个时，旧的消息会立刻关闭。
+
+## Mini Message API
+
+### Mini Message Attributes
+
+| 参数名   | 类型                                           | 默认值                   | 描述                   | 跳转 Demo             |
+| :------- | :--------------------------------------------- | :----------------------- | :--------------------- | :-------------------- |
+| type     | 'info' \| 'success' \| 'danger' \| 'warning'   | 'info'                   | 消息类型               | [基础用法](#基础用法) |
+| message  | string                                         |                          | 消息内容               | [基础用法](#基础用法) |
+| duration | number                                         | 1000(ms)                 | 持续时长               | [基础用法](#基础用法) |
+| location | \{ x: string \| number; y: string \| number \} | \{ x: '50%', y: '50%' \} | 显示位置(相对挂载位置) | [基础用法](#基础用法) |
+| root     | HTMLElement                                    | Document.documentElement | 挂载节点               | [基础用法](#基础用法) |
