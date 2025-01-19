@@ -15,10 +15,10 @@ const { open, close } = SeCreateAlbum({
     ],
     modal: false,
     location: {
-        x: 100,
-        y: 150,
-        width: window.innerWidth - 200,
-        height: window.innerHeight - 300
+        x: window.innerWidth / 2 - 20,
+        y: window.innerHeight / 2 - 20,
+        width: 40,
+        height: 40
     }
 });
 </script>
