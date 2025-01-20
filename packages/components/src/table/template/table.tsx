@@ -1,59 +1,88 @@
-
-import '../../less/components/table/index.less'
-import { defineComponent, ref, computed, onMounted } from "vue";
-
+import { computed, defineComponent } from "vue";
+import "../../less/components/table/index.less";
 
 export default defineComponent({
-  name: "se-table",
-  props: {
-    rows: {
-      type: Array,
-      required: true,
+    name: "SeTable",
+    props: {
+        rows: {
+            type:  Array as () => Array<Record<string, any>>,
+            required: true,
+        },
+        rowHeight: {
+            type: Number,
+            default: 50,
+        },
+        visibleCount: {
+            type: Number,
+            default: 10,
+        },
+        containerHeight: {
+            type: Number,
+            required: true,
+        },
     },
-    rowHeight: {
-      type: Number,
-      default: 50,
+    setup(props) {
+        // 提取列信息
+        const columns = computed(() => {
+            if (props.rows.length > 0) {
+                return Object.keys(props.rows[0]).map((key) => ({
+                    label: key,
+                    field: key,
+                }));
+            }
+            return [];
+        });
+
+        const handleRowClick = (row: any) => {
+            console.log("Row clicked:", row);
+        };
+
+        return {
+            columns,
+            handleRowClick,
+        };
+
     },
-    visibleCount: {
-      type: Number,
-      default: 10,
-    },
-  },
-  setup(props, { slots }) {
-    const scrollTop = ref(0);
-
-    const startIndex = computed(() => Math.floor(scrollTop.value / props.rowHeight));
-    const endIndex = computed(() => startIndex.value + props.visibleCount);
-
-    const visibleRows = computed(() => {
-      return props.rows.slice(startIndex.value, endIndex.value);
-    });
-
-    const totalHeight = computed(() => props.rows.length * props.rowHeight);
-
-    const onScroll = (e: Event) => {
-      const target = e.target as HTMLDivElement;
-      scrollTop.value = target.scrollTop;
-    };
-
-    onMounted(() => {
-      console.log("SeTable mounted");
-    });
-
-    return () => (
-        <div class="se-table-container" onScroll={onScroll}>
-          <div class="se-table-spacer" style={{ height: `${totalHeight.value}px` }}></div>
-          <div
-              class="se-table-viewport"
-              style={{ transform: `translateY(${startIndex.value * props.rowHeight}px)` }}
-          >
-            {visibleRows.value.map((row, index) => (
-                <div class="se-table-row" style={{ height: `${props.rowHeight}px` }}>
-                  {slots.default ? slots.default({ row, index: startIndex.value + index }) : JSON.stringify(row)}
+    render() {
+        return (
+            <div class="se-table-container">
+                {/* 表头 */}
+                <div class="se-table-header">
+                    {this.columns.map((column) => (
+                        <div class="se-table-cell" key={column.field}>
+                            {column.label}
+                        </div>
+                    ))}
                 </div>
-            ))}
-          </div>
-        </div>
-    );
-  },
+
+                {/* 使用虚拟滚动渲染内容 */}
+                <se-virtual-scroller
+                    items={this.rows.map((row, index) => ({
+                        value: index,
+                        label: row,
+                    }))}
+                    itemHeight={this.rowHeight}
+                    visibleCount={this.visibleCount}
+                    containerHeight={this.containerHeight}
+                    isTable={true}
+                >
+                    {{
+                        default: ({ value }: { value: number }) => (
+                            <div
+                                class="se-table-row"
+                                style={{ height: `${this.rowHeight}px` }}
+                                onClick={() => this.handleRowClick(this.rows[value])}
+                            >
+                                {this.columns.map((column) => (
+                                    <div class="se-table-cell" key={column.field}>
+                                        {this.rows[value] && this.rows[value][column.field]}
+                                    </div>
+                                ))}
+                            </div>
+                        ),
+                    }}
+                </se-virtual-scroller>
+            </div>
+        );
+    },
 });

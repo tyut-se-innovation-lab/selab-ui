@@ -1,133 +1,120 @@
 
-# Input（输入框）
 
-`Input` 是一个通用的输入框组件，支持单选和多选模式，并提供筛选、标签显示以及滚动面板功能。
+# Input（输入框）
+## 概述
+
+`Input` 是一个通用的输入框组件，支持图标、清空功能、禁用状态等多种配置，适用于各种输入场景。
 
 ## 预览
-<preview path="../../demos/input/input.vue" title="基本使用" description="展示基本的单选、多选及筛选功能"></preview>
+<preview path="../../demos/input/input.vue" title="基本使用" description="展示基本的输入框功能，包括占位符、清空按钮和图标的使用"></preview>
 
 
-## Input 的基础配置
+## 基础配置
 
-`Input` 支持多种自定义参数，适配不同的使用场景。
+`Input` 提供丰富的自定义参数，支持多种配置，适配不同的场景需求。
+
 
 
 ## Input 参数
 
-| 参数名          | 类型                             | 默认值                | 描述                                                                                     | 跳转 Demo                                 |
-| :-------------- | :------------------------------- | :-------------------- | :--------------------------------------------------------------------------------------- | :---------------------------------------- |
-| `options`       | `Array<{ value, label }>`        | `[]`                  | 下拉框可供选择的选项列表，每个选项包含 `value` 和 `label` 字段。                          | [基本使用](#基本使用)                     |
-| `placeholder`   | `String`                         | `'Enter text...'`     | 输入框的占位文本，支持动态占位符调整。                                                   | [基本使用](#基本使用)                     |
-| `multiSelect`   | `Boolean`                        | `false`               | 是否启用多选模式，多选时选中的选项将以标签形式显示在输入框内。                            | [多选模式](#多选模式)                     |
-| `showDropdown`  | `Boolean`                        | `true`                | 是否显示下拉面板，可以通过参数手动控制下拉框显示与隐藏。                                   | [隐藏下拉框](#隐藏下拉框)                 |
-| `filterable`    | `Boolean`                        | `true`                | 是否启用筛选功能，启用后可通过输入关键字动态过滤下拉选项。                                | [筛选功能](#筛选功能)                     |
-| `itemHeight`    | `Number`                         | `40`                  | 下拉选项的单项高度（仅在虚拟滚动时生效）。                                               | [虚拟滚动](#虚拟滚动)                     |
-| `visibleCount`  | `Number`                         | `10`                  | 下拉面板可见选项的数量（仅在虚拟滚动时生效）。                                            | [虚拟滚动](#虚拟滚动)                     |
-| `keyField`      | `String`                         | `'value'`             | 指定选项的唯一键值字段，用于区分每个选项。                                                | [自定义字段](#自定义字段)                 |
+| 参数名          | 类型                 | 默认值             | 描述                                                                 |
+|-----------------|---------------------|-------------------|---------------------------------------------------------------------|
+| `placeholder`   | `String`            | `'请输入内容...'`   | 输入框的占位文本。                                                   |
+| `icon`          | `String`            | `''`              | 输入框内的图标名称，支持通过 `se-icon` 渲染。                        |
+| `allowClear`    | `Boolean`           | `false`           | 是否显示清空按钮，点击后清空输入内容。                                |
+| `disabled`      | `Boolean`           | `false`           | 是否禁用输入框。                                                     |
+| `size`          | `String`            | `'default'`       | 输入框尺寸，可选值为 `'small'`、`'default'`、`'large'`。              |
+| `bordered`      | `Boolean`           | `true`            | 是否显示边框。                                                       |
+| `prefix`        | `String`            | `''`              | 输入框的前缀图标名称，通过 `se-icon` 渲染。                          |
+| `suffix`        | `String`            | `''`              | 输入框的后缀图标名称，通过 `se-icon` 渲染。                          |
+
 
 
 ## Input 方法
 
-| 方法名          | 参数                        | 返回值        | 描述                                     |
-| :-------------- | :-------------------------- | :------------ | :--------------------------------------- |
-| `handleOptionClick` | `{ value, label }`        | 无            | 点击选项后的回调函数，可在内部更新已选值。 |
-| `handleTagRemove`   | `{ value, label }`        | 无            | 点击标签的删除按钮后的回调函数。           |
-
-
-## 其他说明
-
-1. **单选与多选模式**  
-   `Input` 组件支持单选和多选模式，默认为单选模式。  
-   在多选模式下，选中的选项会以标签形式显示在输入框内。
-
-2. **筛选功能**  
-   启用 `filterable` 参数后，可以根据输入的关键字动态筛选下拉选项，提升用户体验。
-
-3. **虚拟滚动支持**  
-   对于选项数量较多的场景，`Input` 提供虚拟滚动功能，通过 `itemHeight` 和 `visibleCount` 参数优化性能。
-
-4. **占位符动态调整**  
-   如果存在选中的选项，`placeholder` 文本将自动隐藏，保持布局的简洁性。
-
-5. **事件冒泡处理**  
-   组件内部处理了点击事件的冒泡问题，避免在多层嵌套结构中产生意外的关闭行为。
+| 方法名            | 参数                      | 返回值     | 描述                                     |
+|-------------------|--------------------------|-----------|-----------------------------------------|
+| `handleFocus`     | `(event: FocusEvent)`     | `void`    | 输入框获取焦点时触发。                     |
+| `handleBlur`      | `(event: FocusEvent)`     | `void`    | 输入框失去焦点时触发。                     |
+| `clearInput`      | `()`                     | `void`    | 清空输入框内容并触发 `clear` 事件。         |
 
 
 ## 示例代码
 
-#### 单选模式
+### 基本使用
+
 ```vue
 <template>
-    <SeInput
-        :options="options"
-        placeholder="请选择"
-    />
+    <SeInput placeholder="请输入内容" />
 </template>
-
-<script>
-export default {
-    data() {
-        return {
-            options: [
-                { value: 1, label: '选项1' },
-                { value: 2, label: '选项2' },
-                { value: 3, label: '选项3' },
-            ],
-        };
-    },
-};
-</script>
 ```
 
-#### 多选模式
+
+### 带图标的输入框
+
 ```vue
 <template>
-    <SeInput
-        :options="options"
-        :multiSelect="true"
-        placeholder="请选择多个选项"
-    />
+    <SeInput placeholder="搜索内容" icon="search" />
 </template>
-
-<script>
-export default {
-    data() {
-        return {
-            options: [
-                { value: 1, label: '选项1' },
-                { value: 2, label: '选项2' },
-                { value: 3, label: '选项3' },
-            ],
-        };
-    },
-};
-</script>
 ```
 
-#### 筛选与虚拟滚动
+
+### 带清空按钮的输入框
+
 ```vue
 <template>
-    <SeInput
-        :options="largeOptions"
-        :filterable="true"
-        :itemHeight="50"
-        :visibleCount="15"
-        placeholder="搜索选项"
-    />
+    <SeInput placeholder="可清空的输入框" allowClear />
 </template>
-
-<script>
-export default {
-    data() {
-        return {
-            largeOptions: Array.from({ length: 1000 }, (_, i) => ({
-                value: i,
-                label: `选项${i + 1}`,
-            })),
-        };
-    },
-};
-</script>
 ```
 
+
+### 禁用状态
+
+```vue
+<template>
+    <SeInput placeholder="禁用状态" disabled />
+</template>
+```
+
+
+
+### 带前缀和后缀图标
+
+```vue
+<template>
+    <SeInput placeholder="输入内容" prefix="user" suffix="close" />
+</template>
+```
+
+
+### 不同尺寸的输入框
+
+```vue
+<template>
+    <div>
+        <SeInput placeholder="小尺寸" size="small" />
+        <SeInput placeholder="默认尺寸" size="default" />
+        <SeInput placeholder="大尺寸" size="large" />
+    </div>
+</template>
+```
+
+
+
+## 其他说明
+
+1. **图标渲染**  
+   组件中的 `icon`、`prefix` 和 `suffix` 参数都通过 `se-icon` 渲染，支持灵活的图标设置。
+
+2. **清空按钮**  
+   当 `allowClear` 设置为 `true` 且有输入内容时，输入框右侧会显示清空按钮。
+
+3. **禁用状态**  
+   `disabled` 参数可禁用输入框，禁用状态下无法进行交互。
+
+4. **尺寸配置**  
+   `size` 参数支持三种尺寸选择，分别为 `'small'`、`'default'` 和 `'large'`。
+
+5. **无边框模式**  
+   设置 `bordered` 为 `false`，可以隐藏输入框的边框样式。
 

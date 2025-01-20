@@ -1,142 +1,131 @@
 // Your component styles here
 @import url('../../base/index.less');
-
-.se-select {
+// 主容器样式
+.input-with-virtual-dropdown {
     position: relative;
-    box-sizing: border-box;
+    width: 100%; // 可根据需要设置固定宽度
+    font-family: Arial, sans-serif;
+}
+
+// 输入框容器样式
+.input-container {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    width: 100%;
-    min-height: 32px;
-    padding: 1px 4px;
-    margin: 0;
-    font-size: 14px;
-    background-color: #fff;
+    gap: 4px;
     border: 1px solid #d9d9d9;
-    border-radius: 6px;
-    transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+    border-radius: 4px;
+    padding: 4px 8px;
+    background-color: #fff;
+    cursor: text;
+    box-sizing: border-box;
 
-    .se-select-wrapper {
-        display: flex;
-        align-items: center;
-        height: 100%;
-        width: 100%;
-        flex-wrap: wrap;
-
-        .se-select-selection-tags {
-            position: relative;
-            box-sizing: border-box;
-            display: flex;
-            flex: none;
-            align-items: center;
-            max-width: 100%;
-            padding: 3px 8px;
-            margin-inline-end: 4px;
-            margin-top: 2px;
-            margin-bottom: 2px;
-            user-select: none;
-            border-radius: 4px;
-            transition:
-                font-size 0.3s,
-                line-height 0.3s,
-                height 0.3s;
-
-            .se-select-selection-tag-close {
-                margin-left: 5px;
-                color: rgb(0 0 0 / 30%);
-                cursor: pointer;
-
-                &:hover {
-                    color: rgb(0 0 0 / 60%);
-                }
-            }
-        }
+    &:hover {
+        border-color: #40a9ff;
     }
 
-    .se-select-selection-placeholder {
-        position: absolute;
-        inset-inline: 11px 11px;
-        top: 50%;
-        flex: 1;
-        overflow: hidden;
-        color: rgb(0 0 0 / 25%);
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        pointer-events: none;
-        transition: all 0.3s;
-        transform: translateY(-50%);
+    &:focus-within {
+        border-color: #1890ff;
+        box-shadow: 0 0 4px rgba(24, 144, 255, 0.4);
+    }
+}
+
+// 输入框样式
+.input-field {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    padding: 4px 0;
+    min-width: 120px;
+    background: transparent;
+
+    &::placeholder {
+        color: #bfbfbf;
     }
 
-    .se-select-search-input {
-        width: 100%;
-        height: 100%;
-        padding: 0;
-        margin: 0;
-        appearance: none;
-        background: transparent;
-        border: none;
-        outline: none;
+    &:disabled {
+        background-color: #f5f5f5;
+        cursor: not-allowed;
+    }
+}
+
+// 下拉框样式
+.dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    width: 100%;
+    max-height: 240px;
+    margin-top: 4px;
+    overflow-y: auto;
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    color: #6A737D;
+    &::-webkit-scrollbar {
+        width: 6px;
     }
 
-    .se-select-dropdown {
-        position: absolute;
-        top: calc(100% + 5px);
-        left: 0;
-        z-index: 99;
-        box-sizing: border-box;
-        width: 100%;
-        max-height: 200px;
-        padding: 4px;
-        margin: 0;
-        overflow: auto;
-        font-size: 14px;
-        color: rgb(0 0 0 / 88%);
-        list-style: none;
-        background-color: #fff;
-        border-radius: 8px;
-        outline: none;
-        box-shadow:
-            0 6px 16px 0 rgb(0 0 0 / 8%),
-            0 3px 6px -4px rgb(0 0 0 / 12%),
-            0 9px 28px 8px rgb(0 0 0 / 5%);
+    &::-webkit-scrollbar-thumb {
+        background-color: #d9d9d9;
+        border-radius: 3px;
+    }
+}
 
-        .se-select-dropdown-item {
-            position: relative;
-            box-sizing: border-box;
-            display: block;
-            min-height: 32px;
-            padding: 5px 12px;
-            font-size: 14px;
-            font-weight: normal;
-            color: rgb(0 0 0 / 88%);
-            cursor: pointer;
-            border-radius: 4px;
-            transition: background 0.3s ease;
+// 下拉选项样式
+.dropdown-item {
+    padding: 8px 12px;
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
 
-            &:hover {
-                background-color: rgb(0 0 0 / 4%);
-            }
-        }
+    &:hover {
+        background-color: #f5f5f5;
+    }
 
-        .se-select-dropdown-item-selected {
-            font-weight: 600;
-            color: rgb(0 0 0 / 88%);
-            background-color: #e6f4ff;
-            border-radius: 0;
-        }
+    &.dropdown-item-disabled {
+        color: #bfbfbf;
+        cursor: not-allowed;
+        background-color: #fafafa;
+    }
+}
 
-        .empty-data {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100px;
-            color: #d9d9d9;
+// 多选标签样式
+se-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 0 8px;
+    background-color: #f0f0f0;
+    color: #333;
+    border-radius: 4px;
+    font-size: 12px;
+    cursor: default;
+
+    .se-icon-close {
+        margin-left: 4px;
+        font-size: 12px;
+        cursor: pointer;
+
+        &:hover {
+            color: #ff4d4f;
         }
     }
 }
 
-.se-select-selected {
-    border: 1px solid #4096ff;
-    box-shadow: 0 0 0 2px rgb(5 145 255 / 10%);
+// 虚拟滚动容器样式
+se-virtual-scroller {
+    height: 100%;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: #d9d9d9;
+        border-radius: 3px;
+    }
 }

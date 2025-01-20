@@ -1,4 +1,4 @@
-# Message(componentNameZh)
+# Message(消息)
 
 ## 基础用法
 

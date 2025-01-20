@@ -1,3 +1,41 @@
 // Your component styles here
     @import url('../../base/index.less');
-    
+.se-Slider {
+    position: relative;
+    width: 100%;
+    height: 8px;
+    background: #f0f0f0;
+    border-radius: 4px;
+    cursor: pointer;
+
+    &__track {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        border-radius: 4px;
+        background: transparent;
+    }
+
+    &__progress {
+        height: 100%;
+        background: #1890ff;
+        border-radius: 4px;
+    }
+
+    &__handle {
+        position: absolute;
+        top: 50%;
+        width: 16px;
+        height: 16px;
+        background: #fff;
+        border: 2px solid #1890ff;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        cursor: grab;
+
+        &--disabled {
+            cursor: not-allowed;
+            border-color: #d9d9d9;
+        }
+    }
+}

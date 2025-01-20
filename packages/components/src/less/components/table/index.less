@@ -1,34 +1,38 @@
 // Your component styles here
-    @import url('../../base/index.less');
+@import url('../../base/index.less');
 .se-table-container {
-    position: relative;
-    height: 500px; /* 可视区域的高度 */
-    overflow-y: auto;
-    border: 1px solid #ddd;
-    background-color: #fff;
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
 }
 
-.se-table-spacer {
-    width: 100%;
-}
-
-.se-table-viewport {
-    position: absolute;
-    width: 100%;
-    top: 0;
-    left: 0;
+.se-table-header {
+  display: flex;
+  //background-color: #f4f4f4;
+  font-weight: bold;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
 }
 
 .se-table-row {
-    display: flex;
-    align-items: center;
-    padding: 0 10px;
-    border-bottom: 1px solid #f0f0f0;
-    box-sizing: border-box;
-    background-color: #fff;
-    transition: background-color 0.3s;
+  display: flex;
+  border-bottom: 1px solid #eee;
 }
 
 .se-table-row:hover {
-    background-color: #f9f9f9;
+  background-color: #f9f9f9;
+}
+
+.se-table-cell {
+  flex: 1;
+  padding: 10px;
+  text-align: left;
+  border-right: 1px solid #eee;
+  box-sizing: border-box;
+}
+
+.se-table-cell:last-child {
+  border-right: none;
 }

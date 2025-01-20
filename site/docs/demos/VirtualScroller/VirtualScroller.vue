@@ -4,11 +4,12 @@
       :itemHeight="40"
       :visibleCount="10"
       :onItemClick="handleItemClick"
+      :containerHeight="300"
   />
 </template>
 
 <script lang="ts" setup>
-import { defineComponent, ref } from 'vue';
+import {  ref } from 'vue';
 
     const items = ref(
         Array.from({ length: 1000 }, (_, index) => ({

@@ -1,5 +1,5 @@
 import { defineComponent, ref, computed, watch } from 'vue';
-import '../../less/components/input/index.less';
+import '../../less/components/select/index.less';
 
 export default defineComponent({
     name: 'SeSelect',
@@ -18,7 +18,7 @@ export default defineComponent({
         },
         enableVirtualScroll: {
             type: Boolean,
-            default: false,
+            default: true,
         },
     },
     setup(props) {
@@ -167,6 +167,7 @@ export default defineComponent({
                                 itemHeight={40}
                                 visibleCount={10}
                                 onItemClick={handleOptionClick}
+                                containerHeight={300}
                             />
                         ) : (
                             filteredOptions.map((option) => (

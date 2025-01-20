@@ -1,181 +1,115 @@
-import { defineComponent, ref, computed, watch } from 'vue';
+import { defineComponent, ref, watch, toRefs } from 'vue';
 import '../../less/components/input/index.less';
 
 export default defineComponent({
     name: 'SeInput',
     props: {
-        options: {
-            type: Array as () => Array<{ value: string | number; label: string }>,
-            required: true,
+        modelValue: {  // 使用 modelValue 来支持 v-model
+            type: [String, Number, Array],  // 支持 String, Number 和 Array 类型
+            default: '',
         },
         placeholder: {
             type: String,
             default: '请输入内容...',
         },
-        multiple: {
-            type: Boolean,
-            default: false, // 是否多选
+        icon: {
+            type: String, // 图标名称，例如 'search' 或 'close'
+            default: '',
         },
-        enableVirtualScroll: {
+        allowClear: {
             type: Boolean,
-            default: false, // 是否启用虚拟滚动
+            default: false,
+        },
+        disabled: {
+            type: Boolean,
+            default: false,
+        },
+        size: {
+            type: String,
+            default: 'default', // 可选值：small, default, large
+        },
+        bordered: {
+            type: Boolean,
+            default: true,
+        },
+        prefix: {
+            type: String,
+            default: '', // 前缀图标名称
+        },
+        suffix: {
+            type: String,
+            default: '', // 后缀图标名称
+        },
+        type: {
+            type: String,
+            default: 'text', // 默认是 text 类型，你可以传递其他类型，比如 password, number
         },
     },
-    setup(props) {
-        const inputValue = ref(''); // 输入框的值
-        const selectedOptions = ref<{ value: string | number; label: string }[]>([]); // 已选选项
-        const dropdownVisible = ref(false); // 下拉框显示状态
-        const scrollContainer = ref<HTMLElement | null>(null); // 下拉框容器引用
+    setup(props, { emit }) {
+        const { modelValue } = toRefs(props);
+        const inputValue = ref(modelValue.value); // 输入框的值
 
-        // 根据输入框内容过滤选项
-        const filteredOptions = computed(() => {
-            const filtered = !inputValue.value
-                ? props.options
-                : props.options.filter((option) =>
-                    option.label.toLowerCase().includes(inputValue.value.toLowerCase())
-                );
-
-            // 更新禁用状态
-            return filtered.map((option) => ({
-                ...option,
-                disabled: selectedOptions.value.some(
-                    (selected) => selected.value === option.value
-                ),
-            }));
+        // 监听 inputValue 的变化，并同步到外部的 modelValue
+        watch(inputValue, (newValue) => {
+            emit('update:modelValue', newValue); // 触发 update:modelValue 事件
+            console.log(newValue)
         });
 
-        // 显示下拉框
-        const handleInputFocus = () => {
-            dropdownVisible.value = true;
-        };
-
-        // 点击选项时的处理
-        const handleOptionClick = (option: { value: string | number; label: string; disabled?: boolean }) => {
-            if (option.disabled) return; // 禁用的选项无法点击
-
-            if (props.multiple) {
-                // 多选模式：添加到已选选项
-                if (!selectedOptions.value.some((selected) => selected.value === option.value)) {
-                    selectedOptions.value.push(option);
-                }
-                inputValue.value = ''; // 清空输入框
-            } else {
-                // 单选模式：更新输入框值并关闭下拉框
-                selectedOptions.value = [option];
-                inputValue.value = option.label;
-                dropdownVisible.value = false;
-            }
-        };
-
-        // 删除选中的标签（仅多选模式有效）
-        const handleTagRemove = (tag: { value: string | number; label: string }) => {
-            // 从已选选项中删除对应的标签
-            selectedOptions.value = selectedOptions.value.filter(
-                (selected) => selected.value !== tag.value
-            );
-            // 清空输入框以重新触发 `filteredOptions`
+        const clearInput = () => {
             inputValue.value = '';
+            emit('clear');
         };
 
-        // 点击外部关闭下拉框
-        const handleOutsideClick = (event: MouseEvent) => {
-            const target = event.target as Node;
-            if (
-                scrollContainer.value &&
-                !scrollContainer.value.contains(target) &&
-                !(target as HTMLElement).classList.contains('input-field')
-            ) {
-                dropdownVisible.value = false;
-            }
+        const handleFocus = (event: any) => {
+            emit('focus', event);
         };
 
-        // 监听下拉框状态，动态绑定事件
-        watch(dropdownVisible, (newValue) => {
-            if (newValue) {
-                document.addEventListener('click', handleOutsideClick);
-            } else {
-                document.removeEventListener('click', handleOutsideClick);
-            }
-        });
+        const handleBlur = (event: any) => {
+            emit('blur', event);
+        };
 
         return {
             inputValue,
-            selectedOptions,
-            dropdownVisible,
-            filteredOptions,
-            handleInputFocus,
-            handleOptionClick,
-            handleTagRemove,
-            scrollContainer,
+            clearInput,
+            handleFocus,
+            handleBlur,
         };
     },
     render() {
-        return (
-            <div class="input-with-virtual-dropdown">
-                {/* 输入框与多选标签 */}
-                <div
-                    class="input-container"
-                    onClick={() => this.handleInputFocus()}
-                >
-                    {this.multiple ? (
-                        // 多选模式：显示标签和输入框
-                        <>
-                            {this.selectedOptions.map((tag) => (
-                                <se-tag
-                                    key={tag.value}
-                                    onClose={() => this.handleTagRemove(tag)}
-                                >
-                                    {tag.label}
-                                </se-tag>
-                            ))}
-                            <input
-                                type="text"
-                                class="input-field"
-                                placeholder={this.placeholder}
-                                v-model={this.inputValue}
-                                onFocus={this.handleInputFocus}
-                                onClick={(e) => e.stopPropagation()} // 防止冒泡
-                            />
-                        </>
-                    ) : (
-                        // 单选模式：仅显示输入框
-                        <input
-                            type="text"
-                            class="input-field"
-                            placeholder={
-                                this.selectedOptions.length > 0
-                                    ? ''
-                                    : this.placeholder
-                            }
-                            v-model={this.inputValue}
-                            onFocus={this.handleInputFocus}
-                            onClick={(e) => e.stopPropagation()} // 防止冒泡
-                        />
-                    )}
-                </div>
+        const sizeClass = `input-${this.size}`;
+        const borderedClass = this.bordered ? 'input-bordered' : 'input-no-border';
+        const disabledClass = this.disabled ? 'input-disabled' : '';
 
-                {/* 下拉框 */}
-                {this.dropdownVisible && (
-                    <div
-                        class="dropdown"
-                        ref="scrollContainer"
-                        onClick={(e) => e.stopPropagation()} // 防止冒泡
-                    >
-                        {this.filteredOptions.map((option) => (
-                            <div
-                                key={option.value}
-                                class={[
-                                    'dropdown-item',
-                                    { 'dropdown-item-disabled': option.disabled },
-                                ]}
-                                onClick={() => this.handleOptionClick(option)}
-                            >
-                                {option.label}
-                            </div>
-                        ))}
-                    </div>
+        return (
+            <div class={['input-container', sizeClass, borderedClass, disabledClass]}>
+                {this.prefix && <se-icon icon={this.prefix} color="gray" class="prefix-icon" />}
+                <input
+                    type={this.type}
+                    class="input-field"
+                    placeholder={this.placeholder}
+                    value={Array.isArray(this.inputValue) ? this.inputValue.join(', ') : this.inputValue}  // 处理多选情况
+                    onInput={(event: Event) => {
+                        const target = event.target as HTMLInputElement; // 明确类型
+                        const value = target?.value || ''; // 确保安全获取 value 值
+
+                        // 判断 inputValue 是否是数组类型
+                        if (Array.isArray(this.inputValue)) {
+                            // 将输入值按照逗号分隔，去除多余空格
+                            this.inputValue = value.split(',').map(val => val.trim());
+                        } else {
+                            // 直接存储输入值
+                            this.inputValue = value;
+                        }
+                    }}
+                    disabled={this.disabled}
+                    onFocus={this.handleFocus}
+                    onBlur={this.handleBlur}
+                />
+                {this.suffix && <se-icon icon={this.suffix} color="gray" class="suffix-icon" />}
+                {this.allowClear && this.inputValue && (
+                    <se-icon icon="cuida:x-outline" class="clear-icon" color="gray" onClick={this.clearInput} />
                 )}
             </div>
         );
-    }
+    },
 });
