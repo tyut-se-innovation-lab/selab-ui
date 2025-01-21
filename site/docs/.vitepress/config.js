@@ -6,6 +6,7 @@ import {defineConfig} from "vite";
 
 export default defineConfig({
     base: '/selab-ui/',
+    ignoreDeadLinks: true,
     siteTitle: "selab-ui",
     description: 'selab-ui 组件库',
     themeConfig: {
