@@ -175,7 +175,11 @@ export default defineConfig({
                         },
 
 
-                        //]
+                        {
+            text: "Flex",
+            link: "/components/flex/"
+        },
+	//]
 
                     ]
                 },
