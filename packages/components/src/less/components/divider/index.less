@@ -1,0 +1,46 @@
+// Your component styles here
+    @import url('../../base/index.less');
+/* index.less */
+.se-Divider {
+    display: flex;
+    align-items: center;
+    border: none;
+    background-color: transparent;
+
+    &--horizontal {
+        width: 100%;
+        height: 1px;
+        background-color: #e0e0e0;
+        margin: 8px 0;
+    }
+
+    &--vertical {
+        width: 1px;
+        height: 100%;
+        background-color: #e0e0e0;
+        margin: 0 8px;
+    }
+
+    &--dashed {
+        border-top: 1px dashed #e0e0e0;
+        background-color: transparent;
+    }
+
+    &-content {
+        padding: 0 8px;
+        color: rgba(0, 0, 0, 0.85);
+        white-space: nowrap;
+
+        &--left {
+            margin-right: auto;
+        }
+
+        &--center {
+            margin: 0 auto;
+        }
+
+        &--right {
+            margin-left: auto;
+        }
+    }
+}

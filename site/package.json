@@ -15,7 +15,7 @@
   "license": "ISC",
   "devDependencies": {
     "selab-ui": "workspace:^",
-    "vitepress": "1.0.0-rc.31",
+    "vitepress": "1.6.1",
     "vue": "^3.3.11"
   },
   "dependencies": {

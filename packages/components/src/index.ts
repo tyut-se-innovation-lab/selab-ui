@@ -48,3 +48,5 @@ export * from "./input";
 export * from "./VirtualScroller";
 // 导入排版
 export * from "./Typography";
+// 导入分割线
+export * from "./divider";

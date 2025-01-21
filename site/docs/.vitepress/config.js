@@ -72,7 +72,10 @@ export default defineConfig({
                             text: "Card",
                             link: "/components/card/"
                         },
-
+                        {
+                            text: "Divider",
+                            link: "/components/divider/"
+                        },
                     ]
                 },
                 {
@@ -165,11 +168,11 @@ export default defineConfig({
                     items: [
 
 
-
                         {
                             text: "VirtualScroller",
                             link: "/components/virtualscroller/"
                         },
+
 
                         //]
 

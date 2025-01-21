@@ -74,3 +74,5 @@ pnpm run docs:build
 pnpm run dev:examples
 ```
 该命令进入示例目录并使用 Vite 启动开发服务器。
+ ## 注意 
+ 最好使用node18 的版本
