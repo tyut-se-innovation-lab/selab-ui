@@ -8,6 +8,9 @@ hero:
   name: selab
   text: 一个 Vue3 组件库
   tagline: 让你的组件库开发更简单、更高效
+  image:
+    src: /logo.png
+    alt: VitePress
   actions:
     - theme: brand
       text: 开始

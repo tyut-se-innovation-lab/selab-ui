@@ -5,11 +5,16 @@ import {
 import {defineConfig} from "vite";
 
 export default defineConfig({
+    lang: 'en-US',
     base: '/selab-ui/',
     ignoreDeadLinks: true,
+    title:"selab-ui",
     siteTitle: "selab-ui",
     description: 'selab-ui 组件库',
+    lastUpdated: true,
+    logo: '/logo.png',
     themeConfig: {
+        logo: '/logo.png',
         nav: [
             {text: "指南", link: "/guild/installation/"},
             {text: "组件", link: "/components/button/"}
