@@ -12,7 +12,6 @@ export default defineConfig({
     siteTitle: "selab-ui",
     description: 'selab-ui 组件库',
     lastUpdated: true,
-    logo: '/logo.png',
     themeConfig: {
         logo: '/logo.png',
         nav: [
