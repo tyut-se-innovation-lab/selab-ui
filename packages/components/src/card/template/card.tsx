@@ -41,7 +41,7 @@ export default defineComponent({
         return () => (
             <div class={cardClass.value}>
                 {/* Optional Icon */}
-                {props.icon && <div class="se-card-icon">{props.icon}</div>}
+                {props.icon && <se-icon class="se-card-icon">{props.icon}</se-icon>}
 
                 {/* Optional Title */}
                 {props.title && <div class="se-card-title">{props.title}</div>}

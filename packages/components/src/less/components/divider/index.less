@@ -1,6 +1,7 @@
-// Your component styles here
-    @import url('../../base/index.less');
-/* index.less */
+/* 导入基础样式 */
+@import url('../../base/index.less');
+
+/* Divider 样式 */
 .se-Divider {
     display: flex;
     align-items: center;
@@ -15,10 +16,11 @@
     }
 
     &--vertical {
-        width: 1px;
-        height: 100%;
+        width: 1px; /* 设置竖线宽度 */
+        height: 100%; /* 使用父容器的高度 */
         background-color: #e0e0e0;
         margin: 0 8px;
+        min-height: 20px;
     }
 
     &--dashed {
@@ -43,4 +45,21 @@
             margin-left: auto;
         }
     }
+}
+
+/* 容器样式 */
+.divider-container {
+    display: flex; /* 横向排列子元素 */
+    align-items: center; /* 垂直居中 */
+    height: 100px; /* 设置容器高度 */
+    padding: 16px; /* 添加内边距 */
+    background-color: #f9f9f9; /* 设置背景颜色 */
+    border: 1px solid #ddd; /* 添加边框 */
+    border-radius: 4px; /* 圆角 */
+}
+
+/* 子元素内容样式 */
+.content {
+    font-size: 16px; /* 字体大小 */
+    color: #333; /* 字体颜色 */
 }

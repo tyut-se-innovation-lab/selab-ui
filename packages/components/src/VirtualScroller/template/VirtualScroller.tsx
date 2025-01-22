@@ -1,4 +1,4 @@
-import { defineComponent, computed, ref } from 'vue';
+ import { defineComponent, computed, ref } from 'vue';
 import '../../less/components/VirtualScroller/index.less';
 
 export default defineComponent({

@@ -1,0 +1,52 @@
+// Your component styles here
+    @import url('../../base/index.less');
+.se-flex {
+    display: flex;
+
+    /* 布局方向 */
+    &--direction-row {
+        flex-direction: row;
+    }
+    &--direction-column {
+        flex-direction: column;
+    }
+
+    /* 主轴对齐方式 */
+    &--justify-start {
+        justify-content: flex-start;
+    }
+    &--justify-center {
+        justify-content: center;
+    }
+    &--justify-end {
+        justify-content: flex-end;
+    }
+    &--justify-space-between {
+        justify-content: space-between;
+    }
+    &--justify-space-around {
+        justify-content: space-around;
+    }
+    &--justify-space-evenly {
+        justify-content: space-evenly;
+    }
+
+    /* 交叉轴对齐方式 */
+    &--align-stretch {
+        align-items: stretch;
+    }
+    &--align-start {
+        align-items: flex-start;
+    }
+    &--align-center {
+        align-items: center;
+    }
+    &--align-end {
+        align-items: flex-end;
+    }
+
+    /* 自动换行 */
+    &--wrap {
+        flex-wrap: wrap;
+    }
+}

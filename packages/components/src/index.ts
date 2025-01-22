@@ -50,3 +50,5 @@ export * from "./VirtualScroller";
 export * from "./Typography";
 // 导入分割线
 export * from "./divider";
+// 导入弹性布局
+export * from "./flex";

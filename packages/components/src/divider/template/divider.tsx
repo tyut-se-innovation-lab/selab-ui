@@ -1,5 +1,5 @@
 import { defineComponent, computed } from 'vue';
-import '../../less/components/Divider/index.less';
+import '../../less/components/divider/index.less';
 
 export default defineComponent({
     name: 'SeDivider',

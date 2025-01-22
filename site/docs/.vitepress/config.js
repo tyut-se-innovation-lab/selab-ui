@@ -66,12 +66,12 @@ export default defineConfig({
                     collapsed: false,
                     items: [
                         {
-                            text: "Box",
-                            link: "/components/box/"
+                            text: "Flex",
+                            link: "/components/flex/"
                         },
                         {
-                            text: "Card",
-                            link: "/components/card/"
+                            text: "Box",
+                            link: "/components/box/"
                         },
                         {
                             text: "Divider",
@@ -126,7 +126,10 @@ export default defineConfig({
                             text: "Img",
                             link: "/components/img/"
                         },
-
+                        {
+                            text: "Card",
+                            link: "/components/card/"
+                        },
                         {
                             text: "Tag",
                             link: "/components/tag/"
@@ -175,10 +178,7 @@ export default defineConfig({
                         },
 
 
-                        {
-            text: "Flex",
-            link: "/components/flex/"
-        },
+
 	//]
 
                     ]
