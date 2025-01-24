@@ -2,34 +2,26 @@
 @import url('../../base/index.less');
 
 .se-rate {
-  display: flex;
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
   list-style: none;
-  color: #fadb14;
-  font-size: 20px;
-  outline: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
 }
 
-.se-rate.star {
-  position: relative;
-  display: inline-block;
-  color: inherit;
+.se-rate-item {
+  font-size: 24px;
   cursor: pointer;
-
-  .ant-rate-star-first {
-    position: absolute;
-    top: 0;
-    inset-inline-start: 0;
-    width: 50%;
-    height: 100%;
-    overflow: hidden;
-    opacity: 0;
-  }
+  transition: color 0.3s ease;
 }
 
-//.action {
-//  color: green;
-//  background-color: green;
-//}
+.se-rate-item.active .se-icon {
+  color: #f39c12; /* 选中时的颜色 */
+}
+
+.se-rate-item.hover .se-icon {
+  color: #f39c12; /* 悬浮时的颜色 */
+}
+
+.se-rate-item:hover .se-icon {
+  color: #f39c12; /* 纯悬浮效果 */
+}

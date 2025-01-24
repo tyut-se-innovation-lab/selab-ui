@@ -16,7 +16,7 @@ export default defineConfig({
         logo: '/logo.png',
         nav: [
             {text: "指南", link: "/guild/installation/"},
-            {text: "组件", link: "/components/button/"}
+            {text: "组件", link: "/components/typography/"}
         ],
         socialLinks: [
             {icon: "github", "link": "https://github.com/tyut-se-innovation-lab/selab-ui"}
