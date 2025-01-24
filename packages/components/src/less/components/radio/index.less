@@ -1,90 +1,87 @@
-@import url('../../base/index.less');
+@import url("../../base/index.less");
 
 .se-radio {
+  display: flex;
+  width: fit-content;
+  margin: 20px;
+  font-size: 15px;
+
+  .se-radio-label {
     width: fit-content;
-    display: flex;
-    margin: 20px 20px;
-    font-size: 15px;
+    height: 30px;
+  }
+
+  .se-radio-round {
+    width: 13px;
+    height: 13px;
+  }
+
+  &--small {
+    font-size: 13px;
 
     .se-radio-label {
-        width: fit-content;
-        height: 30px;
+      height: 20px;
     }
 
     .se-radio-round {
-        width: 13px;
-        height: 13px;
+      width: 12px;
+      height: 12px;
+    }
+  }
+
+  &--middle {
+    font-size: 15px;
+
+    .se-radio-label {
+      height: 30px;
     }
 
+    .se-radio-round {
+      width: 13px;
+      height: 13px;
+    }
+  }
 
-    &--small {
-        font-size: 13px;
+  &--large {
+    font-size: 20px;
 
-        .se-radio-label {
-            height: 20px;
-        }
-
-        .se-radio-round {
-            width: 12px;
-            height: 12px;
-        }
+    .se-radio-label {
+      height: 40px;
     }
 
-    &--middle {
-        font-size: 15px;
-
-        .se-radio-label {
-            height: 30px;
-        }
-
-        .se-radio-round {
-            width: 13px;
-            height: 13px;
-        }
+    .se-radio-round {
+      width: 14px;
+      height: 14px;
     }
-
-    &--large {
-        font-size: 20px;
-
-        .se-radio-label {
-
-            height: 40px;
-        }
-
-        .se-radio-round {
-            width: 14px;
-            height: 14px;
-        }
-    }
+  }
 }
 
 .se-radio-label {
-    display: inline-flex;
-    align-items: center;
-    margin-right: 36px;
-    cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  margin-right: 36px;
+  cursor: pointer;
 }
 
-
 .se-radio-round {
-    cursor: pointer;
-    margin: 0 0;
-    accent-color: @text-color-accent;
+  margin: 0;
+  accent-color: @text-color-accent;
+  cursor: pointer;
 
-    &:checked+.se-radio-text {
-        color: #3498db; // 选中状态下的文字颜色，你可以替换为其他颜色
-    }
+  &:checked + .se-radio-text {
+    color: #3498db; // 选中状态下的文字颜色，你可以替换为其他颜色
+  }
 
-    &.disabled {
-        cursor: not-allowed; // 设置鼠标样式为不可用
-    }
+  &.disabled {
+    cursor: not-allowed; // 设置鼠标样式为不可用
+  }
 }
 
 .se-radio-text {
-    padding-left: 12px;
+  padding-left: 12px;
 
-    &.disabled {
-        color: rgb(178, 178, 178);
-        cursor: not-allowed;
-    }
+  &.disabled {
+    color: rgb(178 178 178);
+    cursor: not-allowed;
+  }
 }

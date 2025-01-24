@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Hover 触发的 Tooltip -->
-    <se-tooltip style="margin: 10px" trigger="hover" color="#3498db" >
+    <se-tooltip style="margin: 10px" trigger="hover" color="#3498db">
       <template #default>
         <se-button>Hover 显示 Tooltip</se-button>
       </template>
@@ -19,10 +19,7 @@
         <p>这是一个 Click 显示的 Tooltip 内容。</p>
       </template>
     </se-tooltip>
-
-
   </div>
 </template>
 
-<script lang="ts" setup>
-</script>
+<script lang="ts" setup></script>

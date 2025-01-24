@@ -1,9 +1,11 @@
 .hover-underline:hover {
   text-decoration: underline;
 }
+
 .hover-pointer:hover {
   cursor: pointer;
 }
+
 .se-img-preview-direct-root {
   position: fixed;
   top: 0;
@@ -11,6 +13,7 @@
   width: 0;
   height: 0;
 }
+
 .se-img-preview {
   position: fixed;
   top: 0;
@@ -18,88 +21,114 @@
   width: 0;
   height: 0;
 }
+
 .se-img-preview .se-img-preview-mask {
   position: absolute;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: #00000066;
+  background-color: #0006;
   transition: all 0.3s;
+  animation: showPreview 0.3s;
   animation-name: showPreview;
   animation-iteration-count: 1;
-  animation: showPreview 0.3s;
 }
+
 .se-img-preview .se-img-preview-img {
   overflow: visible;
 }
+
 .se-img-preview .se-img-preview-img .se-img-preview-img-item {
   position: absolute;
-  transition: left 0.3s ease-in-out, top 0.3s ease-in-out, width 0.3s ease-in-out, height 0.3s ease-in-out, min-width 0.3s ease-in-out, min-height 0.3s ease-in-out, transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
   cursor: grab;
+  transition:
+    left 0.3s ease-in-out,
+    top 0.3s ease-in-out,
+    width 0.3s ease-in-out,
+    height 0.3s ease-in-out,
+    min-width 0.3s ease-in-out,
+    min-height 0.3s ease-in-out,
+    transform 0.3s ease-in-out,
+    opacity 0.3s ease-in-out;
 }
-.se-img-preview .se-img-preview-img .se-img-preview-img-item.se-img-preview-img-only-preview {
+
+.se-img-preview
+  .se-img-preview-img
+  .se-img-preview-img-item.se-img-preview-img-only-preview {
   animation: showPreview 0.3s;
 }
-.se-img-preview .se-img-preview-img .se-img-preview-img-item.se-img-preview-img-item-noModal {
-  -webkit-filter: drop-shadow(0 0 6px #33333333);
-  filter: drop-shadow(0 0 6px #33333333);
+
+.se-img-preview
+  .se-img-preview-img
+  .se-img-preview-img-item.se-img-preview-img-item-noModal {
+  filter: drop-shadow(0 0 6px #3333);
+  filter: drop-shadow(0 0 6px #3333);
 }
+
 .se-img-preview .se-img-preview-toolbar {
   position: fixed;
   top: calc(100vh - 80px);
   left: 50vw;
-  transform: translateX(-50%);
   transition: all 0.3s;
+  transform: translateX(-50%);
+  animation: showToolbar 0.3s;
   animation-name: showToolbar;
   animation-iteration-count: 1;
-  animation: showToolbar 0.3s;
 }
+
 .se-img-preview .se-img-preview-close {
   position: fixed;
   top: 20px;
   right: 20px;
+  z-index: 99;
   width: 30px;
   height: 30px;
-  border-radius: 50%;
-  background-color: #00000033;
+  line-height: 30px;
   color: #fff;
   text-align: center;
-  line-height: 30px;
-  backdrop-filter: blur(10px);
   cursor: pointer;
+  background-color: #0003;
+  backdrop-filter: blur(10px);
+  border-radius: 50%;
   transition: all 0.3s;
-  z-index: 99;
 }
+
 .se-img-preview .se-img-preview-close > div {
   padding: 2px;
 }
+
 .se-img-preview .se-img-preview-close:hover {
-  background-color: #00000055;
+  background-color: #0005;
 }
+
 .se-img-preview .se-img-preview-msg {
   position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  color: #fff;
-  text-align: center;
+  z-index: 99;
   font-size: 20px;
   font-weight: bold;
-  z-index: 99;
+  color: #fff;
+  text-align: center;
+  transform: translate(-50%, -50%);
 }
+
 @keyframes showPreview {
   0% {
     opacity: 0;
   }
+
   100% {
     opacity: 1;
   }
 }
+
 @keyframes showToolbar {
   0% {
     transform: translateX(-50%) translateY(200%);
   }
+
   100% {
     transform: translateX(-50%) translateY(0);
   }

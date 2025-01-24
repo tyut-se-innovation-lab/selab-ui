@@ -15,7 +15,11 @@
     <h3>带前缀和后缀的输入框</h3>
     <SeInput placeholder="带前缀" prefix="cuida:search-outline" />
     <SeInput placeholder="带后缀" suffix="cuida:settings-outline" />
-    <SeInput placeholder="带前缀和后缀" prefix="cuida:search-outline" suffix="cuida:settings-outline" />
+    <SeInput
+      placeholder="带前缀和后缀"
+      prefix="cuida:search-outline"
+      suffix="cuida:settings-outline"
+    />
 
     <h3>不同大小的输入框</h3>
     <SeInput placeholder="小尺寸" size="small" />
@@ -27,28 +31,26 @@
 
     <h3>事件监听</h3>
     <SeInput
-        placeholder="监听事件"
-        allowClear
-        @focus="onFocus"
-        @blur="onBlur"
-        @clear="onClear"
+      placeholder="监听事件"
+      allowClear
+      @focus="onFocus"
+      @blur="onBlur"
+      @clear="onClear"
     />
   </div>
 </template>
 
 <script>
-
 export default {
-
   methods: {
     onFocus(event) {
-      console.log('输入框聚焦', event);
+      console.log("输入框聚焦", event);
     },
     onBlur(event) {
-      console.log('输入框失焦', event);
+      console.log("输入框失焦", event);
     },
     onClear() {
-      console.log('清除内容');
+      console.log("清除内容");
     },
   },
 };
@@ -64,5 +66,4 @@ h3 {
   font-size: 16px;
   color: #333;
 }
-
 </style>

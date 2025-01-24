@@ -1,32 +1,33 @@
 // Your compsent styles here
 @import url("../../base/index.less");
+
 .se-dialog_wrapper {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
+  width: 100%;
+  height: 100%;
+  background: rgb(0 0 0 / 50%);
 }
 
 .se-dialog {
+  overflow: hidden;
   background: #fff;
   border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 12px rgb(0 0 0 / 10%);
 }
 
 .se-dialog_header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding: 16px;
   font-size: 16px;
   font-weight: bold;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   border-bottom: 1px solid #ebeef5;
 }
 
@@ -35,8 +36,8 @@
 }
 
 .se-dialog_headerbtn {
-  cursor: pointer;
   color: #909399;
+  cursor: pointer;
 }
 
 .se-dialog_body {

@@ -1,18 +1,26 @@
 <template>
   <div>
     <span
-        ref="elRef"
-        :class="[$attrs.class, 'se-icon']"
-        :style="computedStyle"
+      ref="elRef"
+      :class="[$attrs.class, 'se-icon']"
+      :style="computedStyle"
     ></span>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { renderSVG } from "@iconify/iconify";
-import {ref, computed, onMounted, unref, nextTick, CSSProperties, defineComponent,} from "vue";
+import {
+  ref,
+  computed,
+  onMounted,
+  unref,
+  nextTick,
+  CSSProperties,
+  defineComponent,
+} from "vue";
 import "../../less/components/icon/index.less";
-defineOptions({ name: 'se-icon' });
+defineOptions({ name: "se-icon" });
 // 定义组件的 Props
 interface Props {
   icon: string; // 图标名称
@@ -26,16 +34,17 @@ const props = withDefaults(defineProps<Props>(), {
   color: "white",
 });
 
-
 // 引用 DOM 元素
 const elRef = ref<Element>();
 
 // 动态计算样式
-const computedStyle = computed((): CSSProperties => ({
-  color: props.color,
-  fontSize: `${props.size}px`,
-  display: "inline-flex",
-}));
+const computedStyle = computed(
+  (): CSSProperties => ({
+    color: props.color,
+    fontSize: `${props.size}px`,
+    display: "inline-flex",
+  }),
+);
 
 // 更新图标
 const updateIcon = async () => {

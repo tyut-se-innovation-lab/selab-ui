@@ -1,130 +1,134 @@
-@import url('../../base/index.less');
+@import url("../../base/index.less");
 
 /* 根容器样式 */
 .se-checkbox {
-    display: inline-block;
-    font-family: 'Roboto', Arial, sans-serif;
-    font-size: 16px;
-    padding: 20px;
-    width: 100%;
-    background-color: var(--background-color, #fff);
-    border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s, box-shadow 0.3s;
+  display: inline-block;
+  width: 100%;
+  padding: 20px;
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 16px;
+  background-color: var(--background-color, #fff);
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgb(0 0 0 / 10%);
+  transition:
+    background-color 0.3s,
+    box-shadow 0.3s;
 }
 
 /* 按钮样式：全选、清除 */
 .se-checkbox-select-all {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 15px;
-    padding: 10px 0;
-    border-bottom: 1px solid var(--border-color, #ddd);
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  margin-bottom: 15px;
+  border-bottom: 1px solid var(--border-color, #ddd);
 
-    button {
-        padding: 8px 18px;
-        background-color: var(--button-bg, #3498db);
-        color: var(--button-text-color, white);
-        border: none;
-        cursor: pointer;
-        border-radius: 5px;
-        font-size: 14px;
-        transition: background-color 0.3s, transform 0.3s;
+  button {
+    padding: 8px 18px;
+    font-size: 14px;
+    color: var(--button-text-color, white);
+    cursor: pointer;
+    background-color: var(--button-bg, #3498db);
+    border: none;
+    border-radius: 5px;
+    transition:
+      background-color 0.3s,
+      transform 0.3s;
 
-        &:hover {
-            background-color: var(--button-bg-hover, #2980b9);
-            transform: scale(1.05);
-        }
-
-        &:disabled {
-            background-color: var(--button-bg-disabled, #ccc);
-            cursor: not-allowed;
-        }
+    &:hover {
+      background-color: var(--button-bg-hover, #2980b9);
+      transform: scale(1.05);
     }
+
+    &:disabled {
+      cursor: not-allowed;
+      background-color: var(--button-bg-disabled, #ccc);
+    }
+  }
 }
 
 /* 单个复选框项 */
 .se-checkbox-label {
-    display: flex;
-    align-items: center;
-    margin-bottom: 12px;
-    position: relative;
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
 
-    .se-checkbox-square {
-        width: 20px;
-        height: 20px;
-        margin-right: 12px;
-        border-radius: 4px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        background-color: var(--checkbox-bg, #fff);
-        border: 2px solid var(--checkbox-border-color, #ccc);
+  .se-checkbox-square {
+    width: 20px;
+    height: 20px;
+    margin-right: 12px;
+    cursor: pointer;
+    background-color: var(--checkbox-bg, #fff);
+    border: 2px solid var(--checkbox-border-color, #ccc);
+    border-radius: 4px;
+    transition: all 0.3s ease;
 
-        &:checked {
-            background-color: var(--checkbox-checked-bg, #3498db);
-            border-color: var(--checkbox-checked-border, #3498db);
-        }
-
-        &:hover {
-            border-color: var(--checkbox-border-hover, #3498db);
-        }
-
-        &:disabled {
-            background-color: var(--checkbox-disabled-bg, #e0e0e0);
-            border-color: var(--checkbox-disabled-border, #ccc);
-        }
-    }
-
-    .se-checkbox-text {
-        font-size: 16px;
-        color: var(--checkbox-text-color, #333);
-        cursor: pointer;
-        font-weight: 500;
-
-        &.disabled {
-            color: var(--checkbox-text-disabled-color, #ccc);
-        }
+    &:checked {
+      background-color: var(--checkbox-checked-bg, #3498db);
+      border-color: var(--checkbox-checked-border, #3498db);
     }
 
     &:hover {
-        .se-checkbox-square {
-            border-color: var(--checkbox-border-hover, #3498db);
-        }
+      border-color: var(--checkbox-border-hover, #3498db);
     }
 
     &:disabled {
-        cursor: not-allowed;
-
-        .se-checkbox-square {
-            cursor: not-allowed;
-        }
-
-        .se-checkbox-text {
-            color: var(--checkbox-text-disabled-color, #ccc);
-        }
+      background-color: var(--checkbox-disabled-bg, #e0e0e0);
+      border-color: var(--checkbox-disabled-border, #ccc);
     }
+  }
+
+  .se-checkbox-text {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--checkbox-text-color, #333);
+    cursor: pointer;
+
+    &.disabled {
+      color: var(--checkbox-text-disabled-color, #ccc);
+    }
+  }
+
+  &:hover {
+    .se-checkbox-square {
+      border-color: var(--checkbox-border-hover, #3498db);
+    }
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+
+    .se-checkbox-square {
+      cursor: not-allowed;
+    }
+
+    .se-checkbox-text {
+      color: var(--checkbox-text-disabled-color, #ccc);
+    }
+  }
 }
 
 /* 不同大小的复选框 */
 .se-checkbox--small .se-checkbox-square {
-    width: 14px;
-    height: 14px;
+  width: 14px;
+  height: 14px;
 }
 
 .se-checkbox--middle .se-checkbox-square {
-    width: 18px;
-    height: 18px;
+  width: 18px;
+  height: 18px;
 }
 
 .se-checkbox--large .se-checkbox-square {
-    width: 22px;
-    height: 22px;
+  width: 22px;
+  height: 22px;
 }
 
 /* 禁用状态样式 */
 .disabled {
-    opacity: 0.5;
-    pointer-events: none;
+  pointer-events: none;
+  opacity: 0.5;
 }
 
 /* 白天模式 */

@@ -1,84 +1,96 @@
 .hover-underline:hover {
   text-decoration: underline;
 }
+
 .hover-pointer:hover {
   cursor: pointer;
 }
+
 .se-dialog_wrapper {
   position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  overflow: auto;
-  margin: 0;
+  inset: 0;
   z-index: 2001;
-  background-color: rgba(0, 0, 0, 0.5);
+  margin: 0;
+  overflow: auto;
+  background-color: rgb(0 0 0 / 50%);
 }
+
 .se-dialog_wrapper .se-dialog {
   position: relative;
+  box-sizing: border-box;
+  width: 30%;
   margin: 15vh auto 50px;
   background: #fff;
   border-radius: 2px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-  box-sizing: border-box;
-  width: 30%;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 30%);
 }
+
 .se-dialog_wrapper .se-dialog_header {
   padding: 20px 20px 10px;
 }
+
 .se-dialog_wrapper .se-dialog_header .se-dialog_title {
-  line-height: 24px;
   font-size: 18px;
+  line-height: 24px;
   color: #303133;
 }
+
 .se-dialog_wrapper .se-dialog_header .se-dialog_headerbtn {
   position: absolute;
   top: 20px;
   right: 20px;
   padding: 0;
+  font-size: 16px;
+  cursor: pointer;
   background: transparent;
   border: nse;
   outline: nse;
-  cursor: pointer;
-  font-size: 16px;
 }
+
 .se-dialog_wrapper .se-dialog_header .se-dialog_headerbtn:hover {
-  color: rgba(0, 0, 0, 0.6);
+  color: rgb(0 0 0 / 60%);
 }
+
 .se-dialog_wrapper .se-dialog_header .se-dialog_headerbtn .se-icon-close {
   margin-left: 5px;
   font-size: 12px;
-  color: rgba(0, 0, 0, 0.3);
+  color: rgb(0 0 0 / 30%);
   cursor: pointer;
 }
+
 .se-dialog_wrapper .se-dialog_body {
   padding: 30px 20px;
-  color: #606266;
   font-size: 14px;
+  color: #606266;
   word-break: break-all;
 }
+
 .se-dialog_wrapper .se-dialog_footer {
+  box-sizing: border-box;
   padding: 10px 20px 20px;
   text-align: right;
-  box-sizing: border-box;
 }
+
 .se-dialog_wrapper .se-dialog_footer ::v-deep .se-button:first-child {
   margin-right: 20px;
 }
+
 @keyframes fadeIn {
   0% {
     opacity: 0;
     transform: translateY(-20px);
   }
+
   100% {
     opacity: 1;
-    transform: translateY(0px);
+    transform: translateY(0);
   }
 }
+
 .dialog-fade-enter-active {
   animation: fadeIn 0.3s;
 }
+
 .dialog-fade-leave-active {
   animation: fadeIn 0.3s reverse;
 }

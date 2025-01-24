@@ -1,8 +1,8 @@
- import { defineComponent, computed, ref } from 'vue';
-import '../../less/components/VirtualScroller/index.less';
+import { defineComponent, computed, ref } from "vue";
+import "../../less/components/VirtualScroller/index.less";
 
 export default defineComponent({
-  name: 'SeVirtualScroller',
+  name: "SeVirtualScroller",
   props: {
     items: {
       type: Array as () => Array<{ value: string | number; label: any }>,
@@ -34,11 +34,17 @@ export default defineComponent({
     const containerRef = ref<HTMLDivElement | null>(null);
 
     // 计算开始和结束索引
-    const startIndex = computed(() => Math.floor(scrollTop.value / props.itemHeight));
-    const endIndex = computed(() => Math.min(startIndex.value + props.visibleCount, props.items.length));
+    const startIndex = computed(() =>
+      Math.floor(scrollTop.value / props.itemHeight),
+    );
+    const endIndex = computed(() =>
+      Math.min(startIndex.value + props.visibleCount, props.items.length),
+    );
 
     // 获取可见项
-    const visibleItems = computed(() => props.items.slice(startIndex.value, endIndex.value));
+    const visibleItems = computed(() =>
+      props.items.slice(startIndex.value, endIndex.value),
+    );
 
     // 计算总高度
     const totalHeight = computed(() => props.items.length * props.itemHeight);
@@ -69,67 +75,69 @@ export default defineComponent({
   },
   render() {
     return (
+      <div
+        class="virtual-scroller-container"
+        ref="containerRef"
+        onScroll={this.onScroll}
+        style={{
+          height: `${this.containerHeight}px`,
+          overflowY: "auto",
+          position: "relative",
+        }} // 固定容器高度
+      >
+        {/* 占位层：用于占据虚拟滚动的总高度 */}
         <div
-            class="virtual-scroller-container"
-            ref="containerRef"
-            onScroll={this.onScroll}
-            style={{
-              height: `${this.containerHeight}px`,
-              overflowY: 'auto',
-              position: 'relative',
-            }} // 固定容器高度
-        >
-          {/* 占位层：用于占据虚拟滚动的总高度 */}
-          <div
-              class="virtual-scroller-phantom"
-              style={{
-                height: `${this.totalHeight}px`,
-                position: 'absolute',
-                width: '100%',
-              }}
-          ></div>
+          class="virtual-scroller-phantom"
+          style={{
+            height: `${this.totalHeight}px`,
+            position: "absolute",
+            width: "100%",
+          }}
+        ></div>
 
-          {/* 内容区域：根据当前滚动位置来平移 */}
-          <div
-              class="virtual-scroller-content"
+        {/* 内容区域：根据当前滚动位置来平移 */}
+        <div
+          class="virtual-scroller-content"
+          style={{
+            transform: `translateY(${this.translateY}px)`,
+            position: "relative",
+            width: "100%",
+          }}
+        >
+          {this.visibleItems.map((item) => (
+            <div
+              class="virtual-scroller-item"
+              key={item.value}
+              onClick={() => this.handleItemClick(item)}
               style={{
-                transform: `translateY(${this.translateY}px)`,
-                position: 'relative',
-                width: '100%',
-              }}
-          >
-            {this.visibleItems.map((item) => (
-                <div
-                    class="virtual-scroller-item"
-                    key={item.value}
-                    onClick={() => this.handleItemClick(item)}
+                height: `${this.itemHeight}px`,
+                display: "flex",
+                alignItems: "center",
+              }} // 每一项的高度固定
+            >
+              {this.isTable ? (
+                // 如果是表格，逐一渲染表格列
+                Object.values(item.label).map((val, index) => (
+                  <div
+                    key={index}
                     style={{
-                      height: `${this.itemHeight}px`,
-                      display: 'flex',
-                      alignItems: 'center',
-                    }} // 每一项的高度固定
-                >
-                  {this.isTable
-                      ? // 如果是表格，逐一渲染表格列
-                      Object.values(item.label).map((val, index) => (
-                          <div
-                              key={index}
-                              style={{
-                                flex: 1,
-                                border: '1px solid #ccc',
-                                padding: '4px',
-                                textAlign: 'center',
-                              }}
-                          >
-                            {val}
-                          </div>
-                      ))
-                      : // 如果不是表格，直接渲染 label
-                      <div>{item.label}</div>}
-                </div>
-            ))}
-          </div>
+                      flex: 1,
+                      border: "1px solid #ccc",
+                      padding: "4px",
+                      textAlign: "center",
+                    }}
+                  >
+                    {val}
+                  </div>
+                ))
+              ) : (
+                // 如果不是表格，直接渲染 label
+                <div>{item.label}</div>
+              )}
+            </div>
+          ))}
         </div>
+      </div>
     );
   },
 });

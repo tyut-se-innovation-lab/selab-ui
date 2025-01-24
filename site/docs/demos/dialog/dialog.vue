@@ -5,16 +5,16 @@
 
     <!-- 使用 SeDialog 组件 -->
     <SeDialog
-        v-model:visible="isDialogVisible"
-        title="自定义标题"
-        :width="'50%'"
-        :top="'10vh'"
-        :closeable="true"
-        @close="handleDialogClose"
+      v-model:visible="isDialogVisible"
+      title="自定义标题"
+      :width="'50%'"
+      :top="'10vh'"
+      :closeable="true"
+      @close="handleDialogClose"
     >
       <!-- 自定义标题 -->
       <template #title>
-        <span style="color: #007bff; font-weight: bold;">插槽自定义标题</span>
+        <span style="color: #007bff; font-weight: bold">插槽自定义标题</span>
       </template>
 
       <!-- 默认插槽内容 -->
@@ -22,7 +22,9 @@
 
       <!-- 自定义页脚 -->
       <template #footer>
-        <button @click="isDialogVisible = false" class="btn btn-close">关闭</button>
+        <button @click="isDialogVisible = false" class="btn btn-close">
+          关闭
+        </button>
         <button @click="confirmAction" class="btn btn-confirm">确认</button>
       </template>
     </SeDialog>
@@ -30,20 +32,20 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { ref } from "vue";
 
 // 控制对话框显示状态
 const isDialogVisible = ref(false);
 
 // 关闭对话框的回调
 const handleDialogClose = () => {
-  console.log('对话框已关闭');
+  console.log("对话框已关闭");
   isDialogVisible.value = false;
 };
 
 // 确认操作的回调
 const confirmAction = () => {
-  console.log('确认操作执行');
+  console.log("确认操作执行");
   isDialogVisible.value = false;
 };
 </script>

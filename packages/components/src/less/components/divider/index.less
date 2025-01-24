@@ -1,65 +1,65 @@
 /* 导入基础样式 */
-@import url('../../base/index.less');
+@import url("../../base/index.less");
 
 /* Divider 样式 */
 .se-Divider {
-    display: flex;
-    align-items: center;
-    border: none;
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+
+  &--horizontal {
+    width: 100%;
+    height: 1px;
+    margin: 8px 0;
+    background-color: #e0e0e0;
+  }
+
+  &--vertical {
+    width: 1px; /* 设置竖线宽度 */
+    height: 100%; /* 使用父容器的高度 */
+    min-height: 20px;
+    margin: 0 8px;
+    background-color: #e0e0e0;
+  }
+
+  &--dashed {
     background-color: transparent;
+    border-top: 1px dashed #e0e0e0;
+  }
 
-    &--horizontal {
-        width: 100%;
-        height: 1px;
-        background-color: #e0e0e0;
-        margin: 8px 0;
+  &-content {
+    padding: 0 8px;
+    color: rgb(0 0 0 / 85%);
+    white-space: nowrap;
+
+    &--left {
+      margin-right: auto;
     }
 
-    &--vertical {
-        width: 1px; /* 设置竖线宽度 */
-        height: 100%; /* 使用父容器的高度 */
-        background-color: #e0e0e0;
-        margin: 0 8px;
-        min-height: 20px;
+    &--center {
+      margin: 0 auto;
     }
 
-    &--dashed {
-        border-top: 1px dashed #e0e0e0;
-        background-color: transparent;
+    &--right {
+      margin-left: auto;
     }
-
-    &-content {
-        padding: 0 8px;
-        color: rgba(0, 0, 0, 0.85);
-        white-space: nowrap;
-
-        &--left {
-            margin-right: auto;
-        }
-
-        &--center {
-            margin: 0 auto;
-        }
-
-        &--right {
-            margin-left: auto;
-        }
-    }
+  }
 }
 
 /* 容器样式 */
 .divider-container {
-    display: flex; /* 横向排列子元素 */
-    align-items: center; /* 垂直居中 */
-    height: 100px; /* 设置容器高度 */
-    padding: 16px; /* 添加内边距 */
-    background-color: #f9f9f9; /* 设置背景颜色 */
-    border: 1px solid #ddd; /* 添加边框 */
-    border-radius: 4px; /* 圆角 */
+  display: flex; /* 横向排列子元素 */
+  align-items: center; /* 垂直居中 */
+  height: 100px; /* 设置容器高度 */
+  padding: 16px; /* 添加内边距 */
+  background-color: #f9f9f9; /* 设置背景颜色 */
+  border: 1px solid #ddd; /* 添加边框 */
+  border-radius: 4px; /* 圆角 */
 }
 
 /* 子元素内容样式 */
 .content {
-    font-size: 16px; /* 字体大小 */
-    color: #333; /* 字体颜色 */
+  font-size: 16px; /* 字体大小 */
+  color: #333; /* 字体颜色 */
 }

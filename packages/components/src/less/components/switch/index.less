@@ -1,112 +1,114 @@
 // Your component styles here
- @import url('../../base/index.less');
-.se-switch-external{
-    display: flex;
-    padding-top: 10px;
-}
-.se-switch {
-    position: relative;
-    display: inline-block;
-    width: 45px;
-    height: 27px;
-    //padding-top: 10px;
+@import url("../../base/index.less");
+
+.se-switch-external {
+  display: flex;
+  padding-top: 10px;
 }
 
-.se-switch--large{
-    position: relative;
-    display: inline-block;
-    width: 60px;
-    height: 34px;
+.se-switch {
+  position: relative;
+  display: inline-block;
+  width: 45px;
+  height: 27px;
+  //padding-top: 10px;
+}
+
+.se-switch--large {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
 }
 
 .switch input {
-    display:none;
+  display: none;
 }
 
 .slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    -webkit-transition: .4s;
-    transition: .4s;
+  position: absolute;
+  inset: 0;
+  cursor: pointer;
+  background-color: #ccc;
+  transition: 0.4s;
+  transition: 0.4s;
 }
 
-.se-slider--large:before {
-    position: absolute;
-    content: "";
-    height: 26px;
-    width: 26px;
-    left: 4px;
-    bottom: 4px;
-    background-color: @bg-color-primary;
-    -webkit-transition: .4s;
-    transition: .4s;
+.se-slider--large::before {
+  position: absolute;
+  bottom: 4px;
+  left: 4px;
+  width: 26px;
+  height: 26px;
+  content: "";
+  background-color: @bg-color-primary;
+  transition: 0.4s;
+  transition: 0.4s;
 }
 
-
-.se-slider:before{
-    position: absolute;
-    content: "";
-    height: 22px;
-    width: 22px;
-    left: 1px;
-    bottom: 3px;
-    background-color: @bg-color-primary;
-    -webkit-transition: .4s;
-    transition: .4s;
+.se-slider::before {
+  position: absolute;
+  bottom: 3px;
+  left: 1px;
+  width: 22px;
+  height: 22px;
+  content: "";
+  background-color: @bg-color-primary;
+  transition: 0.4s;
+  transition: 0.4s;
 }
+
 input:checked + .slider {
-    background-color: @bg-color-accent;
+  background-color: @bg-color-accent;
 }
 
 input:focus + .slider {
-    box-shadow: 0 0 1px @bg-color-accent;
+  box-shadow: 0 0 1px @bg-color-accent;
 }
 
-input:checked + .se-slider:before {
-    -webkit-transform: translateX(18px);
-    -ms-transform: translateX(18px);
-    transform: translateX(18px);
+input:checked + .se-slider::before {
+  transform: translateX(18px);
+  transform: translateX(18px);
+  transform: translateX(18px);
 }
-input:checked + .se-slider--large:before {
-    -webkit-transform: translateX(26px);
-    -ms-transform: translateX(26px);
-    transform: translateX(26px);
+
+input:checked + .se-slider--large::before {
+  transform: translateX(26px);
+  transform: translateX(26px);
+  transform: translateX(26px);
 }
 
 /* Rounded sliders */
 .slider.round {
-    border-radius: 34px;
-}
-.se-slider-forbidden{
-    cursor: not-allowed;
-}
-.slider.round:before {
-    border-radius: 50%;
+  border-radius: 34px;
 }
 
-.se-switch-frontText{
-    margin-right: 15px;
-    height: 27px;
-    line-height: 27px;
-    color: #000000;
+.se-slider-forbidden {
+  cursor: not-allowed;
 }
-.se-switch-followText{
-    margin-left: 15px;
-    height: 27px;
-    line-height: 27px;
-    color: #000000;
+
+.slider.round::before {
+  border-radius: 50%;
 }
-.activeText{
-    color: @text-color-accent;
+
+.se-switch-frontText {
+  height: 27px;
+  margin-right: 15px;
+  line-height: 27px;
+  color: #000;
+}
+
+.se-switch-followText {
+  height: 27px;
+  margin-left: 15px;
+  line-height: 27px;
+  color: #000;
+}
+
+.activeText {
+  color: @text-color-accent;
 }
 
 .showText {
-    display: none;
+  display: none;
 }
-
-    

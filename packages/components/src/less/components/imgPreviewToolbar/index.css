@@ -1,109 +1,129 @@
 .hover-underline:hover {
   text-decoration: underline;
 }
+
 .hover-pointer:hover {
   cursor: pointer;
 }
+
 .se-img-preview-toolbar-root {
   position: relative;
-  background-color: #00000044;
-  border-radius: 999px;
-  box-shadow: 0 0 10px #00000044;
-  color: #ffffffaa;
   overflow: hidden;
+  color: #fffa;
+  background-color: #0004;
   backdrop-filter: blur(10px);
+  border-radius: 999px;
+  box-shadow: 0 0 10px #0004;
 }
+
 .se-img-preview-toolbar-root.se-img-preview-toolbar-noModal {
-  background-color: #00000066;
-  border: 1.4px solid #ffffff66;
+  background-color: #0006;
+  border: 1.4px solid #fff6;
 }
+
 .se-img-preview-toolbar-root ul {
   position: relative;
+  box-sizing: content-box;
   display: flex;
   align-items: center;
-  list-style: none;
   padding: 8px 10px;
   margin: 0;
-  transition: all 0.3s;
+  list-style: none;
   cursor: default;
-  box-sizing: content-box;
+  transition: all 0.3s;
 }
+
 .se-img-preview-toolbar-root ul li {
   display: flex;
-  transition: all 0.3s;
   margin-right: 10px;
   font-size: 12px;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
   user-select: none;
-}
-.se-img-preview-toolbar-root ul li button {
-  margin-right: 10px;
-  height: 32px;
-  width: 32px;
-  border-radius: 50%;
-  border: none;
-  background-color: #00000000;
-  color: #ffffffaa;
-  cursor: pointer;
+  user-select: none;
+  user-select: none;
+  user-select: none;
   transition: all 0.3s;
-  outline: none;
 }
+
+.se-img-preview-toolbar-root ul li button {
+  width: 32px;
+  height: 32px;
+  margin-right: 10px;
+  color: #fffa;
+  cursor: pointer;
+  background-color: #0000;
+  border: none;
+  border-radius: 50%;
+  outline: none;
+  transition: all 0.3s;
+}
+
 .se-img-preview-toolbar-root ul li button > div {
   padding: 5px;
 }
+
 .se-img-preview-toolbar-root ul li button:last-child {
   margin-right: 0;
 }
+
 .se-img-preview-toolbar-root ul li button:hover {
-  background-color: #00000022;
-  color: #ffffffff;
+  color: #ffff;
+  background-color: #0002;
 }
+
 .se-img-preview-toolbar-root ul li button span {
   margin: 0;
+  line-height: 48px;
+  color: #fffa;
   white-space: nowrap;
   transition: all 0.3s;
-  line-height: 48px;
-  color: #ffffffaa;
 }
+
 .se-img-preview-toolbar-root ul li button:hover span {
-  color: #ffffffff;
+  color: #ffff;
 }
+
 .se-img-preview-toolbar-root ul li span.se-img-preview-toolbar-pagination {
   margin: 0 10px;
+  font-size: 12px;
   white-space: nowrap;
-  transition: all 0.3s;
   cursor: text;
-  font-size: 12px;
-}
-.se-img-preview-toolbar-root ul li span.se-img-preview-toolbar-pagination:hover {
-  color: #ffffffff;
-}
-.se-img-preview-toolbar-root ul li form input {
-  margin: 0 10px;
-  padding: 0 10px;
-  height: 32px;
-  border-radius: 4px;
-  border: none;
-  background-color: #00000022;
-  color: #ffffffaa;
-  font-size: 12px;
   transition: all 0.3s;
-  outline: none;
-  text-align: center;
-  -moz-appearance: textfield;
-  appearance: none;
 }
+
+.se-img-preview-toolbar-root
+  ul
+  li
+  span.se-img-preview-toolbar-pagination:hover {
+  color: #ffff;
+}
+
+.se-img-preview-toolbar-root ul li form input {
+  height: 32px;
+  padding: 0 10px;
+  margin: 0 10px;
+  font-size: 12px;
+  color: #fffa;
+  text-align: center;
+  appearance: textfield;
+  appearance: none;
+  background-color: #0002;
+  border: none;
+  border-radius: 4px;
+  outline: none;
+  transition: all 0.3s;
+}
+
 .se-img-preview-toolbar-root ul li form input::-webkit-inner-spin-button,
 .se-img-preview-toolbar-root ul li form input::-webkit-outer-spin-button {
-  -webkit-appearance: none;
   margin: 0;
+  appearance: none;
 }
+
 .se-img-preview-toolbar-root ul li form input:hover {
-  background-color: #00000044;
-  color: #ffffffff;
+  color: #ffff;
+  background-color: #0004;
 }
+
 .se-img-preview-toolbar-root ul li:last-child {
   margin-right: 0;
 }

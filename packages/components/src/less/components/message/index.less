@@ -1,69 +1,67 @@
 // Your component styles here
-@import url('../../base/index.less');
+@import url("../../base/index.less");
 
 @SeMsgColorMap: {
-    success: @success-color,
-        lighten(saturate(spin(@success-color, -35%), 1), 40%);
-    warning: @warning-color,
-        lighten(saturate(spin(@warning-color, 10%), 1), 35%);
-    danger: @error-color, lighten(saturate(spin(@error-color, -30%), 1), 35%);
-    info: @brand-color-primary,
-        lighten(saturate(spin(@brand-color-primary, -30%), 1), 35%);
+  success: @success-color, lighten(saturate(spin(@success-color, -35%), 1), 40%);
+  warning: @warning-color, lighten(saturate(spin(@warning-color, 10%), 1), 35%);
+  danger: @error-color, lighten(saturate(spin(@error-color, -30%), 1), 35%);
+  info: @brand-color-primary,
+    lighten(saturate(spin(@brand-color-primary, -30%), 1), 35%);
 };
 
 @SeMsgSizeMag: mini, small, default, large;
 
 .se-msg {
-    position: fixed;
-    left: 50%;
-    display: flex;
-    justify-content: space-between;
-    // height: 16px;
-    padding: 15px;
-    // font-weight: bold;
-    line-height: 16px;
-    border: 1.4px solid;
-    border-radius: 8px;
-    transition: all 0.3s;
-    transform: translateX(-50%);
-    box-sizing: content-box;
+  position: fixed;
+  left: 50%;
+  box-sizing: content-box;
+  display: flex;
+  justify-content: space-between;
+  // height: 16px;
+  padding: 15px;
+  // font-weight: bold;
+  line-height: 16px;
+  border: 1.4px solid;
+  border-radius: 8px;
+  transition: all 0.3s;
+  transform: translateX(-50%);
 }
 
 .se-msg-content {
-    white-space: nowrap;
-    max-width: 80vw;
-    // 超出部分省略号
-    overflow: hidden;
-    text-overflow: ellipsis;
+  max-width: 80vw;
+  // 超出部分省略号
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .se-msg-icon {
-    margin-right: 10px;
-    font-size: 16px;
-    line-height: 16px;
+  margin-right: 10px;
+  font-size: 16px;
+  line-height: 16px;
 }
 
 .se-msg-close {
-    margin-left: 10px;
-    font-size: 16px;
-    line-height: 16px;
-    cursor: pointer;
-    transition: all 0.2s;
+  margin-left: 10px;
+  font-size: 16px;
+  line-height: 16px;
+  cursor: pointer;
+  transition: all 0.2s;
 }
 
 .se-msg-num {
-    position: absolute;
-    top: 0;
-    right: 0;
-    height: 14px;
-    line-height: 14px;
-    text-align: center;
-    font-size: 12px;
-    border: 1.4px solid;
-    border-radius: 7px;
-    box-shadow: -1px 1px 1px #0002;
-    transform: translate(50%, -50%);
-    box-sizing: content-box;
+  position: absolute;
+  top: 0;
+  right: 0;
+  box-sizing: content-box;
+  height: 14px;
+  font-size: 12px;
+  line-height: 14px;
+  text-align: center;
+  border: 1.4px solid;
+  border-radius: 7px;
+  box-shadow: -1px 1px 1px #0002;
+  transform: translate(50%, -50%);
 }
 
 each(@SeMsgColorMap, {

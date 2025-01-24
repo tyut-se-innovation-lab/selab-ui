@@ -1,9 +1,7 @@
 <template>
   <div>
     <!-- 加粗的大标题 -->
-    <se-typography type="h1" bold color="blue">
-      加粗的大标题
-    </se-typography>
+    <se-typography type="h1" bold color="blue"> 加粗的大标题 </se-typography>
 
     <!-- 斜体的段落文字 -->
     <se-typography type="p" italic size="16px">
@@ -22,5 +20,4 @@
   </div>
 </template>
 
-<script setup>
-</script>
+<script setup></script>

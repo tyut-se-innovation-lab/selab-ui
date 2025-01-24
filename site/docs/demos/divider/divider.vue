@@ -10,7 +10,7 @@
 
     <!-- 垂直分隔线 -->
     <h3>垂直分隔线</h3>
-    <div style="display: flex; align-items: center;">
+    <div style="display: flex; align-items: center">
       Text <se-divider type="vertical" /> Text
     </div>
 

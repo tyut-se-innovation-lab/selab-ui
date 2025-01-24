@@ -1,5 +1,5 @@
 // Your component styles here
-@import url('../../base/index.less');
+@import url("../../base/index.less");
 
 /* 整体 */
 .se-tooltip {
@@ -17,13 +17,13 @@
   position: absolute;
   top: 100%;
   left: 50%;
-  transform: translateX(-50%);
   padding-top: 12px;
-
+  transform: translateX(-50%);
 }
 
 /* 提示文本 */
 .se-tooltip-inner {
+  box-sizing: border-box;
   min-width: 200px;
   min-height: 32px;
   padding: 6px 8px;
@@ -32,14 +32,12 @@
   word-wrap: break-word;
   //background-color: @bgColor;
   border-radius: 6px;
-  box-sizing: border-box;
 }
 
 /* 小箭头 */
 .se-tooltip-arrow {
   position: relative;
 }
-
 
 /* 渐变过渡 */
 .fade-enter-active,
@@ -66,8 +64,8 @@
   magenta: @bg-color-magenta;
   volcano: @bg-color-volcano;
   gold: @bg-color-gold;
-  lime: @bg-color-lime
-}
+  lime: @bg-color-lime;
+};
 
 each(@set, {
   .se-tooltip-arrow-@{key} {

@@ -44,9 +44,12 @@ export default defineComponent({
     }));
 
     return () => (
-        <div class={`se-flex ${Object.keys(flexClasses.value).join(" ")}`} style={flexStyle.value}>
-          {slots.default?.()}
-        </div>
+      <div
+        class={`se-flex ${Object.keys(flexClasses.value).join(" ")}`}
+        style={flexStyle.value}
+      >
+        {slots.default?.()}
+      </div>
     );
   },
 });

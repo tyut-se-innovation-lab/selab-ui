@@ -3,7 +3,11 @@
     <h3>Checkbox 示例</h3>
 
     <!-- 使用 se-checkbox 组件，带有不同的选项和v-model -->
-    <se-checkbox :options="checkboxOptions" v-model="selectedOptions" :disabled="true">
+    <se-checkbox
+      :options="checkboxOptions"
+      v-model="selectedOptions"
+      :disabled="true"
+    >
       <p>已选择: {{ selectedOptions.length }} 个选项</p>
       <!-- 清除已选项按钮 -->
       <button @click="clearSelection">清除选项</button>
@@ -12,7 +16,9 @@
     <div class="selected-options">
       <h4>当前选中的选项:</h4>
       <ul>
-        <li v-for="(option, index) in selectedOptions" :key="index">{{ option }}</li>
+        <li v-for="(option, index) in selectedOptions" :key="index">
+          {{ option }}
+        </li>
       </ul>
     </div>
 
@@ -20,26 +26,44 @@
 
     <div class="checkbox-sizes">
       <h4>小号复选框</h4>
-      <se-checkbox :options="checkboxOptions" v-model="smallSelected" size="small"></se-checkbox>
+      <se-checkbox
+        :options="checkboxOptions"
+        v-model="smallSelected"
+        size="small"
+      ></se-checkbox>
 
       <h4>中号复选框</h4>
-      <se-checkbox :options="checkboxOptions" v-model="mediumSelected" size="middle"></se-checkbox>
+      <se-checkbox
+        :options="checkboxOptions"
+        v-model="mediumSelected"
+        size="middle"
+      ></se-checkbox>
 
       <h4>大号复选框</h4>
-      <se-checkbox :options="checkboxOptions" v-model="largeSelected" size="large"></se-checkbox>
+      <se-checkbox
+        :options="checkboxOptions"
+        v-model="largeSelected"
+        size="large"
+      ></se-checkbox>
     </div>
   </div>
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref } from "vue";
 
 export default defineComponent({
-  name: 'CheckboxDemo',
+  name: "CheckboxDemo",
 
   setup() {
     // 存储不同复选框选项
-    const checkboxOptions = ref(['Option 1', 'Option 2', 'Option 3', 'Option 4', 'Option 5']);
+    const checkboxOptions = ref([
+      "Option 1",
+      "Option 2",
+      "Option 3",
+      "Option 4",
+      "Option 5",
+    ]);
 
     // 存储选中的选项
     const selectedOptions = ref([]);
@@ -112,4 +136,3 @@ button:hover {
   background-color: #2980b9;
 }
 </style>
-

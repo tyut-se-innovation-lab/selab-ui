@@ -1,75 +1,75 @@
 // Your component styles here
-@import url('../../base/index.less');
+@import url("../../base/index.less");
 
 .skeleton-animation {
-    animation: pulse 1.8s infinite ease;
+  animation: pulse 1.8s infinite ease;
 }
 
 .skeleton-container {
-    width: 100%;
-    padding: 16px;
+  width: 100%;
+  padding: 16px;
 
-    .skeleton-header {
-        display: flex;
-        align-items: center;
+  .skeleton-header {
+    display: flex;
+    align-items: center;
 
-        .skeleton-title {
-            width: var(--skeleton-title-width); /* 调整头部宽度 */
-            // flex: 1;
-            height: 16px;
-            margin-bottom: 12px;
-            background-color: #d9d9d9;
-            border-radius: 5px;
-        }
+    .skeleton-title {
+      width: var(--skeleton-title-width); /* 调整头部宽度 */
+      // flex: 1;
+      height: 16px;
+      margin-bottom: 12px;
+      background-color: #d9d9d9;
+      border-radius: 5px;
     }
+  }
 
-    /* 头部颜色 */
+  /* 头部颜色 */
+
+  .skeleton-avatar {
+    width: 50px;
+    height: 50px;
+    margin: 10px;
+    background-color: #d9d9d9;
+    border-radius: 50%;
+  }
+
+  .skeleton-content {
+    display: flex;
 
     .skeleton-avatar {
-        width: 50px;
-        height: 50px;
-        margin: 10px;
+      visibility: hidden;
+    }
+
+    .skeleton-paragraph {
+      flex: 1;
+
+      .skeleton-paragraph-content {
+        width: 100%;
+        height: 16px;
+        margin-bottom: 12px;
         background-color: #d9d9d9;
-        border-radius: 50%;
+        border-radius: 5px;
+      }
+
+      .skeleton-paragraph-content:last-child {
+        width: 40%;
+      }
     }
-
-    .skeleton-content {
-        display: flex;
-
-        .skeleton-avatar {
-            visibility: hidden;
-        }
-
-        .skeleton-paragraph {
-            flex: 1;
-
-            .skeleton-paragraph-content {
-                width: 100%;
-                height: 16px;
-                margin-bottom: 12px;
-                background-color: #d9d9d9;
-                border-radius: 5px;
-            }
-
-            .skeleton-paragraph-content:last-child {
-                width: 40%;
-            }
-        }
-    }
+  }
 }
 
 /* 骨架屏内容样式 */
 
 @keyframes pulse {
-    0% {
-        opacity: 0.4;
-    }
+  0% {
+    opacity: 0.4;
+  }
 
-    50% {
-        opacity: 1;
-    }
+  50% {
+    opacity: 1;
+  }
 
-    100% {
-        opacity: 0.4;
-    }
+  100% {
+    opacity: 0.4;
+  }
 }

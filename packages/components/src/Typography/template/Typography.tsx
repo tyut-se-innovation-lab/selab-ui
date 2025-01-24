@@ -1,4 +1,4 @@
-import {defineComponent, computed, VNode, PropType, CSSProperties} from "vue";
+import { defineComponent, computed, VNode, PropType, CSSProperties } from "vue";
 import "../../less/components/Typography/index.less";
 
 export default defineComponent({
@@ -6,7 +6,9 @@ export default defineComponent({
   props: {
     // 文本类型，例如 h1~h6、p、span 等
     type: {
-      type: String as PropType<"h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p" | "span">,
+      type: String as PropType<
+        "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p" | "span"
+      >,
       default: "span", // 默认为 span 标签
     },
     // 是否加粗
@@ -62,24 +64,26 @@ export default defineComponent({
     }));
 
     // 计算内联样式
-    const typographyStyle = computed(() => ({
-      color: props.color || undefined,
-      fontSize: props.size || undefined,
-      textAlign: props.align as CSSProperties["textAlign"],
-      userSelect: props.unselectable ? "none" : undefined,
-    }) as CSSProperties);
+    const typographyStyle = computed(
+      () =>
+        ({
+          color: props.color || undefined,
+          fontSize: props.size || undefined,
+          textAlign: props.align as CSSProperties["textAlign"],
+          userSelect: props.unselectable ? "none" : undefined,
+        }) as CSSProperties,
+    );
 
     return () => {
-
       return (
-          <div
-              class={`se-Typography ${Object.keys(typographyClass.value)
-                  .filter((key) => typographyClass.value[key])
-                  .join(" ")}`}
-              style={typographyStyle.value}
-          >
-            {slots.default && slots.default()} {/* 插槽内容 */}
-          </div>
+        <div
+          class={`se-Typography ${Object.keys(typographyClass.value)
+            .filter((key) => typographyClass.value[key])
+            .join(" ")}`}
+          style={typographyStyle.value}
+        >
+          {slots.default && slots.default()} {/* 插槽内容 */}
+        </div>
       );
     };
   },

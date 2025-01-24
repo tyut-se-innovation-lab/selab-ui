@@ -1,131 +1,132 @@
 // Your component styles here
-@import url('../../base/index.less');
+@import url("../../base/index.less");
 // 主容器样式
 .input-with-virtual-dropdown {
-    position: relative;
-    width: 100%; // 可根据需要设置固定宽度
-    font-family: Arial, sans-serif;
+  position: relative;
+  width: 100%; // 可根据需要设置固定宽度
+  font-family: Arial, sans-serif;
 }
 
 // 输入框容器样式
 .input-container {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 4px;
-    border: 1px solid #d9d9d9;
-    border-radius: 4px;
-    padding: 4px 8px;
-    background-color: #fff;
-    cursor: text;
-    box-sizing: border-box;
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  align-items: center;
+  padding: 4px 8px;
+  cursor: text;
+  background-color: #fff;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
 
-    &:hover {
-        border-color: #40a9ff;
-    }
+  &:hover {
+    border-color: #40a9ff;
+  }
 
-    &:focus-within {
-        border-color: #1890ff;
-        box-shadow: 0 0 4px rgba(24, 144, 255, 0.4);
-    }
+  &:focus-within {
+    border-color: #1890ff;
+    box-shadow: 0 0 4px rgb(24 144 255 / 40%);
+  }
 }
 
 // 输入框样式
 .input-field {
-    flex: 1;
-    border: none;
-    outline: none;
-    font-size: 14px;
-    padding: 4px 0;
-    min-width: 120px;
-    background: transparent;
+  flex: 1;
+  min-width: 120px;
+  padding: 4px 0;
+  font-size: 14px;
+  background: transparent;
+  border: none;
+  outline: none;
 
-    &::placeholder {
-        color: #bfbfbf;
-    }
+  &::placeholder {
+    color: #bfbfbf;
+  }
 
-    &:disabled {
-        background-color: #f5f5f5;
-        cursor: not-allowed;
-    }
+  &:disabled {
+    cursor: not-allowed;
+    background-color: #f5f5f5;
+  }
 }
 
 // 下拉框样式
 .dropdown {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    z-index: 1000;
-    width: 100%;
-    max-height: 240px;
-    margin-top: 4px;
-    overflow-y: auto;
-    border: 1px solid #d9d9d9;
-    border-radius: 4px;
-    background-color: #fff;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-    color: #6A737D;
-    &::-webkit-scrollbar {
-        width: 6px;
-    }
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  width: 100%;
+  max-height: 240px;
+  margin-top: 4px;
+  overflow-y: auto;
+  color: #6a737d;
+  background-color: #fff;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 15%);
 
-    &::-webkit-scrollbar-thumb {
-        background-color: #d9d9d9;
-        border-radius: 3px;
-    }
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #d9d9d9;
+    border-radius: 3px;
+  }
 }
 
 // 下拉选项样式
 .dropdown-item {
-    padding: 8px 12px;
-    font-size: 14px;
-    color: #333;
-    cursor: pointer;
+  padding: 8px 12px;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
 
-    &:hover {
-        background-color: #f5f5f5;
-    }
+  &:hover {
+    background-color: #f5f5f5;
+  }
 
-    &.dropdown-item-disabled {
-        color: #bfbfbf;
-        cursor: not-allowed;
-        background-color: #fafafa;
-    }
+  &.dropdown-item-disabled {
+    color: #bfbfbf;
+    cursor: not-allowed;
+    background-color: #fafafa;
+  }
 }
 
 // 多选标签样式
 se-tag {
-    display: inline-flex;
-    align-items: center;
-    padding: 0 8px;
-    background-color: #f0f0f0;
-    color: #333;
-    border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 8px;
+  font-size: 12px;
+  color: #333;
+  cursor: default;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+
+  .se-icon-close {
+    margin-left: 4px;
     font-size: 12px;
-    cursor: default;
+    cursor: pointer;
 
-    .se-icon-close {
-        margin-left: 4px;
-        font-size: 12px;
-        cursor: pointer;
-
-        &:hover {
-            color: #ff4d4f;
-        }
+    &:hover {
+      color: #ff4d4f;
     }
+  }
 }
 
 // 虚拟滚动容器样式
 se-virtual-scroller {
-    height: 100%;
-    overflow-y: auto;
+  height: 100%;
+  overflow-y: auto;
 
-    &::-webkit-scrollbar {
-        width: 6px;
-    }
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
 
-    &::-webkit-scrollbar-thumb {
-        background-color: #d9d9d9;
-        border-radius: 3px;
-    }
+  &::-webkit-scrollbar-thumb {
+    background-color: #d9d9d9;
+    border-radius: 3px;
+  }
 }

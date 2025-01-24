@@ -1,13 +1,12 @@
 .input-container {
+  position: relative;
   display: flex;
   align-items: center;
-  position: relative;
+  margin: 2px;
+  background-color: #fff;
   border: 1px solid #d9d9d9;
   border-radius: 4px;
-  background-color: #fff;
   transition: all 0.3s;
-  margin: 2px;
-
 
   &.input-small {
     height: 28px;
@@ -29,30 +28,30 @@
   }
 
   &.input-no-border {
-    border: none;
     background-color: transparent;
+    border: none;
   }
 
   &.input-disabled {
-    background-color: #f5f5f5;
     cursor: not-allowed;
+    background-color: #f5f5f5;
 
     .input-field {
-      background-color: transparent;
       color: #bfbfbf;
+      background-color: transparent;
     }
   }
 
   .prefix-icon,
   .suffix-icon {
-    vertical-align: middle;
     color: #888;
+    vertical-align: middle;
     cursor: default;
   }
 
   .clear-icon {
-    color: #999;
     margin-right: 8px;
+    color: #999;
     cursor: pointer;
 
     &:hover {
@@ -62,17 +61,17 @@
 
   .input-field {
     flex: 1;
-    border: none;
-    outline: none;
     padding: 0 8px;
     font-size: inherit;
-    background: none;
     color: #333;
+    background: none;
+    border: none;
+    outline: none;
 
     &:disabled {
-      background-color: transparent;
       color: #bfbfbf;
       cursor: not-allowed;
+      background-color: transparent;
     }
 
     &::placeholder {

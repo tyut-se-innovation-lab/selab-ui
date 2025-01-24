@@ -1,5 +1,3 @@
-
-
 <template>
   <div>
     <!-- 案例 1：基础使用 -->
@@ -9,10 +7,14 @@
     <se-box type="secondary">这是一个 Secondary 类型的 Box</se-box>
 
     <!-- 案例 3：动态标签 -->
-    <se-box type="success" tag="section">这是一个使用 Section 标签的 Box</se-box>
+    <se-box type="success" tag="section"
+      >这是一个使用 Section 标签的 Box</se-box
+    >
 
     <!-- 案例 4：自定义类名 -->
-    <se-box type="warning" customClass="custom-style">带有自定义类名的 Box</se-box>
+    <se-box type="warning" customClass="custom-style"
+      >带有自定义类名的 Box</se-box
+    >
 
     <!-- 案例 5：动态插槽内容 -->
     <se-box type="info">

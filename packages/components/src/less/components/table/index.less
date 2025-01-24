@@ -1,11 +1,12 @@
 // Your component styles here
-@import url('../../base/index.less');
+@import url("../../base/index.less");
+
 .se-table-container {
   width: 100%;
-  border: 1px solid #ddd;
-  border-radius: 4px;
   overflow: hidden;
   font-family: Arial, sans-serif;
+  border: 1px solid #ddd;
+  border-radius: 4px;
 }
 
 .se-table-header {
@@ -26,11 +27,11 @@
 }
 
 .se-table-cell {
+  box-sizing: border-box;
   flex: 1;
   padding: 10px;
   text-align: left;
   border-right: 1px solid #eee;
-  box-sizing: border-box;
 }
 
 .se-table-cell:last-child {

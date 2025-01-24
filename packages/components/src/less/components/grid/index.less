@@ -1,3 +1,58 @@
 // Your component styles here
-    @import url('../../base/index.less');
-    
+@import url("../../base/index.less");
+
+/* se-grid 样式 */
+.se-grid {
+  display: grid;
+  grid-gap: 10px; /* 默认设置间距，可以通过组件的 gap 属性来控制 */
+
+  /* 根据 columns 属性设置 grid-template-columns */
+  &.se-grid--columns-1 {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  &.se-grid--columns-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  &.se-grid--columns-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  &.se-grid--columns-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  &.se-grid--columns-5 {
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  &.se-grid--columns-6 {
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  /* 设置 gap 属性 */
+  &.se-grid--gap-5 {
+    grid-gap: 5px;
+  }
+
+  &.se-grid--gap-10 {
+    grid-gap: 10px;
+  }
+
+  &.se-grid--gap-15 {
+    grid-gap: 15px;
+  }
+
+  &.se-grid--gap-20 {
+    grid-gap: 20px;
+  }
+
+  /* 在子项中设置每个网格项的样式 */
+  > div {
+    box-sizing: border-box;
+    padding: 10px;
+    background: #f5f5f5;
+    border-radius: 4px;
+  }
+}
