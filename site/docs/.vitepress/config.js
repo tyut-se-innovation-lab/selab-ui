@@ -74,6 +74,10 @@ export default defineConfig({
                             link: "/components/flex/"
                         },
                         {
+                            text: "Grid",
+                            link: "/components/grid/"
+                        },
+                        {
                             text: "Box",
                             link: "/components/box/"
                         },
@@ -180,8 +184,6 @@ export default defineConfig({
                             text: "VirtualScroller",
                             link: "/components/virtualscroller/"
                         },
-
-
 
 	//]
 
