@@ -97,6 +97,10 @@ export default defineConfig({
                             text: "Breadcrumb",
                             link: "/components/breadcrumb/"
                         },
+                        {
+                            text: "Anchor",
+                            link: "/components/anchor/"
+                        },
                     ]
                 },
                 {

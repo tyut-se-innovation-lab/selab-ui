@@ -1,0 +1,44 @@
+// Your component styles here
+@import url('../../base/index.less');
+.se-anchor {
+    position: relative;
+    display: block;
+    margin: 20px 0;
+    font-family: Arial, sans-serif;
+}
+
+.se-anchor--horizontal {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap; /* 支持换行 */
+    gap: 10px; /* 项目间的间隙 */
+}
+
+.se-anchor--vertical {
+    display: flex;
+    flex-direction: column; /* 竖直方向 */
+    gap: 10px; /* 项目间的间隙 */
+}
+
+.se-anchor-link {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: #333;
+    transition: color 0.3s;
+}
+
+.se-anchor-link a {
+    margin-left: 8px;
+    color: #666;
+}
+
+.se-anchor-link a:hover {
+    color: #1890ff;
+    text-decoration: none;
+}
+
+.se-anchor-link a.active {
+    color: #1890ff;
+    font-weight: bold;
+}

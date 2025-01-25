@@ -59,3 +59,5 @@ export * from "./grid";
 export * from "./layout";
 // 导入面包屑
 export * from "./breadcrumb";
+// 导入锚点
+export * from "./anchor";
