@@ -1,3 +1,5 @@
+import {Breadcrumb} from "./components/src";
+import {Layout} from "./components/src";
 import {Grid} from "./components/src";
 import {Flex} from "./components/src";
 import {Divider} from "./components/src";
@@ -31,7 +33,9 @@ declare module "@vue/runtime-core" {
         seBox: typeof Box;
         seCheckbox: typeof Checkbox;
         seRadio: typeof Radio;
-        //[		 seGrid: typeof Grid;
+        //[		 seBreadcrumb: typeof Breadcrumb;
+		 seLayout: typeof Layout;
+		 seGrid: typeof Grid;
 		 seFlex: typeof Flex;
 		 seDivider: typeof Divider;
 

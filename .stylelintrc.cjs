@@ -12,9 +12,13 @@ module.exports = {
         // 'stylelint-config-prettier',
         'stylelint-prettier/recommended'
     ],
+    ignoreFiles: [
+        "./packages/components/src/less/base/index.less"  // 排除 index.less 文件"src/less/base/index.less"  // 排除 index.less 文件
+    ],
     // 配置 rules
     rules: {
         // 开启 Prettier 自动格式化功能
         'prettier/prettier': true,
-    }
+    },
+
 };

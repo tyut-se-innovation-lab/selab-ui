@@ -54,3 +54,8 @@ export * from "./divider";
 export * from "./flex";
 // 导入栅格
 export * from "./grid";
+
+// 导入页面布局
+export * from "./layout";
+// 导入面包屑
+export * from "./breadcrumb";

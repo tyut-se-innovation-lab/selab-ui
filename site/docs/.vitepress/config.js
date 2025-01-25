@@ -62,7 +62,6 @@ export default defineConfig({
                             text: "Icon",
                             link: "/components/icon/"
                         },
-
                     ]
                 },
                 {
@@ -84,6 +83,20 @@ export default defineConfig({
                         {
                             text: "Divider",
                             link: "/components/divider/"
+                        },
+                        {
+                            text: "Layout",
+                            link: "/components/layout/"
+                        },
+                    ]
+                },
+                {
+                    text: "导航组件",
+                    collapsed: false,
+                    items: [
+                        {
+                            text: "Breadcrumb",
+                            link: "/components/breadcrumb/"
                         },
                     ]
                 },
@@ -178,13 +191,10 @@ export default defineConfig({
                     text: "其他组件",
                     collapsed: false,
                     items: [
-
-
                         {
                             text: "VirtualScroller",
                             link: "/components/virtualscroller/"
                         },
-
 	//]
 
                     ]
