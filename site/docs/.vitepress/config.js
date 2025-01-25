@@ -28,7 +28,6 @@ export default defineConfig({
         search: {
             provider: 'local'
         },
-
         sidebar: {
             "/guild/": [
                 {
