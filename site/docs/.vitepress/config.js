@@ -101,6 +101,18 @@ export default defineConfig({
                             text: "Anchor",
                             link: "/components/anchor/"
                         },
+                        {
+                            text: "Dropdown",
+                            link: "/components/dropdown/"
+                        },
+                        {
+                            text: "PageHeader",
+                            link: "/components/pageheader/"
+                        },
+                        {
+                            text: "Pagination",
+                            link: "/components/pagination/"
+                        },
                     ]
                 },
                 {
@@ -198,6 +210,7 @@ export default defineConfig({
                             text: "VirtualScroller",
                             link: "/components/virtualscroller/"
                         },
+
 	//]
 
                     ]
