@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="display:inline-block;">
     <span
       ref="elRef"
       :class="[$attrs.class, 'se-icon']"
@@ -42,7 +42,7 @@ const computedStyle = computed(
   (): CSSProperties => ({
     color: props.color,
     fontSize: `${props.size}px`,
-    display: "inline-flex",
+    display: "inline-block",
   }),
 );
 

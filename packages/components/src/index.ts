@@ -61,3 +61,9 @@ export * from "./layout";
 export * from "./breadcrumb";
 // 导入锚点
 export * from "./anchor";
+// 导入下拉菜单
+export * from "./dropdown";
+// 导入页头
+export * from "./pageHeader";
+// 导入分页
+export * from "./pagination";

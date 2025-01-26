@@ -1,3 +1,38 @@
 // Your component styles here
     @import url('../../base/index.less');
-    
+.se-page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+    background-color: #f0f2f5;
+    border-bottom: 1px solid #e8e8e8;
+
+    &--with-back {
+        padding-left: 48px;
+    }
+
+    .se-page-header-back {
+        cursor: pointer;
+        margin-right: 16px;
+    }
+
+    .se-page-header-content {
+        flex-grow: 1;
+    }
+
+    .se-page-header-title {
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .se-page-header-subtitle {
+        font-size: 14px;
+        color: #888;
+    }
+
+    .se-page-header-extra {
+        display: flex;
+        align-items: center;
+    }
+}

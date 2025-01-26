@@ -1,3 +1,109 @@
-// Your component styles here
-    @import url('../../base/index.less');
-    
+/* Dropdown 容器 */
+/* Dropdown 容器 */
+.se-dropdown {
+  position: relative; /* 使下拉菜单能够相对于其父元素定位 */
+  display: inline-block;
+  font-family: Arial, sans-serif;
+  cursor: pointer;
+  width: 200px;
+  user-select: none;
+}
+
+/* 下拉按钮（触发器） */
+.se-dropdown-trigger {
+  padding: 8px 12px;
+  background-color: #f4f4f4;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: #e6e6e6; /* 鼠标悬停时的背景色 */
+  }
+
+  &:active {
+    background-color: #ccc; /* 按下时的背景色 */
+  }
+}
+
+/* 下拉菜单 */
+.se-dropdown-menu {
+  display: none; /* 默认隐藏 */
+  position: absolute;
+  top: 100%; /* 菜单下方显示 */
+  left: 0;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 9999; /* 确保菜单显示在最上层 */
+  max-height: 200px;
+  overflow-y: auto; /* 当菜单项过多时，启用滚动条 */
+  margin-top: 8px;
+  padding: 0;
+}
+
+/* 使 visible 状态下的菜单显示 */
+.se-dropdown--visible .se-dropdown-menu {
+  display: block; /* 可见时，菜单显示 */
+}
+
+/* 菜单项 */
+.se-dropdown-item {
+  padding: 10px 15px;
+  background-color: white;
+  color: #333;
+  font-size: 14px;
+  border-bottom: 1px solid #f0f0f0;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #f4f4f4; /* 鼠标悬停时的背景色 */
+  }
+
+  &:active {
+    background-color: #e6e6e6; /* 鼠标点击时的背景色 */
+  }
+
+  &--selected {
+    background-color: #1890ff; /* 选中的菜单项 */
+    color: white;
+      &:hover {
+          background-color: #0ba0f1; /* 鼠标悬停时的背景色 */
+      }
+  }
+}
+
+/* 禁用状态 */
+.se-dropdown--disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* 下拉菜单的位置 */
+.se-dropdown--bottomLeft {
+  left: 0;
+  top: 100%;
+}
+
+.se-dropdown--bottomRight {
+  right: 0;
+  top: 100%;
+}
+
+.se-dropdown--topLeft {
+  left: 0;
+  bottom: 100%;
+}
+
+.se-dropdown--topRight {
+  right: 0;
+  bottom: 100%;
+}

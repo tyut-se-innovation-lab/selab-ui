@@ -1,3 +1,6 @@
+import {Pagination} from "./components/src";
+import {PageHeader} from "./components/src";
+import {Dropdown} from "./components/src";
 import {Anchor} from "./components/src";
 import {Breadcrumb} from "./components/src";
 import {Layout} from "./components/src";
@@ -34,7 +37,10 @@ declare module "@vue/runtime-core" {
         seBox: typeof Box;
         seCheckbox: typeof Checkbox;
         seRadio: typeof Radio;
-        //[		 seAnchor: typeof Anchor;
+        //[		 sePagination: typeof Pagination;
+		 sePageHeader: typeof PageHeader;
+		 seDropdown: typeof Dropdown;
+		 seAnchor: typeof Anchor;
 		 seBreadcrumb: typeof Breadcrumb;
 		 seLayout: typeof Layout;
 		 seGrid: typeof Grid;

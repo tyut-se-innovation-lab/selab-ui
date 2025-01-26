@@ -1,7 +1,7 @@
 {
   "name": "selab-ui",
   "version": "1.0.0",
-  "description": "",
+  "description": "UIComponentLibrary",
   "main": "index.js",
   "type": "module",
   "scripts": {
