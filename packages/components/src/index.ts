@@ -67,3 +67,5 @@ export * from "./dropdown";
 export * from "./pageHeader";
 // 导入分页
 export * from "./pagination";
+// 导入级联选择
+export * from "./cascader";

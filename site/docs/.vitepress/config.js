@@ -211,6 +211,10 @@ export default defineConfig({
                             link: "/components/virtualscroller/"
                         },
 
+	{
+            text: "Cascader",
+            link: "/components/cascader/"
+        },
 	//]
 
                     ]

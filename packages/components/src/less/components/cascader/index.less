@@ -1,0 +1,52 @@
+.se-cascader {
+    position: relative;
+    display: inline-block;
+    width: 300px;
+    font-family: Arial, sans-serif;
+
+    .se-cascader-input {
+        position: relative;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .se-cascader-clear {
+        position: absolute;
+        top: 50%;
+        right: 8px;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: #ff4d4f;
+        font-size: 12px;
+    }
+
+    .se-cascader-dropdown {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: white;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        max-height: 300px;
+        overflow-y: auto;
+        width: 100%;
+        z-index: 10;
+    }
+
+    .se-cascader-option {
+        padding: 8px;
+        cursor: pointer;
+        &:hover {
+            background-color: #f0f0f0;
+        }
+    }
+
+    .se-cascader-option.selected {
+        background-color: #1890ff;
+        color: white;
+    }
+}
