@@ -159,6 +159,14 @@ export default defineConfig({
                     collapsed: false,
                     items: [
                         {
+                            text: "Cascader",
+                            link: "/components/cascader/"
+                        },
+                        {
+                            text: "DatePicker",
+                            link: "/components/datepicker/"
+                        },
+                        {
                             text: "Img",
                             link: "/components/img/"
                         },
@@ -211,10 +219,8 @@ export default defineConfig({
                             link: "/components/virtualscroller/"
                         },
 
-	{
-            text: "Cascader",
-            link: "/components/cascader/"
-        },
+
+
 	//]
 
                     ]

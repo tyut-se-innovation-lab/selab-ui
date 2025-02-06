@@ -1,0 +1,111 @@
+.se-datePicker {
+  position: relative;
+  display: inline-block;
+  font-size: 14px;
+
+  .input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  input {
+    width: 260px;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+
+  .clear-btn {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    color: #ccc;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 0;
+
+    &:hover {
+      color: #000;
+    }
+  }
+
+  .dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    z-index: 10;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+  }
+
+  .calendar, .time, .months, .years {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .calendar-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+
+  .nav-btn {
+    cursor: pointer;
+    color: #007bff;
+    text-decoration: none;
+  }
+
+  .current-month {
+    font-weight: bold;
+  }
+
+  .days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+  }
+
+  .day, .month, .year {
+    padding: 5px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 4px;
+
+    &:hover {
+      background-color: #f0f0f0;
+    }
+  }
+
+  .empty {
+    visibility: hidden;
+  }
+
+  .pagination {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+
+  .year-list {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  select {
+    padding: 5px;
+    margin: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+}
