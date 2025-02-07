@@ -71,3 +71,5 @@ export * from "./pagination";
 export * from "./cascader";
 // 导入日期选择框
 export * from "./datePicker";
+// 导入空状态
+export * from "./empty";

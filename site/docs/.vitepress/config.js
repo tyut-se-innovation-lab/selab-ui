@@ -186,6 +186,10 @@ export default defineConfig({
                             text: "Tooltip",
                             link: "/components/tooltip/"
                         },
+                        {
+                            text: "Empty",
+                            link: "/components/empty/"
+                        },
                     ]
                 },
                 {
@@ -218,6 +222,7 @@ export default defineConfig({
                             text: "VirtualScroller",
                             link: "/components/virtualscroller/"
                         },
+
 
 
 

@@ -1,0 +1,23 @@
+// Your component styles here
+    @import url('../../base/index.less');
+// src/less/components/empty/index.less
+
+.se-empty {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    color: #aaa;
+
+    &.se-empty--no-data {
+        color: #f56c6c;
+    }
+
+    &.se-empty--no-content {
+        color: #409eff;
+    }
+
+    // 更多空状态类型的样式可以根据需要扩展
+}

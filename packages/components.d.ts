@@ -1,3 +1,4 @@
+import {Empty} from "./components/src";
 import {DatePicker} from "./components/src";
 import {Cascader} from "./components/src";
 import {Pagination} from "./components/src";
@@ -39,7 +40,8 @@ declare module "@vue/runtime-core" {
         seBox: typeof Box;
         seCheckbox: typeof Checkbox;
         seRadio: typeof Radio;
-        //[		 seDatePicker: typeof DatePicker;
+        //[		 seEmpty: typeof Empty;
+		 seDatePicker: typeof DatePicker;
 		 seCascader: typeof Cascader;
 		 sePagination: typeof Pagination;
 		 sePageHeader: typeof PageHeader;
